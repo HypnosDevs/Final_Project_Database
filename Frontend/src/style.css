@@ -46,6 +46,7 @@ q{
 }
 
 .section-p1 {
+  
   padding: 40px 80px;
 }
 
@@ -176,10 +177,7 @@ body {
     
 }
 
-#feature img {
-  width: 100px; /* ปรับความกว้างของรูปเป็น 100px */
-  height: auto; /* ทำให้ความสูงของรูปปรับตามอัตราส่วน */
-}
+
 
 #feature {
   display: flex;
@@ -208,4 +206,88 @@ body {
     border-radius:4px;
     color: #1a1a1a;
     background-color: #fddde4;
+}
+
+#feature .fe-box:nth-child(2) h6{
+    background-color: #cdebbc;
+}
+
+#feature .fe-box:nth-child(3) h6{
+  background-color: #d1e8f2;
+}
+#feature .fe-box:nth-child(4) h6{
+  background-color: #cdd4f8;
+}
+#feature .fe-box:nth-child(5) h6{
+  background-color: #f6dbf6;
+}
+#feature .fe-box:nth-child(6) h6{
+  background-color: #fff2e5;
+}
+
+#product1 {
+  text-align: center;
+}
+
+#product1 .pro {
+  width: 23%;
+  min-width: 250px;
+  padding: 10px 12px;
+  border: 1px solid #cce7d0;
+  border-radius: 25px;
+  box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.02);
+  margin: 15px 0;
+}
+
+#product1 .pro:hover{
+ box-shadow:20px 20px 30px rgba(0, 0, 0, 0.06);
+}
+
+#product1 .pro img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+#product1 .pro .des{
+ text-align: start;
+ padding: 10px 0;
+}
+
+#product1 .pro .des span{
+  color: #606063;
+  font-size: 12px;
+}
+
+#product1 .pro .des h5{
+  padding-top: 7px;
+  color: #1a1a1a;
+  font-size:14px;
+}
+
+/*สีดาว*/
+#product1 .pro .des i{
+  color:rgb(228,170,24);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/*ตะกร้า*/
+#product1 .pro .des h4{
+  padding-top: 7px;
+  color: #088178;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+#product1 .pro .cart{
+  width:40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50px;
+  background-color: #e8f6ea;
+  font-weight: 500;
+  color: #088178;
+
 }
