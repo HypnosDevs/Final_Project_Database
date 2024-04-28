@@ -4,12 +4,44 @@ const mongoose = require("mongoose");
 cors = require('cors')
 require('dotenv').config()
 const env = process.env;
+const path = require('path');
 
 const Product = require('./Models/Product.js')
+
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'Images');
+    },
+    filename: (req, file, cb) => {
+        console.log(file);
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+})
+
+const upload = multer({ 
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if(
+            file.mimetype == 'image/png' ||
+            file.mimetype == 'image/jpg' ||
+            file.mimetype == 'image/jpeg'
+        ) {
+            cb(null, true);
+        } else {
+            console.log(file);
+            console.log('Please only use PNG, JPG and JPEG files. Thank you!');
+            cb(null, false);
+        }
+    } 
+})
+
+app.set('view engine', 'ejs');
 
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
+app.use('/Images', express.static('Images'))
 
 app.get('/Product/getProduct', async (req, res) => {
     try {
@@ -34,9 +66,12 @@ app.get('/Product/getProduct/:id', async (req, res) => {
     }
 })
 
-app.post('/Product/addProduct', async (req, res) => {
+app.post('/Product/addProduct', upload.single('image'), async (req, res) => {
     try {
         const newProd = new Product(req.body);
+        if(req.file) {
+            newProd.image = req.file.path;
+        }
         await newProd.save();
         res.send(req.body)
     } catch (err) {
@@ -45,10 +80,13 @@ app.post('/Product/addProduct', async (req, res) => {
     }
 })
 
-app.patch('/Product/:id/updateProduct', async (req, res) => {
+app.patch('/Product/:id/updateProduct', upload.single('image'), async (req, res) => {
     try {
         const { id } = req.params;
         const data = await Product.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+        if(req.file) {
+            data.image = req.file.path;
+        }
         res.send(data)
     } catch (err) {
         console.log(err.message);
