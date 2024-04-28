@@ -22,6 +22,6 @@ database();
 
 const PORT = env.PORT || 8080;
 
-app.listen(env.PORT, () => {
+app.listen(PORT, () => {
     console.log(`Open server on port ${env.PORT} complete`)
 })
