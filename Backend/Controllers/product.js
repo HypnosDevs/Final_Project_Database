@@ -1,32 +1,4 @@
 const Product = require('../Models/Product.js')
-const multer = require('multer');
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'Images');
-    },
-    filename: (req, file, cb) => {
-        console.log(file);
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
-})
-
-exports.upload = multer({
-    storage: storage,
-    fileFilter: (req, file, cb) => {
-        if (
-            file.mimetype == 'image/png' ||
-            file.mimetype == 'image/jpg' ||
-            file.mimetype == 'image/jpeg'
-        ) {
-            cb(null, true);
-        } else {
-            console.log(file);
-            console.log('Please only use PNG, JPG and JPEG files. Thank you!');
-            cb(null, false);
-        }
-    }
-})
-
 
 exports.getAllProduct = async (req, res) => {
     try {
@@ -68,10 +40,11 @@ exports.addProduct = async (req, res) => {
 exports.updateProduct = async (req, res) => {
     try {
         const { id } = req.params;
-        const data = await Product.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
         if (req.file) {
-            data.image = req.file.path;
+            req.body.image = req.file.path;
         }
+        const data = await Product.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+        await data.save();
         res.send(data)
     } catch (err) {
         console.log(err.message);
@@ -80,14 +53,12 @@ exports.updateProduct = async (req, res) => {
 }
 
 exports.deleteProduct = async (req, res) => {
-    async (req, res) => {
-        try {
-            const { id } = req.params;
-            const data = await Product.deleteOne({ _id: id })
-            res.send(data)
-        } catch (err) {
-            console.log(err.message);
-            res.status(500).send({ message: err.message });
-        }
+    try {
+        const { id } = req.params;
+        const data = await Product.deleteOne({ _id: id })
+        res.send(data)
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
     }
 }
