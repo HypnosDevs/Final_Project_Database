@@ -20,6 +20,8 @@ const database = () => {
 
 database();
 
+const PORT = env.PORT || 8080;
+
 app.listen(env.PORT, () => {
     console.log(`Open server on port ${env.PORT} complete`)
 })
