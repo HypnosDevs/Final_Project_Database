@@ -120,7 +120,7 @@ body {
 
 /*banner*/
 #hero{
-    background-image :url("img/banner_index.png");
+    background-image :url("/Frontend/img/banner_index.png");
     height: 90vh;
     width: 100%;
     background-size: cover;
