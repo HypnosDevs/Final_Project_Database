@@ -31,9 +31,9 @@ const Navbar = () => {
 
     const navitems = [
         { "link": "Home" },
+        { "link": "Sign In" },
+        { "link": "Shop" },
         { "link": "About" },
-        { "link": "Projects" },
-        { "link": "Certificates" },
         { "link": "Contacts" }
     ]
     return (
