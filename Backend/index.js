@@ -7,6 +7,7 @@ const env = process.env;
 const Product = require('./Models/Product.js')
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 
 app.get('/Product/getProduct', async (req, res) => {
     try {
@@ -53,7 +54,7 @@ app.patch('/Product/:id/updateProduct', async (req, res) => {
     }
 })
 
-app.delete('/Product/:id/deleteProduct', async (req,res) =>{
+app.delete('/Product/:id/deleteProduct', async (req, res) => {
     try {
         const { id } = req.params;
         const data = await Product.deleteOne({ _id: id })
