@@ -19,6 +19,18 @@ app.get('/Product/getProduct', async (req, res) => {
     }
 })
 
+app.get('/Product/getProduct/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const data = await Product.find({ _id: id })
+        res.send(data);
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+})
+
 app.post('/Product/addProduct', async (req, res) => {
     try {
         const newProd = new Product(req.body);
