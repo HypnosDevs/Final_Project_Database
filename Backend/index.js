@@ -31,8 +31,9 @@ app.post('/Product/addProduct', async (req, res) => {
 })
 
 app.patch('/Product/:id/updateProduct', async (req, res) => {
-    try{
-        const data = await Product.findByIdAndUpdate('662df0c2febd2ada172ebff2', req.body)
+    try {
+        const { id } = req.params;
+        const data = await Product.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
         res.send(data)
     } catch (err) {
         console.log(err.message);
