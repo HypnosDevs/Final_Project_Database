@@ -26,6 +26,8 @@ h4 {
 h6 {
   font-weight: 700;
   font-size: 12px;
+  color: #222;
+  
 }
 
 p {
@@ -151,4 +153,38 @@ body {
     font-weight:700; 
     font-size: 15px;
     
+}
+
+#feature img {
+  width: 100px; /* ปรับความกว้างของรูปเป็น 100px */
+  height: auto; /* ทำให้ความสูงของรูปปรับตามอัตราส่วน */
+}
+
+#feature {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+#feature.fe-box{
+  width: 180px;
+   text-align: center;
+   padding:25px 15px ;
+   box-shadow :20px 20px 34px rgba(0,0,0,0.03);
+   border :1px solid #cce7d0;
+   border-radius: 4px;
+   margin: 15px 0;
+}
+
+#feature.fe-box img{
+    width: 100%;
+    margin: bottom 10px;
+}
+#feature.fe-box h6{
+    padding: 9px 8px 6px 8px;
+    line-height: 1;
+    border-radius:4px;
+    color: #1a1a1a;
+    background-color: #fddde4;
 }
