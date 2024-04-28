@@ -8,7 +8,6 @@ const Product = require('./Models/Product.js')
 
 app.use(express.json());
 
-
 app.get('/Product/getProduct', async (req, res) => {
     try {
         const data = await Product.find()
@@ -25,6 +24,16 @@ app.post('/Product/addProduct', async (req, res) => {
         const newProd = new Product(req.body);
         await newProd.save();
         res.send(req.body)
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+})
+
+app.patch('/Product/:id/updateProduct', async (req, res) => {
+    try{
+        const data = await Product.findByIdAndUpdate('662df0c2febd2ada172ebff2', req.body)
+        res.send(data)
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
