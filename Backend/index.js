@@ -1,11 +1,13 @@
 const express = require('express');
 const app = express();
 const mongoose = require("mongoose");
+cors = require('cors')
 require('dotenv').config()
 const env = process.env;
 
 const Product = require('./Models/Product.js')
 
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
