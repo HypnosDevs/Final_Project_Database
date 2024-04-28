@@ -77,6 +77,27 @@ body {
     left: 0;
 }
 
+/* Search Bar */
+
+.search {
+--padding: 14px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  padding: var(--padding);
+  border-radius: 28px;
+  background: #f6f6f6;
+}
+
+.search-input {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 16px;
+  color: #1a1a1a;
+  margin-left: var(--padding);
+}
+
 #navbar {
     display: flex;
     align-items: center;
