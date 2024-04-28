@@ -41,6 +41,17 @@ app.patch('/Product/:id/updateProduct', async (req, res) => {
     }
 })
 
+app.delete('/Product/:id/deleteProduct', async (req,res) =>{
+    try {
+        const { id } = req.params;
+        const data = await Product.deleteOne({ _id: id })
+        res.send(data)
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+})
+
 app.get('/', (req, res) => {
     res.send("Hello world")
 })
