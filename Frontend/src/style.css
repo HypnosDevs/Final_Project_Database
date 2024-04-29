@@ -99,6 +99,11 @@ body {
   margin-left: var(--padding);
 }
 
+.search-input::placeholder {
+  position: relative;
+  top: 2px;
+}
+
 #navbar {
     display: flex;
     align-items: center;
