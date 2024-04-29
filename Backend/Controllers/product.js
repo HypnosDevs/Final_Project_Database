@@ -1,4 +1,8 @@
 const Product = require('../Models/Product.js')
+const uploadModule = require('../Middleware/upload')
+const toDataURL = uploadModule.otherMethod;
+const path = require('path');
+const fs = require('fs');
 
 exports.getAllProduct = async (req, res) => {
     try {
@@ -25,12 +29,12 @@ exports.getProduct = async (req, res) => {
 
 exports.addProduct = async (req, res) => {
     try {
-        const newProd = new Product(req.body);
         if (req.file) {
-            newProd.image = req.file.path;
+            req.body.image = fs.readFileSync(req.file.path, {encoding: 'base64'});
         }
+        const newProd = new Product(req.body);
         await newProd.save();
-        res.send(req.body)
+        res.send(newProd)
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
@@ -41,7 +45,7 @@ exports.updateProduct = async (req, res) => {
     try {
         const { id } = req.params;
         if (req.file) {
-            req.body.image = req.file.path;
+            req.body.image = fs.readFileSync(req.file.path, {encoding: 'base64'});
         }
         const data = await Product.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
         await data.save();
