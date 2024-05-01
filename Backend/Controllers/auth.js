@@ -1,41 +1,27 @@
 
+const Address = require('../Models/Address');
 const User = require('../Models/User');
 const bcrypt = require('bcrypt');
 
-
-// example allowedRoles = ['admin','product manager']
-exports.checkUserRole = (allowedRoles) => {
-    return (req, res, next) => {
-
-        const userRole = req.session.user.role;
-        if (allowedRoles.includes('ADMIN')) {
-            return next();
-        }
-
-        if (!allowedRoles.includes(userRole)) {
-            return res.status(403).json({ message: 'You do not have permission to access this resource.' });
-        }
-
-
-        return next();
-    };
-};
-
 exports.register = async (req, res) => {
-    const { username, password } = req.body;
-    const user = await User.find({ username: username });
-    if (user.length > 0) {
-        return res.status(400).send({ message: "Already register" })
-    }
-
-    const hash = await bcrypt.hash(password, 10);
-    req.body.password = hash;
-
     try {
+        const { username, password } = req.body;
+        const user = await User.find({ username: username });
+        if (user.length > 0) {
+            return res.status(400).send({ message: "This usesername has been already used" })
+        }
 
-        const userData = new User(req.body);
+        const hash = await bcrypt.hash(password, 10);
+        req.body.password = hash;
+
+
+        const userData = new User({ ...req.body.user });
+        const addressData = new Address({ ...req.body.address });
+        userData.push(addressData);
         await userData.save();
-        res.send(userData);
+        await addressData.save();
+        res.status(201).send({ message: "register successful" });
+
 
     } catch (err) {
         console.log(err.message);
@@ -76,12 +62,10 @@ exports.login = async (req, res) => {
         }
 
         req.session.userId = user.id;
-        req.session.user = user;
 
         res.status(200).json({
             message: 'Login successful',
-            username: user.username,
-            role: user.role
+            username: user.username
         });
 
     } catch (err) {
@@ -99,16 +83,17 @@ Sample login
 
 */
 
-exports.getUsers = async (req, res) => {
+exports.logout = async (req, res) => {
     try {
-        if (!req.session.userId) {
-            throw { message: 'Authentication fail' };
-        }
-        const userData = await User.find({});
-        return res.status(200).json(userData);
 
-    }
-    catch (err) {
+        req.session.userId = null;
+
+        res.status(200).json({
+            message: 'Logout successful',
+            username: user.username,
+        });
+
+    } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
     }

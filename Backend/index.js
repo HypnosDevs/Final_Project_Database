@@ -12,7 +12,9 @@ const env = process.env;
 
 
 const productRouters = require('./Routes/product');
-const authRouters = require('./Routes/auth')
+const authRouters = require('./Routes/auth');
+const userRouter = require('./Routes/user')
+const addressRouter = require('./Routes/address')
 
 
 
@@ -37,7 +39,8 @@ app.use('/Images', express.static('Images'))
 
 app.use('/api/Product', productRouters);
 app.use('/api/Authentication', authRouters);
-
+app.use('/api/User', userRouter);
+app.use('/api/Address', addressRouter);
 
 
 app.get('/', (req, res) => {
