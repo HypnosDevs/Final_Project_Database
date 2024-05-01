@@ -12,6 +12,20 @@ exports.getAllProduct = async (req, res) => {
     }
 }
 
+/*
+exports.getCategoryProduct = async (req, res) => {
+    try {
+        const { name } = req.params;
+        const data = await Product.find({ category: { name: name } });
+        res.send(data);
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}
+*/
+
 exports.getProduct = async (req, res) => {
     try {
         const { id } = req.params;

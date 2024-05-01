@@ -13,6 +13,7 @@ const env = process.env;
 
 const productRouters = require('./Routes/product');
 const authRouters = require('./Routes/auth')
+const categoryRouters = require('./Routes/category');
 
 
 
@@ -37,6 +38,7 @@ app.use('/Images', express.static('Images'))
 
 app.use('/api/Product', productRouters);
 app.use('/api/Authentication', authRouters);
+app.use('/api/Category', categoryRouters);
 
 
 
