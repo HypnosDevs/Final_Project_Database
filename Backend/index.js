@@ -1,17 +1,33 @@
 const express = require('express');
 const app = express();
 const mongoose = require("mongoose");
+
+const session = require('express-session')
+
+
+
 cors = require('cors')
 require('dotenv').config()
 const env = process.env;
-// const path = require('path');
-
-const productRouters = require('./Routes/product')
 
 
+const productRouters = require('./Routes/product');
+const authRouters = require('./Routes/auth')
 
 
-app.set('view engine', 'ejs');
+
+app.use(
+    session({
+        secret: "secretlaew",
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            maxAge: 3600000 // 1 hour
+        }
+    })
+)
+
+
 
 app.use(cors())
 app.use(express.json());
@@ -19,11 +35,15 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/Images', express.static('Images'))
 
 
-app.use('/', productRouters);
+app.use('/api/Product', productRouters);
+app.use('/api/Authentication', authRouters);
+
+
 
 app.get('/', (req, res) => {
     res.send("Hello world")
 })
+
 
 
 

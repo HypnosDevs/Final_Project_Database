@@ -4,15 +4,15 @@ const router = express.Router()
 const { getAllProduct, getProduct, addProduct, updateProduct, deleteProduct, upload } = require('../Controllers/product')
 
 
-router.get('/Product/getProduct', getAllProduct)
+router.get('/getProduct', getAllProduct)
 
-router.get('/Product/getProduct/:id', getProduct)
+router.get('/getProduct/:id', getProduct)
 
-router.post('/Product/addProduct', upload.single('image'), addProduct)
+router.post('/addProduct', upload.single('image'), addProduct)
 
-router.patch('/Product/:id/updateProduct', upload.single('image'), updateProduct)
+router.patch('/:id/updateProduct', upload.single('image'), updateProduct)
 
-router.delete('/Product/:id/deleteProduct', deleteProduct)
+router.delete('/:id/deleteProduct', deleteProduct)
 
 
 
