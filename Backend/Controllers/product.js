@@ -1,7 +1,4 @@
 const Product = require('../Models/Product.js')
-const uploadModule = require('../Middleware/upload')
-const toDataURL = uploadModule.otherMethod;
-const path = require('path');
 const fs = require('fs');
 
 exports.getAllProduct = async (req, res) => {
