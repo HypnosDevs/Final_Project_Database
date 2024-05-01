@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
-const { getAllProduct, getProduct, addProduct, updateProduct, deleteProduct, upload } = require('../Controllers/product')
-
+const { getAllProduct, getProduct, addProduct, updateProduct, deleteProduct } = require('../Controllers/product')
+const upload = require('../Middleware/upload')
 
 router.get('/getProduct', getAllProduct)
 
