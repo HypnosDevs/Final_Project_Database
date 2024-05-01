@@ -455,3 +455,19 @@ footer .col img {
   cursor: pointer;
   border-radius: 10px;
 }
+
+
+#cart table{
+   width: 100%;
+}
+
+#cart table img{
+  width: 70px;
+}
+#cart table th{
+  padding: 10px 0;
+  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+}

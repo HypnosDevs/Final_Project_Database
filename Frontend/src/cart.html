@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cart.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
@@ -29,48 +29,47 @@
 
                 <li><a href="index.html">Home</a></li>
                 <li><a href="/Frontend/src/Sign_In/Sign In.html">Sign In/Register</a></li>
-                <li><a class="active" href="Shop.html">Shop</a></li>
+                <li><a  href="Shop.html">Shop</a></li>
                 <li><a href="About.html">About</a></li>
                 <li><a href="Contact.html">Contact</a></li>
-                <li><a href="Cart.html"><img src="/Frontend/img/cart.png"></a></li>
+                <li><a class="active" href="Cart.html"><img src="/Frontend/img/cart1.png"></a></li>
             <ul>
         </div>
     </section>
 
-    <section id="prodetails" class="section-p1">
-        <div class="single-pro-image">
-            <img src="/Frontend/img/products/p1.jpg" id="MainImg" alt="">
-            <div class="small-img-group">
-                <div class="small-img-col">
-                    <img src="/Frontend/img/products/p1.jpg" class="small-img" alt="">
-                </div>
-                <div class="small-img-col">
-                    <img src="/Frontend/img/products/p1.2.jpg" class="small-img" alt="">
-                </div>
-                <div class="small-img-col">
-                    <img src="/Frontend/img/products/p1.3.jpg" class="small-img" alt="">
-                </div>
-                <div class="small-img-col">
-                    <img src="/Frontend/img/products/p1.4.jpg" class="small-img" alt="">
-                </div>
-            </div>
-        </div>
-        <d class="single-pro-details">
-            <h6>Home/Labubu</h6>
-            <h4>THE MONSTERS Catch Me If You Like Me Series-Vinyl Doll Gift Box</h4>
-            <h2>฿380</h2>
-            <input type="number" value="1" min="1">
-            <button class="normal">Add To Cart</button>
-            <h4>Product Details</h4>
-            <span>Designer: POP MART<br>
-                Material: POLYESTER/PP COLLOIDAL PARTICLES<br>
-                Size: 8.66/5.91/14.96 INCHES<br>
-                Not suitable for persons under 15.</span>
-                
-            
-        </div>
+    <section id="page-header">
+        
+        <h2># Collection</h2>
+        <p>Save more with coupons & up to 70% off! </p>
+        
     </section>
+<section id="cart" class="">
+    <table width="100%">
+        <thead>
+            <tr>
+                <td>Remove</td>
+                <td>Tmage</td>
+                <td>Product</td>
+                <td>Price</td>
+                <td>Quantity</td>
+                <td>Subtotal</td>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                    <td><img src="/Frontend/img/products/p1.jpg"></td>
+                    <td>THE MONSTERS Catch Me If You Like Me Series-Vinyl Doll Gift Box</td>
+                    <td>$ 29.99</td>
+                    <td><input type="number" value="1"></td>
+                    <td>฿380</td>
+                </tr>
+            </tbody>
+    </table>
+</section>
     
+    </section>
+
 <footer class="section-p1">
   <div class="col">
     <img src="/Frontend/img/logo_footer.png" alt="">
@@ -93,32 +92,6 @@
          <a href="Ordertracking.html">Track My Order </a>
         </div>
     </footer>
-    
-    <script>
-        var MainImg=document.getElementById('MainImg');
-        var smallimg=document.getElementsByClassName('small-img');
-
-        smallimg[0].onclick=function(){
-            MainImg.src=smallimg[0].src;
-
-        }
-        
-        smallimg[1].onclick=function(){
-            MainImg.src=smallimg[1].src;
-            
-        }
-        
-        smallimg[2].onclick=function(){
-            MainImg.src=smallimg[2].src;
-            
-        }
-        
-        smallimg[3].onclick=function(){
-            MainImg.src=smallimg[3].src;
-            
-        }
-        </script>
-
 <script src="script.js"></script>
 </body>
 </html>
