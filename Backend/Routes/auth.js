@@ -1,14 +1,14 @@
 const express = require('express')
 const router = express.Router()
 
-const { register, getUsers, login, checkUserRole } = require('../Controllers/auth')
-
+const { register, login, logout } = require('../Controllers/auth')
 
 router.post('/register', register)
 
 router.post('/login', login)
 
-router.get('/getUsers', checkUserRole(['ADMIN']), getUsers)
+router.post('/logout', logout)
+
 
 
 module.exports = router

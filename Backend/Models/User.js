@@ -1,11 +1,16 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
     {
         username: {
             type: String,
             required: true
         },
+        address: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Address'
+        }],
         password: {
             type: String,
             required: true
@@ -13,6 +18,7 @@ const userSchema = new mongoose.Schema(
         role: {
             type: String,
             default: "USER",
+            enum: ["USER", "ADMIN", "PRODUCT_MANAGER"],
             required: true
         },
         firstname: {
@@ -33,6 +39,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             enum: ["Male", "Female", "Others"]
         }
+
     },
     {
         timestamps: true
@@ -41,15 +48,15 @@ const userSchema = new mongoose.Schema(
 
 const User = mongoose.model('User', userSchema);
 
-// Middleware to prevent clients from setting the role field
-userSchema.pre('save', function (next) {
-    // If the document is new (i.e., being created), or the role field is being modified
-    if (this.isNew || this.isModified('role')) {
-        // Set the role to the default value
-        this.role = "USER";
-    }
-    next();
-});
+// // Middleware to prevent clients from setting the role field
+// userSchema.pre('save', function (next) {
+//     // If the document is new (i.e., being created), or the role field is being modified
+//     if (this.isNew || this.isModified('role')) {
+//         // Set the role to the default value
+//         this.role = "USER";
+//     }
+//     next();
+// });
 
 module.exports = User;
 
