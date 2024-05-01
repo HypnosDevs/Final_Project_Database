@@ -127,20 +127,10 @@ body {
     transition: 0.3s ease;
 }
 
-/*เม้าไปชี้เเล้วเปลี่ยนสี*/
-#navbar li a:hover, 
-#navbar li a.active {
-     color: #088178;
-}
-#navbar li a.active::after,
-#navbar li a:hover::after{
-    content: "";
-    width: 30%;
-    border-bottom: 2px solid;
-    background : #088178;
-    position: absolute;
-    bottom: -4px;
-    left:20px;
+/*เม้าไปชี้เเล้วเปลี่ยนสี และขีดเส้นใต้*/
+#navbar li a:hover {
+    color: #6f56ec;
+    border-bottom: 2px solid #6f56ec;
 }
 
 /*Home Page*/
