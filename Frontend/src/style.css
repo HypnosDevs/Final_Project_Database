@@ -309,9 +309,149 @@ body {
 }
 
 /*footer ส่วนท้ายเว็บ*/
-#footer {
- display:flex;
- flex-wrap: wrap;
- justify-content: space-around;
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
+footer .col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+footer .logo{
+  margin-bottom: 30px;
+}
+
+footer h4 {
+  font-size: 14px;
+  padding-bottom: 20px;
+}
+
+footer p {
+  font-size: 14px;
+  margin-bottom: 0 0 8px 0;
+}
+
+footer a {
+  font-size:13px;
+  text-decoration: none;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+footer .col img {
+  width: 200px; /* ปรับขนาดความกว้างของโลโก้ */
+  height: auto; /* รักษาสัดส่วนของรูปภาพ */
+}
+
+/* Shop Page*/
+#page-header{
+  background-image: url("/Frontend/img/banner_shop.png");
+  width: 100%;
+  height: 40vh;
+  background-size: cover;
+  display : flex;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  padding: 14px;
+}
+
+#page-header h2,
+#page-header p{
+  color: #fff;
+}
+
+#pagination{
+  text-align: center;
+}
+#pagination a {
+  text-decoration: none;
+  background-color: #088178;
+  padding: 15px 20px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 600;
+}
+
+#pagination a i{
+  font-size:16px;
+  font-weight: 600;
+}
+#prodetails .single-pro-image {
+  width: 40%;
+  margin-right: 50px;
+}
+
+#prodetails .single-pro-image img {
+  width: 100%; /* รูปภาพหลักจะทำให้กว้างเต็มรูปแบบของพื้นที่ที่กำหนด */
+  height: auto; /* ความสูงจะปรับอัตโนมัติตามอัตราส่วน */
+}
+
+#prodetails .small-img {
+  width: 100%; /* รูปภาพย่อยจะทำให้กว้างเต็มรูปแบบของพื้นที่ที่กำหนด */
+  height: auto; /* ความสูงจะปรับอัตโนมัติตามอัตราส่วน */
+}
+
+.small-img-group{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.small-img-col{
+  flex-basis: 24%;
+  cursor: pointer;
+}
+
+/* ปุ่มเพิ่มลงตะกร้า */
+#prodetails {
+  display: flex;
+  margin-top: 20px;
+}
+#prodetails .single-pro-details {
+  width: 50%;
+  padding-top: 30px;
+
+}
+
+#prodetails .single-pro-details h4{
+  padding: 40px 0 20px 0;
+}
+
+#prodetails .single-pro-details h2{
+  font-size:26px;
+}
+
+
+#prodetails .single-pro-details input{
+  width: 50px;
+  height: 47px;
+  padding-left: 10px;
+  font-size :16px;
+  margin-right: 10px;
+
+}
+#prodetails .single-pro-details input:focus{
+  outline: none;
+}
+#prodetails .single-pro-details button {
+  background: #088178;
+  color: #fff;
+  width: 150px; /* กำหนดความกว้างของปุ่ม */
+  height: 50px;
+  outline: none;
+
+}
+.normal {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+  border-radius: 10px;
+}
