@@ -39,19 +39,19 @@
 
     <section id="prodetails" class="section-p1">
         <div class="single-pro-image">
-            <img src="/Frontend/img/products/p1.jpg" id="MainImg" alt="">
+            <img src="/Frontend/img/products/p1.jpg" width="100%" id="MainImg" alt="">
             <div class="small-img-group">
                 <div class="small-img-col">
-                    <img src="/Frontend/img/products/p1.jpg" class="small-img" alt="">
+                    <img src="/Frontend/img/products/p1.jpg"  width="100%" class="small-img" alt="">
                 </div>
                 <div class="small-img-col">
-                    <img src="/Frontend/img/products/p1.2.jpg" class="small-img" alt="">
+                    <img src="/Frontend/img/products/p1.2.jpg" width="100%" class="small-img" alt="">
                 </div>
                 <div class="small-img-col">
-                    <img src="/Frontend/img/products/p1.3.jpg" class="small-img" alt="">
+                    <img src="/Frontend/img/products/p1.3.jpg" width="100%" class="small-img" alt="">
                 </div>
                 <div class="small-img-col">
-                    <img src="/Frontend/img/products/p1.4.jpg" class="small-img" alt="">
+                    <img src="/Frontend/img/products/p1.4.jpg" width="100%" class="small-img" alt="">
                 </div>
             </div>
         </div>
@@ -70,6 +70,24 @@
             
         </div>
     </section>
+
+    <script>
+        var MainImg=document.getElementById('MainImg');
+        var smallimg=document.getElementsByClassName('small-img');
+
+        smallimg[0].onclick=function(){
+            MainImg.src=smallimg[0].src;
+        }
+        smallimg[1].onclick=function(){
+            MainImg.src=smallimg[1].src;
+        }
+        smallimg[2].onclick=function(){
+            MainImg.src=smallimg[2].src;
+        }
+        smallimg[3].onclick=function(){
+            MainImg.src=smallimg[3].src;
+        }
+        </script>
     
 <footer class="section-p1">
   <div class="col">

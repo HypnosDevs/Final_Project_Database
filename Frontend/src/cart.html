@@ -39,16 +39,17 @@
 
     <section id="page-header">
         
-        <h2># Collection</h2>
-        <p>Save more with coupons & up to 70% off! </p>
+        <h2># My Cart</h2>
+        <p>
+            Your shopping cart contains the following items: </p>
         
     </section>
-<section id="cart" class="">
+<section id="cart" class="section-p1">
     <table width="100%">
         <thead>
             <tr>
                 <td>Remove</td>
-                <td>Tmage</td>
+                <td>Image</td>
                 <td>Product</td>
                 <td>Price</td>
                 <td>Quantity</td>
@@ -60,15 +61,59 @@
                     <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
                     <td><img src="/Frontend/img/products/p1.jpg"></td>
                     <td>THE MONSTERS Catch Me If You Like Me Series-Vinyl Doll Gift Box</td>
-                    <td>$ 29.99</td>
-                    <td><input type="number" value="1"></td>
                     <td>฿380</td>
+                    <td><input type="number" value="1" min="1"></td>
+                    <td>฿380</td>
+                </tr>
+                <tr>
+                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                    <td><img src="/Frontend/img/products/p3.png"></td>
+                    <td>Crybaby Crying Parade Series</td>
+                    <td>฿590</td>
+                    <td><input type="number" value="1" min="1"></td>
+                    <td>฿590</td>
+                </tr>
+                <tr>
+                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                    <td><img src="/Frontend/img/products/p8.jpg"></td>
+                    <td>CRYBABY × Powerpuff Girls Series-Vinyl Face Plush Blind Box</td>
+                    <td>฿430</td>
+                    <td><input type="number" value="1" min="1"></td>
+                    <td>฿430</td>
                 </tr>
             </tbody>
     </table>
 </section>
     
     </section>
+<section id="cart-add" class="section-p1">
+    <div id="coupon">
+        <h3>Apply coupon</h3>
+        <div>
+            <input type="text" placeholder="Enter Your Coupon">
+            <button class="normal"><strong>Apply</strong></button>
+        </div>
+    </div>
+
+    <div id="subtotal">
+        <h3>Cart Totals</h3>
+        <table>
+            <tr>
+                <td>Cart Subtotal</td>
+                <td>฿1400</td>
+            </tr>
+            <tr>
+                <td>Shipping</td>
+                <td>Free</td>
+            </tr>
+            <tr>
+                <td><strong>Total</strong></td>
+                <td><strong>฿1400</strong></td>
+            </tr>
+        </table>
+        <button class="normal"><strong>Proceed to check out</strong></button>
+    </div>
+</section>
 
 <footer class="section-p1">
   <div class="col">

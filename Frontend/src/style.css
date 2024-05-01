@@ -179,7 +179,7 @@ body {
     cursor: pointer;
     font-weight:700; 
     font-size: 15px;
-    
+  
 }
 
 
@@ -308,11 +308,75 @@ body {
   right: 10px; /* ปรับตำแหน่งให้ไกล้กับขอบขวา */
 }
 
+/*promation*/
+#banner{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-image: url("/Frontend/img/banner_promotion.png");
+  width: 100;
+  height: 40vh;
+  background-size: cover;
+  background-position: center;
+}
+
+#banner h4{
+  color:rgb(0, 0, 0);
+  font-size: 16px;
+}
+
+#banner h2{
+  color:rgb(0, 0, 0);
+  font-size: 30px;
+  padding: 10px 0;
+}
+
+#banner h2 span{
+  color:#ef3636;
+  font-size: 30px;
+  padding: 10px 0;
+}
+
+button.normal{
+  font-size:14px;
+  font-weight: 600;
+  padding:15px 30px;
+  color: #000;
+  background-color: #fff;
+  border-radius: 4px;
+  cursor:pointer;
+  border: none;
+  outline:none;
+  transition: 0.2s;
+}
+
+#banner button:hover{
+  background-color: #088178;
+  color: #fff;
+}
+
 /*footer ส่วนท้ายเว็บ*/
-#footer {
- display:flex;
- flex-wrap: wrap;
- justify-content: space-around;
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+footer .col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+footer .logo{
+  margin-bottom: 30px;
+}
+
+footer h4 {
+  font-size: 14px;
+  padding-bottom: 20px;
 }
 
 footer p {
@@ -332,7 +396,7 @@ footer .col img {
   height: auto; /* รักษาสัดส่วนของรูปภาพ */
 }
 
-/* Shop Page*/
+/*Shop*/
 #page-header{
   background-image: url("/Frontend/img/banner_shop.png");
   width: 100%;
@@ -349,42 +413,37 @@ footer .col img {
 #page-header p{
   color: #fff;
 }
-
-#pagination{
-  text-align: center;
-}
 #pagination a {
   text-decoration: none;
-  background-color: #088178;
   padding: 15px 20px;
+  background-color:#088178;
   border-radius: 4px;
   color: #fff;
   font-weight: 600;
 }
-
 #pagination a i{
-  font-size:16px;
+  font-size: 16px;
   font-weight: 600;
 }
-#prodetails .single-pro-image {
+#pagination {
+  text-align: center;
+}
+
+#pagination a:hover {
+  background-color: #088178;
+  color: #fff;
+}
+
+
+/*Prodetail*/
+#prodetails .single-pro-image{
   width: 40%;
   margin-right: 50px;
-}
-
-#prodetails .single-pro-image img {
-  width: 100%; /* รูปภาพหลักจะทำให้กว้างเต็มรูปแบบของพื้นที่ที่กำหนด */
-  height: auto; /* ความสูงจะปรับอัตโนมัติตามอัตราส่วน */
-}
-
-#prodetails .small-img {
-  width: 100%; /* รูปภาพย่อยจะทำให้กว้างเต็มรูปแบบของพื้นที่ที่กำหนด */
-  height: auto; /* ความสูงจะปรับอัตโนมัติตามอัตราส่วน */
 }
 
 .small-img-group{
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
 }
 
 .small-img-col{
@@ -392,25 +451,25 @@ footer .col img {
   cursor: pointer;
 }
 
-/* ปุ่มเพิ่มลงตะกร้า */
 #prodetails {
-  display: flex;
-  margin-top: 20px;
+ display: flex;
+ margin-top: 20px;
 }
-#prodetails .single-pro-details {
-  width: 50%;
-  padding-top: 30px;
 
+#prodetails .single-pro-detail{
+  width: 50%;
+  padding-top:30px ;
 }
 
 #prodetails .single-pro-details h4{
   padding: 40px 0 20px 0;
+  
 }
 
-#prodetails .single-pro-details h2{
-  font-size:26px;
+#prodetails .single-pro-detail h2{
+  font-size: 26px;
+  
 }
-
 
 #prodetails .single-pro-details input{
   width: 50px;
@@ -420,23 +479,34 @@ footer .col img {
   margin-right: 10px;
 
 }
-#prodetails .single-pro-details input:focus{
-  outline: none;
-}
-#prodetails .single-pro-details button {
-  background: #088178;
-  color: #fff;
-  width: 150px; /* กำหนดความกว้างของปุ่ม */
-  height: 50px;
-  outline: none;
 
-}
-.normal {
-  background: none;
+
+#prodetails .single-pro-detail button{
+  padding: 15px 30px;
+  background: #088178;
+  color: #ffffff;
   border: none;
-  padding: 0;
-  font-size: inherit;
-  color: inherit;
+  border-radius: 20px;
   cursor: pointer;
-  border-radius: 10px;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+#prodetails .single-pro-detail button {
+  background: #088178;
+  color: #ffffff;
+}
+
+button.normal {
+  background-color: #088178; /* สีพื้นหลัง */
+  border: none;
+  color: white; /* สีข้อความ */
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px; /* ทำให้มีมุมโค้ง */
 }
