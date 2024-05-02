@@ -20,6 +20,7 @@ const discountRouters = require('./Routes/discount');
 const paymentMethodRouters = require('./Routes/paymentMethod');
 const paymentTypeRouters = require('./Routes/paymentType');
 const shoppingCartRouters = require('./Routes/shoppingCart')
+const shoppingCartItemRouters = require('./Routes/shoppingCartItem');
 const orderItemRouters = require('./Routes/orderItem');
 const orderRouters = require('./Routes/order');
 
@@ -54,6 +55,7 @@ app.use('/api/PaymentType', paymentTypeRouters);
 app.use('/api/OrderItem', orderItemRouters);
 app.use('/api/Order', orderRouters);
 app.use('/api/ShoppingCart', shoppingCartRouters);
+app.use('/api/ShoppingCartItem', shoppingCartItemRouters);
 
 app.get('/', (req, res) => {
     res.send("Hello world")
