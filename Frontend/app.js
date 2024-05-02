@@ -33,17 +33,17 @@ app.get('/shop', (req, res) => {
     res.render('shop')
 })
 
-app.get('/about', (req, res) => {
-    res.render('about')
-})
+// app.get('/about', (req, res) => {
+//     res.render('about')
+// })
 
 app.get('/cart', (req, res) => {
     res.render('cart')
 })
 
-app.get('/contact', (req, res) => {
-    res.render('contact')
-})
+// app.get('/contact', (req, res) => {
+//     res.render('contact')
+// })
 
 app.get('/register', (req, res) => {
     res.render('Register');
@@ -62,12 +62,12 @@ app.get('/promotion', (req, res) => {
 
 app.post('/signIn', async (req, res) => {
     try {
-        // console.log(req.body);
+        //console.log(req.body);
         // console.log("here")
-        res.send(req.body);
-        // const response = await axios.post("http://localhost:8888/api/Authentication/login", req.body);
-        // console.log("register success");
-        // res.redirect('/login');
+        //res.send(req.body);
+        const response = await axios.post("http://localhost:8080/api/Authentication/login", req.body);
+        console.log("register success", response);
+        res.redirect('/');
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
@@ -78,9 +78,11 @@ app.post('/register', async (req, res) => {
     try {
         // console.log(req.body);
         // console.log("here")
-        const response = await axios.post("http://localhost:8888/api/Authentication/register", req.body);
+        const response = await axios.post("http://localhost:8080/api/Authentication/register", req.body, {
+            withCredential: true
+        });
         console.log("register success");
-        res.redirect('/login');
+        res.redirect('/signIn');
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });

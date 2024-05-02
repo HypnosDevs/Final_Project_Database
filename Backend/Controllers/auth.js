@@ -12,12 +12,13 @@ exports.register = async (req, res) => {
         }
 
         const hash = await bcrypt.hash(password, 10);
-        req.body.password = hash;
+        req.body.user.password = hash;
 
 
         const userData = new User(req.body.user);
         const addressData = new Address(req.body.address);
         userData.address.push(addressData);
+
         await userData.save();
         await addressData.save();
         res.status(201).send({ message: "register successful" });
@@ -63,7 +64,7 @@ exports.login = async (req, res) => {
 
         req.session.userId = user.id;
 
-        res.status(200).json({
+        res.status(200).send({
             message: 'Login successful',
             username: user.username
         });
