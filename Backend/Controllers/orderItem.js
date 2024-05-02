@@ -2,6 +2,8 @@ const Order = require("../Models/Order.js");
 const OrderItem = require("../Models/Orderitem.js");
 const Product = require("../Models/Product.js");
 
+
+
 exports.getAllOrderItem = async (req, res) => {
     try {
         const data = await OrderItem.find();
@@ -19,6 +21,21 @@ exports.getOrderItem = async (req, res) => {
         if (data.length === 0) {
             throw { message: "Order item Not Found" };
         }
+        res.status(200).send(data);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}
+
+exports.getProductFromOrderItem = async (req, res) => {
+    try {
+        const { order_id, product_id } = req.params;
+        const data = await OrderItem.findById({ order: order_id, prodcut: product_id });
+        if (data.length === 0) {
+            throw { message: "Data (product in that order id) Not Found" };
+        }
+        data = data.populate("product")
         res.status(200).send(data);
     } catch (err) {
         console.log(err.message);
