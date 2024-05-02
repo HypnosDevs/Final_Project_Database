@@ -5,14 +5,20 @@ const orderItemSchema = new mongoose.Schema({
         type: String
     },
     qty: {
-        type: Number
+        type: Number,
+        required: true
     },
-    product_id: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Product'
-        }
-    ]
+    product: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true
+    },
+    order: {
+        type: Schema.Types.ObjectId,
+        ref: 'Order',
+        required: true
+    }
+
 })
 
 const OrderItem = mongoose.model('OrderItem', orderItemSchema);

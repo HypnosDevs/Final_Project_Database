@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Spartan', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('/img/Register/6574806.jpg') no-repeat;
+    backdrop-filter: blur(70px);
+    background-size: cover;
+}
+
+.wrapper {
+    width: 420px;
+    background: rgba(218, 176, 227, 0.2);
+    border: 2px solid rgba(134, 46, 151, 0.2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    color: #6f56ec;
+    border-radius: 20px;
+    padding: 30px 40px;
+}
+
+.wrapper h1 {
+    font-size: 36px;
+    text-align: center;
+}
+
+.wrapper .input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid #5a47b5;
+    border-radius: 40px;
+    font-size: 20px;
+    color: #5a47b5;
+    font-weight: 500;
+    padding: 20px 45px 20px 20px;
+}
+
+.wrapper .input-box input::placeholder {
+    color: #5a47b5;
+}
+
+.input-box i {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: #5a47b5;
+}
+
+.wrapper .btn {
+    width: 100%;
+    height: 50px;
+    border: none;
+    outline: none;
+    background: #5a47b5;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 40px;
+    cursor: pointer;
+    margin: 20px 0;
+}
+
+.wrapper .btn:hover {
+    background: #6f56ec;
+}
+
+.wrapper .SignIn-link {
+    font-size: 14.5px;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+
+.SignIn-link p a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.SignIn-link p a:hover {
+    text-decoration: underline;
+}
+
+.wrapper .address-box {
+    position: relative;
+    width: 100%;
+    margin: 30px 0;
+}
+
+.address-box textarea {
+    width: 100%;
+    height: 120px;
+    /* ปรับขนาด textarea ให้มีความสูงเพิ่มเติม */
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid #5a47b5;
+    border-radius: 40px;
+    font-size: 20px;
+    color: #5a47b5;
+    font-weight: 500;
+    padding: 20px 45px 20px 20px;
+    resize: none;
+    /* ป้องกันการปรับขนาด textarea */
+}
+
+.address-box textarea::placeholder {
+    color: #5a47b5;
+}
+
+.address-box i {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: #5a47b5;
+}
+
+/* ตกแต่งลักษณะของ dropdown */
+select {
+    appearance: none;
+    /* ปิดการใช้งานการแสดงของหน้าต่างเดิมของ dropdown */
+    -webkit-appearance: none;
+    /* สำหรับ Safari */
+    -moz-appearance: none;
+    /* สำหรับ Firefox */
+    padding: 12px 20px;
+    /* ปรับขนาดของ dropdown */
+    border-radius: 40px;
+    /* กำหนดรูปร่างของ dropdown */
+    border: 2px solid #5a47b5;
+    /* กำหนดสีของเส้นขอบ dropdown */
+    background-color: transparent;
+    /* กำหนดสีพื้นหลังของ dropdown */
+    font-size: 20px;
+    /* กำหนดขนาดตัวอักษรของ dropdown */
+    color: #5a47b5;
+    /* กำหนดสีข้อความของ dropdown */
+    font-weight: 500;
+    /* กำหนดความหนาของตัวอักษรของ dropdown */
+    cursor: pointer;
+    /* กำหนด pointer cursor เมื่อนำเมาส์ไปชี้ dropdown */
+}
+
+/* ตกแต่งลักษณะของ option ใน dropdown */
+select option {
+    padding: 12px 20px;
+    /* ปรับขนาดของ option */
+    font-size: 20px;
+    /* กำหนดขนาดตัวอักษรของ option */
+    color: #5a47b5;
+    /* กำหนดสีข้อความของ option */
+    background-color: #fff;
+    /* กำหนดสีพื้นหลังของ option */
+    cursor: pointer;
+    /* กำหนด pointer cursor เมื่อนำเมาส์ไปชี้ option */
+}
+
+/* ตกแต่งสถานะ hover ของ option ใน dropdown */
+select option:hover {
+    background-color: #f2f2f2;
+    /* กำหนดสีพื้นหลังของ option เมื่อ hover */
+}

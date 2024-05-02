@@ -3,10 +3,15 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const orderSchema = new Schema({
-    order_item: [{
+    paymentmethod: {
         type: Schema.Types.ObjectId,
-        ref: 'OrderItem'
-    }]
+        ref: 'PaymentMethod'
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
+
 })
 
 const Order = mongoose.model('Order', orderSchema);
