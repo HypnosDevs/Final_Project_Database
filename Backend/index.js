@@ -16,6 +16,7 @@ const authRouters = require('./Routes/auth');
 const userRouter = require('./Routes/user');
 const addressRouter = require('./Routes/address');
 const categoryRouters = require('./Routes/category');
+const discountRouters = require('./Routes/discount');
 
 
 
@@ -43,6 +44,7 @@ app.use('/api/Authentication', authRouters);
 app.use('/api/User', userRouter);
 app.use('/api/Address', addressRouter);
 app.use('/api/Category', categoryRouters);
+app.use('/api/Discount', discountRouters);
 
 
 app.get('/', (req, res) => {

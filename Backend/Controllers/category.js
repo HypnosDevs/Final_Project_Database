@@ -1,8 +1,21 @@
 const Category = require('../Models/Category.js');
+const Product = require('../Models/Product.js');
 
 exports.getAllCategory = async (req, res) => {
     try {
         const data = await Category.find()
+        res.send(data);
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}
+
+exports.getAllCategoryFromProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const data = await Product.findById(id).populate('category');
         res.send(data);
 
     } catch (err) {
