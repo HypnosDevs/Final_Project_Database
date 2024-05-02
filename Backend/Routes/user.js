@@ -1,12 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const { checkUserRole } = require('../Middleware/auth')
-const { getUser, getAllUsers, addUser, editUser, deleteUser, addUserWithAddress } = require('../Controllers/user')
+const { getUser, getAllUsers, addUser, editUser, deleteUser, addUserWithAddress, getAllUsernameAndEmail } = require('../Controllers/user')
 
 
 router.get('/getUsers', checkUserRole(['ADMIN']), getAllUsers);
 
 router.get('/getUser/:id', getUser);
+
+router.get('/getAllUsernameEmail', getAllUsernameAndEmail);
 
 router.post('/addUser', checkUserRole(['ADMIN']), addUser);
 

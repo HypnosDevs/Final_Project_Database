@@ -120,3 +120,14 @@ exports.deleteUser = async (req, res) => {
     }
 };
 
+exports.getAllUsernameAndEmail = async (req, res) => {
+    try {
+
+        const data = await User.find({}, { username: 1, email: 1, _id: 0 });
+        res.status(200).send(data);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ message: 'Internal Server Error' });
+    }
+};
+
