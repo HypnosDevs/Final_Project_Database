@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=">
+    <title>Register Form</title>
+    <link rel="stylesheet" href="Register_style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="wrapper">
+        <form action="/register" method="POST">
+            <h1>Create Your Account</h1>
+            <div class="input-box">
+                <input type="text" placeholder="Username" name="user[username]" required>
+                <i class='bx bxs-user'></i>
+            </div>
+
+            <div class="input-box">
+                <input type="password" placeholder="Password" name="user[password]" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+
+            <div class="input-box">
+                <input type="email" placeholder="Email" name="user[email]" required>
+                <i class='bx bxl-gmail'></i>
+            </div>
+
+            <div class="input-box">
+                <input type="text" placeholder="Firstname" name="user[firstname]" required>
+
+            </div>
+
+            <div class="input-box">
+                <input type="text" placeholder="Lastname" name="user[lastname]" required>
+
+            </div>
+
+
+            <!-- <div class="input-box" name="">
+                <input type="password" placeholder="Confirm Password" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div> -->
+
+            <!-- Address -->
+
+            <div class="input-box">
+                <input type="text" placeholder="Address name" name="address[name]" required>
+            </div>
+
+            <div class="address-box">
+                <textarea placeholder="Address line 1" name="address[address_line1]"></textarea>
+            </div>
+
+            <div class="address-box">
+                <textarea placeholder="Address line 2" name="address[address_line2]"></textarea>
+            </div>
+
+            <div class="address-box">
+                <select id="country" name="address[country]" required>
+                    <option value="" disabled selected>Select Country</option>
+                    <option value="thailand">thailand</option>
+                </select>
+                <i class='bx bx-flag'></i>
+            </div>
+
+            <div class="address-box">
+                <select id="province" name="address[province]" required>
+                    <option value="" disabled selected>Select Province</option>
+                    <option value="Test">Test</option>
+                    <!-- JS will display province -->
+                </select>
+                <i class='bx bx-map-pin'></i>
+            </div>
+
+            <div class="address-box">
+                <select id="district" name="address[district]" required>
+                    <option value="" disabled selected>Select District</option>
+                    <option value="Test">Test</option>
+                    <!-- JS will display district -->
+                </select>
+                <i class='bx bx-street-view'></i>
+            </div>
+
+            <div class="input-box">
+                <input type="text" placeholder="street_number" name="address[street_number]" required>
+                <i class='bx bx-transfer'></i>
+            </div>
+
+            <div class="input-box">
+                <input type="text" placeholder="Postal Code" name="address[postal_code]" required>
+                <i class='bx bx-mail-send'></i>
+            </div>
+
+            <div class="input-box">
+                <input type="text" placeholder="Phone Number" name="address[tel_no]" required>
+                <i class='bx bxs-phone'></i>
+            </div>
+
+            <!-- gender -->
+            <div class="input-box">
+                <select name="user[gender]" id="gender" required>
+                    <option value="" disabled selected>Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                </select>
+                <i class='bx bx-user pin'></i>
+            </div>
+
+            <!-- ไว้ล่างสุด -->
+            <button type="submit" class="btn">Register</button>
+
+            <div class="SignIn-link">
+                <p>Already have an account? <a href="/Frontend/src/Sign_In/Sign%20In.html">Sign In</a></p>
+            </div>
+
+        </form>
+    </div>
+    <!-- <script type="text/javascript" src="Register_script.js"></script> -->
+</body>
+
+</html>
+<!-- 
+DOM javascript
+
+
+
+-->
