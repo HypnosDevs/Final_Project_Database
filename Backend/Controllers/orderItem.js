@@ -1,9 +1,11 @@
+const Order = require("../Models/Order.js");
 const OrderItem = require("../Models/Orderitem.js");
+const Product = require("../Models/Product.js");
 
 exports.getAllOrderItem = async (req, res) => {
     try {
         const data = await OrderItem.find();
-        res.send(data);
+        res.status(200).send(data);
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
@@ -14,7 +16,10 @@ exports.getOrderItem = async (req, res) => {
     try {
         const { order_id, product_id } = req.params;
         const data = await OrderItem.findById({ order: order_id, prodcut: product_id });
-        res.send(data);
+        if (data.length === 0) {
+            throw { message: "Order item Not Found" };
+        }
+        res.status(200).send(data);
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
@@ -24,9 +29,19 @@ exports.getOrderItem = async (req, res) => {
 exports.addOrderItem = async (req, res) => {
     try {
         const { order_id, product_id } = req.params;
-        const data = await OrderItem.findById({ order: order_id, product: product_id });
-        await data.save();
-        res.send(data);
+        const order = await Order.findById({ _id: order_id });
+        if (order.length === 0) {
+            throw { message: "Order Not Found" };
+        }
+        const product = await Product.findById({ _id: product_id });
+        if (product.length === 0) {
+            throw { message: "Product Not Found" };
+        }
+        const orderItem = new OrderItem(req.body);
+        orderItem.order = order;
+        orderItem.product = product;
+        orderItem.save();
+        res.status(201).send({ message: "Create order item succesful" });
 
     } catch (err) {
         console.log(err.message);
@@ -37,8 +52,8 @@ exports.addOrderItem = async (req, res) => {
 exports.deleteOrderItem = async (req, res) => {
     try {
         const { order_id, product_id } = req.params;
-        const data = await OrderItem.deleteOne({ order: order_id, prodcut: product_id })
-        res.send(data)
+        await OrderItem.deleteOne({ order: order_id, prodcut: product_id })
+        res.status(204).send({ message: "Delete order item succesful" });
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
