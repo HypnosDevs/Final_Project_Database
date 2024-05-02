@@ -20,7 +20,7 @@ h1 {
   
   h4 {
     font-size: 20px;
-    color: #000000;
+    color: #222;
   }
   
   h6 {
@@ -29,15 +29,10 @@ h1 {
     color: #222;
     
   }
-  h7{
-    font-size: 22px;
-    font-weight: 700;
-    color: rgb(255, 255, 255);
-  }
   
   p {
     font-size: 16px;
-    color: #000000;
+    color: #465b52;
     margin: 15px 0 20px 0; /* ปรับเว้นระยะห่าง */
   }
   
@@ -222,93 +217,4 @@ footer {
 #about-us{
   position: relative;
   top: 35%
-}
-#about-shop{
-  text-align: center;
-}
-#about-shop .video{
-  width: 70%;
-  height: 100%;
-  margin: 30px auto 0 auto;
-}
-#about-shop .video video{
-  width: 100%;
-  height: 100%;
-  border-radius: 20px;
-}
-
-/*feature (6ช่องข้างล่าง)*/
-#feature {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-
-#feature.fe-box{
-  width: 180px;
-   text-align: center;
-   padding:25px 15px ;
-   box-shadow :20px 20px 34px rgba(0,0,0,0.03);
-   border :1px solid #cce7d0;
-   border-radius: 4px;
-   margin: 15px 0;
-}
-
-#feature.fe-box img{
-    width: 100%;
-    margin: bottom 10px;
-}
-#feature.fe-box h6{
-    padding: 9px 8px 6px 8px;
-    line-height: 1;
-    border-radius:4px;
-    color: #1a1a1a;
-    background-color: #fddde4;
-}
-
-#feature .fe-box:nth-child(2) h6{
-    background-color: #cdebbc;
-}
-
-#feature .fe-box:nth-child(3) h6{
-  background-color: #d1e8f2;
-}
-/*feature (6ช่องข้างล่าง)*/
-
-/*News letter*/
-#newsletter{
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: center;
-  background-image: url();
-  background-repeat: no-repeat;
-  background-position: 20% 30%;
-  background-color:#1c0069;
-}
-#newsletter .newstext p{
-  font-size: 14px;
-  font-weight: 600;
-  color: #5c5c5c;
-}
-#newsletter .newstext p span {
-  color: #dfe211;
-}
-#newsletter input{
-  height: 3.125rem;
-  padding: 0 1.25em;
-  font-size: 14px;
-  width: 100%;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  outline: none;
-}
-#newsletter button{
-  border-radius: 12px;
-  background-color: #088178;
-}
-#newsletter .form{
-  display: flex;
-  width: 40%;
 }
