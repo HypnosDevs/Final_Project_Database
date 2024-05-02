@@ -29,6 +29,10 @@ exports.addCategory = async (req, res) => {
         const existingCategory = await Category.find({ name: name });
 
         if (existingCategory.length === 0) {
+<<<<<<< HEAD
+=======
+            req.body.name = name;
+>>>>>>> ed2c0f817598db884220a43433ca48b47bc8043b
             const newCategory = new Category(req.body);
             await newCategory.save();
             res.send(newCategory);
