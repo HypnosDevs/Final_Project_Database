@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=">
@@ -7,9 +8,10 @@
     <link rel="stylesheet" href="Register_style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
+
 <body>
     <div class="wrapper">
-        <form action="">
+        <form action="/register" method="POST">
             <h1>Create Your Account</h1>
             <div class="input-box">
                 <input type="text" placeholder="Username" required>
@@ -37,7 +39,7 @@
             </div>
 
             <div class="address-box">
-                <select id = "country" required>
+                <select id="country" required>
                     <option value="" disabled selected>Select Country</option>
                     <option value="thailand">thailand</option>
                 </select>
@@ -45,7 +47,7 @@
             </div>
 
             <div class="address-box">
-                <select id = "province" required>
+                <select id="province" required>
                     <option value="" disabled selected>Select Province</option>
                     <!-- JS will display province -->
                 </select>
@@ -53,7 +55,7 @@
             </div>
 
             <div class="address-box">
-                <select id = "district" required>
+                <select id="district" required>
                     <option value="" disabled selected>Select District</option>
                     <!-- JS will display district -->
                 </select>
@@ -72,13 +74,13 @@
 
             <!-- gender -->
             <div class="input-box">
-                    <select name="gender" id="gender" required>
-                        <option value="" disabled selected>Gender</option>
-                        <option value="male">Male</option>
-                        <option value=female">Female</option>
-                        <option value=other">Other</option>
-                    </select>
-                    <i class='bx bx-user pin'></i>
+                <select name="gender" id="gender" required>
+                    <option value="" disabled selected>Gender</option>
+                    <option value="male">Male</option>
+                    <option value=female">Female</option>
+                    <option value=other">Other</option>
+                </select>
+                <i class='bx bx-user pin'></i>
             </div>
 
             <!-- ไว้ล่างสุด -->
@@ -92,4 +94,11 @@
     </div>
     <script src="Register_script.js"></script>
 </body>
+
 </html>
+<!-- 
+DOM javascript
+
+
+
+-->
