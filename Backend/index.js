@@ -42,7 +42,7 @@ app.use('/api/Product', productRouters);
 app.use('/api/Authentication', authRouters);
 app.use('/api/User', userRouter);
 app.use('/api/Address', addressRouter);
-app.use('api/Category', categoryRouters);
+app.use('/api/Category', categoryRouters);
 
 
 app.get('/', (req, res) => {

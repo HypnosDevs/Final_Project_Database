@@ -26,12 +26,17 @@ exports.getCategory = async (req, res) => {
 exports.addCategory = async (req, res) => {
     try {
         const { name } = req.params;
-        if(await Category.find({ name: name }) == []){
+        const existingCategory = await Category.find({ name: name });
+
+        if (existingCategory.length === 0) {
+            req.body.name = name;
             const newCategory = new Category(req.body);
             await newCategory.save();
-            res.send(newCategory)
+            res.send(newCategory);
+        } else {
+            res.status(400).send({ message: "Category already exists" });
         }
-        
+
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
