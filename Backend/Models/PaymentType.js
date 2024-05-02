@@ -6,7 +6,7 @@ const paymentTypeSchema = new Schema(
 
         type: {
             type: String,
-            required: True
+            required: true
         },
         paymentmethod: [{
             type: Schema.Types.ObjectId,

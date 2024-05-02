@@ -17,6 +17,9 @@ const userRouter = require('./Routes/user');
 const addressRouter = require('./Routes/address');
 const categoryRouters = require('./Routes/category');
 const discountRouters = require('./Routes/discount');
+const paymentMethodRouters = require('./Routes/paymentMethod');
+const paymentTypeRouters = require('./Routes/paymentType'); 
+
 const orderItemRouters = require('./Routes/orderItem');
 const orderRouters = require('./Routes/order');
 
@@ -46,6 +49,8 @@ app.use('/api/User', userRouter);
 app.use('/api/Address', addressRouter);
 app.use('/api/Category', categoryRouters);
 app.use('/api/Discount', discountRouters);
+app.use('/api/PaymentMethod', paymentMethodRouters);
+app.use('/api/PaymentType', paymentTypeRouters);
 app.use('/api/OrderItem', orderItemRouters);
 app.use('/api/Order', orderRouters);
 
