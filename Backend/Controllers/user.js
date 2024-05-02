@@ -1,5 +1,6 @@
 
 const Address = require('../Models/Address');
+const PaymentMethod = require('../Models/PaymentMethod');
 const User = require('../Models/User');
 
 exports.getAllUsers = async (req, res) => {
@@ -106,6 +107,12 @@ exports.deleteUser = async (req, res) => {
             {
                 id: { $in: user.address }
             });
+
+        await PaymentMethod.deleteMany(
+            {
+                id: { $in: user.paymentmethod }
+            });
+
 
         const deletedUser = await User.findByIdAndDelete(id);
 

@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 
-const productSchema = new mongoose.Schema({
+const { Schema } = mongoose;
+
+const productSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -15,7 +17,7 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     category: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Category"
     },
     stock: {
@@ -27,6 +29,8 @@ const productSchema = new mongoose.Schema({
     image: {
         type: String
     }
+
+
 })
 
 const Product = mongoose.model('Product', productSchema);

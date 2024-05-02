@@ -38,7 +38,15 @@ const userSchema = new Schema(
         gender: {
             type: String,
             enum: ["Male", "Female", "Others"]
-        }
+        },
+        order: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Order'
+        }],
+        paymentmethod: [{
+            type: Schema.Types.ObjectId,
+            ref: 'PaymentMethod'
+        }],
 
     },
     {
