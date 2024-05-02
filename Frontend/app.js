@@ -56,6 +56,9 @@ app.get('/Sup-product', (req, res) => {
 app.get('/Sup-product2', (req, res) => {
     res.render('sproduct2')
 })
+app.get('/promotion', (req, res) => {
+    res.render('promotion')
+})
 
 app.post('/register', async (req, res) => {
     try {
