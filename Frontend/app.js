@@ -49,6 +49,10 @@ app.get('/register', (req, res) => {
     res.render('Register');
 })
 
+app.get('/Sup-produect', (req, res) => {
+    res.render('sproduct')
+})
+
 app.post('/register', async (req, res) => {
     try {
         // console.log(req.body);
