@@ -17,10 +17,10 @@ const productSchema = new Schema({
         min: 0,
         required: true
     },
-    category: {
+    category: [{
         type: Schema.Types.ObjectId,
         ref: "Category"
-    },
+    }],
     stock: {
         type: Number,
         default: 0,
