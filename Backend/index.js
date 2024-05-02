@@ -20,6 +20,7 @@ const discountRouters = require('./Routes/discount');
 const paymentMethodRouters = require('./Routes/paymentMethod');
 const paymentTypeRouters = require('./Routes/paymentType'); 
 
+const orderItemRouters = require('./Routes/orderItem');
 
 
 app.use(
@@ -49,6 +50,7 @@ app.use('/api/Category', categoryRouters);
 app.use('/api/Discount', discountRouters);
 app.use('/api/PaymentMethod', paymentMethodRouters);
 app.use('/api/PaymentType', paymentTypeRouters);
+app.use('/api/OrderItem', orderItemRouters);
 
 
 app.get('/', (req, res) => {
