@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { checkUserRole } = require('../Middleware/auth')
-const { getUser, getAllUsers, addUser, editUser, deleteUser, addUserWithAddress, getAllUsernameAndEmail } = require('../Controllers/user')
+const { getUser, getAllUsers, addUser, editUser, deleteUser, addUserWithAddress, getAllUsernameAndEmail, addOrder } = require('../Controllers/user')
 
 
 router.get('/getUsers', checkUserRole(['ADMIN']), getAllUsers);
@@ -19,7 +19,7 @@ router.put('/editUser/:id', checkUserRole(['ADMIN', 'USER']), editUser);
 
 router.delete('/deleteUser/:id', checkUserRole(['ADMIN']), deleteUser);
 
-
+router.post('/addOrder', checkUserRole(['ADMIN', 'USER']), addOrder);
 // router.post('/addProduct', upload.single('image'), addProduct)
 
 // router.patch('/:id/updateProduct', upload.single('image'), updateProduct)

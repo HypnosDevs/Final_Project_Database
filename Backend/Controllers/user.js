@@ -1,5 +1,6 @@
 
 const Address = require('../Models/Address');
+const Order = require('../Models/Order');
 const PaymentMethod = require('../Models/PaymentMethod');
 const User = require('../Models/User');
 
@@ -138,3 +139,15 @@ exports.getAllUsernameAndEmail = async (req, res) => {
     }
 };
 
+exports.addOrder = async (req, res) => {
+    try {
+        const order = req.body();
+        const data = await User.findById(req.session.userId);
+        data.order.push(order);
+        await data.save();
+        res.status(200).send({ message: 'Create add order to user success' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ message: 'Internal Server Error' });
+    }
+};

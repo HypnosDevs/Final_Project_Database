@@ -17,7 +17,7 @@ exports.getAllOrderItem = async (req, res) => {
 exports.getOrderItem = async (req, res) => {
     try {
         const { order_id, product_id } = req.params;
-        const data = await OrderItem.findById({ order: order_id, prodcut: product_id });
+        const data = await OrderItem.findById({ order: order_id, product: product_id });
         if (data.length === 0) {
             throw { message: "Order item Not Found" };
         }
@@ -31,7 +31,7 @@ exports.getOrderItem = async (req, res) => {
 exports.getProductFromOrderItem = async (req, res) => {
     try {
         const { order_id, product_id } = req.params;
-        const data = await OrderItem.findById({ order: order_id, prodcut: product_id });
+        const data = await OrderItem.findById({ order: order_id, product: product_id });
         if (data.length === 0) {
             throw { message: "Data (product in that order id) Not Found" };
         }
@@ -69,7 +69,7 @@ exports.addOrderItem = async (req, res) => {
 exports.deleteOrderItem = async (req, res) => {
     try {
         const { order_id, product_id } = req.params;
-        await OrderItem.deleteOne({ order: order_id, prodcut: product_id })
+        await OrderItem.deleteOne({ order: order_id, product: product_id })
         res.status(204).send({ message: "Delete order item succesful" });
     } catch (err) {
         console.log(err.message);
