@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 exports.register = async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { username, password } = req.body.user;
         const user = await User.find({ username: username });
         if (user.length > 0) {
             return res.status(400).send({ message: "This usesername has been already used" })
@@ -15,9 +15,9 @@ exports.register = async (req, res) => {
         req.body.password = hash;
 
 
-        const userData = new User({ ...req.body.user });
-        const addressData = new Address({ ...req.body.address });
-        userData.push(addressData);
+        const userData = new User(req.body.user);
+        const addressData = new Address(req.body.address);
+        userData.address.push(addressData);
         await userData.save();
         await addressData.save();
         res.status(201).send({ message: "register successful" });

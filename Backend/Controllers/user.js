@@ -53,10 +53,10 @@ exports.addUser = async (req, res) => {
 exports.addUserWithAddress = async (req, res) => {
     try {
 
-        const newUser = new User({ ...req.body.user });
-        const newAddress = new Address({ ...req.body.address });
+        const newUser = new User(req.body.user);
+        const newAddress = new Address(req.body.address);
         await newAddress.save();
-        newUser.push(newAddress);
+        newUser.address.push(newAddress);
         await newUser.save();
         res.sendStatus(201);
     } catch (err) {

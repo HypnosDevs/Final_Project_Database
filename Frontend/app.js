@@ -7,6 +7,8 @@ require('dotenv').config()
 const env = process.env;
 
 
+app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'assets')));
 
@@ -45,6 +47,19 @@ app.get('/contact', (req, res) => {
 
 app.get('/register', (req, res) => {
     res.render('Register');
+})
+
+app.post('/register', async (req, res) => {
+    try {
+        // console.log(req.body);
+        // console.log("here")
+        const response = await axios.post("http://localhost:8888/api/Authentication/register", req.body);
+        console.log("register success");
+        res.redirect('/login');
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
 })
 
 app.listen(PORT, () => {

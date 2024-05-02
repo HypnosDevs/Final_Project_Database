@@ -33,7 +33,7 @@ exports.addAddress = async (req, res) => {
     try {
         const user = await User.findById(req.session.userId);
         const newAddress = new Address(req.body);
-        user.push(newAddress);
+        user.address.push(newAddress);
         await user.save();
         await newAddress.save();
         res.status(201).send({ message: "Address added successfully" });
