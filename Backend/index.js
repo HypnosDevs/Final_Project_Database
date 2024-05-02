@@ -53,7 +53,7 @@ app.use('/api/PaymentMethod', paymentMethodRouters);
 app.use('/api/PaymentType', paymentTypeRouters);
 app.use('/api/OrderItem', orderItemRouters);
 app.use('/api/Order', orderRouters);
-app.user('/api/ShoppingCart', shoppingCartRouters);
+app.use('/api/ShoppingCart', shoppingCartRouters);
 
 app.get('/', (req, res) => {
     res.send("Hello world")
