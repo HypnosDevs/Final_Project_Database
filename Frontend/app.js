@@ -49,8 +49,12 @@ app.get('/register', (req, res) => {
     res.render('Register');
 })
 
-app.get('/Sup-produect', (req, res) => {
+app.get('/Sup-product', (req, res) => {
     res.render('sproduct')
+})
+
+app.get('/Sup-product2', (req, res) => {
+    res.render('sproduct2')
 })
 
 app.post('/register', async (req, res) => {

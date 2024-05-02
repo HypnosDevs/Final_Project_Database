@@ -160,21 +160,145 @@ body {
   color: #fff;
 }
 
+/*ตารางสินค้า*/
 #cart table{
   width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  white-space: nowrap;
+  margin-top:20px;
 }
 
 #cart table img{
- width: 70px;
+  width: 100px;
+  height: auto;
 }
-#cart table th{
- padding: 10px 0;
- color: #1a1a1a;
- font-size: 16px;
- font-weight: 700;
- text-align: left;
+
+#cart table td:nth-child(1){
+  width: 100px;
+  text-align: center;
 }
-/*footer ส่วนท้ายเว็บ*/
+#cart table td:nth-child(2){
+  width: 150px;
+  text-align: center;
+}
+#cart table td:nth-child(3){
+  width: 350px;
+  text-align: center;
+  
+  
+}
+
+#cart table td:nth-child(4),
+#cart table td:nth-child(5),
+#cart table td:nth-child(6){
+  width: 150px;
+  text-align: center;
+}
+
+#cart table td:nth-child(5) input{
+  width: 70px;
+  padding: 10px 5px 10px 15px;
+}
+
+#cart table thead{
+  border: 1px solid #e2e2e1;
+  border-left:none ;
+  border-right:none;
+}
+
+#cart table thead td{
+  padding: 18px 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+
+}
+
+#cart table tbody tr td{
+  padding-top:15px;
+}
+
+#cart table tbody td{
+  font-size:13px;
+
+}
+
+/*Total*/
+#cart-add{
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#subtotal{
+  width: 50%;
+  margin-bottom: 30px;
+  border: 1px solid #e2e9e1;
+  padding: 30px;
+}
+
+#subtotal table{
+  border-collapse: collapse;
+  width:100%;
+  margin-bottom: 20px;
+}
+
+#subtotal table td{
+  width: 50%;
+  border:1px solid #e2e9e1;
+  padding: 10px 0;
+  font-size: 13px;
+}
+.normal {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+
+/* Coupon */
+.normal {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+#coupon{
+  width: 50%;
+  margin-bottom: 30px;
+
+}
+
+#coupon h3,#subtotal h3{
+  padding-bottom: 15px;
+}
+
+#coupon input{
+  padding: 10px 20px;
+  width: 60%;
+  outline:none;
+  margin-right: 10px;
+  border:1px solid #e2e9e1;
+}
+
+#coupon button,
+#subtotal button{
+  padding: 12px 20px;
+  background: #088178;
+  color: #fff;
+  border-radius: 7px; 
+  cursor: pointer;
+}
+
+
+/*ท้ายเว็บ*/
 footer {
     display: flex;
     flex-wrap: wrap;

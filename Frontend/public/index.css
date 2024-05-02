@@ -134,10 +134,21 @@ body {
 }
 
 /*เม้าไปชี้เเล้วเปลี่ยนสี และขีดเส้นใต้*/
-#navbar li a:hover {
-  color: #6f56ec;
-  border-bottom: 2px solid #6f56ec;
+#navbar li a:hover, 
+#navbar li a.active {
+     color: #088178;
 }
+#navbar li a.active::after,
+#navbar li a:hover::after{
+    content: "";
+    width: 30%;
+    border-bottom: 2px solid;
+    background : #088178;
+    position: absolute;
+    bottom: -4px;
+    left:20px;
+}
+
 
 /*Home Page*/
 
@@ -317,10 +328,25 @@ body {
 }
 
 /*footer ส่วนท้ายเว็บ*/
-#footer {
+footer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+
+footer .col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+footer .logo{
+  margin-bottom: 30px;
+}
+
+footer h4 {
+  font-size: 14px;
+  padding-bottom: 20px;
 }
 
 footer p {
@@ -329,17 +355,15 @@ footer p {
 }
 
 footer a {
-  font-size: 13px;
+  font-size:13px;
   text-decoration: none;
   color: #222;
   margin-bottom: 10px;
 }
 
 footer .col img {
-  width: 200px;
-  /* ปรับขนาดความกว้างของโลโก้ */
-  height: auto;
-  /* รักษาสัดส่วนของรูปภาพ */
+  width: 200px; /* ปรับขนาดความกว้างของโลโก้ /
+  height: auto; / รักษาสัดส่วนของรูปภาพ */
 }
 
 /* Shop Page*/
