@@ -60,6 +60,15 @@ app.get('/promotion', (req, res) => {
     res.render('promotion')
 })
 
+app.get('/admin_panel', (req, res) => {
+    res.render('admin_panel')
+})
+
+
+app.get('/edit', (req, res) => {
+    res.render('edit')
+})
+
 app.post('/register', async (req, res) => {
     try {
         // console.log(req.body);

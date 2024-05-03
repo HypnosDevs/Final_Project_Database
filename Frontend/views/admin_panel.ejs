@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="admin_panel.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+
+
+
+    <body>
+
+
+    <section id="header">
+        <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
+        <div>
+            <ul id="navbar">
+
+                <form>  
+                    <div class = "search">
+                        <span class="search-icon material-symbols-outlined">search</span>
+                        <input class = "search-input" type= "search" placeholder="Search">
+                    </div>
+                </form>
+
+                <li><a href="/">Home</a></li>
+                <li><a href="/signIn">Sign In/Register</a></li>
+                <li><a  href="/shop">Shop</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/cart"><img src="/img/cart.png"></a></li>
+            <ul>
+        </div>
+    </section>
+
+    <section id="page-header">
+
+        <h2># Admin Panel</h2>
+        <p> </p>
+
+    </section>
+    
+<section id="interface">
+    <h3 class="i-name">
+        Dashboard
+    </h3>
+    
+    <div class="values">
+        <div class="val-box">
+            <i class="fa-solid fa-users"></i>
+            <div>
+                <h3>254</h3>
+                <span>New Users</span>
+            </div>
+        </div>
+        <div class="val-box">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <div>
+                <h3>2</h3>
+                <span>Total Orders</span>
+            </div>
+        </div>
+        <div class="val-box">
+            <i class="fa-solid fa-box"></i>
+            <div>
+                <h3>8</h3>
+                <span>Product Sell</span>
+            </div>
+        </div>
+        <div class="val-box">
+            <i class="fa-solid fa-baht-sign"></i>
+            <div>
+                <h3>฿1400</h3>
+                <span>This Month</span>
+            </div>
+        </div>
+    </div>    
+    
+    <div class="board">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Title</td>
+                    <td>Status</td>
+                    <td>Role</td>
+                    <td></td>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class ="people">
+                        <img src="/img/user.png" alt="">
+                        <div class="people-de">
+                            <h5>John Doe</h5>
+                            <p>jas@gmail.com</p>
+                        </div>
+                    </td>
+
+                    <td class="people-des">
+                        <h5>Admin</h5>
+                        <p>Admin</p>
+
+                    </td>
+                    
+                    <td class="active">
+                        <p>Active</p>
+                    </td>
+                   
+
+                    <td class="role">
+                        <p>Owner</p>
+                    </td>
+                   
+                    <td class="edit"><a href="/edit">Edit</a></td>
+                </tr>
+                 <tr>
+                    <td class ="people">
+                        <img src="/img/user.png" alt="">
+                        <div class="people-de">
+                            <h5>John Doe</h5>
+                            <p>jas@gmail.com</p>
+                        </div>
+                    </td>
+
+                    <td class="people-des">
+                        <h5>Admin</h5>
+                        <p>Admin</p>
+
+                    </td>
+                    
+                    <td class="active">
+                        <p>Active</p>
+                    </td>
+                   
+
+                    <td class="role">
+                        <p>Owner</p>
+                    </td>
+                   
+                    <td class="edit"><a href="/edit">Edit</a></td>
+                </tr> 
+                <tr>
+                    <td class ="people">
+                        <img src="/img/user.png" alt="">
+                        <div class="people-de">
+                            <h5>John Doe</h5>
+                            <p>jas@gmail.com</p>
+                        </div>
+                    </td>
+
+                    <td class="people-des">
+                        <h5>Admin</h5>
+                        <p>Admin</p>
+
+                    </td>
+                    
+                    <td class="active">
+                        <p>Active</p>
+                    </td>
+                   
+
+                    <td class="role">
+                        <p>Owner</p>
+                    </td>
+                   
+                    <td class="edit"><a href="#">Edit</a></td>
+                </tr>
+                 <tr>
+                    <td class ="people">
+                        <img src="/img/user.png" alt="">
+                        <div class="people-de">
+                            <h5>John Doe</h5>
+                            <p>jas@gmail.com</p>
+                        </div>
+                    </td>
+
+                    <td class="people-des">
+                        <h5>Admin</h5>
+                        <p>Admin</p>
+
+                    </td>
+                    
+                    <td class="active">
+                        <p>Active</p>
+                    </td>
+                   
+
+                    <td class="role">
+                        <p>Owner</p>
+                    </td>
+                   
+                    <td class="edit"><a href="#">Edit</a></td>
+                </tr>              
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<footer class="section-p1">
+  <div class="col">
+    <img src="/img/logo_footer.png" alt="">
+     <h4>Contact</h4>
+     <p><strong>Address:</strong> 126 Pracha Uthit Rd., Bang Mod,Bangkok 10140, Thailand.</p>
+     <p><strong>Phone:</strong> +01 1233 660</p>
+     <p><strong>Hours:</strong> 8:30 - 10:30,Mon-Sat</p>
+    </div>
+
+    <div class="col">
+       <h4>About</h4>
+       <a href="/about">About </a>
+        <a href="/contact">Contact </a>
+      </div>
+
+      <div class="col">
+         <h4>My Account</h4>
+         <a href="/signIn">Sign In </a>
+         <a href="/cart">View Cart </a>
+
+         <!-- Need to edit -->
+         <a href="Ordertracking.html">Track My Order </a>
+        </div>
+    </footer>
+</body>
+</html>
