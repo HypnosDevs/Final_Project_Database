@@ -66,7 +66,7 @@ app.post('/signIn', async (req, res) => {
         // console.log("here")
         //res.send(req.body);
         const response = await axios.post("http://localhost:8080/api/Authentication/login", req.body);
-        console.log("register success", response);
+        // console.log("register success", response);
         res.redirect('/');
     } catch (err) {
         console.log(err.message);
