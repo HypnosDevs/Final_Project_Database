@@ -50,10 +50,16 @@ exports.addShoppingCart = async (req, res) => {
         if (user.length === 0) {
             throw { message: "User Not Found" };
         }
-        const shoppingCart = new ShoppingCart();
-        shoppingCart.user = user;
-        shoppingCart.save();
-        res.status(201).send(shoppingCart);
+        if (user.shoppingcart) {
+            res.status(201).send(user.shoppingcart);
+        } else {
+            const shoppingCart = new ShoppingCart();
+            shoppingCart.user = user;
+            shoppingCart.save();
+            res.status(201).send(shoppingCart);
+        }
+        
+        
 
     } catch (err) {
         console.log(err.message);

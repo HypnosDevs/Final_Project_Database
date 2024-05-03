@@ -41,6 +41,24 @@
 
     <section id="prodetails" class="section-p1">
         <div class="single-pro-image">
+            <img src="data:image/png;base64, <%= product.image %>" id="MainImg" alt="">
+        </div>
+        <div class="single-pro-detail">
+            <h6>Home/Labubu</h6>
+            <h4><%= product.name %></h4>
+            <h2>฿<%= product.price %></h2>
+            <input type="number" value="1" min="1" max="<%= product.stock %>">
+            <button class="normal" onclick="redirectToProduct('<%= product._id %>')">Add To Cart</button>
+            <h4>Product Details</h4>
+            <span id="spanDesc"></span>
+
+        </div>
+    </section>
+
+    <!--
+
+    <section id="prodetails" class="section-p1">
+        <div class="single-pro-image">
             <img src="/img/products/p1.jpg" id="MainImg" alt="">
             <div class="small-img-group">
                 <div class="small-img-col">
@@ -72,6 +90,8 @@
 
             </div>
     </section>
+
+    -->
 
     <script>
         var MainImg=document.getElementById('MainImg');
@@ -116,6 +136,12 @@
             <a href="Ordertracking.html">Track My Order </a>
         </div>
     </footer>
+        
+    <script>
+        function redirectToProduct(productId) {
+            window.location.href = `/getProduct/${productId}`;
+        }
+    </script>
 
     <script>
         var MainImg = document.getElementById('MainImg');

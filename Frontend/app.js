@@ -111,11 +111,21 @@ app.get('/getProduct', async (req, res) => {
 app.get('/getProduct/:id', async (req, res) => {
     try {
         //console.log('kuy');
-        const {id} = req.params;
+        const { id } = req.params;
         console.log(id)
         const product = await axios.get(`http://localhost:8080/api/Product/getProduct/${id}`);
         //console.log(product.data);
          res.render('sproduct',{product: product.data})
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+})
+
+app.post('/getProduct/:id', async (req, res) => {
+    try {
+        const { id }  = req.params;
+        await axios.post(`http://localhost:8080/api/ShoppingCart/addShoppingCart`)
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });

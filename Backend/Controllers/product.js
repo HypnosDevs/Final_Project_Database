@@ -15,7 +15,7 @@ exports.getAllProduct = async (req, res) => {
 exports.getProduct = async (req, res) => {
     try {
         const { id } = req.params;
-        const data = await Product.find({ _id: id })
+        const data = await Product.findById(id)
         res.send(data);
 
     } catch (err) {
