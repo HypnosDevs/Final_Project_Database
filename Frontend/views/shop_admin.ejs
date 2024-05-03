@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link rel="stylesheet" href="cart.css">
+    <link rel="stylesheet" href="shop_admin.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -32,22 +32,21 @@
                 </form>
 
                 <li><a href="/">Home</a></li>
-                <li><a href="/signIn">Sign In/Register</a></li>
-                <li><a href="/shop">Shop</a></li>
+                <li><a href="/admin_panel">Dashboard</a></li>
+                <li><a class="active" href="/shop_admin">Shop</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/contact">Contact</a></li>
-                <li><a href="/edit"><img src="/img/user.png"></a></li>
-                <li><a class = "active" href="/cart"><img src="/img/cart1.png"></a></li>
+              
                 <ul>
         </div>
     </section>
 
     <section id="page-header">
 
-        <h2># Collection</h2>
-        <p>Save more with coupons & up to 70% off! </p>
+        <h2># Shop by Admin</h2>
 
     </section>
+
     <section id="cart" class="">
         <table width="100%">
             <thead>
@@ -55,9 +54,9 @@
                     <td>Remove</td>
                     <td>Image</td>
                     <td>Product</td>
+                    <td>Category</td>
                     <td>Price</td>
-                    <td>Quantity</td>
-                    <td>Subtotal</td>
+                    <td></td>
                 </tr>
             </thead>
             <tbody>
@@ -65,60 +64,33 @@
                     <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
                     <td><img src="/img/products/p1.jpg"></td>
                     <td>THE MONSTERS Catch Me If You Like Me Series-Vinyl Doll Gift Box</td>
+                    <td>labubu</td>
                     <td>$ 29.99</td>
-                    <td><input type="number" value="1"></td>
-                    <td>฿380</td>
+                    <td class="edit"><a href="/edit">Edit</a></td>
+                    
                 </tr>
                 <tr>
                     <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
                     <td><img src="/img/products/p3.png"></td>
                     <td>Crybaby Crying Parade Series</td>
+                    <td>Crybaby</td>
                     <td>฿590</td>
-                    <td><input type="number" value="1" min="1"></td>
-                    <td>฿590</td>
+                    <td class="edit"><a href="/edit">Edit</a></td>
                 </tr>
                 <tr>
                     <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
                     <td><img src="/img/products/p8.jpg"></td>
                     <td>CRYBABY × Powerpuff Girls Series-Vinyl Face Plush Blind Box</td>
+                    <td>Crybaby</td>
                     <td>฿430</td>
-                    <td><input type="number" value="1" min="1"></td>
-                    <td>฿430</td>
+                    <td class="edit"><a href="/edit">Edit</a></td>
                 </tr>
 
             </tbody>
         </table>
     </section>
 
-    <section id="cart-add" class="section-p1">
-        <div id="coupon">
-            <h3>Apply coupon</h3>
-            <div>
-                <input type="text" placeholder="Enter Your Coupon">
-                <button class="normal"><strong>Apply</strong></button>
-            </div>
-        </div>
-    
-        <div id="subtotal">
-            <h3>Cart Totals</h3>
-            <table>
-                <tr>
-                    <td>Cart Subtotal</td>
-                    <td>฿1400</td>
-                </tr>
-                <tr>
-                    <td>Shipping</td>
-                    <td>Free</td>
-                </tr>
-                <tr>
-                    <td><strong>Total</strong></td>
-                    <td><strong>฿1400</strong></td>
-                </tr>
-            </table>
-            <button class="normal"><strong>Proceed to check out</strong></button>
-        </div>
-    </section>
-    
+  
     <footer class="section-p1">
         <div class="col">
             <img src="/img/logo_footer.png" alt="">
