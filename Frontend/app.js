@@ -20,17 +20,22 @@ app.set('views', path.join(__dirname, 'views'))
 
 const PORT = env.PORT || 9090;
 
+/*
 app.get('/', (req, res) => {
     res.render('index');
 })
-
+*/
 
 app.get('/signIn', (req, res) => {
     res.render('SignIn')
 })
 
 app.get('/shop', (req, res) => {
-    res.render('shop')
+    res.render('shop', {
+        title: "Shop",
+        style: "/index.css",
+        shop: "active",
+    })
 })
 
 // app.get('/about', (req, res) => {
@@ -38,7 +43,11 @@ app.get('/shop', (req, res) => {
 // })
 
 app.get('/cart', (req, res) => {
-    res.render('cart')
+    res.render('cart', {
+        title: "Cart",
+        style: "/cart.css",
+        cart: "active",
+    })
 })
 
 // app.get('/contact', (req, res) => {
@@ -50,14 +59,23 @@ app.get('/register', (req, res) => {
 })
 
 app.get('/Sup-product', (req, res) => {
-    res.render('sproduct')
+    res.render('sproduct', {
+        title: "Sup-product",
+        style: "/sproduct.css",
+    })
 })
 
 app.get('/Sup-product2', (req, res) => {
-    res.render('sproduct2')
+    res.render('sproduct2', {
+        title: "Sup-product2",
+        style: "/index.css",
+    })
 })
 app.get('/promotion', (req, res) => {
-    res.render('promotion')
+    res.render('promotion', {
+        title: "Promotion",
+        style: "/promotion.css",
+    })
 })
 
 app.post('/signIn', async (req, res) => {
@@ -96,12 +114,17 @@ app.post('/register', async (req, res) => {
     }
 })
 
-app.get('/getProduct', async (req, res) => {
+app.get('/', async (req, res) => {
     try {
         //console.log('kuy');
         const products = await axios.get("http://localhost:8080/api/Product/getProduct");
         //console.log(products.data);
-        res.render('index',{products: products.data})
+        res.render('index', {
+            products: products.data,
+            title: "Home",
+            style: "/index.css",
+            home: "active"
+        })
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
@@ -115,22 +138,41 @@ app.get('/getProduct/:id', async (req, res) => {
         console.log(id)
         const product = await axios.get(`http://localhost:8080/api/Product/getProduct/${id}`);
         //console.log(product.data);
-         res.render('sproduct',{product: product.data})
+         res.render('sproduct', {
+            product: product.data,
+            title: "Sup-Product",
+            style: "/sproduct.css"
+        })
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
     }
 })
 
-app.post('/getProduct/:id', async (req, res) => {
+app.get('/shop', async (req, res) => {
     try {
-        const { id }  = req.params;
-        await axios.post(`http://localhost:8080/api/ShoppingCart/addShoppingCart`)
+        console.log('kuy');
+        const products = await axios.get("http://localhost:8080/api/Product/getProduct");
+        //console.log(products.data);
+        res.render('shop',{products: products.data})
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
     }
 })
+
+/*app.post('/getProduct/:id', async (req, res) => {
+    try {
+        const { id }  = req.params;
+        const shoppingCart = await axios.post("http://localhost:8080/api/ShoppingCart/addShoppingCart");
+        console.log(shoppingCart);
+        const shoppingCartId = shoppingCart._id;
+        await axios.post(`http://localhost:8080/api/ShoppingCartItem/${shoppingCartId}/${id}`);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+})*/
 
 app.listen(PORT, () => {
     console.log(`Open server on port ${PORT} complete`)

@@ -1,24 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-
-  <link rel="stylesheet" href="/index.css">
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-</head>
-
-<body>
-
-
+<%- include('../partials/header') %>
+  <!--
   <section id="header">
     <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
     <div>
@@ -40,6 +21,7 @@
         <ul>
     </div>
   </section>
+  -->
 
   <section id="hero">
     <h4> Trade-in-offer</h4>
@@ -293,30 +275,6 @@
     </a>
   </section>
 
-  <footer class="section-p1">
-    <div class="col">
-      <img src="/img/logo_footer.png" alt="">
-      <h4>Contact</h4>
-      <p><strong>Address:</strong> 126 Pracha Uthit Rd., Bang Mod,Bangkok 10140, Thailand.</p>
-      <p><strong>Phone:</strong> +01 1233 660</p>
-      <p><strong>Hours:</strong> 8:30 - 10:30,Mon-Sat</p>
-    </div>
-
-    <div class="col">
-      <h4>About</h4>
-      <a href="/about">About </a>
-      <a href="/contact">Contact </a>
-    </div>
-
-    <div class="col">
-      <h4>My Account</h4>
-      <a href="/signIn">Sign In </a>
-      <a href="/cart">View Cart </a>
-
-      <!-- Need to edit -->
-      <a href="Ordertracking.html">Track My Order </a>
-    </div>
-  </footer>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="Authen.js"></script>
   <script>
@@ -324,6 +282,5 @@
       window.location.href = `/getProduct/${productId}`;
     }
   </script>
-</body>
 
-</html>
+  <%- include('../partials/footer') %>
