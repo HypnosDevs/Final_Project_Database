@@ -1,31 +1,31 @@
-const validateText = document.querySelector("#validate-text");
-const signInForm = document.querySelector("#signInForm");
-const submitButton = document.querySelector("#submitButton");
 
+const submitButton = document.querySelector("#submitButton");
+const formData = document.querySelector("#form-register");
+const usernameInput = document.querySelector("#username");
+const passwordContainer = document.querySelector("#password");
 
 submitButton.addEventListener("click", async () => {
-    try {
-        console.log('here');
-        const username = document.querySelector("#username").value;
-        const password = document.querySelector("#password").value;
 
-        const res = await axios.post('http://localhost:8080/api/Authentication/checkMatch', {
-            username,
-            password
-        })
 
-        const match = res.data.isValid;
-        
-        if (!match) {
+    try{
+        const response = await axios.post("http://localhost:8080/api/Authentication/checkUsername", {
+            username: usernameInput.value
+        });
+
+
+        const inValid = response.data.exists;
+
+        console.log(inValid);
+
+        if (inValid) {
             // Check if the validation message already exists
             const existingValidationMessage = document.getElementById("validate-text");
             if (!existingValidationMessage) {
-                // Create and insert the validation message
                 const validationMessage = document.createElement("div");
                 validationMessage.id = "validate-text";
                 validationMessage.classList.add("validate");
-                validationMessage.textContent = "Invalid username or password";
-                submitButton.parentNode.insertBefore(validationMessage, submitButton);
+                validationMessage.textContent = "Username already exists";
+                submitButton.parentNode.insertBefore(validationMessage, passwordContainer);
             }
         } else {
             // Remove the validation message if it exists
@@ -33,10 +33,10 @@ submitButton.addEventListener("click", async () => {
             if (existingValidationMessage) {
                 existingValidationMessage.parentNode.removeChild(existingValidationMessage);
             }
-            // Submit the form
-            signInForm.submit();
+            // formData.submit();
         }
     }
+
     catch (error) {
         console.error('An error occurred:', error);
         // Handle error - display a generic error message to the user
@@ -46,7 +46,7 @@ submitButton.addEventListener("click", async () => {
             validationMessage.id = "validate-text";
             validationMessage.classList.add("validate");
             validationMessage.textContent = "An error occurred. Please try again later.";
-            submitButton.parentNode.insertBefore(validationMessage, submitButton);
+            formData.appendChild(validationMessage);
         }
     }
 });
