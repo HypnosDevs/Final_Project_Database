@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link rel="stylesheet" href="admin_panel.css">
+    <link rel="stylesheet" href="promotion_admin.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -32,9 +32,9 @@
                 </form>
 
                 <li><a href="/">Home</a></li>
-                <li><a class="active" href="/admin_panel">Dashboard</a></li>
+                <li><a href="/admin_panel">Dashboard</a></li>
                 <li><a href="/product_admin">Products</a></li>
-                <li><a href="/promotion_admin">Promotion</a></li>
+                <li><a class="active" href="/promotion_admin">Promotion</a></li>
               
                 <ul>
         </div>
@@ -42,93 +42,54 @@
 
     <section id="page-header">
 
-        <h2># Dashboard</h2>
+        <h2># Promotions</h2>
 
     </section>
 
-    <section id="interface">
-        <h3 class="i-name">
-            Dashboard
-        </h3>
-    
-        <div class="values">
-            <div class="val-box">
-                <i class="fa-solid fa-users"></i>
-                <div>
-                    <h3>254</h3>
-                    <span>Users</span>
-                </div>
-            </div>
-            <div class="val-box">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <div>
-                    <h3>2</h3>
-                    <span>Total Orders</span>
-                </div>
-            </div>
-            
-            <div class="val-box">
-                <i class="fa-solid fa-box"></i>
-                <div>
-                    <h3>8</h3>
-                    <span>Product Sell</span>
-                </div>
-            </div>
-            <div class="val-box">
-                <i class="fa-solid fa-ticket"></i>
-                <div>
-                    <h3>2</h3>
-                    <span>Total Coupon</span>
-                </div>
-            </div>
-            <div class="val-box">
-                <i class="fa-solid fa-baht-sign"></i>
-                <div>
-                    <h3>฿1400</h3>
-                    <span>This Month</span>
-                </div>
-            </div>
-        </div>
-    </section>
-    
 
-    <section id="board" class="">
+    <section id="button_create">
+        <a href="/create_promotion">
+            <button>Add Promotion</button>
+        </a>
+    </section> 
+    
+    <section id="cart" class="">
         <table width="100%">
             <thead>
                 <tr>
                     <td>Remove</td>
-                    <td>Users</td>
-                    <td>Name</td>
-                    <td>Email</td>
-                    <td>Role</td>
+                    <td>Image</td>
+                    <td>Details</td>
+                    <td>Code</td>
+                    <td>Price</td>
                     <td></td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
-                    <td><img src="/img/user.png"></a></li></td>
-                    <td>Anna xxxx</td>
-                    <td>Ann@gmail.com</td>
-                    <td>Owner</td>
-                    <td class="edit"><a href="/edit_by_admin">Edit</a></td>
+                    <td><img src="/img/products/p1.jpg"></td>
+                    <td>crazy deals 30% off Mystery and figure</td>
+                    <td>ABC123</td>
+                    <td>$ 29.99</td>
+                    <td class="edit"><a href="/edit_promotion">Edit</a></td>
                     
                 </tr>
                 <tr>
                     <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
-                    <td><img src="/img/user.png"></a></li></td>
-                    <td>ALs</td>
-                    <td>A@gmail</td>
-                    <td>admin</td>
-                    <td class="edit"><a href="/edit_by_admin">Edit</a></td>
+                    <td><img src="/img/products/p3.png"></td>
+                    <td>Crybaby Crying Parade Series</td>
+                    <td>Crybaby</td>
+                    <td>฿590</td>
+                    <td class="edit"><a href="/edit_promotion">Edit</a></td>
                 </tr>
                 <tr>
                     <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
-                    <td><img src="/img/user.png"></a></li></td>
-                    <td>Tom  asssss</td>
-                    <td>Tom@gmail.com</td>
-                    <td>Admin</td>
-                    <td class="edit"><a href="/edit_by_admin">Edit</a></td>
+                    <td><img src="/img/products/p8.jpg"></td>
+                    <td>CRYBABY × Powerpuff Girls Series-Vinyl Face Plush Blind Box</td>
+                    <td>Crybaby</td>
+                    <td>฿430</td>
+                    <td class="edit"><a href="/edit_promotion">Edit</a></td>
                 </tr>
 
             </tbody>

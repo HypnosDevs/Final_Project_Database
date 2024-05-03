@@ -225,6 +225,29 @@ body {
 }
 
 
+#button_create {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* เว้นระยะด้านบน */
+}
+
+#button_create button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none; 
+  background: #088178;
+  color: #fff;
+  border-radius: 70px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#button_create button:hover {
+  background: #ADD495; /* เปลี่ยนสีเมื่อชี้เมาส์ */
+}
 /*ท้ายเว็บ*/
 footer {
     display: flex;

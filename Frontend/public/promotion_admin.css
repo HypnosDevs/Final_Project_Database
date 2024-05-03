@@ -144,90 +144,24 @@ body {
 }
 
 #page-header{
-  background-image: url("/img/banner_promotion.png");
-  width: 100%;
-  height: 40vh;
-  background-size: cover;
-  display : flex;
-  justify-content: center;
-  text-align: center;
-  flex-direction: column;
-  padding: 14px;
+    background-image: url("/img/banner_promotion.png");
+    width: 100%;
+    height: 40vh;
+    background-size: cover;
+    display : flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    padding: 14px;
+  }
+
+#page-header h2,
+#page-header p{
+  color: #1a1a1a;
 }
 
-.i-name{
-  color: #444a53;
-  padding:30px 30px  0 30px;
-  font-size: 24px;
-  font-weight: 700;
-}
-
-/* ระยะ box */
-.values{
-  color: #444a53;
-  padding:30px 30px  0 30px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.values .val-box{
-  background: #E3E6F3;
-  width: 235px;
-  padding: 16px 20px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.values .val-box i{
-  font-size: 25px;
-  width: 60px;
-  height: 60px;
-  line-height:60px;
-  border-radius: 50%;
-  text-align: center;
-  color: #fff;
-  margin-right: 15px;
-}
-
-.values .val-box:nth-child(1) i {
-  background: #7B74EC;
-}
-
-.values .val-box:nth-child(2) i {
-  background: #5C8AF0;
-}
-
-.values .val-box:nth-child(3) i {
-  background: #E45D99;
-}
-
-.values .val-box:nth-child(4) i {
-  background: #74daec;
-}
-
-.values .val-box:nth-child(5) i {
-  background: #ADD495;
-}
-
-
-
-
-.values .val-box h3{
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.values .val-box span{
-  font-size: 15px;
-  color: #828997;
-}
-
-/*ตาราง user*/
-#board table{
+/*ตารางสินค้า*/
+#cart table{
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
@@ -235,45 +169,45 @@ body {
   margin-top:20px;
 }
 
-#board table img{
-  width: 30px;
+#cart table img{
+  width: 100px;
   height: auto;
 }
 
-#board table td:nth-child(1){
+#cart table td:nth-child(1){
   width: 100px;
   text-align: center;
 }
-#board table td:nth-child(2){
+#cart table td:nth-child(2){
   width: 150px;
   text-align: center;
 }
-#board table td:nth-child(3){
+#cart table td:nth-child(3){
   width: 350px;
   text-align: center;
   
   
 }
 
-#board table td:nth-child(4),
-#board table td:nth-child(5),
-#board table td:nth-child(6){
+#cart table td:nth-child(4),
+#cart table td:nth-child(5),
+#cart table td:nth-child(6){
   width: 150px;
   text-align: center;
 }
 
-#board table td:nth-child(5) input{
+#cart table td:nth-child(5) input{
   width: 70px;
   padding: 10px 5px 10px 15px;
 }
 
-#board table thead{
+#cart table thead{
   border: 1px solid #e2e2e1;
   border-left:none ;
   border-right:none;
 }
 
-#board table thead td{
+#cart table thead td{
   padding: 18px 0;
   font-weight: 700;
   text-transform: uppercase;
@@ -281,16 +215,39 @@ body {
 
 }
 
-#board  table tbody tr td{
+#cart table tbody tr td{
   padding-top:15px;
 }
 
-#board table tbody td{
+#cart table tbody td{
   font-size:13px;
 
 }
 
 
+#button_create {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* เว้นระยะด้านบน */
+}
+
+#button_create button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none; 
+  background: #088178;
+  color: #fff;
+  border-radius: 70px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#button_create button:hover {
+  background: #ADD495; /* เปลี่ยนสีเมื่อชี้เมาส์ */
+}
 /*ท้ายเว็บ*/
 footer {
     display: flex;
