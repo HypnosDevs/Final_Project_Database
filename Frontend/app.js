@@ -69,6 +69,22 @@ app.get('/edit', (req, res) => {
     res.render('edit')
 })
 
+
+app.post('/signIn', async (req, res) => {
+    try {
+        // console.log(req.body);
+        // console.log("here")
+        res.send(req.body);
+        // const response = await axios.post("http://localhost:8888/api/Authentication/login", req.body);
+        // console.log("register success");
+        // res.redirect('/login');
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+
+})
+
 app.post('/register', async (req, res) => {
     try {
         // console.log(req.body);
