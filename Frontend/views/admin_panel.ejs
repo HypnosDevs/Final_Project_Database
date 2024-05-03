@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="admin_panel.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+<body>
+
+
+    <section id="header">
+        <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
+        <div>
+            <ul id="navbar">
+
+                <form>
+                    <div class="search">
+                        <span class="search-icon material-symbols-outlined">search</span>
+                        <input class="search-input" type="search" placeholder="Search">
+                    </div>
+                </form>
+
+                <li><a href="/">Home</a></li>
+                <li><a class="active" href="/admin_panel">Dashboard</a></li>
+                <li><a href="/product_admin">Products</a></li>
+                <li><a href="/promotion_admin">Promotion</a></li>
+              
+                <ul>
+        </div>
+    </section>
+
+    <section id="page-header">
+
+        <h2># Dashboard</h2>
+
+    </section>
+
+    <section id="interface">
+        <h3 class="i-name">
+            Dashboard
+        </h3>
+    
+        <div class="values">
+            <div class="val-box">
+                <i class="fa-solid fa-users"></i>
+                <div>
+                    <h3>254</h3>
+                    <span>Users</span>
+                </div>
+            </div>
+            <div class="val-box">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <div>
+                    <h3>2</h3>
+                    <span>Total Orders</span>
+                </div>
+            </div>
+            
+            <div class="val-box">
+                <i class="fa-solid fa-box"></i>
+                <div>
+                    <h3>8</h3>
+                    <span>Product Sell</span>
+                </div>
+            </div>
+            <div class="val-box">
+                <i class="fa-solid fa-ticket"></i>
+                <div>
+                    <h3>2</h3>
+                    <span>Total Coupon</span>
+                </div>
+            </div>
+            <div class="val-box">
+                <i class="fa-solid fa-baht-sign"></i>
+                <div>
+                    <h3>฿1400</h3>
+                    <span>This Month</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <section id="board" class="">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <td>Remove</td>
+                    <td>Users</td>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Role</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                    <td><img src="/img/user.png"></a></li></td>
+                    <td>Anna xxxx</td>
+                    <td>Ann@gmail.com</td>
+                    <td>Owner</td>
+                    <td class="edit"><a href="/edit_by_admin">Edit</a></td>
+                    
+                </tr>
+                <tr>
+                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                    <td><img src="/img/user.png"></a></li></td>
+                    <td>ALs</td>
+                    <td>A@gmail</td>
+                    <td>admin</td>
+                    <td class="edit"><a href="/edit_by_admin">Edit</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                    <td><img src="/img/user.png"></a></li></td>
+                    <td>Tom  asssss</td>
+                    <td>Tom@gmail.com</td>
+                    <td>Admin</td>
+                    <td class="edit"><a href="/edit_by_admin">Edit</a></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </section>
+
+  
+    <footer class="section-p1">
+        <div class="col">
+            <img src="/img/logo_footer.png" alt="">
+            <h4>Contact</h4>
+            <p><strong>Address:</strong> 126 Pracha Uthit Rd., Bang Mod,Bangkok 10140, Thailand.</p>
+            <p><strong>Phone:</strong> +01 1233 660</p>
+            <p><strong>Hours:</strong> 8:30 - 10:30,Mon-Sat</p>
+        </div>
+
+        <div class="col">
+            <h4>About</h4>
+            <a href="About.html">About </a>
+            <a href="Contact.html">Contact </a>
+        </div>
+
+        <div class="col">
+            <h4>My Account</h4>
+            <a href="/signIn">Sign In </a>
+            <a href="/cart">View Cart </a>
+
+            <!-- Need to edit -->
+            <a href="Ordertracking.html">Track My Order </a>
+        </div>
+    </footer>
+</body>
+
+</html>

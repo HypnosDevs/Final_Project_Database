@@ -78,6 +78,47 @@ app.get('/promotion', (req, res) => {
     })
 })
 
+app.get('/admin_panel', (req, res) => {
+    res.render('admin_panel')
+})
+
+
+app.get('/edit_by_admin', (req, res) => {
+    res.render('edit_by_admin')
+})
+
+app.get('/edit_by_user', (req, res) => {
+    res.render('edit_by_user')
+})
+
+app.get('/product_admin', (req, res) => {
+    res.render('product_admin')
+})
+
+app.get('/create_product', (req, res) => {
+    res.render('create_product')
+})
+
+app.get('/create_promotion', (req, res) => {
+    res.render('create_promotion')
+})
+
+app.get('/promotion_admin', (req, res) => {
+    res.render('promotion_admin')
+})
+
+
+
+
+app.get('/edit_product', (req, res) => {
+    res.render('edit_product')
+})
+
+app.get('/edit_promotion', (req, res) => {
+    res.render('edit_promotion')
+})
+
+
 app.post('/signIn', async (req, res) => {
     try {
         //console.log(req.body);
@@ -97,6 +138,7 @@ app.post('/signIn', async (req, res) => {
         console.log(err.message);
         res.status(500).send({ message: err.message });
     }
+
 })
 
 app.post('/register', async (req, res) => {
