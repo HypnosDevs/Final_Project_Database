@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>User Setting Page</title>
-        <link rel="stylesheet" href="edit.css">
+        <link rel="stylesheet" href="edit_by_admin.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
@@ -23,6 +23,12 @@
                     class="tab">
                     <i class="fa-solid fa-credit-card"></i>
                     </a>
+
+                    <a onclick="tabs(2)" 
+                    class="tab">
+                    <i class="fa-solid fa-gear"></i>
+                    </a>
+
                 </nav>
             </div>
             <div class="rightbox">
@@ -34,11 +40,9 @@
                     <h2>Gender</h2>
                     <input type="text" class="input" value="Female">
 
-                    <h2>Email</h2>
-                    <input type="text" class="input" value="example@gmil.com">
-                   
-                    <h2>Password</h2>
-                    <input type="password" class="input" value="brightcode">
+                    <h2>Role</h2>
+                    <input type="text" class="input" value="Owner">
+
                     <button class="btn">Update</button>
                     
                 </div>
@@ -52,10 +56,21 @@
                     <input type="text" class="input" value="Jan 20,2025">
 
                     <h2>ZipCode</h2>
-                    <input type="text" class="input" value="example@gmil.com">
+                    <input type="text" class="input" value="AAA-xxx">
                    
                     <button class="btn">Update</button>
                     
+                </div>
+
+                
+                <div class="setting tabshow">
+                    <h1>Email & Password</h1>
+                    <h2>Email</h2>
+                    <input type="text" class="input" value="example@gmil.com">
+                   
+                    <h2>Password</h2>
+                    <input type="password" class="input" value="brightcode">
+                    <button class="btn">Update</button>
                 </div>
 
             </div>

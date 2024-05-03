@@ -65,8 +65,12 @@ app.get('/admin_panel', (req, res) => {
 })
 
 
-app.get('/edit', (req, res) => {
-    res.render('edit')
+app.get('/edit_by_admin', (req, res) => {
+    res.render('edit_by_admin')
+})
+
+app.get('/edit_by_user', (req, res) => {
+    res.render('edit_by_user')
 })
 
 app.get('/shop_admin', (req, res) => {
