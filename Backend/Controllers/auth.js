@@ -3,6 +3,25 @@ const Address = require('../Models/Address');
 const User = require('../Models/User');
 const bcrypt = require('bcrypt');
 
+exports.checkMatch = async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        const user = await User.findOne({ username: username });
+        if (!user) {
+            // User not found
+            res.json({ isValid: false });
+        } else {
+            // User found, compare passwords
+            const validate = await bcrypt.compare(password, user.password);
+            res.json({ isValid: validate });
+        }
+    } catch (error) {
+        console.error('An error occurred:', error);
+        res.status(500).json({ error: 'An error occurred' });
+    }
+};
+
+
 exports.register = async (req, res) => {
     try {
         const { username, password } = req.body.user;
@@ -98,3 +117,4 @@ exports.logout = async (req, res) => {
         res.status(500).send({ message: err.message });
     }
 }
+
