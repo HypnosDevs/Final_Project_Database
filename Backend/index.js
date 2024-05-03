@@ -23,21 +23,27 @@ const shoppingCartRouters = require('./Routes/shoppingCart')
 const orderItemRouters = require('./Routes/orderItem');
 const orderRouters = require('./Routes/order');
 
+app.use(
+    cors({
+        credentials: true
+    }),
+);
+
+
 
 app.use(
     session({
         secret: "secretlaew",
         resave: false,
         saveUninitialized: true,
-        cookie: {
-            maxAge: 3600000 // 1 hour
-        }
+        // cookie: {
+        //     maxAge: 3600000 // 1 hour
+        // }
     })
 )
 
 
 
-app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use('/Images', express.static('Images'))

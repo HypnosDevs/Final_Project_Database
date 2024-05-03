@@ -24,9 +24,9 @@ exports.checkMatch = async (req, res) => {
 exports.currentUser = async (req, res) => {
     try {
         //const user = await User.findById(req.session.userId);
-        //console.log("session getuser", req.session.userId);
-
-        res.status(200).send('user');
+        console.log("session getuser", req.session.userId);
+        const userid = req.session.userId;
+        res.status(200).send(userid);
     } catch (error) {
         console.error('An error occurred:', error);
         res.status(500).json({ error: 'An error occurred' });
