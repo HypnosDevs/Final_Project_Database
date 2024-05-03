@@ -21,6 +21,18 @@ exports.checkMatch = async (req, res) => {
     }
 };
 
+exports.currentUser = async (req, res) => {
+    try {
+        //const user = await User.findById(req.session.userId);
+        //console.log("session getuser", req.session.userId);
+
+        res.status(200).send('user');
+    } catch (error) {
+        console.error('An error occurred:', error);
+        res.status(500).json({ error: 'An error occurred' });
+    }
+};
+
 exports.register = async (req, res) => {
     try {
         const { username, password } = req.body.user;
@@ -81,6 +93,8 @@ exports.login = async (req, res) => {
         }
 
         req.session.userId = user.id;
+
+        console.log("session login", req.session.userId);
 
         res.status(200).send({
             message: 'Login successful',

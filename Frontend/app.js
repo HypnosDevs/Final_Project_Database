@@ -20,10 +20,10 @@ app.set('views', path.join(__dirname, 'views'))
 
 const PORT = env.PORT || 9090;
 
-
 app.get('/', (req, res) => {
-    res.render('index')
+    res.render('index');
 })
+
 
 app.get('/signIn', (req, res) => {
     res.render('SignIn')
@@ -66,8 +66,8 @@ app.post('/signIn', async (req, res) => {
         // console.log("here")
         //res.send(req.body);
         const response = await axios.post("http://localhost:8080/api/Authentication/login", req.body);
-        // console.log("register success", response);
-        res.redirect('/');
+        console.log("sign in success", response.data.username);
+        res.redirect(`/`);
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
