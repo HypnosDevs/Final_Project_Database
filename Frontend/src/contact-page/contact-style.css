@@ -11,13 +11,14 @@ h1 {
     color: #222;
   }
   
+  /*
   h2 {
     font-size: 46px;
-    line-height: 64px; /* ปรับเป็นตัวหนา */
+    line-height: 64px; ปรับเป็นตัวหนา 
     color: #000000;
     height: 100px;
   }
-  
+  */
   h4 {
     font-size: 20px;
     color: #222;
@@ -49,6 +50,7 @@ h1 {
   .section-p1 {
     
     padding: 40px 80px;
+    margin: 40px 0;
   }
   
   .section-m1 {
@@ -190,8 +192,8 @@ footer {
 
 
   /*----------------------dola code---------------*/
-  #page-header.about-header {
-      background-image: url("../../img/features/aboutpage1.jpg");
+  #page-header.contact-header {
+      background-image: url("/Frontend/img/features/aboutpage1.jpg");
       height: 90vh;
       width: 100%;
       background-size: cover;
@@ -217,4 +219,78 @@ footer {
 #about-us{
   position: relative;
   top: 35%
+}
+
+/*--------------google map--------*/
+#contact-details{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#contact-details .details{
+  width: 40%;
+}
+#contact-details .detail span,
+#form-details form span
+{
+  font-size: 12px;
+}
+#contact-details .details h2 ,
+#form-details form h2{
+  font-size: 28px; /*26*/
+  line-height: 35px;
+  padding: 20px 0;
+}
+#contact-details .details h3{
+  font-size: 16px;
+  padding-bottom: 15px;
+}
+#contact-details .details li{
+  list-style: none;
+  display: flex;
+  padding: 10px 0;
+}
+#contact-details .details li i{
+  font-size: 14px;
+  padding-right: 22px;
+}
+#contact-details .details li p{
+  margin: 0;
+  font-size: 14px;
+}
+#contact-details .map{
+  width: 55%;
+  height: 400px;
+}
+#contact-details .map iframe{
+  width: 100%;
+  height: 100%;
+}
+#form-details form{
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+#form-details form input ,
+#form-details form textarea
+{
+  width: 100%;
+  padding: 12px 15px;
+  outline: none;
+  margin-bottom: 20px;
+  border: 1px solid #e1e1e1;
+}
+
+.normal{
+  width: 30%;
+  padding:15px 30px;
+  font-weight: 600;
+  background-color: #00d1ec;
+  border-radius: 4px;
+  cursor:pointer;
+  border: none;
+  outline:none;
+  transition: 0.2s;
+
 }

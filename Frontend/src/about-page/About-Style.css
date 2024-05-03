@@ -195,17 +195,17 @@ footer {
 
 
   /*----------------------dola code---------------*/
-  #page-header.about-header {
-      background-image: url("../../img/features/aboutpage1.jpg");
-      height: 90vh;
-      width: 100%;
-      background-size: cover;
-      background-position: top 25%;
+  #page-header.acontact-header {
+    background-image: url("../../img/features/aboutpage2.jpg");
+    height: 90vh;
+    width: 100%;
+    background-size: cover;
+    background-position: top 25%;
 
 
+  
     
-      
-  }
+}
 #about-head{
   display: flex; 
   align-items:center ;
@@ -305,10 +305,28 @@ footer {
   outline: none;
 }
 #newsletter button{
-  border-radius: 12px;
+  border-radius: 4px;
   background-color: #088178;
+  height: 3.125rem;
 }
 #newsletter .form{
   display: flex;
   width: 40%;
+}
+button.normal{
+  width: 45%;
+  padding:15px 30px;
+  font-weight: 600;
+  background-color: #fff;
+  border-radius: 4px;
+  cursor:pointer;
+  border: none;
+  outline:none;
+  transition: 0.2s;
+
+}
+
+#newsletter button:hover{
+  background-color: #088178;
+  color: #fff;
 }
