@@ -131,3 +131,20 @@ exports.logout = async (req, res) => {
         res.status(500).send({ message: err.message });
     }
 }
+
+exports.checkUsername = async (req, res) => {
+    const { username } = req.body;
+    try {
+        const user = await User.findOne({ username: username });
+        if (!user) {
+            // Username not found
+            res.json({ exists: false });
+        } else {
+            // Username found
+            res.json({ exists: true });
+        }
+    } catch (error) {
+        console.error('An error occurred:', error);
+        res.status(500).json({ error: 'An error occurred' });
+    }
+};

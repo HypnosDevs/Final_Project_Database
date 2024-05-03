@@ -96,6 +96,32 @@ app.post('/register', async (req, res) => {
     }
 })
 
+app.get('/getProduct', async (req, res) => {
+    try {
+        //console.log('kuy');
+        const products = await axios.get("http://localhost:8080/api/Product/getProduct");
+        //console.log(products.data);
+        res.render('index',{products: products.data})
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+})
+
+app.get('/getProduct/:id', async (req, res) => {
+    try {
+        //console.log('kuy');
+        const {id} = req.params;
+        console.log(id)
+        const product = await axios.get(`http://localhost:8080/api/Product/getProduct/${id}`);
+        //console.log(product.data);
+         res.render('sproduct',{product: product.data})
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+})
+
 app.listen(PORT, () => {
     console.log(`Open server on port ${PORT} complete`)
 })

@@ -11,14 +11,18 @@
 
 <body>
     <div class="wrapper">
-        <form action="/register" method="POST">
+        <form id="form-register" action="/register" method="POST">
             <h1>Create Your Account</h1>
-            <div class="input-box">
-                <input type="text" placeholder="Username" name="user[username]" required>
+            <div class="input-box" id = "usernameContainer">
+                <input id="username" type="text" placeholder="Username" name="user[username]" required>
                 <i class='bx bxs-user'></i>
             </div>
 
-            <div class="input-box">
+            <!-- <div id="validate-text" class="validate">
+                Invalid username 
+            </div> -->
+
+            <div class="input-box" id = "password">
                 <input type="password" placeholder="Password" name="user[password]" required>
                 <i class='bx bxs-lock-alt'></i>
             </div>
@@ -111,7 +115,7 @@
             </div>
 
             <!-- ไว้ล่างสุด -->
-            <button type="submit" class="btn">Register</button>
+            <button type="button" id="submitButton" class="btn">Register</button>
 
             <div class="SignIn-link">
                 <p>Already have an account? <a href="/signIn">Sign In</a></p>
@@ -119,8 +123,10 @@
 
         </form>
     </div>
-    <!-- <script type="text/javascript" src="Register_script.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="Register.js"></script>
 </body>
+
 
 </html>
 <!-- 
