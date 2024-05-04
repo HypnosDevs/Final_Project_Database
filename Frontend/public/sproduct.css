@@ -134,19 +134,20 @@ body {
 }
 
 /*เม้าไปชี้เเล้วเปลี่ยนสี และขีดเส้นใต้*/
-#navbar li a:hover, 
+#navbar li a:hover,
 #navbar li a.active {
-     color: #088178;
+  color: #088178;
 }
+
 #navbar li a.active::after,
-#navbar li a:hover::after{
-    content: "";
-    width: 30%;
-    border-bottom: 2px solid;
-    background : #088178;
-    position: absolute;
-    bottom: -4px;
-    left:20px;
+#navbar li a:hover::after {
+  content: "";
+  width: 30%;
+  border-bottom: 2px solid;
+  background: #088178;
+  position: absolute;
+  bottom: -4px;
+  left: 20px;
 }
 
 
@@ -340,7 +341,8 @@ footer .col {
   align-items: flex-start;
   margin-bottom: 20px;
 }
-footer .logo{
+
+footer .logo {
   margin-bottom: 30px;
 }
 
@@ -355,14 +357,15 @@ footer p {
 }
 
 footer a {
-  font-size:13px;
+  font-size: 13px;
   text-decoration: none;
   color: #222;
   margin-bottom: 10px;
 }
 
 footer .col img {
-  width: 200px; /* ปรับขนาดความกว้างของโลโก้ /
+  width: 200px;
+  /* ปรับขนาดความกว้างของโลโก้ /
   height: auto; / รักษาสัดส่วนของรูปภาพ */
 }
 
@@ -414,9 +417,9 @@ footer .col img {
   /* ความสูงจะปรับอัตโนมัติตามอัตราส่วน */
 }
 
-#MainImg{
+#MainImg {
   width: 100%;
-  height:100%;
+  height: 100%;
 }
 
 #prodetails .small-img {
@@ -492,8 +495,8 @@ footer .col img {
 }
 
 /* Banner Promotion */
-#banner{
-  display:flex;
+#banner {
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -505,37 +508,37 @@ footer .col img {
   background-position: center;
 }
 
-#banner h4{
-  color:rgb(0, 0, 0);
+#banner h4 {
+  color: rgb(0, 0, 0);
   font-size: 16px;
 }
 
-#banner h2{
-  color:rgb(0, 0, 0);
+#banner h2 {
+  color: rgb(0, 0, 0);
   font-size: 30px;
   padding: 10px 0;
 }
 
-#banner h2 span{
-  color:#ef3636;
+#banner h2 span {
+  color: #ef3636;
   font-size: 30px;
   padding: 10px 0;
 }
 
-button.normal{
-  font-size:14px;
+button.normal {
+  font-size: 14px;
   font-weight: 600;
-  padding:15px 30px;
+  padding: 15px 30px;
   color: #000;
   background-color: #fff;
   border-radius: 4px;
-  cursor:pointer;
+  cursor: pointer;
   border: none;
-  outline:none;
+  outline: none;
   transition: 0.2s;
 }
 
-#banner button:hover{
+#banner button:hover {
   background-color: #088178;
   color: #fff;
 }

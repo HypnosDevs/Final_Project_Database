@@ -1,25 +1,30 @@
 <%- include('../partials/head') %>
-<%- include('../partials/header') %>
+    <%- include('../partials/header') %>
 
-    <section id="prodetails" class="section-p1">
-        <div class="single-pro-image">
-            <img src="data:image/png;base64, <%= product.image %>" id="MainImg" alt="">
-        </div>
-        <div class="single-pro-detail">
-            <h6>Home/Labubu</h6>
-            <h4><%= product.name %></h4>
-            <h2>฿<%= product.price %></h2>
-            <!--<form action="/getProduct/<%= product._id %>" method="POST">-->
-            <input name="qty" type="number" value="1" min="1" max="<%= product.stock %>">
-            <button class="normal" type="submit">Add To Cart</button>
-            <!--</form>-->
-            <h4>Product Details</h4>
-            <span id="spanDesc"><%= product.description %></span>
+        <section id="prodetails" class="section-p1">
+            <div class="single-pro-image">
+                <img src="data:image/png;base64, <%= product.image %>" id="MainImg" alt="">
+            </div>
+            <div class="single-pro-details">
+                <h6>Home/Labubu</h6>
+                <h4>
+                    <%= product.name %>
+                </h4>
+                <h2>฿<%= product.price %>
+                </h2>
+                <!--<form action="/getProduct/<%= product._id %>" method="POST">-->
+                <input name="qty" type="number" value="1" min="1" max="<%= product.stock %>">
+                <button id="addCart" class="normal" type="submit">Add To Cart</button>
+                <!--</form>-->
+                <h4>Product Details</h4>
+                <span id="spanDesc">
+                    <%= product.description %>
+                </span>
 
-        </div>
-    </section>
+            </div>
+        </section>
 
-    <!--
+        <!--
 
     <section id="prodetails" class="section-p1">
         <div class="single-pro-image">
@@ -57,53 +62,55 @@
 
     -->
 
-    <script>
-        var MainImg=document.getElementById('MainImg');
-        var smallimg=document.getElementsByClassName('small-img');
+        <script>
+            var MainImg = document.getElementById('MainImg');
+            var smallimg = document.getElementsByClassName('small-img');
 
-        smallimg[0].onclick=function(){
-            MainImg.src=smallimg[0].src;
-        }
-        smallimg[1].onclick=function(){
-            MainImg.src=smallimg[1].src;
-        }
-        smallimg[2].onclick=function(){
-            MainImg.src=smallimg[2].src;
-        }
-        smallimg[3].onclick=function(){
-            MainImg.src=smallimg[3].src;
-        }
+            smallimg[0].onclick = function () {
+                MainImg.src = smallimg[0].src;
+            }
+            smallimg[1].onclick = function () {
+                MainImg.src = smallimg[1].src;
+            }
+            smallimg[2].onclick = function () {
+                MainImg.src = smallimg[2].src;
+            }
+            smallimg[3].onclick = function () {
+                MainImg.src = smallimg[3].src;
+            }
         </script>
         <script>
-        function redirectToProduct(productId) {
-            window.location.href = `/getProduct/${productId}`;
-        }
-    </script>
+            function redirectToProduct(productId) {
+                window.location.href = `/getProduct/${productId}`;
+            }
+        </script>
 
-    <script>
-        var MainImg = document.getElementById('MainImg');
-        var smallimg = document.getElementsByClassName('small-img');
+        <script>
+            var MainImg = document.getElementById('MainImg');
+            var smallimg = document.getElementsByClassName('small-img');
 
-        smallimg[0].onclick = function () {
-            MainImg.src = smallimg[0].src;
+            smallimg[0].onclick = function () {
+                MainImg.src = smallimg[0].src;
 
-        }
+            }
 
-        smallimg[1].onclick = function () {
-            MainImg.src = smallimg[1].src;
+            smallimg[1].onclick = function () {
+                MainImg.src = smallimg[1].src;
 
-        }
+            }
 
-        smallimg[2].onclick = function () {
-            MainImg.src = smallimg[2].src;
+            smallimg[2].onclick = function () {
+                MainImg.src = smallimg[2].src;
 
-        }
+            }
 
-        smallimg[3].onclick = function () {
-            MainImg.src = smallimg[3].src;
+            smallimg[3].onclick = function () {
+                MainImg.src = smallimg[3].src;
 
-        }
-    </script>
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="/Authen.js"></script>
 
 
-<%- include('../partials/footer') %>
+        <%- include('../partials/footer') %>

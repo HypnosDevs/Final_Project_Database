@@ -1,80 +1,80 @@
 <%- include('../partials/head') %>
-<%- include('../partials/header') %>
+    <%- include('../partials/header') %>
 
-    <section id="prodetails" class="section-p1">
-        <div class="single-pro-image">
-            <img src="/img/products/p2.jpg" width="100%" id="MainImg" alt="">
-            <div class="small-img-group">
-                <div class="small-img-col">
-                    <img src="/img/products/p2.jpg"  width="100%" class="small-img" alt="">
-                </div>
-                <div class="small-img-col">
-                    <img src="/img/products/p2.1.jpg" width="100%" class="small-img" alt="">
-                </div>
-                <div class="small-img-col">
-                    <img src="/img/products/p2.2.jpg" width="100%" class="small-img" alt="">
-                </div>
-                <div class="small-img-col">
-                    <img src="/img/products/p2.3.jpg" width="100%" class="small-img" alt="">
+        <section id="prodetails" class="section-p1">
+            <div class="single-pro-image">
+                <img src="/img/products/p2.jpg" width="100%" id="MainImg" alt="">
+                <div class="small-img-group">
+                    <div class="small-img-col">
+                        <img src="/img/products/p2.jpg" width="100%" class="small-img" alt="">
+                    </div>
+                    <div class="small-img-col">
+                        <img src="/img/products/p2.1.jpg" width="100%" class="small-img" alt="">
+                    </div>
+                    <div class="small-img-col">
+                        <img src="/img/products/p2.2.jpg" width="100%" class="small-img" alt="">
+                    </div>
+                    <div class="small-img-col">
+                        <img src="/img/products/p2.3.jpg" width="100%" class="small-img" alt="">
+                    </div>
                 </div>
             </div>
-        </div>
-        <d class="single-pro-details">
-            <h6>Home/Jujutsu Kaisen</h6>
-            <h4>Anime Figure Jujutsu Kaisen Collection Model Toy Gojo Satoru</h4>
-            <h2>฿3,183</h2>
-            <input type="number" value="1" min="1">
-            <button class="normal">Add To Cart</button>
-            <h4>Product Details</h4>
-            <span>Designer: POP MART<br>
-                Material: POLYESTER/PP COLLOIDAL PARTICLES<br>
-                Size: 8.66/5.91/14.96 INCHES<br>
-                Not suitable for persons under 15.</span>
-                
-            
-        </div>
-    </section>
+            <div class="single-pro-details">
+                <h6>Home/Jujutsu Kaisen</h6>
+                <h4>Anime Figure Jujutsu Kaisen Collection Model Toy Gojo Satoru</h4>
+                <h2>฿3,183</h2>
+                <input type="number" value="1" min="1">
+                <button class="normal">Add To Cart</button>
+                <h4>Product Details</h4>
+                <span>Designer: POP MART<br>
+                    Material: POLYESTER/PP COLLOIDAL PARTICLES<br>
+                    Size: 8.66/5.91/14.96 INCHES<br>
+                    Not suitable for persons under 15.</span>
 
-    <script>
-        var MainImg=document.getElementById('MainImg');
-        var smallimg=document.getElementsByClassName('small-img');
 
-        smallimg[0].onclick=function(){
-            MainImg.src=smallimg[0].src;
-        }
-        smallimg[1].onclick=function(){
-            MainImg.src=smallimg[1].src;
-        }
-        smallimg[2].onclick=function(){
-            MainImg.src=smallimg[2].src;
-        }
-        smallimg[3].onclick=function(){
-            MainImg.src=smallimg[3].src;
-        }
+            </div>
+        </section>
+
+        <script>
+            var MainImg = document.getElementById('MainImg');
+            var smallimg = document.getElementsByClassName('small-img');
+
+            smallimg[0].onclick = function () {
+                MainImg.src = smallimg[0].src;
+            }
+            smallimg[1].onclick = function () {
+                MainImg.src = smallimg[1].src;
+            }
+            smallimg[2].onclick = function () {
+                MainImg.src = smallimg[2].src;
+            }
+            smallimg[3].onclick = function () {
+                MainImg.src = smallimg[3].src;
+            }
         </script>
         <script>
-        var MainImg=document.getElementById('MainImg');
-        var smallimg=document.getElementsByClassName('small-img');
+            var MainImg = document.getElementById('MainImg');
+            var smallimg = document.getElementsByClassName('small-img');
 
-        smallimg[0].onclick=function(){
-            MainImg.src=smallimg[0].src;
+            smallimg[0].onclick = function () {
+                MainImg.src = smallimg[0].src;
 
-        }
-        
-        smallimg[1].onclick=function(){
-            MainImg.src=smallimg[1].src;
-            
-        }
-        
-        smallimg[2].onclick=function(){
-            MainImg.src=smallimg[2].src;
-            
-        }
-        
-        smallimg[3].onclick=function(){
-            MainImg.src=smallimg[3].src;
-            
-        }
+            }
+
+            smallimg[1].onclick = function () {
+                MainImg.src = smallimg[1].src;
+
+            }
+
+            smallimg[2].onclick = function () {
+                MainImg.src = smallimg[2].src;
+
+            }
+
+            smallimg[3].onclick = function () {
+                MainImg.src = smallimg[3].src;
+
+            }
         </script>
-    
-<%- include('../partials/footer') %>
+
+        <%- include('../partials/footer') %>
