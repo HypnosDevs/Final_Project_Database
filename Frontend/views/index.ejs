@@ -1,46 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-
-  <link rel="stylesheet" href="index.css">
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-
-
-<body>
-
-
-  <section id="header">
-    <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
-    <div>
-      <ul id="navbar">
-
-        <form>
-          <div class="search">
-            <span class="search-icon material-symbols-outlined">search</span>
-            <input class="search-input" type="search" placeholder="Search">
-          </div>
-        </form>
-
-        <li><a class="active" href="/">Home</a></li>
-        <li><a href="/signIn">Sign In/Register</a></li>
-        <li><a href="/shop">Shop</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/edit_by_user"><img src="/img/user.png"></a></li>
-        <li><a href="/cart"><img src="/img/cart.png"></a></li>
-        <ul>
-    </div>
-  </section>
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
 
   <section id="hero">
     <h4> Trade-in-offer</h4>
@@ -81,6 +40,31 @@
     <h2>Featured Product</h2>
     <p>New Collection</p>
     <div class="pro-container">
+      <% for(let product of products) { %>
+        <div class="pro" onclick="redirectToProduct('<%= product._id %>')">
+          <img src="data:image/png;base64, <%= product.image %>" alt="">
+          <div class="des">
+            <span><%= product.name %></span>
+            <h5><%= product.description %></h5>
+            <div class="star">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <h4>฿<%= product.price %></h4>
+          </div>
+          <a href="#">
+            <div class="cart">
+              <i class="fa-solid fa-cart-shopping"></i>
+            </div>
+          </a>
+        </div>
+      <% } %>
+
+      <!--
+
       <div class="pro" onclick="window.location.href='/Sup-product';">
         <img src="/img/products/p1.jpg" alt="">
         <div class="des">
@@ -252,6 +236,8 @@
 
       </div>
 
+      -->
+
     </div>
 
   </section>
@@ -263,32 +249,10 @@
       <button class="normal">Explore More</button>
     </a>
   </section>
+  <script>
+    function redirectToProduct(productId) {
+        window.location.href = `/getProduct/${productId}`;
+    }
+  </script>
 
-  <footer class="section-p1">
-    <div class="col">
-      <img src="/img/logo_footer.png" alt="">
-      <h4>Contact</h4>
-      <p><strong>Address:</strong> 126 Pracha Uthit Rd., Bang Mod,Bangkok 10140, Thailand.</p>
-      <p><strong>Phone:</strong> +01 1233 660</p>
-      <p><strong>Hours:</strong> 8:30 - 10:30,Mon-Sat</p>
-    </div>
-
-    <div class="col">
-      <h4>About</h4>
-      <a href="/about">About </a>
-      <a href="/contact">Contact </a>
-    </div>
-
-    <div class="col">
-      <h4>My Account</h4>
-      <a href="/signIn">Sign In </a>
-      <a href="/cart">View Cart </a>
-      
-      <!-- Need to edit -->
-      <a href="Ordertracking.html">Track My Order </a>
-      <a href="/admin_panel">Admin Dashbord </a>
-    </div>
-  </footer>
-</body>
-
-</html>
+<%- include('../partials/footer') %>

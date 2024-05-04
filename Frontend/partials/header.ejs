@@ -1,0 +1,24 @@
+<body>
+
+    <section id="header">
+        <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
+        <div>
+            <ul id="navbar">
+
+                <form>
+                    <div class="search">
+                        <span class="search-icon material-symbols-outlined">search</span>
+                        <input class="search-input" type="search" placeholder="Search">
+                    </div>
+                </form>
+
+                <li><a class="<%= typeof home != 'undefined' ? home: '' %>" href="/">Home</a></li>
+                <li><a href="/signIn">Sign In/Register</a></li>
+                <li><a class="<%= typeof shop != 'undefined' ? shop: '' %>" href="/shop">Shop</a></li>
+                <li><a class="<%= typeof about != 'undefined' ? about: '' %>" href="/about">About</a></li>
+                <li><a class="<%= typeof contact != 'undefined' ? contact: '' %>" href="/contact">Contact</a></li>
+                <li><a href="/edit_by_user"><img src="/img/user.png"></a></li>
+                <li><a class="<%= typeof cart != 'undefined' ? cart: '' %>" href="/cart"><img src="/img/cart1.png"></a></li>
+                <ul>
+        </div>
+    </section>
