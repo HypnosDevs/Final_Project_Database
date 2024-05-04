@@ -1,0 +1,123 @@
+<%- include('../partials/head') %>
+
+<body>
+
+
+    <section id="header">
+        <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
+        <div>
+            <ul id="navbar">
+
+                <form>
+                    <div class="search">
+                        <span class="search-icon material-symbols-outlined">search</span>
+                        <input class="search-input" type="search" placeholder="Search">
+                    </div>
+                </form>
+
+                <li><a href="/">Home</a></li>
+                <li><a class="active" href="/admin_panel">Dashboard</a></li>
+                <li><a href="/product_admin">Products</a></li>
+                <li><a href="/promotion_admin">Promotion</a></li>
+              
+                <ul>
+        </div>
+    </section>
+
+    <section id="page-header">
+
+        <h2># Dashboard</h2>
+
+    </section>
+
+    <section id="interface">
+        <h3 class="i-name">
+            Dashboard
+        </h3>
+    
+        <div class="values">
+            <div class="val-box">
+                <i class="fa-solid fa-users"></i>
+                <div>
+                    <h3>254</h3>
+                    <span>Users</span>
+                </div>
+            </div>
+            <div class="val-box">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <div>
+                    <h3>2</h3>
+                    <span>Total Orders</span>
+                </div>
+            </div>
+            
+            <div class="val-box">
+                <i class="fa-solid fa-box"></i>
+                <div>
+                    <h3>8</h3>
+                    <span>Product Sell</span>
+                </div>
+            </div>
+            <div class="val-box">
+                <i class="fa-solid fa-ticket"></i>
+                <div>
+                    <h3>2</h3>
+                    <span>Total Coupon</span>
+                </div>
+            </div>
+            <div class="val-box">
+                <i class="fa-solid fa-baht-sign"></i>
+                <div>
+                    <h3>฿1400</h3>
+                    <span>This Month</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <section id="board" class="">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <td>Remove</td>
+                    <td>Users</td>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Role</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                    <td><img src="/img/user.png"></a></li></td>
+                    <td>Anna xxxx</td>
+                    <td>Ann@gmail.com</td>
+                    <td>Owner</td>
+                    <td class="edit"><a href="/edit_by_admin">Edit</a></td>
+                    
+                </tr>
+                <tr>
+                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                    <td><img src="/img/user.png"></a></li></td>
+                    <td>ALs</td>
+                    <td>A@gmail</td>
+                    <td>admin</td>
+                    <td class="edit"><a href="/edit_by_admin">Edit</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                    <td><img src="/img/user.png"></a></li></td>
+                    <td>Tom  asssss</td>
+                    <td>Tom@gmail.com</td>
+                    <td>Admin</td>
+                    <td class="edit"><a href="/edit_by_admin">Edit</a></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </section>
+
+  
+<%- include('../partials/footer') %>

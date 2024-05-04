@@ -1,0 +1,83 @@
+<%- include('../partials/head') %>
+
+<body>
+
+
+    <section id="header">
+        <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
+        <div>
+            <ul id="navbar">
+
+                <form>
+                    <div class="search">
+                        <span class="search-icon material-symbols-outlined">search</span>
+                        <input class="search-input" type="search" placeholder="Search">
+                    </div>
+                </form>
+
+                <li><a href="/">Home</a></li>
+                <li><a href="/admin_panel">Dashboard</a></li>
+                <li><a class="active" href="/product_admin">Products</a></li>
+                <li><a href="/promotion_admin">Promotion</a></li>
+              
+                <ul>
+        </div>
+    </section>
+
+    <section id="page-header">
+
+        <h2># Products</h2>
+
+    </section>
+
+
+    <section id="button_create">
+        <a href="/create_product">
+            <button>Add Product</button>
+        </a>
+    </section> 
+    
+    <section id="cart" class="">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <td>Remove</td>
+                    <td>Image</td>
+                    <td>Product</td>
+                    <td>Category</td>
+                    <td>Price</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                    <td><img src="/img/products/p1.jpg"></td>
+                    <td>THE MONSTERS Catch Me If You Like Me Series-Vinyl Doll Gift Box</td>
+                    <td>labubu</td>
+                    <td>$ 29.99</td>
+                    <td class="edit"><a href="/edit_product">Edit</a></td>
+                    
+                </tr>
+                <tr>
+                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                    <td><img src="/img/products/p3.png"></td>
+                    <td>Crybaby Crying Parade Series</td>
+                    <td>Crybaby</td>
+                    <td>฿590</td>
+                    <td class="edit"><a href="/edit_product">Edit</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                    <td><img src="/img/products/p8.jpg"></td>
+                    <td>CRYBABY × Powerpuff Girls Series-Vinyl Face Plush Blind Box</td>
+                    <td>Crybaby</td>
+                    <td>฿430</td>
+                    <td class="edit"><a href="/edit_product">Edit</a></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </section>
+
+<%- include('../partials/footer') %>

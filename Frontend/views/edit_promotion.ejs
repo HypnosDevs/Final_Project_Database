@@ -1,0 +1,57 @@
+<%- include('../partials/head') %>
+    
+    <body>
+        <div class="container">
+            <div class="leftbox">
+                <nav>
+                    <a onclick="tabs(0)" 
+                    class="tab">
+                    <i class="fa-solid fa-ticket"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <div class="rightbox">
+                <div class="profile tabshow">
+                    <h1>Edit Promotion</h1>
+    
+                    <h2>Image</h2>
+                    <input type="file" accept="image/*">
+
+                    <h2>Details</h2>
+                    <input type="text" class="input" value="">
+                    
+                    <h2>Code Promotion</h2>
+                    <input type="text" class="input" value="">
+
+                    <h2>Price</h2>
+                    <input type="text" class="input" value="">
+
+                    
+
+                    <button class="btn">Update</button>
+
+                 
+                    
+                </div>
+            </div>
+
+
+             
+            <script>
+                const tabBtn = document.querySelectorAll('.tab');
+                const tab = document.querySelectorAll('.tabshow');
+            
+                function tabs(panelIndex) {
+                    tab.forEach(function(node) {
+                        node.style.display = "none";
+                    });
+                    tab[panelIndex].style.display = "block";
+                }
+                tabs(0);
+            </script>
+            
+                
+    </body>
+
+</html>

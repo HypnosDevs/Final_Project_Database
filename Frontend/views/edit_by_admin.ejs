@@ -1,0 +1,84 @@
+<%- include('../partials/head') %>
+    
+    <body>
+        <div class="container">
+            <div class="leftbox">
+                <nav>
+                    <a onclick="tabs(0)" 
+                    class="tab">
+                    <i class='bx bxs-user'></i>
+                    </a>
+                    
+                    <a onclick="tabs(1)" 
+                    class="tab">
+                    <i class="fa-solid fa-credit-card"></i>
+                    </a>
+
+                    <a onclick="tabs(2)" 
+                    class="tab">
+                    <i class="fa-solid fa-gear"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <div class="rightbox">
+                <div class="profile tabshow">
+                    <h1>Prosonal Info</h1>
+                    <h2>Full name</h2>
+                    <input type="text" class="input" value="Anna xxx">
+
+                    <h2>Gender</h2>
+                    <input type="text" class="input" value="Female">
+
+                    <h2>Role</h2>
+                    <input type="text" class="input" value="Owner">
+
+                    <button class="btn">Update</button>
+                    
+                </div>
+
+                <div class="payment tabshow">
+                    <h1>Payment Info</h1>
+                    <h2>Payment Method</h2>
+                    <input type="text" class="input" value="MasterCard -0104 ******** 7321">
+
+                    <h2>Billng Address</h2>
+                    <input type="text" class="input" value="Jan 20,2025">
+
+                    <h2>ZipCode</h2>
+                    <input type="text" class="input" value="AAA-xxx">
+                   
+                    <button class="btn">Update</button>
+                    
+                </div>
+
+                
+                <div class="setting tabshow">
+                    <h1>Email & Password</h1>
+                    <h2>Email</h2>
+                    <input type="text" class="input" value="example@gmail.com">
+                   
+                    <h2>Password</h2>
+                    <input type="password" class="input" value="brightcode">
+                    <button class="btn">Update</button>
+                </div>
+
+            </div>
+             
+            <script>
+                const tabBtn = document.querySelectorAll('.tab');
+                const tab = document.querySelectorAll('.tabshow');
+            
+                function tabs(panelIndex) {
+                    tab.forEach(function(node) {
+                        node.style.display = "none";
+                    });
+                    tab[panelIndex].style.display = "block";
+                }
+                tabs(0);
+            </script>
+            
+                
+    </body>
+
+</html>
