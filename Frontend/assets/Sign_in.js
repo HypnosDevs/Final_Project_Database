@@ -15,7 +15,7 @@ submitButton.addEventListener("click", async () => {
         })
 
         const match = res.data.isValid;
-        
+
         if (!match) {
             // Check if the validation message already exists
             const existingValidationMessage = document.getElementById("validate-text");
@@ -33,6 +33,21 @@ submitButton.addEventListener("click", async () => {
             if (existingValidationMessage) {
                 existingValidationMessage.parentNode.removeChild(existingValidationMessage);
             }
+            const response = await axios.post("http://localhost:8080/api/Authentication/login", {
+                username,
+                password
+            }, {
+                withCredentials: true
+            });
+
+            const curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+                withCredentials: true
+            });
+
+            console.log("sign in success", response.data);
+            username.value = "";
+            password.value = "";
+
             // Submit the form
             signInForm.submit();
         }

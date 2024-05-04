@@ -25,6 +25,7 @@ const orderRouters = require('./Routes/order');
 
 app.use(
     cors({
+        origin: 'http://localhost:9090',
         credentials: true
     }),
 );
