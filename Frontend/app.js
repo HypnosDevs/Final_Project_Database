@@ -29,19 +29,60 @@ const PORT = env.PORT || 9090;
 //     res.render('contact')
 // })
 
+app.get('/', async (req, res) => {
+    try {
+        //console.log('kuy');
+        const products = await axios.get("http://localhost:8080/api/Product/getProduct");
+        //console.log(products.data);
+        res.render('index', {
+            products: products.data,
+            title: "Home",
+            style: "/index.css",
+            home: "active"
+        })
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+})
+
+app.post('/', async (req, res) => {
+    try {
+        //console.log('kuy');
+        const products = await axios.get("http://localhost:8080/api/Product/getProduct");
+        //console.log(products.data);
+        res.render('index', {
+            products: products.data,
+            title: "Home",
+            style: "/index.css",
+            home: "active"
+        })
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+})
+
+
 app.get('/admin_panel', async (req, res) => {
-    const users = await axios.get("http://localhost:8080/api/User/getUsers");
-    const products = await axios.get("http://localhost:8080/api/Product/getProduct");
-    const orderItems = await axios.get("http://localhost:8080/api/OrderItem/getAllOrderItem");
-    const discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
-    res.render('admin_panel', {
-        users: users.data,
-        products: products.data,
-        orderItems: orderItems.data,
-        discounts: discounts.data,
-        title: "Admin Panel",
-        style: "admin_panel.css"
-    })
+    try {
+        // const users = await axios.get("http://localhost:8080/api/User/getUser");
+        // const products = await axios.get("http://localhost:8080/api/Product/getProduct");
+        // const orderItems = await axios.get("http://localhost:8080/api/OrderItem/getAllOrderItem");
+        // const discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
+        // res.render('admin_panel', {
+        //     users: users.data,
+        //     products: products.data,
+        //     orderItems: orderItems.data,
+        //     discounts: discounts.data,
+        //     title: "Admin Panel",
+        //     style: "admin_panel.css"
+        // })
+        res.render('admin_panel');
+    } catch (err) {
+        console.log("Error can't access admin panel");
+        res.send({ message: err });
+    }
 })
 
 app.get('/cart', (req, res) => {
@@ -100,22 +141,6 @@ app.get('/', (req, res) => {
 })
 */
 
-app.get('/', async (req, res) => {
-    try {
-        //console.log('kuy');
-        const products = await axios.get("http://localhost:8080/api/Product/getProduct");
-        //console.log(products.data);
-        res.render('index', {
-            products: products.data,
-            title: "Home",
-            style: "/index.css",
-            home: "active"
-        })
-    } catch (err) {
-        console.log(err.message);
-        res.status(500).send({ message: err.message });
-    }
-})
 
 app.get('/getProduct/:id', async (req, res) => {
     try {

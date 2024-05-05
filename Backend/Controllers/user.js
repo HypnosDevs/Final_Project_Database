@@ -27,7 +27,7 @@ exports.getUser = async (req, res) => {
             return res.status(400).send({ message: 'ID parameter is missing' });
         }
 
-        const user = await User.findById(id);
+        const user = await User.findById(id, { password: 0 });
 
         if (!user) {
             return res.status(404).send({ message: 'User not found' });
