@@ -1,7 +1,7 @@
 const Address = require("../Models/Address");
 const User = require("../Models/User");
 
-exports.getAllAdressFromUser = async (req, res) => {
+exports.getAllAddressFromUser = async (req, res) => {
     try {
         const addressData = await User.findById(req.session.userId).populate('address');
 

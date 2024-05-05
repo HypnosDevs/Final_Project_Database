@@ -4,32 +4,45 @@
         <div class="container">
             <div class="leftbox">
                 <nav>
-                    <a onclick="tabs(0)" 
-                    class="tab">
-                    <i class='bx bxs-user'></i>
+                    <a onclick="tabs(0)" class="tab">
+                        <i class='bx bxs-user'></i>
                     </a>
                     
-                    <a onclick="tabs(1)" 
-                    class="tab">
-                    <i class="fa-solid fa-credit-card"></i>
+                    <a onclick="tabs(1)" class="tab">
+                        <i class="fa-solid fa-credit-card"></i>
                     </a>
-
-                    <a onclick="tabs(2)" 
-                    class="tab">
-                    <i class="fa-solid fa-gear"></i>
+            
+                    <a onclick="tabs(2)" class="tab">
+                        <i class="fa-solid fa-truck-fast"></i>
                     </a>
-
+            
+                    <a onclick="tabs(4)" class="tab">
+                        <i class="fa-solid fa-gear"></i>
+                    </a>
                 </nav>
             </div>
             <div class="rightbox">
                 <div class="profile tabshow">
                     <h1>Prosonal Info</h1>
-                    <h2>Full name</h2>
-                    <input type="text" class="input" value="Anna xxx">
+                    <h2>First name</h2>
+                    <input type="text" class="input" value="">
+
+                    <h2>Last name</h2>
+                    <input type="text" class="input" value="">
 
                     <h2>Gender</h2>
-                    <input type="text" class="input" value="Female">
+                    <select class="input">
+                        <option value="Male">Male</option>
+                
+                        <option value="Female">Female</option>
 
+                        <option value="Other">Others</option>
+                       
+                    </select>
+
+                    <h2>Phone Number</h2>
+                    <input type="text" class="input" value="">
+                
 
                     <button class="btn">Update</button>
                     
@@ -38,23 +51,63 @@
                 <div class="payment tabshow">
                     <h1>Payment Info</h1>
                     <h2>Payment Method</h2>
-                    <input type="text" class="input" value="MasterCard -0104 ******** 7321">
+                    <input type="text" class="input" value="">
 
                     <h2>Billng Address</h2>
-                    <input type="text" class="input" value="Jan 20,2025">
+                    <input type="text" class="input" value="">
 
                     <h2>ZipCode</h2>
-                    <input type="text" class="input" value="AAA-xxx">
+                    <input type="text" class="input" value="">
                    
                     <button class="btn">Update</button>
                     
                 </div>
 
+                <div class="Address tabshow" id="addressPage1">
+                    <h1>Address Info</h1>
+                    <h2>Address name</h2>
+                    <input type="text" class="input" value="">
+                
+                    <h2>Address line1</h2>
+                    <input type="text" class="input" value="">
+                
+                    <h2>Address line2</h2>
+                    <input type="text" class="input" value="">
+                
+                    <h2>Country</h2>
+                    <select class="input">
+                        <option value="Thailand">Thailand</option>
+                    </select>
+                   
+                    <button class="btn" onclick="nextPage()">Next</button>
+                </div>
+
+                <div class="Address tabshow" id="addressPage2" style="display: none;">
+                    <h1>Address Info</h1>
+
+                    <h2>District</h2>
+                    <select class="input">
+                        <option value="Thailand">Thailand</option>
+                    </select>
+
+                    <h2>street number</h2>
+                    <input type="text" class="input" value="">
+                
+                    <h2>Postal Code</h2>
+                    <input type="text" class="input" value="">
+                
+                    <button class="btn" onclick="prevPage()">Previous</button>
+                    <button class="btn" onclick="updateAddress()">Update</button>
+                
+                </div>
+                
+               
+
                 
                 <div class="setting tabshow">
                     <h1>Email & Password</h1>
                     <h2>Email</h2>
-                    <input type="text" class="input" value="example@gmail.com">
+                    <input type="text" class="input" value="">
                    
                     <h2>Password</h2>
                     <input type="password" class="input" value="brightcode">
@@ -74,8 +127,32 @@
                     tab[panelIndex].style.display = "block";
                 }
                 tabs(0);
-            </script>
             
+                var currentPage = 1;
+                var totalPages = 2;
+            
+                function nextPage() {
+                    document.getElementById("addressPage" + currentPage).style.display = "none";
+                    currentPage++;
+                    if (currentPage > totalPages) {
+                        currentPage = totalPages;
+                    }
+                    document.getElementById("addressPage" + currentPage).style.display = "block";
+                }
+            
+                function prevPage() {
+                    document.getElementById("addressPage" + currentPage).style.display = "none";
+                    currentPage--;
+                    if (currentPage < 1) {
+                        currentPage = 1;
+                    }
+                    document.getElementById("addressPage" + currentPage).style.display = "block";
+                }
+            
+                function updateAddress() {
+                    // ทำสิ่งที่ต้องการเมื่อกดปุ่ม Update
+                }
+            </script>
                 
     </body>
 

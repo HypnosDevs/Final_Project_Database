@@ -2,7 +2,7 @@ const express = require('express');
 const { getAllOrderItem, getOrderItem, addOrderItem, deleteOrderItem, getProductFromOrderItem } = require('../Controllers/orderItem');
 const router = express.Router()
 
-router.get('/getAllsOrderItem', getAllOrderItem);
+router.get('/getAllOrderItem', getAllOrderItem);
 
 router.get('/getOrderItem/:order_id/:product_id', getOrderItem)
 

@@ -2,7 +2,7 @@ const express = require('express');
 const { getAllShoppingCartItem, getShoppingCartItem, addShoppingCartItem, deleteShoppingCartItem, getProductFromShoppingCartItem } = require('../Controllers/shoppingCartItem');
 const router = express.Router()
 
-router.get('/getAllsShoppingCartItem', getAllShoppingCartItem);
+router.get('/getAllShoppingCartItem', getAllShoppingCartItem);
 
 router.get('/getShoppingCartItem/:ShoppingCart_id/:product_id', getShoppingCartItem)
 
