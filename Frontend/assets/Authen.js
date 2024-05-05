@@ -1,11 +1,11 @@
 
 const authentication = async (req, res) => {
-    const curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+    const curUserId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
         withCredentials: true
     });
 
 
-    console.log("user", curUser);
+    console.log("user", curUserId.data);
 }
 
 authentication();

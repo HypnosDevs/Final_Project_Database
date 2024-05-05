@@ -5,7 +5,11 @@ const discountSchema = new mongoose.Schema({
         type: Number,
         required: true,
     }
-})
+    },
+    {
+        timestamps: true
+    }
+)
 
 const Discount = mongoose.model('Discount', discountSchema);
 

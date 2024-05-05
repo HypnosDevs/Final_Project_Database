@@ -20,7 +20,11 @@ const orderItemSchema = new Schema({
         required: true
     }
 
-})
+    },
+    {
+        timestamps: true
+    }
+)
 
 const OrderItem = mongoose.model('OrderItem', orderItemSchema);
 

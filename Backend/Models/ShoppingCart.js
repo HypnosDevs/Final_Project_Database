@@ -8,7 +8,11 @@ const shoppingCartSchema = new Schema({
         ref: 'User'
     }
 
-})
+    },
+    {
+        timestamps: true
+    }
+)
 
 const ShoppingCart = mongoose.model('ShoppingCart', shoppingCartSchema);
 

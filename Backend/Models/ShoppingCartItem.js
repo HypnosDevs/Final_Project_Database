@@ -18,7 +18,11 @@ const shoppingCartItemSchema = new Schema({
     }
     
 
-})
+    },
+    {
+        timestamps: true
+    }
+)
 
 const ShoppingCartItem = mongoose.model('ShoppingCartItem', shoppingCartItemSchema);
 

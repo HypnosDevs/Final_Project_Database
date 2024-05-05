@@ -10,7 +10,11 @@ const discountCategorySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Discount'
     }
-})
+    },
+    {
+        timestamps: true
+    }
+)
 
 const DiscountCategory = mongoose.model('DiscountCategory', discountCategorySchema);
 

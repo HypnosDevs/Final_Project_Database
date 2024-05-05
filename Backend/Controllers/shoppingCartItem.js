@@ -28,14 +28,16 @@ exports.getShoppingCartItem = async (req, res) => {
     }
 }
 
-exports.getProductFromShoppingCartItem = async (req, res) => {
+exports.getItemFromShoppingCart = async (req, res) => {
     try {
-        const { shoppingcart_id, product_id } = req.params;
-        const data = await ShoppingCartItem.findById({ shoppingcart: shoppingcart_id, product: product_id });
+        const { shoppingcart_id } = req.params;
+        const data = await ShoppingCartItem.findById({ shoppingcart: shoppingcart_id });
         if (data.length === 0) {
             throw { message: "Data (product in that shopping cart id) Not Found" };
         }
+        console.log(data)
         data = data.populate("product")
+        console.log(data)
         res.status(200).send(data);
     } catch (err) {
         console.log(err.message);
@@ -46,6 +48,10 @@ exports.getProductFromShoppingCartItem = async (req, res) => {
 exports.addShoppingCartItem = async (req, res) => {
     try {
         const { shoppingcart_id, product_id } = req.params;
+
+        console.log("params",req.params);
+        console.log("product",product_id);
+        console.log("shoppingcart",shoppingcart_id);
         const shoppingcart = await ShoppingCart.findById({ _id: shoppingcart_id });
         if (shoppingcart.length === 0) {
             throw { message: "Order Not Found" };
@@ -55,9 +61,9 @@ exports.addShoppingCartItem = async (req, res) => {
             throw { message: "Product Not Found" };
         }
         const shoppingCartItem = new ShoppingCartItem(req.body);
-        ShoppingCartItem.shoppingcart = shoppingcart;
-        ShoppingCartItem.product = product;
-        ShoppingCartItem.save();
+        shoppingCartItem.shoppingcart = shoppingcart;
+        shoppingCartItem.product = product;
+        shoppingCartItem.save();
         res.status(201).send({ message: "Create shopping cart item succesful" });
 
     } catch (err) {

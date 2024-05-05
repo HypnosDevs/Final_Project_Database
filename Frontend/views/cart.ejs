@@ -77,5 +77,15 @@
             <button class="normal"><strong>Proceed to check out</strong></button>
         </div>
     </section>
+    <script>
+        const shoppingCart = await axios.post(`http://localhost:8080/api/ShoppingCart/addShoppingCart/${userId}`);
+        console.log('shoppingcart',shoppingCart.data._id);
+        console.log('productid',productId);
+        const shoppingCartItem = await axios.post(`http://localhost:8080/api/ShoppingCartItem/addShoppingCartItem/${shoppingCart.data._id}/${productId}`,{
+            qty:document.querySelector("#qty").value
+        });
+        console.log("Add shopping cart success");
+                   
+    </script>
     
 <%- include('../partials/footer') %>
