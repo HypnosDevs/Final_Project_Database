@@ -15,10 +15,10 @@ const addressSchema = new Schema(
             type: String,
             required: true
         },
-        district: {
+        amphoe: {
             type: String
         },
-        street_number: {
+        district: {
             type: String
         },
         address_line1: {

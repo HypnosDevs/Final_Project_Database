@@ -54,38 +54,39 @@
             </div>
 
             <div class="address-box">
-                <select id="country" name="address[country]" required>
+                <select id="country" name="address[country]" required onchange="showProvinces()">
                     <option value="" disabled selected>Select Country</option>
-                    <option value="thailand">thailand</option>
+                    <option value="Thailand">Thailand</option>
                 </select>
                 <i class='bx bx-flag'></i>
             </div>
 
             <div class="address-box">
-                <select id="province" name="address[province]" required>
+                <select id="province" name="address[province]" required onchange="showAmphoes()" disabled>
                     <option value="" disabled selected>Select Province</option>
-                    <option value="Test">Test</option>
                     <!-- JS will display province -->
                 </select>
                 <i class='bx bx-map-pin'></i>
             </div>
 
             <div class="address-box">
-                <select id="district" name="address[district]" required>
+                <select id="amphoe" name="address[amphoe]" required disabled onchange="showDistricts()">
+                    <option value="" disabled selected>Select Amphoe</option>
+                    <!-- JS will display province -->
+                </select>
+                <i class='bx bx-map-pin'></i>
+            </div>
+
+            <div class="address-box">
+                <select id="district" name="address[district]" required disabled onchange="showPostCode()">
                     <option value="" disabled selected>Select District</option>
-                    <option value="Test">Test</option>
                     <!-- JS will display district -->
                 </select>
                 <i class='bx bx-street-view'></i>
             </div>
 
             <div class="input-box">
-                <input type="text" placeholder="street_number" name="address[street_number]" required>
-                <i class='bx bx-transfer'></i>
-            </div>
-
-            <div class="input-box">
-                <input type="text" placeholder="Postal Code" name="address[postal_code]" required>
+                <input type="text" id="postal_code" placeholder="Postal Code" name="address[postal_code]" required>
                 <i class='bx bx-mail-send'></i>
             </div>
 
@@ -116,6 +117,12 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="Register.js"></script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/JQL.min.js"></script>
+    <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/typeahead.bundle.js"></script>
+    <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.js"></script>
+
 </body>
 
 
