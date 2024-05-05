@@ -29,8 +29,16 @@ const PORT = env.PORT || 9090;
 //     res.render('contact')
 // })
 
-app.get('/admin_panel', (req, res) => {
+app.get('/admin_panel', async (req, res) => {
+    const users = await axios.get("http://localhost:8080/api/User/getUsers");
+    const products = await axios.get("http://localhost:8080/api/Product/getProduct");
+    const orderItems = await axios.get("http://localhost:8080/api/OrderItem/getAllOrderItem");
+    const discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
     res.render('admin_panel', {
+        users: users.data,
+        products: products.data,
+        orderItems: orderItems.data,
+        discounts: discounts.data,
         title: "Admin Panel",
         style: "admin_panel.css"
     })

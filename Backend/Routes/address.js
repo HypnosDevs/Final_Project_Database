@@ -1,9 +1,9 @@
 const express = require('express')
-const { getAllAdressFromUser, getAddress, addAddress, updateAddress, deleteAddress } = require('../Controllers/address')
+const { getAllAddressFromUser, getAddress, addAddress, updateAddress, deleteAddress } = require('../Controllers/address')
 const router = express.Router()
 
 
-router.get('/getAllAdressFromUser', getAllAdressFromUser);
+router.get('/getAllAddressFromUser', getAllAddressFromUser);
 
 router.get('/getAddress', getAddress);
 

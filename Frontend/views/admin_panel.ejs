@@ -39,14 +39,14 @@
             <div class="val-box">
                 <i class="fa-solid fa-users"></i>
                 <div>
-                    <h3>254</h3>
+                    <h3><%= users.length %></h3>
                     <span>Users</span>
                 </div>
             </div>
             <div class="val-box">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <div>
-                    <h3>2</h3>
+                    <h3><%= orderItems.length %></h3>
                     <span>Total Orders</span>
                 </div>
             </div>
@@ -54,14 +54,14 @@
             <div class="val-box">
                 <i class="fa-solid fa-box"></i>
                 <div>
-                    <h3>8</h3>
+                    <h3><%= products.length %></h3>
                     <span>Product Sell</span>
                 </div>
             </div>
             <div class="val-box">
                 <i class="fa-solid fa-ticket"></i>
                 <div>
-                    <h3>2</h3>
+                    <h3><%= discounts.length %></h3>
                     <span>Total Coupon</span>
                 </div>
             </div>
@@ -89,6 +89,16 @@
                 </tr>
             </thead>
             <tbody>
+                <% for(let user of users) { %>
+                    <tr>
+                        <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                        <td><img src="/img/user.png"></a></li></td>
+                        <td><%= user.username %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.role %></td>
+                        <td class="edit"><a href="/edit_by_admin">Edit</a></td>
+                    </tr>
+                <!--
                 <tr>
                     <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
                     <td><img src="/img/user.png"></a></li></td>
@@ -114,7 +124,8 @@
                     <td>Admin</td>
                     <td class="edit"><a href="/edit_by_admin">Edit</a></td>
                 </tr>
-
+                -->    
+                <% } %>
             </tbody>
         </table>
     </section>
