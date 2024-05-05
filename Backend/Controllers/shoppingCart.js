@@ -37,7 +37,7 @@ exports.getShoppingCart = async (req, res) => {
     try {
         const { shoppingcart_id } = req.params;
         console.log(req.params)
-        
+
         const data = await ShoppingCart.findById(shoppingcart_id);
         console.log(data)
         if (data && data.length === 0) {
@@ -54,28 +54,25 @@ exports.getShoppingCart = async (req, res) => {
 
 exports.addShoppingCart = async (req, res) => {
     try {
-        const {id} = req.params;
-        if (!id) {
-            throw { message: "Authentication fail" };
+        const { user_id } = req.params;
+        if (!user_id) {
+            throw new Error("Authentication failed");
         }
-        const user = await User.findById({ _id: id });
-        console.log('addshopping cart to user:',user);
-        if (user.length === 0) {
-            throw { message: "User Not Found" };
+        const user = await User.findById(user_id);
+        if (!user) {
+            throw new Error("User Not Found");
         }
-        if (user.shoppingcart.length > 0) {
-            res.status(201).send(user.shoppingcart);
-        } else {
-            const shoppingCart = new ShoppingCart();
-            shoppingCart.user = user;
-            shoppingCart.save();
-            res.status(201).send(shoppingCart);
+        if (user.shoppingcart) {
+            const curShoppingCart = await ShoppingCart.findOne({ user: user._id, inUsed: true });
+            if (curShoppingCart) {
+                return res.status(201).send(curShoppingCart);
+            }
         }
-        
-        
-
+        const shoppingCart = new ShoppingCart({ user: user._id, inUsed: true });
+        await shoppingCart.save();
+        res.status(201).send(shoppingCart);
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
         res.status(500).send({ message: err.message });
     }
 }
@@ -83,13 +80,13 @@ exports.addShoppingCart = async (req, res) => {
 exports.deleteShoppingCart = async (req, res) => {
     try {
         const { shoppingcart_id } = req.params;
-        console.log('kuy')
+        // console.log('kuy')
 
         await ShoppingCartItem.deleteMany({ shoppingcart: { $in: shoppingcart_id } });
-        console.log('kuy')
+        // console.log('kuy')
 
         await ShoppingCart.deleteOne({ _id: shoppingcart_id });
-        console.log('kuy')
+        // console.log('kuy')
         res.status(204).send({ message: "Delete order item succesful" });
     } catch (err) {
         console.log(err.message);

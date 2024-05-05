@@ -259,7 +259,7 @@ app.get('/Sup-product', (req, res) => {
 app.get('/Sup-product2', (req, res) => {
     res.render('sproduct2', {
         title: "Sup-product2",
-        style: "/sproduct.css",
+        style: "/index.css",
     })
 })
 

@@ -6,9 +6,12 @@ const shoppingCartSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
-
     },
+    inUsed: {
+        type: Boolean,
+        required: true
+    }
+},
     {
         timestamps: true
     }

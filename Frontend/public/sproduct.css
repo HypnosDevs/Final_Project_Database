@@ -475,7 +475,17 @@ footer .col img {
 }
 
 #prodetails .single-pro-details button {
-  background: #088178;
+  background: #3d7f7f;
+  color: #fff;
+  width: 150px;
+  /* กำหนดความกว้างของปุ่ม */
+  height: 50px;
+  outline: none;
+
+}
+
+#prodetails .single-pro-details button:hover {
+  background: #044c4c;
   color: #fff;
   width: 150px;
   /* กำหนดความกว้างของปุ่ม */

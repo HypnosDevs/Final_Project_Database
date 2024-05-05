@@ -8,7 +8,7 @@ router.get('/getAllShoppingcartFromuser', getAllShoppingcartFromuser);
 
 router.get('/getShoppingCart/:shoppingcart_id', getShoppingCart)
 
-router.post('/addShoppingCart/:id', addShoppingCart)
+router.post('/addShoppingCart/:user_id', addShoppingCart)
 
 router.delete('/deleteShoppingCart/:shoppingcart_id', deleteShoppingCart)
 
