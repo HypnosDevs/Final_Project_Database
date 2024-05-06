@@ -112,29 +112,7 @@
         </script>
         -->
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script>
-            console.log("here");
-            // console.log('product',JSON.stringify(product));
-            const addCart = async (productId) => {
-                const addCartButt = document.querySelector("#addCart");
-                const curUserId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
-                    withCredentials: true
-                });
-
-                userId = curUserId.data
-                console.log("user", userId);
-
-                const shoppingCart = await axios.post(`http://localhost:8080/api/ShoppingCart/addShoppingCart/${userId}`);
-                console.log('shoppingcart', shoppingCart.data._id);
-                console.log('productid', productId);
-                const shoppingCartItem = await axios.post(`http://localhost:8080/api/ShoppingCartItem/addShoppingCartItem/${shoppingCart.data._id}/${productId}`, {
-                    qty: document.querySelector("#qty").value
-                });
-                console.log("Add shopping cart success");
-            }
-
-
-        </script>
+        <script src="/sproduct.js"></script>
         <!-- <script src="/Authen.js"></script> -->
 
 
