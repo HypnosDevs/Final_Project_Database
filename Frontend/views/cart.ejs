@@ -29,27 +29,40 @@
     </div>
     <div id="subtotal">
         <h3>Cart Totals</h3>
-        <table>
-            <tr>
-                <td>Cart Subtotal</td>
-                <td>฿1400</td>
-            </tr>
-            <tr>
-                <td>Shipping</td>
-                <td>Free</td>
-            </tr>
-            <tr>
-                <td><strong>Total</strong></td>
-                <td><strong>฿1400</strong></td>
-            </tr>
-        </table>
+        <table></table>
         <button class="normal"><strong>Proceed to check out</strong></button>
     </div>
 </section>
 <script>
     const renderCartTotals = (items) => {
+        const table = document.querySelector('#cart-add #subtotal table');
+        console.log(table);
+        table.innerHTML = '';
+
+        const cartSubtotal = items.reduce((total, item) => total + (item.product.price * item.qty), 0);
+
+
+        const subtotalTr = document.createElement('tr');
+        subtotalTr.innerHTML = `
+            <td>Cart Subtotal</td>
+            <td>฿${cartSubtotal}</td>
+        `;
+        table.appendChild(subtotalTr);
+
+        const shippingTr = document.createElement('tr');
+        shippingTr.innerHTML = `
+            <td>Shipping</td>
+            <td>Free</td>
+        `;
+        table.appendChild(shippingTr);
         
-    }
+        const TotalTr = document.createElement('tr');
+        TotalTr.innerHTML = `
+            <td>Total</td>
+            <td>฿${cartSubtotal}</td>
+        `;
+        table.appendChild(TotalTr);
+    };
 
     const renderCartItems = (items) => {
         const tbody = document.querySelector('#cart tbody');
@@ -83,6 +96,7 @@
                 const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${shoppingCart.data[0]._id}`);
                 console.log("Shopping Cart Items:", shoppingCartItems.data);
                 renderCartItems(shoppingCartItems.data); // Render cart items
+                renderCartTotals(shoppingCartItems.data);
             } else {
                 console.log("No shopping cart found for user:", userId);
             }
