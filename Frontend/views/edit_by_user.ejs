@@ -56,9 +56,6 @@
                     <h2>Billng Address</h2>
                     <input type="text" class="input" value="">
 
-                    <h2>ZipCode</h2>
-                    <input type="text" class="input" value="">
-                   
                     <button class="btn">Update</button>
                     
                 </div>
@@ -66,16 +63,17 @@
                 <div class="Address tabshow" id="addressPage1">
                     <h1>Address Info</h1>
                     <h2>Address name</h2>
-                    <input type="text" class="input" value="">
+                    <input type="text" class="input" value="" name="address[name]">
                 
                     <h2>Address line1</h2>
-                    <input type="text" class="input" value="">
+                    <input type="text" class="input" value="" name="address[address_line1]">
                 
                     <h2>Address line2</h2>
-                    <input type="text" class="input" value="">
+                    <input type="text" class="input" value="" name="address[address_line2]">
                 
                     <h2>Country</h2>
-                    <select class="input">
+                    <select id="country" name="address[country]" required onchange="showProvinces()">
+                        <option value="" disabled selected>Select Country</option>
                         <option value="Thailand">Thailand</option>
                     </select>
                    
@@ -85,16 +83,26 @@
                 <div class="Address tabshow" id="addressPage2" style="display: none;">
                     <h1>Address Info</h1>
 
-                    <h2>District</h2>
-                    <select class="input">
-                        <option value="Thailand">Thailand</option>
+                    <h2>Province</h2>
+                    <select id="province" name="address[province]" required onchange="showAmphoes()" disabled>
+                        <option value="" disabled selected>Select Province</option>
+                        <!-- JS will display province -->
                     </select>
 
-                    <h2>street number</h2>
-                    <input type="text" class="input" value="">
+                    <h2>Amphoe</h2>
+                    <select id="amphoe" name="address[amphoe]" required disabled onchange="showDistricts()">
+                        <option value="" disabled selected>Select Amphoe</option>
+                        <!-- JS will display province -->
+                    </select>
+
+                    <h2>District</h2>
+                    <select id="district" name="address[district]" required disabled onchange="showPostCode()">
+                        <option value="" disabled selected>Select District</option>
+                        <!-- JS will display district -->
+                    </select>
                 
                     <h2>Postal Code</h2>
-                    <input type="text" class="input" value="">
+                    <input type="text" class="input" id="postal_code" placeholder="Postal Code" name="address[postal_code]" required>
                 
                     <button class="btn" onclick="prevPage()">Previous</button>
                     <button class="btn" onclick="updateAddress()">Update</button>
@@ -153,7 +161,12 @@
                     // ทำสิ่งที่ต้องการเมื่อกดปุ่ม Update
                 }
             </script>
-                
+            
+            <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+            <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/JQL.min.js"></script>
+            <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/typeahead.bundle.js"></script>
+            <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.js"></script>
+            <script src="edit.js"></script>
     </body>
 
 </html>
