@@ -45,7 +45,7 @@
           <img src="data:image/png;base64, <%= product.image %>" alt="">
           <div class="des">
             <span><%= product.name %></span>
-            <h5><%= product.description %></h5>
+            <pre id="spanDesc"><%= product.description.replace(/^\s+/gm, '') %></pre>
             <div class="star">
               <i class="fa-solid fa-star"></i>
               <i class="fa-solid fa-star"></i>

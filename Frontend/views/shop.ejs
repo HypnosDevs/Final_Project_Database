@@ -46,9 +46,7 @@
               <span>
                 <%= product.name %>
               </span>
-              <h5>
-                <%= product.description %>
-              </h5>
+              <pre id="spanDesc"><%= product.description.replace(/^\s+/gm, '') %></pre>
               <div class="star">
                 <i class="fa-solid fa-star"></i>
                 <i class="fa-solid fa-star"></i>
@@ -246,11 +244,11 @@
 
     </section>
 
-    <section id="pagination" class="section-p1">
+    <!-- <section id="pagination" class="section-p1">
       <a href="#">1</a>
       <a href="#">2</a>
       <a href="#"><i class="fa-solid fa-arrow-right"></i></a>
-    </section>
+    </section> -->
 
     <script>
       function redirectToProduct(productId) {
