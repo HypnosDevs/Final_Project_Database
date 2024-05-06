@@ -48,27 +48,27 @@
                 <div class="val-box">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <div>
-                        <h3>
-                            orderItems length
+                        <h3 id="orderItems-length">
+
                         </h3>
                         <span>Total Orders</span>
                     </div>
                 </div>
 
-                <div class="val-box">
+                <div class="val-box" id="product_page">
                     <i class="fa-solid fa-box"></i>
                     <div>
-                        <h3>
-                            product.length
+                        <h3 id="products-length">
+
                         </h3>
                         <span>Product Sell</span>
                     </div>
                 </div>
-                <div class="val-box">
+                <div id="promotion_page" class="val-box">
                     <i class="fa-solid fa-ticket"></i>
                     <div>
-                        <h3>
-                            discount.length
+                        <h3 id="discounts-length">
+
                         </h3>
                         <span>Total Coupon</span>
                     </div>
@@ -85,7 +85,7 @@
 
 
         <section id="board" class="">
-            <table width="100%">
+            <table id="user-table" width="100%">
                 <thead>
                     <tr>
                         <td>Remove</td>
@@ -98,7 +98,7 @@
                 </thead>
                 <tbody>
 
-                    <tr>
+                    <!-- <tr>
                         <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
                         <td><img src="/img/user.png"></a></li>
                         </td>
@@ -112,7 +112,7 @@
                             ADMIN
                         </td>
                         <td class="edit"><a href="/edit_by_admin">Edit</a></td>
-                    </tr>
+                    </tr> -->
                     <!--
                 <tr>
                     <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
@@ -148,7 +148,17 @@
         <script>
 
             const allowedRole = ["ADMIN"];
+            const productSell = document.querySelector("#product_page");
+            productSell.addEventListener("click", () => {
+                // console.log("here");
+                window.location.href = "/product_admin"
+            })
 
+            const promotionSell = document.querySelector("#promotion_page");
+            promotionSell.addEventListener("click", () => {
+                // console.log("here");
+                window.location.href = "/promotion_admin"
+            })
 
 
 
@@ -161,14 +171,41 @@
                 const role = curUser.data.role;
                 // console.log("role", role);
                 if (allowedRole.includes(role)) {
-                    let allUsers = await axios.get(`http://localhost:8080/api/User/getUsers`, {
+                    let allUsers = await axios.get("http://localhost:8080/api/User/getUsers", {
                         withCredentials: true
                     })
                     allUsers = allUsers.data;
                     let orderItems = await axios.get("http://localhost:8080/api/OrderItem/getAllOrderItem");
+                    orderItems = orderItems.data;
                     let discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
+                    discounts = discounts.data;
+                    let products = await axios.get("http://localhost:8080/api/Product/getProduct");
+                    products = products.data;
                     let userLength = document.querySelector("#user-length");
                     userLength.innerHTML = allUsers.length;
+                    let orderItemsLength = document.querySelector("#orderItems-length");
+                    orderItemsLength.innerHTML = orderItems.length;
+                    let productLength = document.querySelector("#products-length")
+                    productLength.innerHTML = products.length;
+                    let discountLength = document.querySelector("#discounts-length")
+                    discountLength.innerHTML = discounts.length;
+
+                    const userTable = document.querySelector("#user-table");
+                    const tableBody = document.querySelector("#user-table tbody");
+
+                    for (user of allUsers) {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                        <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                        <td><img src="/img/user.png"></a></li></td>
+                        <td>${user.username}</td>
+                        <td>${user.email}</td>
+                        <td>${user.role}</td>
+                        <td class="edit"><a href="/edit_by_admin">Edit</a></td>
+                        `
+                        tableBody.appendChild(row);
+                    }
+
                 }
                 else {
                     window.location.href = "/"
