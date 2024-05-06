@@ -286,3 +286,11 @@ footer {
     width: 200px; /* ปรับขนาดความกว้างของโลโก้ */
     height: auto; /* รักษาสัดส่วนของรูปภาพ */
   }
+
+  .no-product {
+    text-align: center;
+    color: #b7b8bd;
+    font-size: x-large;
+    font-weight: bold;
+    padding: 150px 0;
+  }
