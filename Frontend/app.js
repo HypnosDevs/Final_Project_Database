@@ -86,11 +86,14 @@ app.get('/admin_panel', async (req, res) => {
 })
 
 app.get('/cart', (req, res) => {
-    res.render('cart', {
-        title: "Cart",
-        style: "/cart.css",
-        cart: "active",
-    })
+    
+        res.render('cart', {
+            title: "Cart",
+            style: "/cart.css",
+            cart: "active",
+        })
+
+        
 })
 
 app.get('/create_product', (req, res) => {

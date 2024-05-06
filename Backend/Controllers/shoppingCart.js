@@ -15,16 +15,38 @@ exports.getAllShoppingcart = async (req, res) => {
 
 exports.getAllShoppingcartFromuser = async (req, res) => {
     try {
-        if (!req.session.userId) {
+        const userId = req.params.user_id;
+        if (!userId) {
             throw { message: "Authentication fail" };
         }
-        const user = await User.findById(req.session.userId);
+        const user = await User.findById(userId);
 
         if (user.length === 0) {
             throw { message: "User not found" };
         }
 
-        const shoppingcart = await user.populate("shoppingcart")
+        const shoppingcart = await ShoppingCart.find({ user: userId })
+
+        res.status(200).send(shoppingcart);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}
+
+exports.getActiveShoppingcartFromuser = async (req, res) => {
+    try {
+        const userId = req.params.user_id;
+        if (!userId) {
+            throw { message: "Authentication fail" };
+        }
+        const user = await User.findById(userId);
+
+        if (user.length === 0) {
+            throw { message: "User not found" };
+        }
+
+        const shoppingcart = await ShoppingCart.findOne({ user: userId, inUsed: true })
 
         res.status(200).send(shoppingcart);
     } catch (err) {

@@ -31,13 +31,10 @@ exports.getShoppingCartItem = async (req, res) => {
 exports.getItemFromShoppingCart = async (req, res) => {
     try {
         const { shoppingcart_id } = req.params;
-        const data = await ShoppingCartItem.findById({ shoppingcart: shoppingcart_id });
+        const data = await ShoppingCartItem.find({ shoppingcart: shoppingcart_id }).populate("product");
         if (data.length === 0) {
             throw { message: "Data (product in that shopping cart id) Not Found" };
         }
-        console.log(data)
-        data = data.populate("product")
-        console.log(data)
         res.status(200).send(data);
     } catch (err) {
         console.log(err.message);
