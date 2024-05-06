@@ -3,7 +3,8 @@ const User = require("../Models/User");
 
 exports.getAllAddressFromUser = async (req, res) => {
     try {
-        const addressData = await User.findById(req.session.userId).populate('address');
+        const { user_id } = req.params;
+        const addressData = await User.findById(user_id).populate('address');
 
         res.send(addressData);
 
@@ -31,7 +32,8 @@ exports.getAddress = async (req, res) => {
 
 exports.addAddress = async (req, res) => {
     try {
-        const user = await User.findById(req.session.userId);
+        const { user_id } = req.params;
+        const user = await User.findById(user_id);
         const newAddress = new Address(req.body);
         user.address.push(newAddress);
         await user.save();

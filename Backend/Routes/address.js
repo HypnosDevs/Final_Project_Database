@@ -3,15 +3,15 @@ const { getAllAddressFromUser, getAddress, addAddress, updateAddress, deleteAddr
 const router = express.Router()
 
 
-router.get('/getAllAddressFromUser', getAllAddressFromUser);
+router.get('/getAllAddressFromUser/:user_id', getAllAddressFromUser);
 
-router.get('/getAddress', getAddress);
+router.get('/getAddress/:id', getAddress);
 
-router.post('/addAddress', addAddress);
+router.post('/addAddress/:user_id', addAddress);
 
-router.put('/updateAddress', updateAddress);
+router.put('/updateAddress/:id', updateAddress);
 
-router.post('/deleteAddress', deleteAddress);
+router.post('/deleteAddress/:id', deleteAddress);
 
 
 
