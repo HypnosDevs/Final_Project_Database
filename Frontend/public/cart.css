@@ -260,7 +260,7 @@ body {
 }
 
 
-/* Coupon */
+/* Address */
 .normal {
   background: none;
   border: none;
@@ -270,31 +270,38 @@ body {
   cursor: pointer;
 }
 
-#coupon{
+#address{
   width: 50%;
   margin-bottom: 30px;
 
 }
 
-#coupon h3,#subtotal h3{
+#address h3,#subtotal h3{
   padding-bottom: 15px;
 }
 
-#coupon input{
+/* #address p{
   padding: 10px 20px;
   width: 60%;
   outline:none;
   margin-right: 10px;
   border:1px solid #e2e9e1;
-}
+} */
 
-#coupon button,
+#address button,
 #subtotal button{
   padding: 12px 20px;
   background: #088178;
   color: #fff;
   border-radius: 7px; 
   cursor: pointer;
+  transition: background-color 0.3s ease; 
+}
+
+/* button hover */
+#address button:hover,
+#subtotal button:hover{
+  background: #40b39e;
 }
 
 
@@ -337,10 +344,87 @@ footer {
     height: auto; /* รักษาสัดส่วนของรูปภาพ */
   }
 
-  .no-product {
-    text-align: center;
-    color: #b7b8bd;
-    font-size: x-large;
-    font-weight: bold;
-    padding: 150px 0;
-  }
+
+/* popup */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(220, 220, 220, 0.5);
+  z-index: 999;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+.popup-content {
+  background-color: #fff;
+  width: 500px;
+  height: 380px;
+  margin: 200px auto;
+  padding: 20px;
+  border-radius: 5px;
+}
+.popup-content h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.popup-buttons {
+  text-align: right;
+}
+
+.popup-buttons button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup-buttons #cancel-btn {
+  background-color: #f44336;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.popup-buttons #cancel-btn:hover {
+  background-color: #da190b;
+}
+
+.popup-buttons #confirm-btn {
+  background-color: #4CAF50;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.popup-buttons #confirm-btn:hover {
+  background-color: #3e8440;
+}
+
+.popup-content ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 230px; /* กำหนดความสูงสูงสุดของ dropdown */
+  overflow-y: auto; /* เปิดใช้งานการเลื่อนตัวเลือก */
+}
+
+.popup-content ul li {
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.popup-content ul li:hover {
+  background-color: #f0f0f0;
+}
+
+.no-product {
+  text-align: center;
+  color: #b7b8bd;
+  font-size: x-large;
+  font-weight: bold;
+  padding: 150px 0;
+}
