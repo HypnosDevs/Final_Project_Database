@@ -71,8 +71,10 @@ exports.addShoppingCartItem = async (req, res) => {
 
 exports.deleteShoppingCartItem = async (req, res) => {
     try {
-        const { shoppingcart_id, product_id } = req.params;
-        await ShoppingCartItem.deleteOne({ shoppingcart: shoppingcart_id, product: product_id })
+        // console.log(req.params)
+        const { shoppingcart_item_id } = req.params;
+        await ShoppingCartItem.deleteOne({ _id: shoppingcart_item_id})
+        console.log('kuy2')
         res.status(204).send({ message: "Delete shopping cart item successful" });
     } catch (err) {
         console.log(err.message);
