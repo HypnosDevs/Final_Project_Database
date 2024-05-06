@@ -5,30 +5,51 @@ const confirmBtn = document.getElementById('confirm-btn');
 const cancelBtn = document.getElementById('cancel-btn');
 const addressList = document.getElementById('address-list');
 
+async function getUserAddress () {
+  try {
+    const curUserId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+        withCredentials: true
+    });
+    const addresses = await axios.get(`http://localhost:8080/api/Address/getAllAddressFromUser/${curUserId.data}`)
+    const addressesData = addresses.data.address;
+
+    let result = [];
+    for(let i = 0; i < addressesData.length ; i++) {
+      result.push(`${ addressesData[i].name + ' ' +
+                      addressesData[i].address_line1 + ' ' +
+                      addressesData[i].address_line2 + ' ' +
+                      addressesData[i].district + ' ' +
+                      addressesData[i].amphoe + ' ' +
+                      addressesData[i].province + ' ' +
+                      addressesData[i].country + ' ' +
+                      addressesData[i].postal_code + ' ' +
+                      addressesData[i].tel_no
+      }`);
+    };
+
+    return result;
+    
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send({ message: err.message });
+  }
+}
+
 // Dummy user addresses (replace with actual backend data)
-const userAddresses = [
-    '123 Main Street, City, Country',
-    '456 Elm Street, Town, Country',
-    '789 Oak Street, Village, Country',
-    '101 Pine Street, Hamlet, Country',
-    '202 Maple Street, Suburb, Country',
-    '303 Cedar Street, Borough, Country',
-    '404 Walnut Street, District, Country',
-    '505 Birch Street, Province, Country',
-    '606 Spruce Street, State, Country',
-    '707 Ash Street, Region, Country',
-    '808 Chestnut Street, Territory, Country',
-    '909 Fir Street, Territory, Country',
-];
+let userAddresses = '';
+getUserAddress().then(data => {userAddresses = data});
+
+let addressIdx = -1;
 
 // Function to populate address list
 function populateAddressList() {
   addressList.innerHTML = '';
-  userAddresses.forEach(address => {
+  userAddresses.forEach((address, index) => {
     const listItem = document.createElement('li');
     listItem.textContent = address;
     listItem.addEventListener('click', () => {
       document.getElementById('user-address').textContent = address;
+      addressIdx = index;
       closePopup();
     });
     addressList.appendChild(listItem);

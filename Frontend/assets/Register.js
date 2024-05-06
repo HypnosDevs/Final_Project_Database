@@ -33,7 +33,7 @@ submitButton.addEventListener("click", async () => {
             if (existingValidationMessage) {
                 existingValidationMessage.parentNode.removeChild(existingValidationMessage);
             }
-            // formData.submit();
+            formData.submit();
         }
     }
 
