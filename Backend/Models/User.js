@@ -46,6 +46,10 @@ const userSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'PaymentMethod'
         }],
+        shoppingcart: [{
+            type: Schema.Types.ObjectId,
+            ref: 'ShoppingCart'
+        }]
 
     },
     {
