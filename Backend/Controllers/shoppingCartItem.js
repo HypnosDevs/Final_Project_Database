@@ -31,10 +31,14 @@ exports.getShoppingCartItem = async (req, res) => {
 exports.getItemFromShoppingCart = async (req, res) => {
     try {
         const { shoppingcart_id } = req.params;
-        const data = await ShoppingCartItem.find({ shoppingcart: shoppingcart_id }).populate("product");
-        if (data.length === 0) {
-            throw { message: "Data (product in that shopping cart id) Not Found" };
-        }
+        console.log(req.params)
+        const data = await ShoppingCartItem.find({ shoppingcart: shoppingcart_id }).populate('product');
+        console.log(data)
+
+        // if (data.length === 0) {
+        //     throw { message: "Data (product in that shopping cart id) Not Found" };
+        // }
+
         res.status(200).send(data);
     } catch (err) {
         console.log(err.message);
@@ -46,20 +50,24 @@ exports.addShoppingCartItem = async (req, res) => {
     try {
         const { shoppingcart_id, product_id } = req.params;
 
-        console.log("params",req.params);
-        console.log("product",product_id);
-        console.log("shoppingcart",shoppingcart_id);
-        const shoppingcart = await ShoppingCart.findById({ _id: shoppingcart_id });
-        if (shoppingcart.length === 0) {
-            throw { message: "Order Not Found" };
+        console.log("params", req.params);
+        console.log("product", product_id);
+        console.log("shoppingcart", shoppingcart_id);
+        let shoppingcart = await ShoppingCart.findById({ _id: shoppingcart_id, inUsed: true });
+        //shoppingcart = shoppingcart.data;
+        console.log(shoppingcart);
+        if (!shoppingcart) {
+            throw { message: "Shopping Cart Not Found" };
         }
         const product = await Product.findById({ _id: product_id });
-        if (product.length === 0) {
+        if (!product) {
             throw { message: "Product Not Found" };
         }
         const shoppingCartItem = new ShoppingCartItem(req.body);
         shoppingCartItem.shoppingcart = shoppingcart;
         shoppingCartItem.product = product;
+        shoppingcart.shoppingCartItems.push(shoppingCartItem);
+        shoppingcart.save();
         shoppingCartItem.save();
         res.status(201).send({ message: "Create shopping cart item succesful" });
 
@@ -71,10 +79,23 @@ exports.addShoppingCartItem = async (req, res) => {
 
 exports.deleteShoppingCartItem = async (req, res) => {
     try {
-        // console.log(req.params)
         const { shoppingcart_item_id } = req.params;
-        await ShoppingCartItem.deleteOne({ _id: shoppingcart_item_id})
-        console.log('kuy2')
+
+        // Delete the shopping cart item
+        const shopItem = await ShoppingCartItem.deleteOne({ _id: shoppingcart_item_id });
+        console.log('delete shopItem', shopItem)
+        // Remove the reference from the shopping cart model
+        const shoppingCart = await ShoppingCart.findOneAndUpdate(
+            { shoppingCartItems: shoppingcart_item_id },
+            { $pull: { shoppingCartItems: shoppingcart_item_id } },
+            { new: true }
+        );
+
+        if (!shoppingCart) {
+            throw { message: "Shopping cart not found or item not in the cart" };
+        }
+
+        console.log('kuy2');
         res.status(204).send({ message: "Delete shopping cart item successful" });
     } catch (err) {
         console.log(err.message);
