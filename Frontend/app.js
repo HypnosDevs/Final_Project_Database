@@ -66,19 +66,19 @@ app.post('/', async (req, res) => {
 
 app.get('/admin_panel', async (req, res) => {
     try {
-        // const users = await axios.get("http://localhost:8080/api/User/getUser");
+
         // const products = await axios.get("http://localhost:8080/api/Product/getProduct");
         // const orderItems = await axios.get("http://localhost:8080/api/OrderItem/getAllOrderItem");
         // const discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
-        // res.render('admin_panel', {
-        //     users: users.data,
-        //     products: products.data,
-        //     orderItems: orderItems.data,
-        //     discounts: discounts.data,
-        //     title: "Admin Panel",
-        //     style: "admin_panel.css"
-        // })
-        res.render('admin_panel');
+        res.render('admin_panel', {
+            // users: users.data,
+            // products: products.data,
+            // orderItems: orderItems.data,
+            // discounts: discounts.data,
+            title: "Admin Panel",
+            style: "admin_panel.css"
+        })
+        // res.render('admin_panel');
     } catch (err) {
         console.log("Error can't access admin panel");
         res.send({ message: err });
@@ -86,14 +86,14 @@ app.get('/admin_panel', async (req, res) => {
 })
 
 app.get('/cart', (req, res) => {
-    
-        res.render('cart', {
-            title: "Cart",
-            style: "/cart.css",
-            cart: "active",
-        })
 
-        
+    res.render('cart', {
+        title: "Cart",
+        style: "/cart.css",
+        cart: "active",
+    })
+
+
 })
 
 app.get('/create_product', (req, res) => {

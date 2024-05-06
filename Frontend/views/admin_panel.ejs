@@ -1,104 +1,119 @@
 <%- include('../partials/head') %>
 
-<body>
+    <body>
 
 
-    <section id="header">
-        <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
-        <div>
-            <ul id="navbar">
+        <section id="header">
+            <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
+            <div>
+                <ul id="navbar">
 
-                <form>
-                    <div class="search">
-                        <span class="search-icon material-symbols-outlined">search</span>
-                        <input class="search-input" type="search" placeholder="Search">
+                    <form>
+                        <div class="search">
+                            <span class="search-icon material-symbols-outlined">search</span>
+                            <input class="search-input" type="search" placeholder="Search">
+                        </div>
+                    </form>
+
+                    <li><a href="/">Home</a></li>
+                    <li><a class="active" href="/admin_panel">Dashboard</a></li>
+                    <li><a href="/product_admin">Products</a></li>
+                    <li><a href="/promotion_admin">Promotion</a></li>
+
+                    <ul>
+            </div>
+        </section>
+
+        <section id="page-header">
+
+            <h2># Dashboard</h2>
+
+        </section>
+
+        <section id="interface">
+            <h3 class="i-name">
+                Dashboard
+            </h3>
+
+            <div class="values">
+                <div class="val-box">
+                    <i class="fa-solid fa-users"></i>
+                    <div>
+                        <h3 id="user-length">
+
+                        </h3>
+                        <span>Users</span>
                     </div>
-                </form>
+                </div>
+                <div class="val-box">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <div>
+                        <h3>
+                            orderItems length
+                        </h3>
+                        <span>Total Orders</span>
+                    </div>
+                </div>
 
-                <li><a href="/">Home</a></li>
-                <li><a class="active" href="/admin_panel">Dashboard</a></li>
-                <li><a href="/product_admin">Products</a></li>
-                <li><a href="/promotion_admin">Promotion</a></li>
-              
-                <ul>
-        </div>
-    </section>
-
-    <section id="page-header">
-
-        <h2># Dashboard</h2>
-
-    </section>
-
-    <section id="interface">
-        <h3 class="i-name">
-            Dashboard
-        </h3>
-    
-        <div class="values">
-            <div class="val-box">
-                <i class="fa-solid fa-users"></i>
-                <div>
-                    <h3><%= users.length %></h3>
-                    <span>Users</span>
+                <div class="val-box">
+                    <i class="fa-solid fa-box"></i>
+                    <div>
+                        <h3>
+                            product.length
+                        </h3>
+                        <span>Product Sell</span>
+                    </div>
+                </div>
+                <div class="val-box">
+                    <i class="fa-solid fa-ticket"></i>
+                    <div>
+                        <h3>
+                            discount.length
+                        </h3>
+                        <span>Total Coupon</span>
+                    </div>
+                </div>
+                <div class="val-box">
+                    <i class="fa-solid fa-baht-sign"></i>
+                    <div>
+                        <h3>฿1400</h3>
+                        <span>This Month</span>
+                    </div>
                 </div>
             </div>
-            <div class="val-box">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <div>
-                    <h3><%= orderItems.length %></h3>
-                    <span>Total Orders</span>
-                </div>
-            </div>
-            
-            <div class="val-box">
-                <i class="fa-solid fa-box"></i>
-                <div>
-                    <h3><%= products.length %></h3>
-                    <span>Product Sell</span>
-                </div>
-            </div>
-            <div class="val-box">
-                <i class="fa-solid fa-ticket"></i>
-                <div>
-                    <h3><%= discounts.length %></h3>
-                    <span>Total Coupon</span>
-                </div>
-            </div>
-            <div class="val-box">
-                <i class="fa-solid fa-baht-sign"></i>
-                <div>
-                    <h3>฿1400</h3>
-                    <span>This Month</span>
-                </div>
-            </div>
-        </div>
-    </section>
-    
+        </section>
 
-    <section id="board" class="">
-        <table width="100%">
-            <thead>
-                <tr>
-                    <td>Remove</td>
-                    <td>Users</td>
-                    <td>Name</td>
-                    <td>Email</td>
-                    <td>Role</td>
-                    <td></td>
-                </tr>
-            </thead>
-            <tbody>
-                <% for(let user of users) { %>
+
+        <section id="board" class="">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <td>Remove</td>
+                        <td>Users</td>
+                        <td>Name</td>
+                        <td>Email</td>
+                        <td>Role</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+
                     <tr>
                         <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
-                        <td><img src="/img/user.png"></a></li></td>
-                        <td><%= user.username %></td>
-                        <td><%= user.email %></td>
-                        <td><%= user.role %></td>
+                        <td><img src="/img/user.png"></a></li>
+                        </td>
+                        <td>
+                            admin
+                        </td>
+                        <td>
+                            admin@mail
+                        </td>
+                        <td>
+                            ADMIN
+                        </td>
                         <td class="edit"><a href="/edit_by_admin">Edit</a></td>
                     </tr>
-                <!--
+                    <!--
                 <tr>
                     <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
                     <td><img src="/img/user.png"></a></li></td>
@@ -124,11 +139,54 @@
                     <td>Admin</td>
                     <td class="edit"><a href="/edit_by_admin">Edit</a></td>
                 </tr>
-                -->    
-                <% } %>
-            </tbody>
-        </table>
-    </section>
+                -->
 
-  
-<%- include('../partials/footer') %>
+                </tbody>
+            </table>
+        </section>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+
+            const allowedRole = ["ADMIN"];
+
+
+
+
+            const loadData = async () => {
+                let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+                    withCredentials: true
+                });
+                // console.log(curUser)
+                curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`)
+                const role = curUser.data.role;
+                // console.log("role", role);
+                if (allowedRole.includes(role)) {
+                    let allUsers = await axios.get(`http://localhost:8080/api/User/getUsers`, {
+                        withCredentials: true
+                    })
+                    allUsers = allUsers.data;
+                    let orderItems = await axios.get("http://localhost:8080/api/OrderItem/getAllOrderItem");
+                    let discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
+                    let userLength = document.querySelector("#user-length");
+                    userLength.innerHTML = allUsers.length;
+                }
+                else {
+                    window.location.href = "/"
+                }
+                // const curUserIdId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+                //     withCredentials: true
+                // });
+                // console.log("curusers inadmin", curUserIdId)
+                // const users = await axios.get("http://localhost:8080/api/User/getUsers", {
+                //     withCredentials: true
+                // });
+                // console.log("users inadmin", users.data)
+            }
+
+            loadData();
+            // const users = await axios.get("http://localhost:8080/api/User/getUser");
+            // const products = await axios.get("http://localhost:8080/api/Product/getProduct");
+            // const orderItems = await axios.get("http://localhost:8080/api/OrderItem/getAllOrderItem");
+            // const discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
+        </script>
+        <%- include('../partials/footer') %>

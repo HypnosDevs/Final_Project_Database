@@ -4,7 +4,7 @@ const { checkUserRole } = require('../Middleware/auth')
 const { getUser, getAllUsers, addUser, editUser, deleteUser, addUserWithAddress, getAllUsernameAndEmail, addOrder } = require('../Controllers/user')
 
 
-router.get('/getUsers', checkUserRole(['ADMIN']), getAllUsers);
+router.get('/getUsers', getAllUsers);
 
 router.get('/getUser/:id', getUser);
 

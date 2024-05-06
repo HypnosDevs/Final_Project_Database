@@ -6,6 +6,7 @@ const User = require('../Models/User');
 
 exports.getAllUsers = async (req, res) => {
     try {
+        console.log("get all users session", req.session)
         if (!req.session.userId) {
             throw { message: 'Authentication fail' };
         }
