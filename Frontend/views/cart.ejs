@@ -20,11 +20,20 @@
             </table>
         </section>
         <section id="cart-add" class="section-p1">
-            <div id="address">
-                <h3>Apply Address</h3>
-                <div>
-                    <p id="user-address">Choose Your Address</p>
-                    <button class="normal" id="change-address-btn"><strong>Change</strong></button>
+            <div id="left-box">
+                <div id="address">
+                    <h3>Apply Address</h3>
+                    <div>
+                        <p id="user-address">Choose Your Address</p>
+                        <button class="normal" id="change-address-btn"><strong>Change</strong></button>
+                    </div>
+                </div>
+                <div id="payment">
+                    <h3>Payment Method</h3>
+                    <div>
+                        <p id="user-payment">Choose Your Payment</p>
+                        <button class="normal" id="change-payment-btn"><strong>Change</strong></button>
+                    </div>
                 </div>
             </div>
 
@@ -33,6 +42,8 @@
                 <table></table>
                 <button class="normal"><strong>Proceed to check out</strong></button>
             </div>
+
+
         </section>
 
 
@@ -45,13 +56,27 @@
                 </ul>
 
                 <div class="popup-buttons">
-                    <button class="normal" id="cancel-btn">Cancel</button>
-                    <button class="normal" id="confirm-btn">Confirm</button>
+                    <button class="normal" id="cancel-adress-btn">Cancel</button>
+                    <button class="normal" id="confirm-address-btn">Confirm</button>
                 </div>
             </div>
         </div>
-        </section>
+
+        <!-- Popup for payment selection -->
+        <div class="popup" id="payment-popup">
+            <div class="popup-content">
+                <h3>Your Payment</h3>
+                <ul id="payment-list">
+                    <!-- Payment list will appear here! -->
+                </ul>
+
+                <div class="popup-buttons">
+                    <button class="normal" id="cancel-payment-btn">Cancel</button>
+                    <button class="normal" id="confirm-payment-btn">Confirm</button>
+                </div>
+            </div>
+        </div>
 
         <script src="Popup-Address.js"></script>
         <script src="cart.js"></script>
-        <%- include('../partials/footer') %>
+<%- include('../partials/footer') %>

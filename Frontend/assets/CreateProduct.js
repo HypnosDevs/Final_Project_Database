@@ -7,12 +7,6 @@ submitButton.addEventListener("click", async () => {
         const formData = new FormData(form);
         console.log("formdata", formData)
 
-        for (item of formData) {
-            if(item[0] == 'name' && item[1] == '') {
-
-            }
-        };
-
         fetch('http://localhost:8080/api/Product/addProduct', {
             method: "POST",
             body: formData,
