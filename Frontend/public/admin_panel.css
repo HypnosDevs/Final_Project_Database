@@ -276,7 +276,8 @@ body {
 #board table td:nth-child(4),
 #board table td:nth-child(5),
 #board table td:nth-child(6),
-#board table td:nth-child(7){
+#board table td:nth-child(7),
+#board table td:nth-child(8) {
   width: 150px;
   text-align: center;
 }

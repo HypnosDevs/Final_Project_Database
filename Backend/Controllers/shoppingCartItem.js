@@ -102,3 +102,33 @@ exports.deleteShoppingCartItem = async (req, res) => {
         res.status(500).send({ message: err.message });
     }
 }
+
+exports.deleteShoppingCartItemByProduct = async (req, res) => {
+    try {
+        console.log('gluay')
+        const { product_id } = req.params;
+        items = await ShoppingCartItem.find({ product: product_id });
+        for (let i = 0; i < items.length; i++) {
+            items[i] = items[i]._id; 
+        }
+        console.log("items", items);
+        
+        // Delete the shopping cart item
+        const test = await ShoppingCartItem.deleteMany({ product: product_id });
+        console.log("test", test);
+
+        // Remove the reference from the shopping cart model
+        for (let i = 0; i < items.length; i++) {
+            await ShoppingCart.updateOne(
+                { shoppingCartItems: items[i] },
+                { $pull: { shoppingCartItems: items[i] } },
+                { new: true }
+            );
+        }
+
+        res.status(204).send({ message: "Delete shopping cart item by product successful" });
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}
