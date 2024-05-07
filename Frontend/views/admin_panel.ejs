@@ -197,6 +197,12 @@
                 if (userCount === 0) {
                     emptyPage("No Users found");
                 }
+                else {
+                    let countNoProduct = document.querySelector('.no-product');
+                    if (countNoProduct) {
+                        countNoProduct.remove();
+                    }
+                }
 
 
             }
@@ -222,6 +228,10 @@
             };
             const loadProducts = async (allProducts) => {
                 const headerTable = document.querySelector("#header-table thead");
+                let countNoProduct = document.querySelector('.no-product');
+                if (countNoProduct) {
+                    countNoProduct.remove();
+                }
                 headerTable.innerHTML = '';
                 const row = document.createElement("tr");
                 row.innerHTML = `
