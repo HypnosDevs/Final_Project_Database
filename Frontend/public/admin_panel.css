@@ -376,16 +376,16 @@ footer .col img {
 
 #button_create {
 
-  padding: 30px 20px;
+  padding: 30px 30px 10px;
 
 
 }
 
-/* #button_create button {
+#button_create button {
   margin: 0 10px;
   padding: 10px 20px;
   border: none;
-  background: #088178;
+  background: #7B74EC;
   color: #fff;
   border-radius: 70px;
   text-decoration: none;
@@ -394,4 +394,8 @@ footer .col img {
   cursor: pointer;
   transition: 0.3s;
 
-} */
+}
+
+#button_create button:hover {
+  background: #48139c;
+}
