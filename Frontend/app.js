@@ -85,6 +85,13 @@ app.get('/admin_panel', async (req, res) => {
     }
 })
 
+app.get('/view', (req, res) => {
+    res.render('view', {
+        title: "View",
+        style: "/view.css"
+    })
+})
+
 app.get('/cart', (req, res) => {
 
     res.render('cart', {
