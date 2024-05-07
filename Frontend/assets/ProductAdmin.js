@@ -61,7 +61,7 @@ const renderProducts= (products) => {
             let categoryArr = [];
             for (category of product.category) {
                 const categoryName = await axios.get(`http://localhost:8080/api/Category/getCategory/${category}`);
-                categoryArr.push(categoryName.data.name);
+                categoryArr.push(categoryName.data[0].name);     
             }
             product.category = categoryArr;
         }
