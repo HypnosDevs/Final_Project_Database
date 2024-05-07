@@ -1,4 +1,5 @@
 const Product = require('../Models/Product.js')
+const Category = require('../Models/Category.js');
 const fs = require('fs');
 
 exports.getAllProduct = async (req, res) => {
@@ -31,7 +32,14 @@ exports.addProduct = async (req, res) => {
         }
         if (req.body.category == '') {
             req.body.category = undefined;
-        }      
+        } else {
+            const categories = req.body.category.split(' ');
+            let categoryArr = [];
+            for(let category of categories) {
+                categoryArr.push(await Category.findOne({ name: category }))
+            }
+            req.body.category = categoryArr;
+        }    
         const newProd = new Product(req.body);
         await newProd.save();
         res.send(newProd)
