@@ -9,7 +9,7 @@ const emptyPage = (text) => {
     h1Element.classList.add('no-product');
 
     // Get the reference node after which the h1 will be inserted
-    const pageHeaderSection = document.getElementById('page-header');
+    const pageHeaderSection = document.getElementById('button_create');
     const referenceNode = pageHeaderSection.nextElementSibling;
 
     // Insert the h1 element after the page-header section
@@ -49,12 +49,16 @@ const renderProducts= (products) => {
 
     products.forEach(product => {
         const row = document.createElement('tr');
+        let imgTd = `<td><img src="data:image/png;base64, ${product.image}"></td>`;
+        if (product.image == undefined) {
+            imgTd = `<td><i class="fa-solid fa-image-slash"></i></td>`;
+        }
         row.innerHTML = `
             <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deleteProduct('${product._id}')"></i></a></td>
-            <td><img src="data:image/png;base64, ${product.image}"></td>
+            ` + imgTd + `
             <td>${product.name}</td>
-            <td>฿${product.category}</td>
-            <td>${product.price}</td>
+            <td>${product.category}</td>
+            <td>฿${product.price}</td>
             <td class="edit"><a href="/edit_product">Edit</a></td>
         `;
         row.setAttribute('id', product._id);

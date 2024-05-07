@@ -31,52 +31,55 @@
                 </nav>
             </div>
             <div class="rightbox">
-                <div class="profile tabshow">
-                    <h1>Create Product</h1>
-    
-                    <h2>Product Name</h2>
-                    <input type="text" class="input" value="">
+                <form id="form-create-product">
+                    <div class="profile tabshow">
+                        <h1>Create Product</h1>
+        
+                        <h2>Product Name</h2>
+                        <input type="text" class="input" placeholder="Product Name" name="name">
 
-                    <h2>Category</h2>
-                    <input type="text" class="input" value="">
+                        <h2>Category</h2>
+                        <input type="text" class="input" placeholder="Category" name="category">
 
-                    <h2>Price</h2>
-                    <input type="text" class="input" value="">
+                        <h2>Price</h2>
+                        <input type="number" class="input" placeholder="Price" name="price">
 
-                 
                     
-                </div>
+                        
+                    </div>
 
-                <div class="payment tabshow">
-                    <h1>Image Product</h1>
-                    <h2>Image Product NO.1</h2>
-                    <input type="file" accept="image/*">
+                    <div class="payment tabshow">
+                        <h1>Image Product</h1>
+                        <!-- <h2>Image Product NO.1</h2> -->
+                        <input type="file" accept="image/*" name="image">
 
-                    <h2>Image Product NO.2</h2>
-                    <input type="file" accept="image/*">
+                        <!-- <h2>Image Product NO.2</h2>
+                        <input type="file" accept="image/*">
 
-                    <h2>Image Product NO.3</h2>
-                    <input type="file" accept="image/*">
+                        <h2>Image Product NO.3</h2>
+                        <input type="file" accept="image/*">
 
-                    <h2>Image Product NO.4</h2>
-                    <input type="file" accept="image/*">
-                   
-                   
+                        <h2>Image Product NO.4</h2>
+                        <input type="file" accept="image/*"> -->
                     
-                </div>
+                    
+                        
+                    </div>
 
-                
-                <div class="setting tabshow">
-                    <h1>Product Detail</h1>
-                    <h2>Detail</h2>
-                    <input type="text" class="input" value="">
-                   
-                    <button class="btn">Create</button>
-                   
-                </div>
+                    
+                    <div class="setting tabshow">
+                        <h1>Product Detail</h1>
+                        <h2>Detail</h2>
+                        <input type="text" class="input" placeholder="Detail" name="description">
+                    
+                        <button type="button" class="btn" id="submitButton">Create</button>
+                    
+                    </div>
+                </form>
 
             </div>
              
+            <script src="CreateProduct.js"></script>
             <script>
                 const tabBtn = document.querySelectorAll('.tab');
                 const tab = document.querySelectorAll('.tabshow');

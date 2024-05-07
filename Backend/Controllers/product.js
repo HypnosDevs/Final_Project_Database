@@ -29,6 +29,9 @@ exports.addProduct = async (req, res) => {
         if (req.file) {
             req.body.image = fs.readFileSync(req.file.path, { encoding: 'base64' });
         }
+        if (req.body.category == '') {
+            req.body.category = undefined;
+        }      
         const newProd = new Product(req.body);
         await newProd.save();
         res.send(newProd)
