@@ -93,11 +93,15 @@
                         <td>Name</td>
                         <td>Email</td>
                         <td>Role</td>
-                        <td></td>
+                        <td>Edit</td>
                     </tr>
                 </thead>
                 <tbody>
-
+                    <tr id="loader">
+                        <td colspan="6">
+                            <div class="loader"></div>
+                        </td>
+                    </tr>
                     <!-- <tr>
                         <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
                         <td><img src="/img/user.png"></a></li>
@@ -144,6 +148,8 @@
                 </tbody>
             </table>
         </section>
+
+        <!-- <script src="/loader.js" defer></script> -->
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
 
@@ -174,6 +180,7 @@
                     let allUsers = await axios.get("http://localhost:8080/api/User/getUsers", {
                         withCredentials: true
                     })
+
                     allUsers = allUsers.data;
                     let orderItems = await axios.get("http://localhost:8080/api/OrderItem/getAllOrderItem");
                     orderItems = orderItems.data;
@@ -190,6 +197,14 @@
                     let discountLength = document.querySelector("#discounts-length")
                     discountLength.innerHTML = discounts.length;
 
+                    loader.classList.add("loader-hidden");
+
+                    loader.addEventListener("transitionend", () => {
+                        document.body.removeChild("loader");
+                    })
+
+                    const rowLoader = document.querySelector("#loader")
+                    rowLoader.remove();
                     const userTable = document.querySelector("#user-table");
                     const tableBody = document.querySelector("#user-table tbody");
 
