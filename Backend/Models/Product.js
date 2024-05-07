@@ -30,13 +30,13 @@ const productSchema = new Schema({
     image: {
         type: String
     },
-    orderItem: {
+    orderItem: [{
         type: Schema.Types.ObjectId,
         ref: 'OrderItem'
-    }
+    }]
 
 
-    },
+},
     {
         timestamps: true
     }
