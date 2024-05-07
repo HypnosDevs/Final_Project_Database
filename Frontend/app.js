@@ -300,6 +300,13 @@ app.get('/Sup-product2', (req, res) => {
     })
 })
 
+app.get('/income-page', (req, res) => {
+    res.render('income_page', {
+        title: "Income Page",
+        style: "/income_page.css"
+    })
+})
+
 
 
 app.listen(PORT, () => {

@@ -77,7 +77,7 @@
                         <span>Total Coupon</span>
                     </div>
                 </div>
-                <div class="val-box">
+                <div class="val-box" id="income-page">
                     <i class="fa-solid fa-baht-sign"></i>
                     <div>
                         <h3>฿1400</h3>
@@ -294,6 +294,7 @@
             const allUsers = document.querySelector("#users_page");
             const allOrders = document.querySelector("#orders_page");
 
+            const income_page = document.querySelector("#income-page");
 
             const loadData = async () => {
                 try {
@@ -361,6 +362,11 @@
                                 // console.log("here");
                                 // window.location.href = "/promotion_admin"
                                 // loadPromotions(discounts);
+                            })
+
+                            income_page.addEventListener("click", () => {
+                                console.log("here");
+                                window.location.href = "/income-page"
                             })
 
 
