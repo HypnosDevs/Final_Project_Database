@@ -354,3 +354,22 @@ footer .col img {
   height: auto;
   /* รักษาสัดส่วนของรูปภาพ */
 }
+
+.no-product {
+  text-align: center;
+  color: #b7b8bd;
+  font-size: x-large;
+  font-weight: bold;
+  padding: 150px 0;
+}
+
+#remove {
+  color: red;
+  cursor: pointer;
+  scale: 1.5;
+  transition: 0.4s;
+}
+
+#remove:hover {
+  color: #541010;
+}

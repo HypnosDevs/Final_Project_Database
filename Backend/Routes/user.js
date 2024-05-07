@@ -17,7 +17,7 @@ router.post('/addUseWithAddress', checkUserRole(['ADMIN']), addUserWithAddress);
 
 router.put('/editUser/:id', checkUserRole(['ADMIN', 'USER']), editUser);
 
-router.delete('/deleteUser/:id', checkUserRole(['ADMIN']), deleteUser);
+router.delete('/deleteUser/:id', deleteUser);
 
 router.post('/addOrder', checkUserRole(['ADMIN', 'USER']), addOrder);
 // router.post('/addProduct', upload.single('image'), addProduct)
