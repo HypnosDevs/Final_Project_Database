@@ -373,3 +373,25 @@ footer .col img {
 #remove:hover {
   color: #541010;
 }
+
+#button_create {
+
+  padding: 30px 20px;
+
+
+}
+
+/* #button_create button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  background: #088178;
+  color: #fff;
+  border-radius: 70px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+
+} */

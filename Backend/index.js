@@ -61,7 +61,7 @@ app.use('/api/PaymentMethod', paymentMethodRouters);
 app.use('/api/PaymentType', paymentTypeRouters);
 app.use('/api/OrderItem', orderItemRouters);
 app.use('/api/Order', orderRouters);
-app.use('/api/ShoppingCart', shoppingCartRouters);
+// app.use('/api/ShoppingCart', shoppingCartRouters);
 app.use('/api/ShoppingCartItem', shoppingCartItemRouters);
 
 app.get('/', (req, res) => {

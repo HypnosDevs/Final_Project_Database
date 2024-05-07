@@ -48,7 +48,7 @@ const userSchema = new Schema(
         }],
         shoppingcart: [{
             type: Schema.Types.ObjectId,
-            ref: 'ShoppingCart'
+            ref: 'ShoppingCartItem'
         }]
 
     },

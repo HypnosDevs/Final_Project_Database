@@ -10,10 +10,10 @@ const addCart = async (productId) => {
     const userId = curUserId.data;
     console.log("user", userId);
 
-    const shoppingCart = await axios.post(`http://localhost:8080/api/ShoppingCart/addShoppingCart/${userId}`);
-    console.log('shoppingcart', shoppingCart.data._id);
+    // const shoppingCart = await axios.post(`http://localhost:8080/api/ShoppingCart/addShoppingCart/${userId}`);
+    console.log('userId', userId);
     console.log('productid', productId);
-    const shoppingCartItem = await axios.post(`http://localhost:8080/api/ShoppingCartItem/addShoppingCartItem/${shoppingCart.data._id}/${productId}`, {
+    const shoppingCartItem = await axios.post(`http://localhost:8080/api/ShoppingCartItem/addShoppingCartItem/${userId}/${productId}`, {
         qty: document.querySelector("#qty").value
     });
 

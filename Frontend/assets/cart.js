@@ -103,13 +103,11 @@ const getCart = async () => {
             withCredentials: true
         });
         const userId = curUserId.data;
+        const curUser = await axios.get(`http://localhost:8080/api/User/getUser/${userId}`)
 
-        const shoppingCart = await axios.get(`http://localhost:8080/api/ShoppingCart/getActiveShoppingcartFromuser/${userId}`);
-        //console("Shopping Cart:", shoppingCart.data);
+        if (curUser.data.shoppingcart && curUser.data.shoppingcart.length > 0) {
 
-        if (shoppingCart.data && shoppingCart.data.shoppingCartItems.length > 0) {
-
-            const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${shoppingCart.data._id}`);
+            const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${curUser.data._id}`);
             //console("Shopping Cart Items:", shoppingCartItems.data);
             renderCartItems(shoppingCartItems.data); // Render cart items
             renderCartTotals(shoppingCartItems.data);
