@@ -49,7 +49,7 @@ const deleteItem = async (shoppingcart_item_id) => {
 
 const renderCartTotals = (items) => {
     const table = document.querySelector('#cart-add #subtotal table');
-    console.log(table);
+    //console(table);
     table.innerHTML = '';
 
     const cartSubtotal = items.reduce((total, item) => total + (item.product.price * item.qty), 0);
@@ -105,12 +105,12 @@ const getCart = async () => {
         const userId = curUserId.data;
 
         const shoppingCart = await axios.get(`http://localhost:8080/api/ShoppingCart/getActiveShoppingcartFromuser/${userId}`);
-        console.log("Shopping Cart:", shoppingCart.data);
+        //console("Shopping Cart:", shoppingCart.data);
 
         if (shoppingCart.data && shoppingCart.data.shoppingCartItems.length > 0) {
 
             const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${shoppingCart.data._id}`);
-            console.log("Shopping Cart Items:", shoppingCartItems.data);
+            //console("Shopping Cart Items:", shoppingCartItems.data);
             renderCartItems(shoppingCartItems.data); // Render cart items
             renderCartTotals(shoppingCartItems.data);
         } else {

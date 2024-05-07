@@ -26,65 +26,119 @@ async function getUserAddress() {
 
     let result = [];
     for (let i = 0; i < addressesData.length; i++) {
-      result.push(`${addressesData[i].name + ' ' +
-        addressesData[i].address_line1 + ' ' +
-        addressesData[i].address_line2 + ' ' +
-        addressesData[i].district + ' ' +
-        addressesData[i].amphoe + ' ' +
-        addressesData[i].province + ' ' +
-        addressesData[i].country + ' ' +
-        addressesData[i].postal_code + ' ' +
-        addressesData[i].tel_no
-        }`);
+      result.push({
+        id: addressesData[i]._id, name: addressesData[i].name, text: `${addressesData[i].address_line1 + ' ' +
+          addressesData[i].address_line2 + ' ' +
+          addressesData[i].district + ' ' +
+          addressesData[i].amphoe + ' ' +
+          addressesData[i].province + ' ' +
+          addressesData[i].country + ' ' +
+          addressesData[i].postal_code + ' ' +
+          addressesData[i].tel_no
+          }`
+      });
     };
 
     return result;
 
   } catch (err) {
-    console.log(err.message);
-    res.status(500).send({ message: err.message });
+    //console.log(err.message);
+    // res.status(500).send({ message: err.message });
   }
 }
+
+async function getUserPaymentMethod() {
+  try {
+    const curUserId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+      withCredentials: true
+    });
+    const payments = await axios.get(`http://localhost:8080/api/PaymentMethod/getAllPaymentMethodFromUser/${curUserId.data}`)
+    const paymentsData = payments.data.paymentmethod;
+    //console.log("payment", paymentsData)
+
+    let result = [];
+    for (let i = 0; i < paymentsData.length; i++) {
+      result.push({
+        id: paymentsData[i]._id,
+        account_number: paymentsData[i].account_number,
+        expiry_date: paymentsData[i].expiry_date
+      });
+    };
+    //console.log("in function pay", result);
+    return result;
+
+  } catch (err) {
+    //console.log(err.message);
+    // res.status(500).send({ message: err.message });
+  }
+}
+
 
 // Dummy user addresses (replace with actual backend data)
 let userAddresses = '';
 getUserAddress().then(data => { userAddresses = data });
 
 let addressIdx = -1;
+let selectedAddressId = null;
+
 
 // Function to populate address list
 function populateAddressList() {
   addressList.innerHTML = '';
-  userAddresses.forEach((address, index) => {
+  for (let i = 0; i < userAddresses.length; i++) {
     const listItem = document.createElement('li');
-    listItem.textContent = address;
+    listItem.textContent = userAddresses[i].text;
     listItem.addEventListener('click', () => {
-      document.getElementById('user-address').textContent = address;
-      addressIdx = index;
+      document.querySelector("#address-name").innerHTML = userAddresses[i].name;
+      selectedAddressId = userAddresses[i].id;
+      //console.log("selected id", selectedAddressId);
+      document.getElementById('user-address').textContent = userAddresses[i].text;
+      addressIdx = i;
       closePopup(addressPopup);
     });
     addressList.appendChild(listItem);
-  });
+  };
 }
 
-// need to edit
-let userPayments = ['Credit Card', 'Debit Card', 'Net Banking'];
+// function populateAddressList() {
+//   addressList.innerHTML = '';
+//   userAddresses.forEach((address, index) => {
+//     const listItem = document.createElement('li');
+//     listItem.textContent = address;
+//     listItem.addEventListener('click', () => {
+//       document.getElementById('user-address').textContent = address;
+//       addressIdx = index;
+//       closePopup(addressPopup);
+//     });
+//     addressList.appendChild(listItem);
+//   });
+// }
 
+// need to edit
+let selectedPaymentId = null;
+let userPayments = ['Credit Card', 'Debit Card'];
+let userPaymentsInfo = '';
+getUserPaymentMethod().then(data => { userPaymentsInfo = data });
+// //console.log("getUserPaymentMethodInfo ", userPaymentsInfo);
 let paymentIdx = -1;
 function populatePaymentList() {
+  //console.log(userPaymentsInfo)
   paymentList.innerHTML = '';
-  userPayments.forEach((payment, index) => {
+  for (let i = 0; i < userPaymentsInfo.length; i++) {
     const listItem = document.createElement('li');
-    listItem.textContent = payment;
+    listItem.textContent = userPaymentsInfo[i].account_number;
     listItem.addEventListener('click', () => {
-      document.getElementById('user-payment').textContent = payment;
-      paymentIdx = index;
+      document.querySelector("#payment-list").innerHTML = userPaymentsInfo[i].account_number;
+      selectedPaymentId = userPaymentsInfo[i].id;
+      //console.log("selected payment id", selectedPaymentId);
+      document.getElementById('payment-list').textContent = userPaymentsInfo[i].text;
+      paymentIdx = i;
       closePopup(paymentPopup);
     });
     paymentList.appendChild(listItem);
-  });
+  };
 }
-  
+
 
 // Function to open popup(both address and payment)
 function openPopup(popup) {

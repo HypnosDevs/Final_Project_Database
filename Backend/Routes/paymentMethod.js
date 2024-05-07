@@ -5,11 +5,11 @@ const { getAllPaymentMethod, getAllPaymentMethodFromUser, getPaymentMethod, addP
 
 router.get('/getPaymentMethod', getAllPaymentMethod)
 
-router.get('/getAllPaymentMethodFromUser', getAllPaymentMethodFromUser);
+router.get('/getAllPaymentMethodFromUser/:id', getAllPaymentMethodFromUser);
 
 router.get('/getPaymentMethod/:id', getPaymentMethod)
 
-router.post('/addPaymentMethod', addPaymentMethod)
+router.post('/addPaymentMethod/:id', addPaymentMethod)
 
 router.post('/:id/updatePaymentMethod', updatePaymentMethod)
 
