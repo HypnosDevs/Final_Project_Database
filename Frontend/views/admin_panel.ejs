@@ -94,48 +94,6 @@
                             <div class="loader"></div>
                         </td>
                     </tr>
-                    <!-- <tr>
-                        <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
-                        <td><img src="/img/user.png"></a></li>
-                        </td>
-                        <td>
-                            admin
-                        </td>
-                        <td>
-                            admin@mail
-                        </td>
-                        <td>
-                            ADMIN
-                        </td>
-                        <td class="edit"><a href="/edit_by_admin">Edit</a></td>
-                    </tr> -->
-                    <!--
-                <tr>
-                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
-                    <td><img src="/img/user.png"></a></li></td>
-                    <td>Anna xxxx</td>
-                    <td>Ann@gmail.com</td>
-                    <td>Owner</td>
-                    <td class="edit"><a href="/edit_by_admin">Edit</a></td>
-                    
-                </tr>
-                <tr>
-                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
-                    <td><img src="/img/user.png"></a></li></td>
-                    <td>ALs</td>
-                    <td>A@gmail</td>
-                    <td>admin</td>
-                    <td class="edit"><a href="/edit_by_admin">Edit</a></td>
-                </tr>
-                <tr>
-                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
-                    <td><img src="/img/user.png"></a></li></td>
-                    <td>Tom  asssss</td>
-                    <td>Tom@gmail.com</td>
-                    <td>Admin</td>
-                    <td class="edit"><a href="/edit_by_admin">Edit</a></td>
-                </tr>
-                -->
 
                 </tbody>
             </table>
@@ -143,6 +101,55 @@
 
         <!-- <script src="/loader.js" defer></script> -->
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            const emptyPage = (text) => {
+                // Create an h1 element with the text "No products found" and class "no-product"
+                const h1Element = document.createElement('h1');
+                h1Element.textContent = `${text}`;
+                h1Element.classList.add('no-product');
+
+                // Get the reference node after which the h1 will be inserted
+                const boardHeaderSection = document.getElementById('board');
+                const referenceNode = boardHeaderSection.nextElementSibling;
+
+                // Insert the h1 element after the page-header section
+                boardHeaderSection.parentNode.insertBefore(h1Element, referenceNode);
+            }
+
+            const deleteUser = async (user_id) => {
+                try {
+                    // Delete the item from the server
+                    await axios.delete(`http://localhost:8080/api/User/deleteUser/${user_id}`);
+
+                    // Remove all td elements inside the corresponding row from the cart table
+                    const rowToRemove = document.querySelector(`#board tr[id="${user_id}"]`);
+                    if (rowToRemove) {
+                        const cellsToRemove = rowToRemove.querySelectorAll('td');
+                        cellsToRemove.forEach(cell => {
+                            cell.remove(); // Remove each td element from the row
+                        });
+
+                        rowToRemove.remove(); // Remove the row from the DOM
+                    } else {
+                        console.error('Row not found for item:', user_id);
+                    }
+
+
+
+                    const userCount = document.querySelectorAll('#board tbody tr').length;
+                    let userLength = document.querySelector("#user-length");
+                    userLength.innerHTML = userCount;
+                    if (userCount === 0) {
+                        emptyPage("No Users found");
+                    }
+                } catch (error) {
+                    console.error('Error deleting item:', error);
+                    // Optionally, you can inform the user about the deletion error
+                    // For example:
+                    alert('An error occurred while deleting the user. Please try again later.');
+                }
+            };
+        </script>
         <script>
             const loadUsers = async (allUsers) => {
                 const headerTable = document.querySelector("#header-table thead");
@@ -166,9 +173,13 @@
                 // Clear existing rows
                 tableBody.innerHTML = '';
                 for (user of allUsers) {
+                    if (user.role === "ADMIN") {
+                        continue;
+                    }
                     const row = document.createElement("tr");
+                    row.setAttribute("id", `${user._id}`);
                     row.innerHTML = `
-                        <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                        <td><a onClick="deleteUser('${user._id}')"><i id="remove"class="fa-solid fa-circle-xmark"></i></a></td>
                         <td><img src="/img/user.png"></a></li></td>
                         <td>${user.username}</td>
                         <td>${user.email}</td>
@@ -176,8 +187,24 @@
                         <td class="view"><a href="/view">View</a></td>
                         <td class="edit"><a href="/edit_by_admin">Edit</a></td>
                         `
+
                     tableBody.appendChild(row);
                 }
+
+                const userCount = document.querySelectorAll('#board tbody tr').length;
+                let userLength = document.querySelector("#user-length");
+                userLength.innerHTML = userCount;
+                if (userCount === 0) {
+                    emptyPage("No Users found");
+                }
+                else {
+                    let countNoProduct = document.querySelector('.no-product');
+                    if (countNoProduct) {
+                        countNoProduct.remove();
+                    }
+                }
+
+
             }
             const loadOrders = async (allOrders) => {
                 const tableBody = document.querySelector("#board tbody");
@@ -201,6 +228,10 @@
             };
             const loadProducts = async (allProducts) => {
                 const headerTable = document.querySelector("#header-table thead");
+                let countNoProduct = document.querySelector('.no-product');
+                if (countNoProduct) {
+                    countNoProduct.remove();
+                }
                 headerTable.innerHTML = '';
                 const row = document.createElement("tr");
                 row.innerHTML = `
@@ -257,6 +288,7 @@
                 }
             };
         </script>
+
         <script>
 
             const allowedRole = ["ADMIN"];
@@ -267,80 +299,84 @@
 
 
             const loadData = async () => {
-                let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
-                    withCredentials: true
-                });
-                // console.log(curUser.data)
-                if (!curUser.data) {
-                    window.location.href = "/"
-                }
-                else {
-                    curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`)
-                    const role = curUser.data.role;
-                    // console.log("role", role);
-                    if (allowedRole.includes(role)) {
-                        let users = await axios.get("http://localhost:8080/api/User/getUsers", {
-                            withCredentials: true
-                        })
-
-                        users = users.data;
-                        let orderItems = await axios.get("http://localhost:8080/api/OrderItem/getAllOrderItem");
-                        orderItems = orderItems.data;
-                        let discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
-                        discounts = discounts.data;
-                        let products = await axios.get("http://localhost:8080/api/Product/getProduct");
-                        products = products.data;
-                        let userLength = document.querySelector("#user-length");
-                        userLength.innerHTML = users.length;
-                        let orderItemsLength = document.querySelector("#orderItems-length");
-                        orderItemsLength.innerHTML = orderItems.length;
-                        let productLength = document.querySelector("#products-length")
-                        productLength.innerHTML = products.length;
-                        let discountLength = document.querySelector("#discounts-length")
-                        discountLength.innerHTML = discounts.length;
-
-                        loader.classList.add("loader-hidden");
-
-                        loader.addEventListener("transitionend", () => {
-                            document.body.removeChild("loader");
-                        })
-
-                        const rowLoader = document.querySelector("#loader")
-                        rowLoader.remove();
-                        loadUsers(users);
-                        allUsers.addEventListener("click", () => {
-                            // console.log("here");
-                            // window.location.href = "/product_admin"
-                            loadUsers(users);
-
-                        })
-
-                        allOrders.addEventListener("click", () => {
-                            // console.log("here");
-                            // window.location.href = "/product_admin"
-                            // loadOrders(orderItems);
-                        })
-
-                        allProducts.addEventListener("click", () => {
-                            // console.log("here");
-                            // window.location.href = "/product_admin"
-                            // console.log(allProducts);
-                            loadProducts(products);
-                        })
-
-                        allPromotions.addEventListener("click", () => {
-                            // console.log("here");
-                            // window.location.href = "/promotion_admin"
-                            // loadPromotions(discounts);
-                        })
-
-
-                    }
-                    else {
-                        console.log("Permission not allowed");
+                try {
+                    let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+                        withCredentials: true
+                    });
+                    // console.log(curUser.data)
+                    if (!curUser.data) {
                         window.location.href = "/"
                     }
+                    else {
+                        curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`)
+                        const role = curUser.data.role;
+                        // console.log("role", role);
+                        if (allowedRole.includes(role)) {
+                            let users = await axios.get("http://localhost:8080/api/User/getUsers", {
+                                withCredentials: true
+                            })
+
+                            users = users.data;
+                            let orderItems = await axios.get("http://localhost:8080/api/OrderItem/getAllOrderItem");
+                            orderItems = orderItems.data;
+                            let discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
+                            discounts = discounts.data;
+                            let products = await axios.get("http://localhost:8080/api/Product/getProduct");
+                            products = products.data;
+                            let orderItemsLength = document.querySelector("#orderItems-length");
+                            orderItemsLength.innerHTML = orderItems.length;
+                            let productLength = document.querySelector("#products-length")
+                            productLength.innerHTML = products.length;
+                            let discountLength = document.querySelector("#discounts-length")
+                            discountLength.innerHTML = discounts.length;
+
+                            loader.classList.add("loader-hidden");
+
+                            loader.addEventListener("transitionend", () => {
+                                document.body.removeChild("loader");
+                            })
+
+                            const rowLoader = document.querySelector("#loader")
+                            rowLoader.remove();
+                            loadUsers(users);
+
+                            allUsers.addEventListener("click", () => {
+                                // console.log("here");
+                                // window.location.href = "/product_admin"
+                                loadUsers(users);
+
+                            })
+
+                            allOrders.addEventListener("click", () => {
+                                // console.log("here");
+                                // window.location.href = "/product_admin"
+                                // loadOrders(orderItems);
+                            })
+
+                            allProducts.addEventListener("click", () => {
+                                // console.log("here");
+                                // window.location.href = "/product_admin"
+                                // console.log(allProducts);
+                                loadProducts(products);
+                            })
+
+                            allPromotions.addEventListener("click", () => {
+                                // console.log("here");
+                                // window.location.href = "/promotion_admin"
+                                // loadPromotions(discounts);
+                            })
+
+
+                        }
+                        else {
+                            console.log("Permission not allowed");
+                            window.location.href = "/"
+                        }
+                    }
+                } catch (err) {
+                    emptyPage(`${err}`);
                 }
+
             }
 
             loadData();
