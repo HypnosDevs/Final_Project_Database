@@ -19,7 +19,7 @@ const emptyPage = (text) => {
 const deleteProduct = async (product_id) => {
     try {
         // Delete the shopping cart item from the server
-        await axios.delete(`http://localhost:8080/api/deleteShoppingCartItemByProduct/${product_id}`);
+        await axios.delete(`http://localhost:8080/api/ShoppingCartItem/deleteShoppingCartItemByProduct/${product_id}`);
 
         // Delete the product from the server
         await axios.delete(`http://localhost:8080/api/Product/${product_id}/deleteProduct`);
