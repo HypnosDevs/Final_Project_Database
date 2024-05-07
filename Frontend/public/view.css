@@ -162,11 +162,138 @@ body {
     padding: 14px;
   }
   
+/* Box */
+/* ระยะ box */
+.values {
+  color: #444a53;
+  padding: 30px 30px 0 30px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 70px;
+}
+
+.values .val-box {
+  background: #E3E6F3;
+  width: 235px;
+  padding: 16px 20px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.values .val-box:hover {
+  background: #babcc8;
+
+}
+
+
+
+.values .val-box i {
+  font-size: 25px;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 50%;
+  text-align: center;
+  color: #fff;
+  margin-right: 15px;
+}
+
+.values .val-box:nth-child(1) i {
+  background: #7B74EC;
+}
+
+.values .val-box:nth-child(2) i {
+  background: #5C8AF0;
+}
+
+.values .val-box:nth-child(3) i {
+  background: #E45D99;
+}
+
+.values .val-box:nth-child(4) i {
+  background: #74daec;
+}
+
+.values .val-box:nth-child(5) i {
+  background: #ADD495;
+}
 
 
 
 
+.values .val-box h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
 
+.values .val-box span {
+  font-size: 15px;
+  color: #828997;
+}
+
+
+/* table */
+/*ตาราง user*/
+#board table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  white-space: nowrap;
+  margin-top: 20px;
+}
+
+#board table thead {
+  border: 1px solid #e2e2e1;
+  border-left: none;
+  border-right: none;
+}
+
+#board table thead td {
+  padding: 18px 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+
+}
+
+#board table tbody tr td {
+  padding-top: 15px;
+}
+
+#board table tbody td {
+  font-size: 13px;
+}
+
+#board table td:nth-child(1) {
+  width: 100px;
+  text-align: center;
+}
+
+#board table td:nth-child(2) {
+  width: 150px;
+  text-align: center;
+}
+
+#board table td:nth-child(3) {
+  width: 350px;
+  text-align: center;
+
+
+}
+
+#board table td:nth-child(4),
+#board table td:nth-child(5),
+#board table td:nth-child(6),
+#board table td:nth-child(7){
+  width: 150px;
+  text-align: center;
+}
 
 
 
