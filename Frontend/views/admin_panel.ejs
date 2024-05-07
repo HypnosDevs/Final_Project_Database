@@ -34,7 +34,11 @@
             <h3 class="i-name">
                 Dashboard
             </h3>
-
+            <section id="button_create">
+                <a href="/create_product">
+                    <button>Add Product</button>
+                </a>
+            </section>
             <div class="values">
                 <div class="val-box" id="users_page">
                     <i class="fa-solid fa-users"></i>
@@ -235,14 +239,10 @@
                 headerTable.innerHTML = '';
                 const row = document.createElement("tr");
                 row.innerHTML = `
-                        <td>Remove</td>
                         <td>Id</td>
                         <td>Name</td>
-                        <td>Price</td>
-                        <td>Stock</td>
-                        <td>Sold</td>
-                        <td>History</td>
-                        <td>Edit</td>
+                        <td>Quantity</td>
+                        <td>Total Sales</td>
                         `
                 headerTable.appendChild(row);
 
@@ -254,14 +254,11 @@
                 for (const product of allProducts) {
                     const row = document.createElement("tr");
                     row.innerHTML = `
-                        <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
                         <td>${product._id}</td>
                         <td>${product.name}</td>
                         <td>${product.price}</td>
                         <td>${product.stock}</td>
-                        <td>waiting for complete orderitems</td>
-                        <td class="view"><a href="/view_product/${product.productId}">View</a></td>
-                        <td class="edit"><a href="/edit_product/${product.productId}">Edit</a></td>
+                       
                     `;
                     tableBody.appendChild(row);
                 }
