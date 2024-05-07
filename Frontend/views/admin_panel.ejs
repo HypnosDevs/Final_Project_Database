@@ -77,11 +77,10 @@
                         <span>Total Coupon</span>
                     </div>
                 </div>
-                <div class="val-box" id="income-page">
+                <div class="val-box" id="analize-page">
                     <i class="fa-solid fa-baht-sign"></i>
                     <div>
-                        <h3>฿1400</h3>
-                        <span>This Month</span>
+                        <span>Analyze</span>
                     </div>
                 </div>
             </div>
@@ -264,6 +263,25 @@
                 }
             };
 
+
+            const loadAnalyzes = async (allProducts,allCategory) => {
+                const headerTable = document.querySelector("#header-table thead");
+                let countNoProduct = document.querySelector('.no-product');
+                if (countNoProduct) {
+                    countNoProduct.remove();
+                }
+
+                headerTable.innerHTML = '';
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                        <td>Category</td>
+                        <td>Product</td>
+                        <td>Quantity</td>
+                        <td>Total Sales</td>
+                        `;
+                headerTable.appendChild(row);
+            };
+
             const loadPromotions = async (allPromotions) => {
                 const tableBody = document.querySelector("#board tbody");
 
@@ -284,6 +302,14 @@
                     tableBody.appendChild(row);
                 }
             };
+
+
+
+
+
+
+
+            
         </script>
 
         <script>
@@ -294,7 +320,7 @@
             const allUsers = document.querySelector("#users_page");
             const allOrders = document.querySelector("#orders_page");
 
-            const income_page = document.querySelector("#income-page");
+            const analize_page = document.querySelector("#analize-page");
 
             const loadData = async () => {
                 try {
@@ -327,6 +353,9 @@
                             productLength.innerHTML = products.length;
                             let discountLength = document.querySelector("#discounts-length")
                             discountLength.innerHTML = discounts.length;
+                            
+                            // Edit pls
+                            let category = ""
 
                             loader.classList.add("loader-hidden");
 
@@ -364,9 +393,11 @@
                                 // loadPromotions(discounts);
                             })
 
-                            income_page.addEventListener("click", () => {
-                                console.log("here");
-                                window.location.href = "/income-page"
+                            analize_page.addEventListener("click", () => {
+                                // console.log("here");
+                                // window.location.href = "/analize-page"
+                                loadAnalyzes(products,category);
+
                             })
 
 
