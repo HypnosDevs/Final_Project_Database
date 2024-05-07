@@ -1,69 +1,72 @@
 <%- include('../partials/head') %>
-<%- include('../partials/header') %>
+  <%- include('../partials/header') %>
 
-  <section id="hero">
-    <h4> Trade-in-offer</h4>
-    <h2>Super value deals</h2>
-    <h1>On all products</h1>
-    <q>Save more with coupons & up to 70% off! </q>
-    <button onclick="window.location.href='/shop';">Shop Now</button>
-  </section>
+    <section id="hero">
+      <h4> Trade-in-offer</h4>
+      <h2>Super value deals</h2>
+      <h1>On all products</h1>
+      <q>Save more with coupons & up to 70% off! </q>
+      <button onclick="window.location.href='/shop';">Shop Now</button>
+    </section>
 
-  <section id="feature" class="section-p1">
-    <div id="feature" class="fe-box">
-      <img src="/img/features/f1.jpg" alt="">
-      <h6>Mystery Box</h6>
-    </div>
-    <div id="feature" class="fe-box">
-      <img src="/img/features/f2.jpg" alt="">
-      <h6>Figure</h6>
-    </div>
-    <div id="feature" class="fe-box">
-      <img src="/img/features/f3.jpg" alt="">
-      <h6>Toy</h6>
-    </div>
-    <div id="feature" class="fe-box">
-      <img src="/img/features/f4.png" alt="">
-      <h6>Promotions</h6>
-    </div>
-    <div id="feature" class="fe-box">
-      <img src="/img/features/f5.jpg" alt="">
-      <h6>Order tracking</h6>
-    </div>
-    <div id="feature" class="fe-box">
-      <img src="/img/features/f6.jpg" alt="">
-      <h6>Review product</h6>
-    </div>
-  </section>
+    <section id="feature" class="section-p1">
+      <div id="feature" class="fe-box">
+        <img src="/img/features/f1.jpg" alt="">
+        <h6>Mystery Box</h6>
+      </div>
+      <div id="feature" class="fe-box">
+        <img src="/img/features/f2.jpg" alt="">
+        <h6>Figure</h6>
+      </div>
+      <div id="feature" class="fe-box">
+        <img src="/img/features/f3.jpg" alt="">
+        <h6>Toy</h6>
+      </div>
+      <div id="feature" class="fe-box">
+        <img src="/img/features/f4.png" alt="">
+        <h6>Promotions</h6>
+      </div>
+      <div id="feature" class="fe-box">
+        <img src="/img/features/f5.jpg" alt="">
+        <h6>Order tracking</h6>
+      </div>
+      <div id="feature" class="fe-box">
+        <img src="/img/features/f6.jpg" alt="">
+        <h6>Review product</h6>
+      </div>
+    </section>
 
-  <section id="product1" class="section-p1">
-    <h2>Featured Product</h2>
-    <p>New Collection</p>
-    <div class="pro-container">
-      <% for(let product of products) { %>
-        <div class="pro" onclick="redirectToProduct('<%= product._id %>')">
-          <img src="data:image/png;base64, <%= product.image %>" alt="">
-          <div class="des">
-            <span><%= product.name %></span>
-            <pre id="spanDesc"><%= product.description.replace(/^\s+/gm, '') %></pre>
-            <div class="star">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
+    <section id="product1" class="section-p1">
+      <h2>Featured Product</h2>
+      <p>New Collection</p>
+      <div class="pro-container">
+        <% for(let product of products) { %>
+          <div class="pro" onclick="redirectToProduct('<%= product._id %>')">
+            <img src="data:image/png;base64, <%= product.image %>" alt="">
+            <div class="des">
+              <span>
+                <%= product.name %>
+              </span>
+              <pre id="spanDesc"><%= product.description.replace(/^\s+/gm, '') %></pre>
+              <div class="star">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <h4>฿<%= product.price %>
+              </h4>
             </div>
-            <h4>฿<%= product.price %></h4>
+            <a href="#">
+              <div class="cart">
+                <i class="fa-solid fa-cart-shopping"></i>
+              </div>
+            </a>
           </div>
-          <a href="#">
-            <div class="cart">
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </a>
-        </div>
-      <% } %>
+          <% } %>
 
-      <!--
+            <!--
 
       <div class="pro" onclick="window.location.href='/Sup-product';">
         <img src="/img/products/p1.jpg" alt="">
@@ -238,21 +241,22 @@
 
       -->
 
-    </div>
+      </div>
 
-  </section>
+    </section>
 
-  <section id="banner" class="section-m1">
-    <h4>Promotions</h4>
-    <h2>Code for up to<span> 30% off</span>-All  Mystery Box & Figure</h2>
-    <a href="/promotion">
-      <button class="normal">Explore More</button>
-    </a>
-  </section>
-  <script>
-    function redirectToProduct(productId) {
+    <section id="banner" class="section-m1">
+      <h4>Promotions</h4>
+      <h2>Code for up to<span> 30% off</span>-All Mystery Box & Figure</h2>
+      <a href="/promotion">
+        <button class="normal">Explore More</button>
+      </a>
+    </section>
+    <script>
+      function redirectToProduct(productId) {
         window.location.href = `/getProduct/${productId}`;
-    }
-  </script>
+      }
+    </script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
 
-<%- include('../partials/footer') %>
+    <%- include('../partials/footer') %>

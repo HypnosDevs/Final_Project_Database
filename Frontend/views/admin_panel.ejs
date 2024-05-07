@@ -151,7 +151,7 @@
 
         <!-- <script src="/loader.js" defer></script> -->
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script>
+        <script defer>
 
             const allowedRole = ["ADMIN"];
             const productSell = document.querySelector("#product_page");
@@ -172,45 +172,49 @@
                 let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
                     withCredentials: true
                 });
-                // console.log(curUser)
-                curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`)
-                const role = curUser.data.role;
-                // console.log("role", role);
-                if (allowedRole.includes(role)) {
-                    let allUsers = await axios.get("http://localhost:8080/api/User/getUsers", {
-                        withCredentials: true
-                    })
+                // console.log(curUser.data)
+                if (!curUser.data) {
+                    window.location.href = "/"
+                }
+                else {
+                    curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`)
+                    const role = curUser.data.role;
+                    // console.log("role", role);
+                    if (allowedRole.includes(role)) {
+                        let allUsers = await axios.get("http://localhost:8080/api/User/getUsers", {
+                            withCredentials: true
+                        })
 
-                    allUsers = allUsers.data;
-                    let orderItems = await axios.get("http://localhost:8080/api/OrderItem/getAllOrderItem");
-                    orderItems = orderItems.data;
-                    let discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
-                    discounts = discounts.data;
-                    let products = await axios.get("http://localhost:8080/api/Product/getProduct");
-                    products = products.data;
-                    let userLength = document.querySelector("#user-length");
-                    userLength.innerHTML = allUsers.length;
-                    let orderItemsLength = document.querySelector("#orderItems-length");
-                    orderItemsLength.innerHTML = orderItems.length;
-                    let productLength = document.querySelector("#products-length")
-                    productLength.innerHTML = products.length;
-                    let discountLength = document.querySelector("#discounts-length")
-                    discountLength.innerHTML = discounts.length;
+                        allUsers = allUsers.data;
+                        let orderItems = await axios.get("http://localhost:8080/api/OrderItem/getAllOrderItem");
+                        orderItems = orderItems.data;
+                        let discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
+                        discounts = discounts.data;
+                        let products = await axios.get("http://localhost:8080/api/Product/getProduct");
+                        products = products.data;
+                        let userLength = document.querySelector("#user-length");
+                        userLength.innerHTML = allUsers.length;
+                        let orderItemsLength = document.querySelector("#orderItems-length");
+                        orderItemsLength.innerHTML = orderItems.length;
+                        let productLength = document.querySelector("#products-length")
+                        productLength.innerHTML = products.length;
+                        let discountLength = document.querySelector("#discounts-length")
+                        discountLength.innerHTML = discounts.length;
 
-                    loader.classList.add("loader-hidden");
+                        loader.classList.add("loader-hidden");
 
-                    loader.addEventListener("transitionend", () => {
-                        document.body.removeChild("loader");
-                    })
+                        loader.addEventListener("transitionend", () => {
+                            document.body.removeChild("loader");
+                        })
 
-                    const rowLoader = document.querySelector("#loader")
-                    rowLoader.remove();
-                    const userTable = document.querySelector("#user-table");
-                    const tableBody = document.querySelector("#user-table tbody");
+                        const rowLoader = document.querySelector("#loader")
+                        rowLoader.remove();
+                        const userTable = document.querySelector("#user-table");
+                        const tableBody = document.querySelector("#user-table tbody");
 
-                    for (user of allUsers) {
-                        const row = document.createElement("tr");
-                        row.innerHTML = `
+                        for (user of allUsers) {
+                            const row = document.createElement("tr");
+                            row.innerHTML = `
                         <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
                         <td><img src="/img/user.png"></a></li></td>
                         <td>${user.username}</td>
@@ -218,13 +222,16 @@
                         <td>${user.role}</td>
                         <td class="edit"><a href="/edit_by_admin">Edit</a></td>
                         `
-                        tableBody.appendChild(row);
-                    }
+                            tableBody.appendChild(row);
+                        }
 
+                    }
+                    else {
+                        console.log("Permission not allowed");
+                        window.location.href = "/"
+                    }
                 }
-                else {
-                    window.location.href = "/"
-                }
+
                 // const curUserIdId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
                 //     withCredentials: true
                 // });
