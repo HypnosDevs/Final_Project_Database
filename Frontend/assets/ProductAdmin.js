@@ -50,11 +50,20 @@ const renderProducts= (products) => {
     const tbody = document.querySelector('#cart tbody');
     tbody.innerHTML = ''; // Clear existing content
 
-    products.forEach(product => {
+    products.forEach(async product => {
         const row = document.createElement('tr');
         let imgTd = `<td><img src="data:image/png;base64, ${product.image}"></td>`;
         if (product.image == undefined) {
-            imgTd = `<td><i class="fa-solid fa-image-slash"></i></td>`;
+            imgTd = `<td> </td>`;
+        }
+
+        if (product.category.length != 0) {
+            let categoryArr = [];
+            for (category of product.category) {
+                const categoryName = await axios.get(`http://localhost:8080/api/Category/getCategory/${category}`);
+                categoryArr.push(categoryName.data[0].name);     
+            }
+            product.category = categoryArr;
         }
         row.innerHTML = `
             <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deleteProduct('${product._id}')"></i></a></td>
