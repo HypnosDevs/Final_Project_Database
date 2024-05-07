@@ -71,7 +71,7 @@ const renderProducts= (products) => {
             <td>${product.name}</td>
             <td>${product.category}</td>
             <td>฿${product.price}</td>
-            <td class="edit"><a href="/edit_product">Edit</a></td>
+            <td class="edit"><a href="/edit_product/${product._id}">Edit</a></td>
         `;
         row.setAttribute('id', product._id);
         tbody.appendChild(row);

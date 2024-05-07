@@ -9,14 +9,14 @@ submitButton.addEventListener("click", async () => {
             if(item[0] == 'category' && item[1] != '') {
                 const categories = item[1].split(' ');
                 for (let i = 0; i < categories.length; i++) {
-                    fetch(`http://localhost:8080/api/Category/addCategory/${categories[i]}`, {
+                    await fetch(`http://localhost:8080/api/Category/addCategory/${categories[i]}`, {
                         method: "POST"
                     });
                 }
             }
         };
 
-        fetch('http://localhost:8080/api/Product/addProduct', {
+        await fetch('http://localhost:8080/api/Product/addProduct', {
             method: "POST",
             body: formData
         })

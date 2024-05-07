@@ -22,54 +22,90 @@
                 </nav>
             </div>
             <div class="rightbox">
-                <div class="profile tabshow">
-                    <h1>Edit Product</h1>
-    
-                    <h2>Product Name</h2>
-                    <input type="text" class="input" value="">
+                <form id="form-update-product">
+                    <div class="profile tabshow">
+                        <h1>Edit Product</h1>
+        
+                        <h2>Product Name</h2>
+                        <input type="text" class="input" placeholder="Product Name" name="name">
+                        
+                        <h2>Category</h2>
+                        <input type="text" class="input" placeholder="Category" name="category">
 
-                    <h2>Category</h2>
-                    <input type="text" class="input" value="">
+                        <h2>Price</h2>
+                        <input type="number" class="input" placeholder="Price" name="price">
+                        
+                        <button type="button" class="btn" id="cancelButton" onclick="window.location.href='/product_admin';">Cancel</button>
 
-                    <h2>Price</h2>
-                    <input type="text" class="input" value="">
-                    <button class="btn">Update</button>
+                    </div>
 
-                 
+                    <div class="payment tabshow">
+                        <h1>Image Product</h1>
+                        <!-- <h2>Image Product NO.1</h2> -->
+                        <input type="file" accept="image/*" name="image">
+
+                        <!-- <h2>Image Product NO.2</h2>
+                        <input type="file" accept="image/*">
+
+                        <h2>Image Product NO.3</h2>
+                        <input type="file" accept="image/*">
+
+                        <h2>Image Product NO.4</h2>
+                        <input type="file" accept="image/*"> -->
+                        <button type="button" class="btn" id="cancelButton" onclick="window.location.href='/product_admin';">Cancel</button>
                     
-                </div>
-
-                <div class="payment tabshow">
-                    <h1>Image Product</h1>
-                    <h2>Image Product NO.1</h2>
-                    <input type="file" accept="image/*">
-
-                    <h2>Image Product NO.2</h2>
-                    <input type="file" accept="image/*">
-
-                    <h2>Image Product NO.3</h2>
-                    <input type="file" accept="image/*">
-
-                    <h2>Image Product NO.4</h2>
-                    <input type="file" accept="image/*">
-                    <button class="btn">Update</button>
-                   
-                   
                     
-                </div>
+                        
+                    </div>
 
-                
-                <div class="setting tabshow">
-                    <h1>Product Detail</h1>
-                    <h2>Detail</h2>
-                    <input type="text" class="input" value="">
-                   
-                    <button class="btn">Update</button>
-                   
-                </div>
+                    
+                    <div class="setting tabshow">
+                        <h1>Product Detail</h1>
+                        <h2>Detail</h2>
+                        <input type="text" class="input" placeholder="Detail" name="description">
+                    
+                        <button type="button" class="btn" id="submitButton">Update</button>
+                        <button type="button" class="btn" id="cancelButton" onclick="window.location.href='/product_admin';">Cancel</button>
+                    
+                    </div>
+                </form>
 
             </div>
-             
+
+            <script>
+                const submitButton = document.querySelector("#submitButton");
+                const form = document.querySelector("#form-update-product");
+
+                submitButton.addEventListener("click", async () => {
+                    try {
+                        const formData = new FormData(form);
+
+                        for (item of formData) {
+                            if(item[0] == 'category' && item[1] != '') {
+                                const categories = item[1].split(' ');
+                                for (let i = 0; i < categories.length; i++) {
+                                    await fetch(`http://localhost:8080/api/Category/addCategory/${categories[i]}`, {
+                                        method: "POST"
+                                    });
+                                }
+                            }
+                        };
+
+                        await fetch(`http://localhost:8080/api/Product/<%= product_id %>/updateProduct`, {
+                            method: "PATCH",
+                            body: formData
+                        })
+                        
+                        location.replace("http://localhost:9090/product_admin")
+
+                    } catch (err) {
+                        console.log(err.message);
+                        res.status(500).send({ message: err.message });
+
+                    }
+                });
+            </script>
+                
             <script>
                 const tabBtn = document.querySelectorAll('.tab');
                 const tab = document.querySelectorAll('.tabshow');

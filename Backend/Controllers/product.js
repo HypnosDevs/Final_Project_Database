@@ -55,7 +55,19 @@ exports.updateProduct = async (req, res) => {
         if (req.file) {
             req.body.image = fs.readFileSync(req.file.path, { encoding: 'base64' });
         }
-        const data = await Product.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+
+        if (req.body.category == '') {
+            req.body.category = undefined;
+        } else {
+            const categories = req.body.category.split(' ');
+            let categoryArr = [];
+            for(let category of categories) {
+                categoryArr.push(await Category.findOne({ name: category }))
+            }
+            req.body.category = categoryArr;
+        }    
+        
+        const data = await Product.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
         await data.save();
         res.send(data)
     } catch (err) {

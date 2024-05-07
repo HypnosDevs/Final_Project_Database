@@ -131,10 +131,12 @@ app.get('/edit_by_user', (req, res) => {
     })
 })
 
-app.get('/edit_product', (req, res) => {
+app.get('/edit_product/:id', (req, res) => {
+    const { id } = req.params
     res.render('edit_product', {
+        product_id: id,
         title: "User Setting Page",
-        style: "create_edit.css"
+        style: "/create_edit.css"
     })
 })
 
@@ -257,7 +259,7 @@ app.get('/shop', async (req, res) => {
 
 app.get('/signIn', (req, res) => {
     res.render('SignIn', {
-        title: "Sing In Form",
+        title: "Sign In Form",
         style: "/Sigin_style.css"
     })
 })
