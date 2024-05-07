@@ -102,3 +102,15 @@ exports.deleteShoppingCartItem = async (req, res) => {
         res.status(500).send({ message: err.message });
     }
 }
+
+exports.deleteShoppingCartItemByProduct = async (req, res) => {
+    try {
+        const { product_id } = req.params;
+        // Delete the shopping cart item
+        await ShoppingCartItem.deleteMany({ product_id });
+        res.status(204).send({ message: "Delete shopping cart item by product successful" });
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}
