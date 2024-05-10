@@ -300,6 +300,13 @@ app.get('/Sup-product2', (req, res) => {
     })
 })
 
+app.get('/trackOrder', (req, res) => {
+    res.render('trackOrder', {
+        title: "Track Order",
+        style: "/trackOrder.css",
+    })
+})
+
 
 app.listen(PORT, () => {
     console.log(`Open server on port ${PORT} complete`)
