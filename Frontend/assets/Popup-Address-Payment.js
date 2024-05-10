@@ -87,7 +87,7 @@ function populateAddressList() {
   addressList.innerHTML = '';
   for (let i = 0; i < userAddresses.length; i++) {
     const listItem = document.createElement('li');
-    listItem.textContent = userAddresses[i].text;
+    listItem.textContent = userAddresses[i].name;
     listItem.addEventListener('click', () => {
       document.querySelector("#address-name").innerHTML = userAddresses[i].name;
       selectedAddressId = userAddresses[i].id;
