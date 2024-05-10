@@ -25,6 +25,18 @@ exports.getDiscountCategory = async (req, res) => {
     }
 }
 
+exports.getDiscountCategoryByDiscountId = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const data = await DiscountCategory.find({ discount:id })
+        res.send(data);
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}
+
 exports.addDiscountCategory = async (req, res) => {
     try {
 
@@ -52,17 +64,23 @@ exports.addDiscountCategory = async (req, res) => {
 exports.deleteDiscountCategoryByDiscountId = async (req, res) => {
     try {
         const { id } = req.params;
-        const discountCategory = await DiscountCategory.findOne({ discount: id})
-        console.log('discountCategory', discountCategory)
-        await DiscountCategory.deleteOne({ discount: id })
+        const discountCategories = await DiscountCategory.find({ discount: id })
+        for (let i = 0; i < discountCategories.length; i++) {
+            discountCategories[i] = discountCategories[i]._id;
+        }
+        
+        await DiscountCategory.deleteMany({ discount: id })
 
-        const category = await Category.findOneAndUpdate(
-            { discountcategory: discountCategory._id },
-            { $pull: { discountcategory: discountCategory._id} },
-            { new: true }
-        );
+        // Remove the reference from the shopping cart model
+        for (let i = 0; i < discountCategories.length; i++) {
+            await Category.updateOne(
+                { discountcategory: discountCategories[i] },
+                { $pull: { discountcategory: discountCategories[i] } },
+                { new: true }
+            );
+        }
 
-        res.send(category)
+        res.send()
 
     } catch (err) {
         console.log(err.message);

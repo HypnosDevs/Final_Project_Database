@@ -39,7 +39,7 @@ exports.getCategory = async (req, res) => {
 exports.addCategory = async (req, res) => {
     try {
         const { name } = req.params;
-        const existingCategory = await Category.find({ name: name });
+        const existingCategory = await Category.findOne({ name: name });
 
         if (existingCategory.length === 0) {
             req.body.name = name;
