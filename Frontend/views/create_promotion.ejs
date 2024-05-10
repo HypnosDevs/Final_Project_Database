@@ -12,32 +12,24 @@
                 </nav>
             </div>
             <div class="rightbox">
-                <div class="profile tabshow">
-                    <h1>Create Promotion</h1>
-    
-                    <h2>Image</h2>
-                    <input type="file" accept="image/*">
+                <form id="form-create-promotion">
+                    <div class="profile tabshow">
+                        <h1>Create Promotion</h1>
+                        
+                        <h2>Discount (%)</h2>
+                        <input type="number" class="input" placeholder="Discount" name="discount" min="1" max="99">
 
-                    <h2>Details</h2>
-                    <input type="text" class="input" value="">
-                    
-                    <h2>Code Promotion</h2>
-                    <input type="text" class="input" value="">
+                        <h2>Category</h2>
+                        <input type="text" class="input" placeholder="Category" name="category">
 
-                    <h2>Price</h2>
-                    <input type="text" class="input" value="">
-
-                    
-
-                    <button class="btn">Create</button>
-
-                 
-                    
-                </div>
+                        <button type="button" class="btn" id="submitButton">Create</button>
+                        <button type="button" class="btn" id="cancelButton" onclick="window.location.href='/promotion_admin';">Cancel</button>
+                    </div>
+                </form>
             </div>
 
 
-             
+            <script src="CreatePromotion.js"></script>
             <script>
                 const tabBtn = document.querySelectorAll('.tab');
                 const tab = document.querySelectorAll('.tabshow');

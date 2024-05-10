@@ -46,47 +46,40 @@ const deleteProduct = async (product_id) => {
     }
 };
 
-const renderProducts= (products) => {
+const renderPromotions= (promotions) => {
     const tbody = document.querySelector('#cart tbody');
     tbody.innerHTML = ''; // Clear existing content
 
-    products.forEach(async product => {
+    promotions.forEach(async promotion => {
         const row = document.createElement('tr');
-        let imgTd = `<td><img src="data:image/png;base64, ${product.image}"></td>`;
-        if (product.image == undefined) {
-            imgTd = `<td> </td>`;
-        }
-
-        if (product.category && product.category.length != 0) {
+        if (promotion.category && promotion.category.length != 0) {
             let categoryArr = [];
-            for (category of product.category) {
+            for (category of promotion.category) {
                 const categoryName = await axios.get(`http://localhost:8080/api/Category/getCategory/${category}`);
                 categoryArr.push(categoryName.data[0].name);     
             }
-            product.category = categoryArr;
+            promotion.category = categoryArr;
         } else {
-            product.category = '';
+            promotion.category = '';
         }
         row.innerHTML = `
-            <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deleteProduct('${product._id}')"></i></a></td>
-            ` + imgTd + `
-            <td>${product.name}</td>
-            <td>${product.category}</td>
-            <td>฿${product.price}</td>
-            <td class="edit"><a href="/edit_product/${product._id}">Edit</a></td>
+            <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deleteProduct('${promotion._id}')"></i></a></td>
+            <td>${promotion.discount}%</td>
+            <td>${promotion.category}</td>
+            <td class="edit"><a href="/edit_product/${promotion._id}">Edit</a></td>
         `;
-        row.setAttribute('id', product._id);
+        row.setAttribute('id', promotion._id);
         tbody.appendChild(row);
     });
 };
 
-const getProducts = async () => {
+const getPromotions = async () => {
     try {
-        const products = await axios.get("http://localhost:8080/api/Product/getProduct");
-        if (products.data && products.data.length > 0) {
-            renderProducts(products.data);
+        const promotions = await axios.get("http://localhost:8080/api/Discount/getDiscount");
+        if (promotions.data && promotions.data.length > 0) {
+            renderPromotions(promotions.data);
         } else {
-            emptyPage("No products found");
+            emptyPage("No promotions found");
         }
 
     } catch (error) {
@@ -95,4 +88,4 @@ const getProducts = async () => {
     }
 };
 
-getProducts();
+getPromotions();

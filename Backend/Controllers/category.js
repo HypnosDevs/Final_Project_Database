@@ -47,7 +47,7 @@ exports.addCategory = async (req, res) => {
             await newCategory.save();
             res.send(newCategory);
         } else {
-            res.status(400).send({ message: "Category already exists" });
+            res.send(existingCategory);
         }
 
     } catch (err) {
