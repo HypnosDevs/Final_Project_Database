@@ -146,10 +146,12 @@ app.get('/edit_product/:id', (req, res) => {
     })
 })
 
-app.get('/edit_promotion', (req, res) => {
+app.get('/edit_promotion/:id', (req, res) => {
+    const { id } = req.params
     res.render('edit_promotion', {
+        discount_id: id,
         title: "User Setting Page",
-        style: "create_edit.css"
+        style: "/create_edit.css"
     })
 })
 

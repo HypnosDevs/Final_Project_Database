@@ -4,9 +4,11 @@ const { Schema } = mongoose;
 const paymentTypeSchema = new Schema(
     {
 
-        type: {
+        name: {
             type: String,
+            enum: ['Credit Card', 'Debit Card', 'Master Card'],
             required: true
+
         },
         paymentmethod: [{
             type: Schema.Types.ObjectId,
