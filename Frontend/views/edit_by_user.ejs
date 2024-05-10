@@ -51,10 +51,32 @@
                 <div class="payment tabshow">
                     <h1>Payment Info</h1>
                     <h2>Payment Method</h2>
-                    <input type="text" class="input" value="">
+                    <select name="" id="paymentSelect" required>
+                        <option value="" disabled selected>Select Payment</option>
+                        <option value="credit_card">Credit Card, 12341234, Jarukit</option>
+                        <option value="debit_card">Debit Card, 093124, Pooh</option>
+                        <option value="debit_card">Debit Card, 13241235, Dola</option>
+                        <option value="add_new_payment">Add a new payment</option>
+                    </select>
 
-                    <h2>Billng Address</h2>
-                    <input type="text" class="input" value="">
+                    <div id="newPaymentInput" style="display: none;">
+                        <h2>METHOD</h2>
+                        <select name="payment[type]" required>
+                            <option value="" disabled selected>Select Payment Type</option>
+                            <option value="credit_card">Credit Card</option>
+                            <option value="debit_card">Debit Card</option>
+                            <option value="debit_card">Master Card</option>
+                        </select>
+                    </div>
+
+                    <h2>Cardholder name</h2>
+                    <input type="text" class="input" name="payment[account_name]">
+
+                    <h2>Card number</h2>
+                    <input type="text" class="input" name="payment[account_number]">
+
+                    <h2>Expiration date</h2>
+                    <input type="text" class="input" name="payment[expiry_date]">
 
                     <button class="btn">Update</button>
                     
