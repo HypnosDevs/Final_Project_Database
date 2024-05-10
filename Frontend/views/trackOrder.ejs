@@ -1,0 +1,101 @@
+<%- include('../partials/head') %>
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animated Step Progress Bar</title>
+
+
+<body>
+
+    <section id="header">
+        <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
+        <div>
+            <ul id="navbar">
+                <form>
+                    <div class="search">
+                        <span class="search-icon material-symbols-outlined">search</span>
+                        <input class="search-input" type="search" placeholder="Search">
+                    </div>
+                </form>
+                <li><a href="/">Home</a></li>
+                <li><a href="/signIn">Sign In/Register</a></li>
+                <li><a href="/shop">Shop</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/edit"><img src="/img/user.png"></a></li>
+                <li><a href="/cart"><img src="/img/cart.png"></a></li>
+            </ul>
+        </div>
+    </section>
+    <section id="page-header">
+
+        <h2># Track My Order</h2>
+        <p>Please check your Order! </p>
+
+    </section>
+
+    <div class="head">
+        <p class="head_1">My Purchases</span></p>
+       
+    </div>
+
+    <ul>
+        <li>
+            <i class="fa-solid fa-cart-plus"></i>
+            <div class="progress one">
+                <p>1</p>
+                <i class="uil uil-check"></i>
+            </div>
+            <p class="text">Add To Cart</p>
+        </li>
+        <li>
+            <i class="fa-solid fa-credit-card"></i>
+            <div class="progress two">
+                <p>2</p>
+                <i class="uil uil-check"></i>
+            </div>
+            <p class="text">Make Payment</p>
+        </li>
+        <li>
+            <i class="fa-solid fa-truck-fast"></i>
+            <div class="progress three">
+                <p>3</p>
+                <i class="uil uil-check"></i>
+            </div>
+            <p class="text">Order in Progress</p>
+        </li>
+        <li>
+            <i class="fa-solid fa-check"></i>
+            <div class="progress four">
+                <p>4</p>
+                <i class="uil uil-check"></i>
+            </div>
+            <p class="text">Order Arrived</p>
+        </li>
+
+    </ul>
+
+</div>
+
+
+<section id="board" class="">
+    <table id="user-table" width="100%">
+        <thead>
+            <tr>
+                <td>Order_ID</td>
+                <td>Product_Name</td>
+                <td>Price</td>
+                <td>Quantity</td>
+                <td>Status</td>
+                <td>Payment</td>
+            </tr>
+        </thead>
+
+    </table>
+
+
+
+   
+    <script src="trackOrder.js"></script>
+
+    <%- include('../partials/footer') %>
+
