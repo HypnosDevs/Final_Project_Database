@@ -137,21 +137,31 @@
             </div>
         </div>
 
+        <!-- Popup for  -->
+
         <!-- Popup for add payment -->
         <div class="popup" id="add-payment-popup">
             <div class="popup-content">
                 <h3>Add Your Payment</h3>
                 <form id="add-payment-form">
                     <div class="input-box">
-                        <input type="text" placeholder="Cardholder name" name="payment[cardholder_name]" required>
+                        <select name="payment[type]" required>
+                            <option value="" disabled selected>Select Payment Type</option>
+                            <option value="credit_card">Credit Card</option>
+                            <option value="debit_card">Debit Card</option>
+                            <option value="debit_card">Master Card</option>
+                        </select>
+
+                    <div class="input-box">
+                        <input type="text" placeholder="Cardholder name" name="payment[account_name]" required>
                     </div>
         
                     <div class="input-box">
-                        <input type="text" placeholder="Card number" name="payment[card_number]" required>
+                        <input type="text" placeholder="Card number" name="payment[account_number]" required>
                     </div>
         
                     <div class="input-box">
-                        <input type="text" placeholder="Expiration date" name="payment[expiration_date]" required>
+                        <input type="text" placeholder="Expiration date" name="payment[expiry_date]" required>
                     </div>
     
                     <div class="popup-buttons">

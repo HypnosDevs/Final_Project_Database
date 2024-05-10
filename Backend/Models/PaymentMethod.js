@@ -12,6 +12,10 @@ const paymentMethodSchema = new Schema(
             type: String,
             required: true
         },
+        account_name: {
+            type: String,
+            required: true
+        },
         expiry_date: {
             type: String,
             required: true

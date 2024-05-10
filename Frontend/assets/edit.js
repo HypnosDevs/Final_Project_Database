@@ -108,18 +108,34 @@ postalCode.value = "";
 }
 }
 
-
+// if select add a new address
 document.getElementById('addressSelect').addEventListener('change', function() {
-    var selectElement = document.getElementById('addressSelect');
+    var selectAddressElement = document.getElementById('addressSelect');
     var newAddressInput = document.getElementById('newAddressInput');
 
-    if (selectElement.value === 'add_new_address') {
-        selectElement.style.display = 'block    ';
+    if (selectAddressElement.value === 'add_new_address') {
+        selectAddressElement.style.display = 'block    ';
         newAddressInput.style.display = 'block';
         newAddressInput.setAttribute('required', 'required');
     } else {
-        selectElement.style.display = 'block';
+        selectAddressElement.style.display = 'block';
         newAddressInput.style.display = 'none';
         newAddressInput.removeAttribute('required');
+    }
+});
+
+// if select add a new paymenyt method
+document.getElementById('paymentSelect').addEventListener('change', function() {
+    var selectPaymentElement = document.getElementById('paymentSelect');
+    var newPaymentInput = document.getElementById('newPaymentInput');
+
+    if (selectPaymentElement.value === 'add_new_payment') {
+        selectPaymentElement.style.display = 'block    ';
+        newPaymentInput.style.display = 'block';
+        newPaymentInput.setAttribute('required', 'required');
+    } else {
+        selectPaymentElement.style.display = 'block';
+        newPaymentInput.style.display = 'none';
+        newPaymentInput.removeAttribute('required');
     }
 });

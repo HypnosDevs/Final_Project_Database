@@ -171,13 +171,6 @@ add_addressBtn.addEventListener('click', () => {
 
 );
 
-add_paymentBtn.addEventListener('click', () => {
-  if (paymentIdx !== -1) {
-    document.getElementById('user-payment').textContent = userPayments[paymentIdx];
-    closePopup(paymentPopup);
-  }
-});
-
 cancel_addressBtn.addEventListener('click', () => {
   closePopup(addressPopup);
 });
