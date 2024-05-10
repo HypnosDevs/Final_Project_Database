@@ -13,6 +13,18 @@ exports.getAllDiscountCategory = async (req, res) => {
     }
 }
 
+exports.getDiscountCategory = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const data = await DiscountCategory.findById(id)
+        res.send(data);
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}
+
 exports.addDiscountCategory = async (req, res) => {
     try {
 

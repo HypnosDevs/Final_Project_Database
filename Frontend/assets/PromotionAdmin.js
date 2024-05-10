@@ -52,10 +52,12 @@ const renderPromotions= (promotions) => {
 
     promotions.forEach(async promotion => {
         const row = document.createElement('tr');
-        if (promotion.category && promotion.category.length != 0) {
+        if (promotion.discountcategory && promotion.discountcategory.length != 0) {
             let categoryArr = [];
-            for (category of promotion.category) {
-                const categoryName = await axios.get(`http://localhost:8080/api/Category/getCategory/${category}`);
+            for (discountCategoryId of promotion.discountcategory) {
+                const discountCategory = await axios.get(`http://localhost:8080/api/DiscountCategory/getDiscountCategory/${discountCategoryId}`)
+                const categoryId = discountCategory.data.category;
+                const categoryName = await axios.get(`http://localhost:8080/api/Category/getCategory/${categoryId}`);
                 categoryArr.push(categoryName.data[0].name);     
             }
             promotion.category = categoryArr;
