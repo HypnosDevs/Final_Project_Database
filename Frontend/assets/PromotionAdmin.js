@@ -16,16 +16,16 @@ const emptyPage = (text) => {
     pageHeaderSection.parentNode.insertBefore(h1Element, referenceNode);
 }
 
-const deleteProduct = async (product_id) => {
+const deletePromotion = async (discount_id) => {
     try {
-        // Delete the shopping cart item from the server
-        await axios.delete(`http://localhost:8080/api/ShoppingCartItem/deleteShoppingCartItemByProduct/${product_id}`);
+        // Delete the discount category from the server
+        await axios.delete(`http://localhost:8080/api/DiscountCategory/${discount_id}/deleteDiscountCategoryByDiscountId`);
 
-        // Delete the product from the server
-        await axios.delete(`http://localhost:8080/api/Product/${product_id}/deleteProduct`);
+        // Delete the discount from the server
+        await axios.delete(`http://localhost:8080/api/Discount/${discount_id}/deleteDiscount`);
 
         // Remove all td elements inside the corresponding row from the cart table
-        const rowToRemove = document.querySelector(`#cart tbody tr[id="${product_id}"]`);
+        const rowToRemove = document.querySelector(`#cart tbody tr[id="${discount_id}"]`);
         if (rowToRemove) {
             const cellsToRemove = rowToRemove.querySelectorAll('td');
             cellsToRemove.forEach(cell => {
@@ -34,15 +34,15 @@ const deleteProduct = async (product_id) => {
 
             rowToRemove.remove(); // Remove the row from the DOM
         } else {
-            console.error('Row not found for product:', product_id);
+            console.error('Row not found for promotion:', discount_id);
         }
 
-        const productsCount = document.querySelectorAll('#cart tbody tr').length;
-        if (productsCount === 0) {
-            emptyPage("No products found");
+        const promotionsCount = document.querySelectorAll('#cart tbody tr').length;
+        if (promotionsCount === 0) {
+            emptyPage("No promotions found");
         }
     } catch (error) {
-        console.error('Error deleting product:', error);
+        console.error('Error deleting promotion:', error);
     }
 };
 
@@ -65,7 +65,7 @@ const renderPromotions= (promotions) => {
             promotion.category = '';
         }
         row.innerHTML = `
-            <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deleteProduct('${promotion._id}')"></i></a></td>
+            <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deletePromotion('${promotion._id}')"></i></a></td>
             <td>${promotion.discount}%</td>
             <td>${promotion.category}</td>
             <td class="edit"><a href="/edit_product/${promotion._id}">Edit</a></td>

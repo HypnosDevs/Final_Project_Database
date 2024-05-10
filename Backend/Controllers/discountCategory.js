@@ -39,12 +39,30 @@ exports.addDiscountCategory = async (req, res) => {
         discount.discountcategory.push(newDiscountCategory);
 
         await newDiscountCategory.save();
-        console.log('kuy')
         await category.save()
-        console.log('kuy')
         await discount.save()
-        console.log('kuy')
         res.send();
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}
+
+exports.deleteDiscountCategoryByDiscountId = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const discountCategory = await DiscountCategory.findOne({ discount: id})
+        console.log('discountCategory', discountCategory)
+        await DiscountCategory.deleteOne({ discount: id })
+
+        const category = await Category.findOneAndUpdate(
+            { discountcategory: discountCategory._id },
+            { $pull: { discountcategory: discountCategory._id} },
+            { new: true }
+        );
+
+        res.send(category)
 
     } catch (err) {
         console.log(err.message);

@@ -12,7 +12,7 @@ submitButton.addEventListener("click", async () => {
                 const categories = item[1].split(' ');
                 for (let i = 0; i < categories.length; i++) {
                     const category = await axios.post(`http://localhost:8080/api/Category/addCategory/${categories[i]}`);
-                    categoriesId.push(category.data[0]._id);
+                    categoriesId.push(category.data._id);
                 }
             }
         };
