@@ -8,11 +8,16 @@ const addCart = async (productId) => {
     });
 
     const userId = curUserId.data;
-    console.log("user", userId);
+    if (!userId) {
+        return window.location.href = `/signIn`;
+    }
 
-    // const shoppingCart = await axios.post(`http://localhost:8080/api/ShoppingCart/addShoppingCart/${userId}`);
-    console.log('userId', userId);
-    console.log('productid', productId);
+
+    // console.log("user", userId);
+
+    // // const shoppingCart = await axios.post(`http://localhost:8080/api/ShoppingCart/addShoppingCart/${userId}`);
+    // console.log('userId', userId);
+    // console.log('productid', productId);
     const shoppingCartItem = await axios.post(`http://localhost:8080/api/ShoppingCartItem/addShoppingCartItem/${userId}/${productId}`, {
         qty: document.querySelector("#qty").value
     });
