@@ -54,7 +54,7 @@ const renderPromotions= (promotions) => {
         const row = document.createElement('tr');
         if (promotion.discountcategory && promotion.discountcategory.length != 0) {
             let categoryArr = [];
-            for (discountCategoryId of promotion.discountcategory) {
+            for (const discountCategoryId of promotion.discountcategory) {
                 const discountCategory = await axios.get(`http://localhost:8080/api/DiscountCategory/getDiscountCategory/${discountCategoryId}`)
                 const categoryId = discountCategory.data.category;
                 const categoryName = await axios.get(`http://localhost:8080/api/Category/getCategory/${categoryId}`);
@@ -68,7 +68,7 @@ const renderPromotions= (promotions) => {
             <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deletePromotion('${promotion._id}')"></i></a></td>
             <td>${promotion.discount}%</td>
             <td>${promotion.category}</td>
-            <td class="edit"><a href="/edit_product/${promotion._id}">Edit</a></td>
+            <td class="edit"><a href="/edit_promotion/${promotion._id}">Edit</a></td>
         `;
         row.setAttribute('id', promotion._id);
         tbody.appendChild(row);
