@@ -11,6 +11,19 @@ exports.getAllPaymentType = async (req, res) => {
     }
 }
 
+exports.getPaymentTypeFromUserPaymentMethod = async (req, res) => {
+    try {
+        const { payment_method_id } = req.params;
+        const data = await PaymentType.findOne({ paymentmethod: { $in: payment_method_id } });
+        res.send(data);
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}
+
+
 exports.getPaymentType = async (req, res) => {
     try {
         const { id } = req.params;
