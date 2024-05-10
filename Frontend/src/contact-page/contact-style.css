@@ -300,13 +300,16 @@ footer {
   width: 30%;
   padding:15px 30px;
   font-weight: 600;
-  background-color: #00d1ec;
+  background-color: #93d2fc;
   border-radius: 4px;
   cursor:pointer;
   border: none;
   outline:none;
   transition: 0.2s;
-
+  color: #fdfdfd;
+}
+.normal:hover{
+  background-color: #f79ef2;
 }
 
 /*people*/

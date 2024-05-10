@@ -285,7 +285,7 @@ footer {
   background-image: url();
   background-repeat: no-repeat;
   background-position: 20% 30%;
-  background-color:#1c0069;
+  background-color:#93d2fc;
 }
 #newsletter .newstext p{
   font-size: 14px;
@@ -293,7 +293,7 @@ footer {
   color: #5c5c5c;
 }
 #newsletter .newstext p span {
-  color: #dfe211;
+  color: #f79ef2;
 }
 #newsletter input{
   height: 3.125rem;
@@ -306,8 +306,9 @@ footer {
 }
 #newsletter button{
   border-radius: 4px;
-  background-color: #088178;
+  background-color: #8cf8f1;
   height: 3.125rem;
+  color: #5c5c5c;
 }
 #newsletter .form{
   display: flex;
@@ -327,6 +328,6 @@ button.normal{
 }
 
 #newsletter button:hover{
-  background-color: #088178;
+  background-color: #67dfd7;
   color: #fff;
 }
