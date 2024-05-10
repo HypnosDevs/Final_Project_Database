@@ -19,15 +19,21 @@ app.set('views', path.join(__dirname, 'views'))
 
 const PORT = env.PORT || 9090;
 
+app.get('/about', (req, res) => {
+    res.render('about', {
+        title: "About",
+        style: "/about.css",
+        about: "active"
+    })
+})
 
-
-// app.get('/about', (req, res) => {
-//     res.render('about')
-// })
-
-// app.get('/contact', (req, res) => {
-//     res.render('contact')
-// })
+app.get('/contact', (req, res) => {
+    res.render('contact', {
+        title: "Contact",
+        style: "/contact.css",
+        contact: "active"
+    })
+})
 
 app.get('/', async (req, res) => {
     try {
@@ -140,10 +146,12 @@ app.get('/edit_product/:id', (req, res) => {
     })
 })
 
-app.get('/edit_promotion', (req, res) => {
+app.get('/edit_promotion/:id', (req, res) => {
+    const { id } = req.params
     res.render('edit_promotion', {
+        discount_id: id,
         title: "User Setting Page",
-        style: "create_edit.css"
+        style: "/create_edit.css"
     })
 })
 
@@ -306,6 +314,8 @@ app.get('/trackOrder', (req, res) => {
         style: "/trackOrder.css",
     })
 })
+
+
 
 
 app.listen(PORT, () => {

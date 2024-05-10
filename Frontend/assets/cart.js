@@ -106,9 +106,9 @@ const getCart = async () => {
         const curUser = await axios.get(`http://localhost:8080/api/User/getUser/${userId}`)
 
         if (curUser.data.shoppingcart && curUser.data.shoppingcart.length > 0) {
-
+            console.log("here cart", curUser.data.shoppingcart);
             const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${curUser.data._id}`);
-            //console("Shopping Cart Items:", shoppingCartItems.data);
+            console.log("Shopping Cart Items:", shoppingCartItems.data);
             renderCartItems(shoppingCartItems.data); // Render cart items
             renderCartTotals(shoppingCartItems.data);
         } else {

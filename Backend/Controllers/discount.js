@@ -53,6 +53,18 @@ exports.updateDiscount = async (req, res) => {
     try {
         const { id } = req.params;
         const data = await Discount.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+
+        console.log('req.body', req.body)
+
+        // Remove the reference from the discount model
+        for (let i = 0; i < req.body.discountCategory.length; i++) {
+            await Discount.updateOne(
+                { discountcategory: req.body.discountCategory[i] },
+                { $pull: { discountcategory: req.body.discountCategory[i] } },
+                { new: true }
+            );
+        }
+
         await data.save();
         res.send(data)
 

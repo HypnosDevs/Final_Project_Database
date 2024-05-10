@@ -11,6 +11,19 @@ exports.getAllPaymentType = async (req, res) => {
     }
 }
 
+exports.getPaymentTypeFromUserPaymentMethod = async (req, res) => {
+    try {
+        const { payment_method_id } = req.params;
+        const data = await PaymentType.findOne({ paymentmethod: { $in: payment_method_id } });
+        res.send(data);
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}
+
+
 exports.getPaymentType = async (req, res) => {
     try {
         const { id } = req.params;
@@ -25,10 +38,12 @@ exports.getPaymentType = async (req, res) => {
 
 exports.addPaymentType = async (req, res) => {
     try {
-        const existingPaymentType = await PaymentType.find({ name: req.body.type });
+        const { name } = req.body;
+        console.log(name, typeof (name));
+        const existingPaymentType = await PaymentType.find({ name: name });
 
         if (existingPaymentType.length === 0) {
-            const newPaymentType = new PaymentType(req.body);
+            const newPaymentType = new PaymentType({ name });
             await newPaymentType.save();
             res.send(newPaymentType);
 
