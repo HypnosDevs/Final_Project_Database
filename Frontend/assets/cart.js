@@ -103,6 +103,9 @@ const getCart = async () => {
             withCredentials: true
         });
         const userId = curUserId.data;
+        if (!userId) {
+            return window.location.href = `/signIn`;
+        }
         const curUser = await axios.get(`http://localhost:8080/api/User/getUser/${userId}`)
 
         if (curUser.data.shoppingcart && curUser.data.shoppingcart.length > 0) {
