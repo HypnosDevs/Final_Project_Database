@@ -127,9 +127,11 @@ function populatePaymentList() {
   for (let i = 0; i < userPaymentsInfo.length; i++) {
     const listItem = document.createElement('li');
     listItem.textContent = userPaymentsInfo[i].account_number;
-    listItem.addEventListener('click', () => {
-      document.querySelector("#user-payment").innerHTML = `Account number: ${userPaymentsInfo[i].account_number}<div><br></div>Expiry date: ${userPaymentsInfo[i].expiry_date}`;
+    listItem.addEventListener('click', async () => {
       selectedPaymentId = userPaymentsInfo[i].id;
+      const data = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentTypeFromUserPaymentMethod/${userPaymentsInfo[i].id}`);
+      document.querySelector("#user-payment").innerHTML = `Type: ${data.data.name}<div><br></div>Account number: ${userPaymentsInfo[i].account_number}<div><br></div>Expiry date: ${userPaymentsInfo[i].expiry_date}`;
+
       //console.log("selected payment id", selectedPaymentId);
       // document.getElementById('user-payment').textContent = userPaymentsInfo[i].expiry_date;
       // console.log("payment-list", document.getElementById('payment-list').textContent);

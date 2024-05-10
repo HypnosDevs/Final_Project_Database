@@ -38,10 +38,12 @@ exports.getPaymentType = async (req, res) => {
 
 exports.addPaymentType = async (req, res) => {
     try {
-        const existingPaymentType = await PaymentType.find({ name: req.body.type });
+        const { name } = req.body;
+        console.log(name, typeof (name));
+        const existingPaymentType = await PaymentType.find({ name: name });
 
         if (existingPaymentType.length === 0) {
-            const newPaymentType = new PaymentType(req.body);
+            const newPaymentType = new PaymentType({ name });
             await newPaymentType.save();
             res.send(newPaymentType);
 

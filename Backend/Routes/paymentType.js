@@ -7,7 +7,7 @@ router.get('/getPaymentType', getAllPaymentType)
 
 router.get('/getPaymentType/:id', getPaymentType)
 
-router.get('/getPaymentTypeFromUserPaymentMethod/payment_method_id', getPaymentTypeFromUserPaymentMethod)
+router.get('/getPaymentTypeFromUserPaymentMethod/:payment_method_id', getPaymentTypeFromUserPaymentMethod)
 
 router.post('/addPaymentType', addPaymentType)
 
