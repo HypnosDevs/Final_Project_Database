@@ -23,16 +23,18 @@
             <div id="left-box">
                 <div id="address">
                     <h3>Apply Address</h3>
-                    <div>
+                    <div id="block-address">
+                        <h4 id="address-name"></h4>
                         <p id="user-address">Choose Your Address</p>
-                        <button class="normal" id="change-address-btn"><strong>Change</strong></button>
+                        <button class="normal" id="change-address-btn"><strong>Choose</strong></button>
                     </div>
                 </div>
                 <div id="payment">
                     <h3>Payment Method</h3>
                     <div>
                         <p id="user-payment">Choose Your Payment</p>
-                        <button class="normal" id="change-payment-btn"><strong>Change</strong></button>
+                        <input type="password" placeholder="Enter your CCV" required>
+                        <button class="normal" id="change-payment-btn"><strong>Choose</strong></button>
                     </div>
                 </div>
             </div>
@@ -57,7 +59,7 @@
 
                 <div class="popup-buttons">
                     <button class="normal" id="cancel-adress-btn">Cancel</button>
-                    <button class="normal" id="confirm-address-btn">Confirm</button>
+                    <button class="normal" id="add-address-btn">Add</button>
                 </div>
             </div>
         </div>
@@ -72,11 +74,102 @@
 
                 <div class="popup-buttons">
                     <button class="normal" id="cancel-payment-btn">Cancel</button>
-                    <button class="normal" id="confirm-payment-btn">Confirm</button>
+                    <button class="normal" id="add-payment-btn">Add</button>
                 </div>
             </div>
         </div>
 
-        <script src="Popup-Address.js"></script>
+        <!-- Popup for Add Address -->
+        <div class="popup" id="add-address-popup">
+            <div class="popup-content">
+                <h3>Add Your Address</h3>
+                <form id="add-address-form">
+
+                    <div class="input-box">
+                        <input type="text" placeholder="Address name" name="address[name]" required>
+                    </div>
+        
+                    <div class="address-box">
+                        <textarea placeholder="Address line 1" name="address[address_line1]"></textarea>
+                    </div>
+        
+                    <div class="address-box">
+                        <textarea placeholder="Address line 2" name="address[address_line2]"></textarea>
+                    </div>
+        
+                    <div class="address-box">
+                        <select id="country" name="address[country]" required onchange="showProvinces()">
+                            <option value="" disabled selected>Select Country</option>
+                            <option value="Thailand">Thailand</option>
+                        </select>
+                    </div>
+        
+                    <div class="address-box">
+                        <select id="province" name="address[province]" required onchange="showAmphoes()" disabled>
+                            <option value="" disabled selected>Select Province</option>
+                            <!-- JS will display province -->
+                        </select>
+                    </div>
+        
+                    <div class="address-box">
+                        <select id="amphoe" name="address[amphoe]" required disabled onchange="showDistricts()">
+                            <option value="" disabled selected>Select Amphoe</option>
+                            <!-- JS will display province -->
+                        </select>
+                    </div>
+        
+                    <div class="address-box">
+                        <select id="district" name="address[district]" required disabled onchange="showPostCode()">
+                            <option value="" disabled selected>Select District</option>
+                            <!-- JS will display district -->
+                        </select>
+                    </div>
+        
+                    <div class="input-box">
+                        <input type="text" id="postal_code" placeholder="Postal Code" name="address[postal_code]" required>
+                    </div>
+
+                    <div class="popup-buttons">
+                        <button class="normal" id="cancel-add-address-btn">Cancel</button>
+                        <button class="normal" id="submit-add-address-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Popup for add payment -->
+        <div class="popup" id="add-payment-popup">
+            <div class="popup-content">
+                <h3>Add Your Payment</h3>
+                <form id="add-payment-form">
+                    <div class="input-box">
+                        <input type="text" placeholder="Cardholder name" name="payment[cardholder_name]" required>
+                    </div>
+        
+                    <div class="input-box">
+                        <input type="text" placeholder="Card number" name="payment[card_number]" required>
+                    </div>
+        
+                    <div class="input-box">
+                        <input type="text" placeholder="Expiration date" name="payment[expiration_date]" required>
+                    </div>
+    
+                    <div class="popup-buttons">
+                        <button class="normal" id="cancel-add-payment-btn">Cancel</button>
+                        <button class="normal" id="submit-add-payment-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+
+
+
+        <script src="Popup-Address-Payment.js"></script>
+        <script src="Add-Address.js"></script>
         <script src="cart.js"></script>
-<%- include('../partials/footer') %>
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/JQL.min.js"></script>
+        <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/typeahead.bundle.js"></script>
+        <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.js"></script>
+        <%- include('../partials/footer') %>

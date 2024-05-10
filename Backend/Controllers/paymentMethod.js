@@ -14,7 +14,8 @@ exports.getAllPaymentMethod = async (req, res) => {
 
 exports.getAllPaymentMethodFromUser = async (req, res) => {
     try {
-        const data = await User.findById(req.session.userId).populate('paymentmethod');
+        const { id } = req.params;
+        const data = await User.findById(id, { password: 0 }).populate('paymentmethod');
         res.send(data);
 
     } catch (err) {
@@ -37,8 +38,13 @@ exports.getPaymentMethod = async (req, res) => {
 
 exports.addPaymentMethod = async (req, res) => {
     try {
+        const { id } = req.params;
+        const user = await User.findById(id);
         const newPaymentMethod = new PaymentMethod(req.body);
+
+        user.paymentmethod.push(newPaymentMethod);
         await newPaymentMethod.save();
+        await user.save();
         res.send(newPaymentMethod);
 
     } catch (err) {

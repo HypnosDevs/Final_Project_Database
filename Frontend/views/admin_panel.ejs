@@ -34,11 +34,11 @@
             <h3 class="i-name">
                 Dashboard
             </h3>
-            <section id="button_create">
+            <div id="button_create">
                 <a href="/create_product">
-                    <button>Add Product</button>
+                    <button>Add User</button>
                 </a>
-            </section>
+            </div>
             <div class="values">
                 <div class="val-box" id="users_page">
                     <i class="fa-solid fa-users"></i>
@@ -264,13 +264,13 @@
             };
 
 
-            const loadAnalyzes = async (allProducts,allCategory) => {
+            const loadAnalyzes = async (allProducts, allCategory) => {
                 const headerTable = document.querySelector("#header-table thead");
                 let countNoProduct = document.querySelector('.no-product');
                 if (countNoProduct) {
                     countNoProduct.remove();
                 }
-
+                console.log("headerTAble", headerTable);
                 headerTable.innerHTML = '';
                 const row = document.createElement("tr");
                 row.innerHTML = `
@@ -280,6 +280,11 @@
                         <td>Total Sales</td>
                         `;
                 headerTable.appendChild(row);
+
+                const tableBody = document.querySelector("#board tbody");
+
+                // Clear existing rows
+                tableBody.innerHTML = '';
             };
 
             const loadPromotions = async (allPromotions) => {
@@ -309,7 +314,7 @@
 
 
 
-            
+
         </script>
 
         <script>
@@ -353,7 +358,7 @@
                             productLength.innerHTML = products.length;
                             let discountLength = document.querySelector("#discounts-length")
                             discountLength.innerHTML = discounts.length;
-                            
+
                             // Edit pls
                             let category = ""
 
@@ -396,7 +401,7 @@
                             analize_page.addEventListener("click", () => {
                                 // console.log("here");
                                 // window.location.href = "/analize-page"
-                                loadAnalyzes(products,category);
+                                loadAnalyzes(products, category);
 
                             })
 

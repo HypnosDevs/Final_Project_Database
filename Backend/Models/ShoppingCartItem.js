@@ -6,19 +6,24 @@ const shoppingCartItemSchema = new Schema({
         type: Number,
         required: true
     },
-    shoppingcart: {
-        type: Schema.Types.ObjectId,
-        ref: 'ShoppingCart',
-        required: true
-    },
+    // shoppingcart: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'ShoppingCart',
+    //     required: true
+    // },
     product: {
         type: Schema.Types.ObjectId,
         ref: 'Product',
         required: true
-    }
-    
-
     },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }
+
+
+},
     {
         timestamps: true
     }
