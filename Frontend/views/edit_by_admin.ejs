@@ -63,8 +63,19 @@
 
                 <div class="Address tabshow" id="addressPage1">
                     <h1>Address Info</h1>
+
                     <h2>Address name</h2>
-                    <input type="text" class="input" value="" name="address[name]">
+                    <select name="address[name]" id="addressSelect" required>
+                        <option value="" disabled selected>Select Address</option>
+                        <option value="">Test1</option>
+                        <option value="">Test2</option>
+                        <option value="add_new_address">Add a new address</option>
+                    </select>
+
+                    <div id="newAddressInput" style="display: none;">
+                        <h2>New address name</h2>
+                        <input type="text" class="input" value="" name="address[name]" placeholder="Enter a new address" >
+                    </div>
 
                     <h2>Address line1</h2>
                     <input type="text" class="input" value="" name="address[address_line1]">

@@ -531,7 +531,7 @@ input:focus, textarea:focus, select:focus {
 #add-payment-popup .popup-content {
   background-color: #fff;
   width: 500px;
-  height: 700px;
+  height: 400px;
   margin: 200px auto;
   padding: 20px;
   border-radius: 5px;

@@ -107,3 +107,19 @@ else {
 postalCode.value = "";
 }
 }
+
+
+document.getElementById('addressSelect').addEventListener('change', function() {
+    var selectElement = document.getElementById('addressSelect');
+    var newAddressInput = document.getElementById('newAddressInput');
+
+    if (selectElement.value === 'add_new_address') {
+        selectElement.style.display = 'block    ';
+        newAddressInput.style.display = 'block';
+        newAddressInput.setAttribute('required', 'required');
+    } else {
+        selectElement.style.display = 'block';
+        newAddressInput.style.display = 'none';
+        newAddressInput.removeAttribute('required');
+    }
+});
