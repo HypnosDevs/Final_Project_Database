@@ -46,7 +46,7 @@ const deletePromotion = async (discount_id) => {
     }
 };
 
-const renderPromotions= (promotions) => {
+const renderPromotions = (promotions) => {
     const tbody = document.querySelector('#cart tbody');
     tbody.innerHTML = ''; // Clear existing content
 
@@ -57,8 +57,10 @@ const renderPromotions= (promotions) => {
             for (const discountCategoryId of promotion.discountcategory) {
                 const discountCategory = await axios.get(`http://localhost:8080/api/DiscountCategory/getDiscountCategory/${discountCategoryId}`)
                 const categoryId = discountCategory.data.category;
+                console.log('getCat1', discountCategory, promotion.discountcategory)
                 const categoryName = await axios.get(`http://localhost:8080/api/Category/getCategory/${categoryId}`);
-                categoryArr.push(categoryName.data[0].name);     
+                // console.log('getCat2')
+                categoryArr.push(categoryName.data[0].name);
             }
             promotion.category = categoryArr;
         } else {

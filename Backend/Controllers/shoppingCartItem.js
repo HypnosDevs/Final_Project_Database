@@ -91,6 +91,30 @@ exports.deleteShoppingCartItem = async (req, res) => {
     }
 }
 
+exports.deleteAllShoppingCartItem = async (req, res) => {
+    try {
+        // Delete all shopping cart items
+        await ShoppingCartItem.deleteMany({});
+
+        // Update all user documents to remove references to shopping cart items
+        const updatedUsers = await User.updateMany(
+            {},
+            { $set: { shoppingcart: [] } } // Clear the shopping cart array
+        );
+
+        // Check if any user was updated
+        if (updatedUsers.nModified === 0) {
+            throw new Error("No users found to update");
+        }
+
+        res.status(204).send({ message: "Delete all shopping cart items and update users successful" });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}
+
+
 exports.deleteShoppingCartItemByProduct = async (req, res) => {
     try {
         console.log('gluay')

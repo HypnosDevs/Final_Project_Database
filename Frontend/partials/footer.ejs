@@ -20,7 +20,7 @@
 
         <!-- Need to edit -->
         <a href="/trackOrder">Track My Order </a>
-        
+
         <a id="admin" href="/admin_panel">Admin Panel</a>
     </div>
 </footer>
@@ -28,6 +28,7 @@
 <script>
     const checkAdmin = async (req, res) => {
         const adminPanel = document.querySelector("#admin");
+        const navSignin = document.querySelector("#nav-signin");
         const curUserId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
             withCredentials: true
         });
@@ -47,6 +48,8 @@
         }
         else if (user && user.data.role !== "ADMIN") {
             adminPanel.remove()
+            navSignin.innerHTML = 'History'
+            navSignin.setAttribute('href', '/trackOrder');
         }
     }
     checkAdmin();

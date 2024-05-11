@@ -6,11 +6,19 @@ const discountSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    min_price: {
+        type: Number,
+        required: true,
+    },
+    max_discount: {
+        type: Number,
+        required: true,
+    },
     discountcategory: [{
         type: Schema.Types.ObjectId,
         ref: "DiscountCategory"
     }]
-    },
+},
     {
         timestamps: true
     }

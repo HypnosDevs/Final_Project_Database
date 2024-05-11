@@ -1,11 +1,11 @@
 const emptyPage = (text) => {
     // Remove the #cart-add section
     const cartAddSection = document.getElementById('cart-add');
-    cartAddSection.parentNode.removeChild(cartAddSection);
+    if (cartAddSection && cartAddSection.parentNode) cartAddSection.parentNode.removeChild(cartAddSection);
 
     // Remove the #cart section
     const cartSection = document.getElementById('cart');
-    cartSection.parentNode.removeChild(cartSection);
+    if (cartSection && cartSection.parentNode) cartSection.parentNode.removeChild(cartSection);
 
     // Create an h1 element with the text "No products found" and class "no-product"
     const h1Element = document.createElement('h1');
