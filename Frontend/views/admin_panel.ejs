@@ -250,10 +250,36 @@
                         <td>${productName}</td>
                         <td>${orderData.price}</td>
                         <td>${orderData.qty}</td>
-                        <td>${orderData.status}</td>
+                        <td>
+                            <select class="selection" id="selectStatus">
+                                <option value="Pending">Pending</option>
+                                <option value="Shipping">Shipping</option>
+                                <option value="Delivered">Delivered</option>
+                            </select>
+                        </td>
                         <td>${userId}</td>
                     `;
                     tableBody.appendChild(row);
+
+                    // Change background color of select element based on selected value
+                    document.querySelectorAll(".selection").forEach(function(selectStatus) {
+                    selectStatus.addEventListener("change", function() {
+                        switch(selectStatus.value) {
+                            case "Pending":
+                                selectStatus.style.backgroundColor = "#eafffa";
+                                break;
+                            case "Shipping":
+                                selectStatus.style.backgroundColor = "#fcefff";
+                                break;
+                            case "Delivered":
+                                selectStatus.style.backgroundColor = "#dcffe0";
+                                break;
+                            default:
+                                selectStatus.style.backgroundColor = "eafffa"; // Reset background color if none of the cases match
+        }
+    });
+});
+                    
                 }
             };
             const loadProducts = async (allProducts) => {
