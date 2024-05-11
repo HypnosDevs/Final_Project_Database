@@ -30,7 +30,7 @@ exports.getOrderItem = async (req, res) => {
 exports.getOrderItemFromOrder = async (req, res) => {
     try {
         const { order_id } = req.params;
-        const data = await OrderItem.findById({ order: order_id });
+        const data = await OrderItem.find({ order: order_id });
         if (!data) {
             throw { message: "Order item Not Found" };
         }

@@ -16,22 +16,28 @@ document.querySelectorAll(".selection").forEach(function(selectStatus) {
     });
 });
 
-const renderOrderItems = (items) => {
-    const tbody = document.querySelector('#cart tbody');
-    tbody.innerHTML = ''; // Clear existing content
+const renderOrderItems = (orderItems) => {
+    const tbody = document.querySelector('#user-table tbody');
 
-    items.forEach(item => {
+    orderItems.forEach(async orderItem => {
+        const product = await axios.get(`http://localhost:8080/api/Product/getProduct/${orderItem.product}`);
+        const productName = product.data.name;
+
+        const order = await axios.get(`http://localhost:8080/api/Order/getOrder/${orderItem.order}`);
+        const paymentType = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentTypeFromUserPaymentMethod/${order.data.paymentmethod}`);
+
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deleteItem('${item._id}')"></i></a></td>
-
-            <td><img src="data:image/png;base64, ${item.product.image}"></td>
-            <td>${item.product.name}</td>
-            <td>฿${item.product.price}</td>
-            <td>${item.qty}</td>
-            <td>฿${item.product.price * item.qty}</td>
+            <td><a onclick=""><i id="remove"class="fa-solid fa-circle-xmark"></i></a></td>
+            <td>${orderItem.order}</td>
+            <td>${orderItem.createdAt}</td>
+            <td>${productName}</td>
+            <td>฿${orderItem.price}</td>
+            <td>${orderItem.qty}</td>
+            <td>${orderItem.status}</td>
+            <td>${paymentType.data.name}</td>
         `;
-        row.setAttribute('id', item._id);
+        row.setAttribute('id', orderItem._id);
         tbody.appendChild(row);
     });
 };
@@ -39,10 +45,15 @@ const renderOrderItems = (items) => {
 const getUserOrder = async () => {
     const userId = sessionStorage.getItem('userId')
 
-    const order = await axios.get(`http://localhost:8080/api/Order/getOrderFromUser/${userId}`);
-    console.log('order.data', order.data);
+    let orders = await axios.get(`http://localhost:8080/api/Order/getOrderFromUser/${userId}`);
+    orders = orders.data;
 
-    
+    orders.forEach(async order => {
+        let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${order._id}`);
+        orderItems = orderItems.data;
+
+        renderOrderItems(orderItems);
+    });
 };
 
 getUserOrder();
