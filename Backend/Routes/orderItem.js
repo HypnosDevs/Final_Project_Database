@@ -1,13 +1,14 @@
 const express = require('express');
-const { getAllOrderItem, getOrderItem, addOrderItem, deleteOrderItem, getProductFromOrderItem } = require('../Controllers/orderItem');
+const { getAllOrderItem, getOrderItem, addOrderItem, deleteOrderItem, getOrderItemFromOrder, getProductFromOrderItem } = require('../Controllers/orderItem');
 const router = express.Router()
 
 router.get('/getAllOrderItem', getAllOrderItem);
 
 router.get('/getOrderItem/:order_id/:product_id', getOrderItem)
 
-router.get('/getProductFromOrderItem/:order_id/:product_id', getProductFromOrderItem)
+router.get('/getOrderItemFromOrder/:order_id', getOrderItemFromOrder)
 
+router.get('/getProductFromOrderItem/:order_id/:product_id', getProductFromOrderItem)
 
 router.post('/addOrderItem/:order_id/:product_id', addOrderItem)
 
