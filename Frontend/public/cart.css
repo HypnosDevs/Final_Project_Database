@@ -281,7 +281,8 @@ body {
 }
 
 #left-box #address,
-#left-box #payment {
+#left-box #payment,
+#left-box #coupon {
   padding-bottom: 30px;
 }
 
@@ -293,7 +294,7 @@ body {
 
 #left-box p {
   font-size: 17px;
-  padding-bottom: 10px;
+  padding-bottom: 15px;
 }
 
 #left-box input {
@@ -389,6 +390,18 @@ footer .col img {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
 }
 
+#coupon-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(220, 220, 220, 0.5);
+  z-index: 999;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
 .popup-content {
   background-color: #fff;
   width: 500px;
@@ -416,26 +429,30 @@ footer .col img {
 }
 
 .popup-buttons #cancel-adress-btn,
-.popup-buttons #cancel-payment-btn {
+.popup-buttons #cancel-payment-btn,
+.popup-buttons #cancel-coupon-btn {
   background-color: #f44336;
   color: white;
   transition: background-color 0.3s ease;
 }
 
 .popup-buttons #cancel-adress-btn:hover,
-.popup-buttons #cancel-payment-btn:hover {
+.popup-buttons #cancel-payment-btn:hover,
+.popup-buttons #cancel-coupon-btn:hover {
   background-color: #da190b;
 }
 
 .popup-buttons #add-address-btn,
-.popup-buttons #add-payment-btn {
+.popup-buttons #add-payment-btn,
+.popup-buttons #apply-coupon-btn {
   background-color: #4CAF50;
   color: white;
   transition: background-color 0.3s ease;
 }
 
 .popup-buttons #add-address-btn:hover,
-.popup-buttons #add-payment-btn:hover {
+.popup-buttons #add-payment-btn:hover,
+.popup-buttons #apply-coupon-btn:hover {
   background-color: #3e8440;
 }
 
