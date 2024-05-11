@@ -60,7 +60,7 @@ const renderPromotions = (promotions) => {
                 console.log('getCat1', discountCategory, promotion.discountcategory)
                 const categoryName = await axios.get(`http://localhost:8080/api/Category/getCategory/${categoryId}`);
                 // console.log('getCat2')
-                categoryArr.push(categoryName.data[0].name);
+                categoryArr.push(categoryName.data.name);
             }
             promotion.category = categoryArr;
         } else {

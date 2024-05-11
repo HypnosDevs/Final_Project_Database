@@ -27,7 +27,7 @@ exports.getAllCategoryFromProduct = async (req, res) => {
 exports.getCategory = async (req, res) => {
     try {
         const { id } = req.params;
-        const data = await Category.find({ _id: id })
+        const data = await Category.findById({ _id: id })
         res.send(data);
 
     } catch (err) {
