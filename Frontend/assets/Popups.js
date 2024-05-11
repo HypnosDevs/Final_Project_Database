@@ -409,15 +409,16 @@ check_outBtn.addEventListener('click', async () => {
 
   let address = await axios.get(`http://localhost:8080/api/Address/getAddress/${selectedAddressId}`)
   address = address.data
+  address._id = undefined;
 
   const order = await axios.post(`http://localhost:8080/api/Order/addOrder/${paymentId}/${userId}`, address);
   const orderId = order.data._id;
 
   const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${userId}`);
-
+  const shoppingCartItemsData = shoppingCartItems.data
   console.log('shoppingCartItems', shoppingCartItems)
 
-  shoppingCartItems.forEach(async item => {
+  shoppingCartItemsData.forEach(async item => {
     const shoppingCartItem = {
       status: 'Order in Progress',
       qty: item.qty
@@ -426,7 +427,7 @@ check_outBtn.addEventListener('click', async () => {
     const productId = item.product._id;
 
     console.log('productId', productId)
-    
+
     const orderItem = await axios.post(`http://localhost:8080/api/OrderItem/addOrderItem/${orderId}/${productId}`, shoppingCartItem);
   });
 

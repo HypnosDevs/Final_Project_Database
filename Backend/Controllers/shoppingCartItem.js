@@ -19,7 +19,7 @@ exports.getAllShoppingCartItem = async (req, res) => {
 exports.getItemFromShoppingCart = async (req, res) => {
     try {
         const { user_id } = req.params;
-        console.log(req.params)
+        // console.log("getitemshoppingcart", req.params)
         const data = await ShoppingCartItem.find({ user: user_id }).populate('product');
         // console.log("uesr", data);
 
