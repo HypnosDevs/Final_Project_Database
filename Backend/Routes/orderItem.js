@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllOrderItem, getOrderItem, addOrderItem, deleteOrderItem, getOrderItemFromOrder, getProductFromOrderItem } = require('../Controllers/orderItem');
+const { getAllOrderItem, getOrderItem, addOrderItem, deleteOrderItem, deleteOrderItemByOrderItemId, getOrderItemFromOrder, getProductFromOrderItem } = require('../Controllers/orderItem');
 const router = express.Router()
 
 router.get('/getAllOrderItem', getAllOrderItem);
@@ -13,5 +13,7 @@ router.get('/getProductFromOrderItem/:order_id/:product_id', getProductFromOrder
 router.post('/addOrderItem/:order_id/:product_id', addOrderItem)
 
 router.delete('/deleteOrderItem/:order_id/:product_id', deleteOrderItem)
+
+router.delete('/deleteOrderItemByOrderItemId/:order_item_id', deleteOrderItemByOrderItemId)
 
 module.exports = router

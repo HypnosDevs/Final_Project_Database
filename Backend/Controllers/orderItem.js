@@ -90,3 +90,14 @@ exports.deleteOrderItem = async (req, res) => {
         res.status(500).send({ message: err.message });
     }
 }
+
+exports.deleteOrderItemByOrderItemId = async (req, res) => {
+    try {
+        const { order_item_id } = req.params;
+        await OrderItem.deleteOne({ _id: order_item_id })
+        res.status(204).send({ message: "Delete order item succesful" });
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}

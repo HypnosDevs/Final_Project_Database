@@ -16,6 +16,51 @@ document.querySelectorAll(".selection").forEach(function(selectStatus) {
     });
 });
 
+const emptyPage = (text) => {
+    // Remove the #board section
+    const boardSection = document.getElementById('board');
+    if (boardSection && boardSection.parentNode) boardSection.parentNode.removeChild(boardSection);
+
+    // Create an h1 element with the text "No products found" and class "no-product"
+    const h1Element = document.createElement('h1');
+    h1Element.textContent = `${text}`;
+    h1Element.classList.add('no-product');
+
+    // Get the reference node after which the h1 will be inserted
+    const pageHeaderSection = document.getElementById('page-header');
+    const referenceNode = pageHeaderSection.nextElementSibling;
+
+    // Insert the h1 element after the page-header section
+    pageHeaderSection.parentNode.insertBefore(h1Element, referenceNode);
+}
+
+const deleteOrderItem = async (order_item_id) => {
+    try {
+        // Delete the item from the server
+        await axios.delete(`http://localhost:8080/api/OrderItem/deleteOrderItemByOrderItemId/${order_item_id}`);
+
+        // Remove all td elements inside the corresponding row from the cart table
+        const rowToRemove = document.querySelector(`#user-table tbody tr[id="${order_item_id}"]`);
+        if (rowToRemove) {
+            const cellsToRemove = rowToRemove.querySelectorAll('td');
+            cellsToRemove.forEach(cell => {
+                cell.remove(); // Remove each td element from the row
+            });
+
+            rowToRemove.remove(); // Remove the row from the DOM
+        } else {
+            console.error('Row not found for item:', order_item_id);
+        }
+
+        const cartItemsCount = document.querySelectorAll('#user-table tbody tr').length;
+        if (cartItemsCount === 0) {
+            emptyPage("No products found");
+        }
+    } catch (error) {
+        console.error('Error deleting item:', error);
+    }
+};
+
 const renderOrderItems = (orderItems) => {
     const tbody = document.querySelector('#user-table tbody');
 
@@ -28,7 +73,7 @@ const renderOrderItems = (orderItems) => {
 
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td><a onclick=""><i id="remove"class="fa-solid fa-circle-xmark"></i></a></td>
+            <td><a onclick="deleteOrderItem('${orderItem._id}')"><i id="remove" class="fa-solid fa-circle-xmark"></i></a></td>
             <td>${orderItem.order}</td>
             <td>${orderItem.createdAt}</td>
             <td>${productName}</td>
