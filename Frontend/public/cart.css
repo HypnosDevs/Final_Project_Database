@@ -462,6 +462,8 @@ footer {
   background-color: rgba(220, 220, 220, 0.5);
   z-index: 999;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+  overflow: auto;
+  
 }
 
 #add-address-popup .popup-content {

@@ -1,4 +1,5 @@
 const PaymentMethod = require('../Models/PaymentMethod.js');
+const PaymentType = require('../Models/PaymentType.js')
 const User = require('../Models/User.js')
 
 exports.getAllPaymentMethod = async (req, res) => {
@@ -40,11 +41,17 @@ exports.addPaymentMethod = async (req, res) => {
     try {
         const { id } = req.params;
         const user = await User.findById(id);
+        const paymentType = await PaymentType.findOne({ name: req.body.type })
         const newPaymentMethod = new PaymentMethod(req.body);
 
+        console.log('req.body', req.body)
+        console.log('paymentType', paymentType)
+
         user.paymentmethod.push(newPaymentMethod);
+        paymentType.paymentmethod.push(newPaymentMethod);
         await newPaymentMethod.save();
         await user.save();
+        await paymentType.save();
         res.send(newPaymentMethod);
 
     } catch (err) {

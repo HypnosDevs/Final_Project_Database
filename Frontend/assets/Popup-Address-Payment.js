@@ -331,6 +331,37 @@ cancel_add_paymentBtn.addEventListener('click', () => {
   openPopup(paymentPopup);
 });
 
+const paymentForm = document.getElementById('add-payment-form');
+
+submit_paymentBtn.addEventListener('click', async () => {
+  const formData = new FormData(paymentForm);
+
+  const payment = {
+    type: Array.from(formData)[0][1],
+    account_name: Array.from(formData)[1][1],
+    account_number: Array.from(formData)[2][1],
+    expiry_date: Array.from(formData)[3][1],
+  };
+
+  let userId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+    withCredentials: true
+  });
+  userId = userId.data
+
+  const paymentType = await axios.post("http://localhost:8080/api/PaymentType/addPaymentType", {
+    name: payment.type
+  })
+
+  const paymentMethod = await axios.post(`http://localhost:8080/api/PaymentMethod/addPaymentMethod/${userId}`, payment)
+  
+  closePopup(add_paymentPopup);
+  
+  await populatePaymentList();
+
+  openPopup(paymentPopup)
+
+});
+
 // submit_paymentBtn.addEventListener('click', () => {
 //   closePopup(add_paymentPopup);
 // });
