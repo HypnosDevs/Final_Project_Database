@@ -315,6 +315,12 @@ app.get('/trackOrder', (req, res) => {
     })
 })
 
+app.get('/add_user', (req, res) => {
+    res.render('add_user', {
+        title: "Add User",
+        style: "/add_user.css",
+    })
+})
 
 
 
