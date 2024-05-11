@@ -43,13 +43,13 @@
                     <p id="coupon-code">Choose Your Coupon</p>
                     <button class="normal" id="choose-coupon-btn"><strong>Choose</strong></button>
                 </div>
-                
+
             </div>
 
             <div id="subtotal">
                 <h3>Cart Totals</h3>
                 <table></table>
-                <button class="normal"><strong>Proceed to check out</strong></button>
+                <button type="button" class="normal" id="check-out-btn"><strong>Proceed to check out</strong></button>
             </div>
 
 
@@ -137,6 +137,10 @@
                             required>
                     </div>
 
+                    <div class="input-box">
+                        <input type="text" id="tel_no" placeholder="Telephone number" name="address[tel_no]" required>
+                    </div>
+
                     <div class="popup-buttons">
                         <button type="button" class="normal" id="cancel-add-address-btn">Cancel</button>
                         <button type="button" class="normal" id="submit-add-address-btn">Submit</button>
@@ -159,25 +163,26 @@
                         </select>
                     </div>
 
-                        <div class="input-box">
-                            <input type="text" placeholder="Cardholder name" name="payment[account_name]" required>
-                        </div>
-
-                        <div class="input-box">
-                            <input type="text" placeholder="Card number" name="payment[account_number]" required>
-                        </div>
-
-                        <div class="input-box">
-                            <input type="text" placeholder="Expiration date" name="payment[expiry_date]" required>
-                        </div>
-
-                        <div class="popup-buttons">
-                            <button type="button" class="normal" id="cancel-add-payment-btn">Cancel</button>
-                            <button type="button" class="normal" id="submit-add-payment-btn">Submit</button>
-                        </div>
+                    <div class="input-box">
+                        <input type="text" placeholder="Cardholder name" name="payment[account_name]" required>
                     </div>
-                </form>
+
+                    <div class="input-box">
+                        <input type="text" placeholder="Card number" name="payment[account_number]" required>
+                    </div>
+
+                    <div class="input-box">
+                        <input type="text" placeholder="Expiration date" name="payment[expiry_date]" required>
+                    </div>
+
+                    <div class="popup-buttons">
+                        <button type="button" class="normal" id="cancel-add-payment-btn">Cancel</button>
+                        <button type="button" class="normal" id="submit-add-payment-btn">Submit</button>
+                    </div>
             </div>
+        </div>
+        </form>
+        </div>
         </div>
 
 

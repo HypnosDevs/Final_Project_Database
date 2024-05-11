@@ -76,14 +76,15 @@ async function getUserPaymentMethod() {
 
 // Dummy user addresses (replace with actual backend data)
 let userAddresses = '';
-getUserAddress().then(data => { userAddresses = data });
+
 
 let addressIdx = -1;
 let selectedAddressId = null;
 
 
 // Function to populate address list
-function populateAddressList() {
+async function populateAddressList() {
+  await getUserAddress().then(data => { userAddresses = data });
   addressList.innerHTML = '';
   for (let i = 0; i < userAddresses.length; i++) {
     const listItem = document.createElement('li');
@@ -155,14 +156,17 @@ function closePopup(popup) {
 }
 
 // Event listeners
-change_address_Btn.addEventListener('click', () => {
+change_address_Btn.addEventListener('click', async () => {
+  // console.log("here")
   openPopup(addressPopup);
   populateAddressList();
+
 });
 
-change_payment_Btn.addEventListener('click', () => {
+change_payment_Btn.addEventListener('click', async () => {
+  await populatePaymentList();
   openPopup(paymentPopup);
-  populatePaymentList();
+
 });
 
 add_addressBtn.addEventListener('click', () => {
@@ -187,16 +191,46 @@ const add_addressPopup = document.getElementById('add-address-popup');
 const cancel_add_addressBtn = document.getElementById('cancel-add-address-btn');
 
 const submit_addressBtn = document.getElementById('submit-add-address-btn');
-
+const addressForm = document.getElementById('add-address-form');
 
 add_addressBtn.addEventListener('click', () => {
   closePopup(addressPopup);
   openPopup(add_addressPopup);
 });
 
-// submit_addressBtn.addEventListener('click', () => {
-//   closePopup(add_addressPopup);
-//   });
+submit_addressBtn.addEventListener('click', async () => {
+  const formData = new FormData(addressForm);
+
+  const address = {
+    name: Array.from(formData)[0][1],
+    address_line1: Array.from(formData)[1][1],
+    address_line2: Array.from(formData)[2][1],
+    country: Array.from(formData)[3][1],
+    province: Array.from(formData)[4][1],
+    amphoe: Array.from(formData)[5][1],
+    district: Array.from(formData)[6][1],
+    postal_code: Array.from(formData)[7][1],
+    tel_no: Array.from(formData)[8][1],
+  };
+
+  console.log(address);
+
+  let userId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+    withCredentials: true
+  });
+  userId = userId.data
+
+
+
+  const addAddress = await axios.post(`http://localhost:8080/api/Address/addAddress/${userId}`, address)
+
+  closePopup(add_addressPopup);
+
+  await populateAddressList();
+
+  openPopup(addressPopup)
+
+});
 
 cancel_add_addressBtn.addEventListener('click', () => {
   closePopup(add_addressPopup);
@@ -353,15 +387,51 @@ submit_paymentBtn.addEventListener('click', async () => {
   })
 
   const paymentMethod = await axios.post(`http://localhost:8080/api/PaymentMethod/addPaymentMethod/${userId}`, payment)
-  
+
   closePopup(add_paymentPopup);
-  
+
   await populatePaymentList();
 
   openPopup(paymentPopup)
 
 });
 
+const check_outBtn = document.getElementById('check-out-btn');
+
+check_outBtn.addEventListener('click', async () => {
+  await getUserPaymentMethod().then(data => { userPaymentsInfo = data });
+  const paymentId = userPaymentsInfo[paymentIdx].id;
+
+  let userId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+    withCredentials: true
+  });
+  userId = userId.data
+
+  let address = await axios.get(`http://localhost:8080/api/Address/getAddress/${selectedAddressId}`)
+  address = address.data
+  address._id = undefined;
+
+  const order = await axios.post(`http://localhost:8080/api/Order/addOrder/${paymentId}/${userId}`, address);
+  const orderId = order.data._id;
+
+  const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${userId}`);
+  const shoppingCartItemsData = shoppingCartItems.data
+  console.log('shoppingCartItems', shoppingCartItems)
+
+  shoppingCartItemsData.forEach(async item => {
+    const shoppingCartItem = {
+      status: 'Order in Progress',
+      qty: item.qty
+    }
+
+    const productId = item.product._id;
+
+    console.log('productId', productId)
+
+    const orderItem = await axios.post(`http://localhost:8080/api/OrderItem/addOrderItem/${orderId}/${productId}`, shoppingCartItem);
+  });
+
+});
 // submit_paymentBtn.addEventListener('click', () => {
 //   closePopup(add_paymentPopup);
 // });

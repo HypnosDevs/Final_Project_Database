@@ -9,6 +9,10 @@ const orderItemSchema = new Schema({
         type: Number,
         required: true
     },
+    price: {
+        type: Number,
+        required: true
+    },
     product: {
         type: Schema.Types.ObjectId,
         ref: 'Product',
@@ -20,7 +24,7 @@ const orderItemSchema = new Schema({
         required: true
     }
 
-    },
+},
     {
         timestamps: true
     }
