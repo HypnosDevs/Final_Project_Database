@@ -60,6 +60,7 @@
     <table id="user-table" width="100%">
         <thead>
             <tr>
+                <td>Remove</td>
                 <td>Order_ID</td>
                 <td>Order_Date</td>
                 <td>Product_Name</td>
@@ -70,10 +71,51 @@
             </tr>
         </thead>
 
+        <!-- Generate sample data -->
+        <tbody>
+            <tr>
+                <td><a onclick=""><i id="remove"class="fa-solid fa-circle-xmark"></i></a></td>
+                <td>1</td>
+                <td>2021-10-10</td>
+                <td>Product 1</td>
+                <td>฿100</td>
+                <td>1</td>
+                <td>
+                    <div class="selection" id="Delivered">Delivered</div>
+                </td>
+                <td>Card</td>
+            </tr>
+
+            <tr>
+                <td><a onclick=""><i id="remove"class="fa-solid fa-circle-xmark"></i></a></td>
+                <td>2</td>
+                <td>2021-10-10</td>
+                <td>Product 2</td>
+                <td>฿200</td>
+                <td>2</td>
+                <td>
+                    <div class="selection" id="Shipping">Shipping</div>
+                </td>
+                <td>Card</td>
+            </tr>
+
+            <tr>
+                <td><a onclick=""><i id="remove"class="fa-solid fa-circle-xmark"></i></a></td>
+                <td>3</td>
+                <td>2021-10-10</td>
+                <td>Product 3</td>
+                <td>฿300</td>
+                <td>3</td>
+                <td>
+                    <div class="selection" id="Pending">Pending</div>
+                </td>
+                <td>Card</td>
+            </tr>
+
+        </tbody>
+
     </table>
-
-
-
+</section>
    
     <script src="trackOrder.js"></script>
 
