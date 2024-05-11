@@ -1,31 +1,10 @@
 <%- include('../partials/head') %>
-<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+<%- include('../partials/header') %>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Animated Step Progress Bar</title>
 
 
 <body>
-
-    <section id="header">
-        <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
-        <div>
-            <ul id="navbar">
-                <form>
-                    <div class="search">
-                        <span class="search-icon material-symbols-outlined">search</span>
-                        <input class="search-input" type="search" placeholder="Search">
-                    </div>
-                </form>
-                <li><a href="/">Home</a></li>
-                <li><a href="/signIn">Sign In/Register</a></li>
-                <li><a href="/shop">Shop</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/contact">Contact</a></li>
-                <li><a href="/edit"><img src="/img/user.png"></a></li>
-                <li><a href="/cart"><img src="/img/cart.png"></a></li>
-            </ul>
-        </div>
-    </section>
     <section id="page-header">
 
         <h2># Track My Order</h2>
@@ -82,6 +61,7 @@
         <thead>
             <tr>
                 <td>Order_ID</td>
+                <td>Order_Date</td>
                 <td>Product_Name</td>
                 <td>Price</td>
                 <td>Quantity</td>

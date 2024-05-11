@@ -38,6 +38,12 @@
                         <button class="normal" id="change-payment-btn"><strong>Choose</strong></button>
                     </div>
                 </div>
+                <div id="coupon">
+                    <h3>Apply Coupon</h3>
+                    <p id="coupon-code">Choose Your Coupon</p>
+                    <button class="normal" id="choose-coupon-btn"><strong>Choose</strong></button>
+                </div>
+                
             </div>
 
             <div id="subtotal">
@@ -139,8 +145,6 @@
             </div>
         </div>
 
-        <!-- Popup for  -->
-
         <!-- Popup for add payment -->
         <div class="popup" id="add-payment-popup">
             <div class="popup-content">
@@ -177,9 +181,25 @@
         </div>
 
 
+        <!-- Popup for Choose coupon -->
+        <div class="popup" id="coupon-popup">
+            <div class="popup-content">
+                <h3>Choose Your Coupon</h3>
+                <ul id="coupon-list">
+                    <!-- Coupon list will appear here! -->
+                </ul>
+
+                <div class="popup-buttons">
+                    <button class="normal" id="cancel-coupon-btn">Cancel</button>
+                    <button class="normal" id="apply-coupon-btn">Apply</button>
+                </div>
+            </div>
+        </div>
+
+
 
         <script src="cart.js"></script>
-        <script src="Popup-Address-Payment.js"></script>
+        <script src="Popups.js"></script>
 
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

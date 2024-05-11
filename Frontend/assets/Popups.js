@@ -365,3 +365,43 @@ submit_paymentBtn.addEventListener('click', async () => {
 // submit_paymentBtn.addEventListener('click', () => {
 //   closePopup(add_paymentPopup);
 // });
+
+
+
+
+/*------------------------------------------------------------------------*/
+/*                          Popup coupon code                             */
+/*------------------------------------------------------------------------*/
+const chooseCouponBtn = document.getElementById('choose-coupon-btn');
+const couponPopup = document.getElementById('coupon-popup');
+const couponList = document.getElementById('coupon-list');
+
+const cancelCouponBtn = document.getElementById('cancel-coupon-btn');
+const applyCouponBtn = document.getElementById('apply-coupon-btn');
+
+function populateCouponList() {
+  couponList.innerHTML = '';
+  const coupons = ['10% off', '20% off', '30% off'];
+  coupons.forEach(coupon => {
+    const listItem = document.createElement('li');
+    listItem.textContent = coupon;
+    listItem.addEventListener('click', () => {
+      document.getElementById('coupon-code').textContent = coupon;
+      closePopup(couponPopup);
+    });
+    couponList.appendChild(listItem);
+  });
+}
+
+chooseCouponBtn.addEventListener('click', () => {
+  openPopup(couponPopup);
+  populateCouponList();
+});
+
+cancelCouponBtn.addEventListener('click', () => {
+  closePopup(couponPopup);
+});
+
+applyCouponBtn.addEventListener('click', () => {
+  closePopup(couponPopup);
+});
