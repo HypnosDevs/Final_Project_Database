@@ -39,7 +39,7 @@ exports.getPaymentType = async (req, res) => {
 exports.addPaymentType = async (req, res) => {
     try {
         const { name } = req.body;
-        console.log(name, typeof (name));
+        console.log('name:', name, typeof (name));
         const existingPaymentType = await PaymentType.find({ name: name });
 
         if (existingPaymentType.length === 0) {
@@ -48,7 +48,7 @@ exports.addPaymentType = async (req, res) => {
             res.send(newPaymentType);
 
         } else {
-            res.status(400).send({ message: "PaymentType already exists" });
+            res.send({ message: "PaymentType already exists" });
         }
 
     } catch (err) {

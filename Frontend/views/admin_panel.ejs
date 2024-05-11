@@ -35,7 +35,7 @@
                 Dashboard
             </h3>
             <div id="button_create">
-                <a href="/create_product">
+                <a href="/add_user">
                     <button>Add User</button>
                 </a>
             </div>
@@ -210,6 +210,24 @@
 
             }
             const loadOrders = async (allOrders) => {
+                const headerTable = document.querySelector("#header-table thead");
+
+                // Clear existing rows
+                headerTable.innerHTML = '';
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                        <td>Remove</td>
+                        <td>Order Id</td>
+                        <td>Order Date</td>
+                        <td>Product Name</td>
+                        <td>Price</td>
+                        <td>Quantity</td>
+                        <td>Status</td>
+                        <td>User</td>
+                        
+                        `;
+                headerTable.appendChild(row);
+
                 const tableBody = document.querySelector("#board tbody");
 
                 // Clear existing rows
@@ -286,6 +304,7 @@
                 // Clear existing rows
                 tableBody.innerHTML = '';
             };
+
 
             const loadPromotions = async (allPromotions) => {
                 const tableBody = document.querySelector("#board tbody");
@@ -382,7 +401,7 @@
                             allOrders.addEventListener("click", () => {
                                 // console.log("here");
                                 // window.location.href = "/product_admin"
-                                // loadOrders(orderItems);
+                                loadOrders(orderItems);
                             })
 
                             allProducts.addEventListener("click", () => {

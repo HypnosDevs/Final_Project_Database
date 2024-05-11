@@ -57,6 +57,7 @@
             <tr>
                 <td>Remove</td>
                 <td>Order_ID</td>
+                <td>Order_Date</td>
                 <td>Product_Name</td>
                 <td>Price</td>
                 <td>Quantity</td>
@@ -64,6 +65,64 @@
                 <td>Payment</td>
             </tr>
         </thead>
+
+        <!-- Generate sample data -->
+        <tbody>
+            <tr>
+                <td><a onclick=""><i id="remove"class="fa-solid fa-circle-xmark"></i></a></td>
+                <td>1</td>
+                <td>2021-10-10</td>
+                <td>Product 1</td>
+                <td>฿100</td>
+                <td>1</td>
+                <td>
+                    <select class="selection" id="selectStatus">
+                        <option value="Pending">Pending</option>
+                        <option value="Shipping">Shipping</option>
+                        <option value="Delivered">Delivered</option>
+                    </select>
+                </td>
+                <td>Card</td>
+            </tr>
+
+            <tr>
+                <td><a onclick=""><i id="remove"class="fa-solid fa-circle-xmark"></i></a></td>
+                <td>2</td>
+                <td>2021-10-10</td>
+                <td>Product 2</td>
+                <td>฿200</td>
+                <td>2</td>
+                <td>
+                    <select class="selection" id="selectStatus">
+                        <option value="Pending">Pending</option>
+                        <option value="Shipping">Shipping</option>
+                        <option value="Delivered">Delivered</option>
+                    </select>
+                </td>
+                <td>Card</td>
+            </tr>
+
+            <tr>
+                <td><a onclick=""><i id="remove"class="fa-solid fa-circle-xmark"></i></a></td>
+                <td>3</td>
+                <td>2021-10-10</td>
+                <td>Product 3</td>
+                <td>฿300</td>
+                <td>3</td>
+                <td>
+                    <select class="selection" id="selectStatus">
+                        <option value="Pending">Pending</option>
+                        <option value="Shipping">Shipping</option>
+                        <option value="Delivered">Delivered</option>
+                    </select>
+                </td>
+                <td>Card</td>
+
+        </tbody>
+
+
+
+
 
 
 
@@ -113,7 +172,7 @@
 
 
 
-
+<script src="view.js"></script>
 
 
 <%- include('../partials/footer') %>
