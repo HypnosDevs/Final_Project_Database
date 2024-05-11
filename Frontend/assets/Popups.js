@@ -118,10 +118,10 @@ function populateAddressList() {
 let selectedPaymentId = null;
 let userPayments = ['Credit Card', 'Debit Card'];
 let userPaymentsInfo = '';
-getUserPaymentMethod().then(data => { userPaymentsInfo = data });
 // //console.log("getUserPaymentMethodInfo ", userPaymentsInfo);
 let paymentIdx = -1;
-function populatePaymentList() {
+async function populatePaymentList() {
+  await getUserPaymentMethod().then(data => { userPaymentsInfo = data });
   console.log(userPaymentsInfo)
   paymentList.innerHTML = '';
   for (let i = 0; i < userPaymentsInfo.length; i++) {
