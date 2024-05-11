@@ -115,21 +115,10 @@ span{
     display: block;
     transition: background-color 0.3s ease;
 }
-
 .btn:hover{
     background-color: #7ed386;
 }
-#submitButton {
-    background:#7ed386;
-}
 
-#updateButton {
-    background:#7ed386;
-}
-
-#cancelButton {
-    background:#f44336;
-}
 
 .tabshow{
     display:none;

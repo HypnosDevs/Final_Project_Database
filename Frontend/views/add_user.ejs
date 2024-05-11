@@ -1,0 +1,221 @@
+<%- include('../partials/head') %>
+
+    <body>
+        <div class="container">
+            <div class="leftbox">
+                <nav>
+                    <a onclick="tabs(0)" class="tab">
+                        <i class='bx bxs-user'></i>
+                    </a>
+
+                    <a onclick="tabs(1)" class="tab">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </a>
+
+                    <a onclick="tabs(2)" class="tab">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </a>
+
+                    <a onclick="tabs(4)" class="tab">
+                        <i class="fa-solid fa-gear"></i>
+                    </a>
+                </nav>
+            </div>
+            <div class="rightbox">
+                <div class="profile tabshow">
+                    <h1>Prosonal Info</h1>
+                    <h2>First name</h2>
+                    <input type="text" class="input" value="">
+
+                    <h2>Last name</h2>
+                    <input type="text" class="input" value="">
+
+                    <h2>Gender</h2>
+                    <select class="input">
+                        <option value="Male">Male</option>
+
+                        <option value="Female">Female</option>
+
+                        <option value="Other">Others</option>
+
+                    </select>
+
+
+                    <h2>Phone Number</h2>
+                    <input type="text" class="input" value="">
+
+
+                    <button class="btn">Add</button>
+
+                </div>
+
+                <div class="payment tabshow">
+                    <h1>Payment Info</h1>
+                    <h2>Payment Method</h2>
+                    <select name="" id="paymentSelect" required>
+                        <option value="" disabled selected>Select Payment</option>
+                        <option value="credit_card">Credit Card, 12341234, Jarukit</option>
+                        <option value="debit_card">Debit Card, 093124, Pooh</option>
+                        <option value="debit_card">Debit Card, 13241235, Dola</option>
+                        <option value="add_new_payment">Add a new payment</option>
+                    </select>
+
+                    <div id="newPaymentInput" style="display: none;">
+                        <h2>METHOD</h2>
+                        <select name="payment[type]" required>
+                            <option value="" disabled selected>Select Payment Type</option>
+                            <option value="credit_card">Credit Card</option>
+                            <option value="debit_card">Debit Card</option>
+                            <option value="debit_card">Master Card</option>
+                        </select>
+                    </div>
+
+                    <h2>Cardholder name</h2>
+                    <input type="text" class="input" name="payment[account_name]">
+
+                    <h2>Card number</h2>
+                    <input type="text" class="input" name="payment[account_number]">
+
+                    <h2>Expiration date</h2>
+                    <input type="text" class="input" name="payment[expiry_date]">
+
+                    <button class="btn">Add</button>
+
+                </div>
+
+                <div class="Address tabshow" id="addressPage1">
+                    <h1>Address Info</h1>
+
+                    <h2>Address name</h2>
+                    <select name="address[name]" id="addressSelect" required>
+                        <option value="" disabled selected>Select Address</option>
+                        <option value="">Test1</option>
+                        <option value="">Test2</option>
+                        <option value="add_new_address">Add a new address</option>
+                    </select>
+
+                    <div id="newAddressInput" style="display: none;">
+                        <h2>New address name</h2>
+                        <input type="text" class="input" value="" name="address[name]" placeholder="Enter a new address" >
+                    </div>
+
+                    <h2>Address line1</h2>
+                    <input type="text" class="input" value="" name="address[address_line1]">
+
+                    <h2>Address line2</h2>
+                    <input type="text" class="input" value="" name="address[address_line2]">
+
+                    <h2>Country</h2>
+                    <select id="country" name="address[country]" required onchange="showProvinces()">
+                        <option value="" disabled selected>Select Country</option>
+                        <option value="Thailand">Thailand</option>
+                    </select>
+
+                    <button class="btn" onclick="nextPage()">Next</button>
+                </div>
+
+                <div class="Address tabshow" id="addressPage2" style="display: none;">
+                    <h1>Address Info</h1>
+
+                    <h2>Province</h2>
+                    <select id="province" name="address[province]" required onchange="showAmphoes()" disabled>
+                        <option value="" disabled selected>Select Province</option>
+                        <!-- JS will display province -->
+                    </select>
+
+                    <h2>Amphoe</h2>
+                    <select id="amphoe" name="address[amphoe]" required disabled onchange="showDistricts()">
+                        <option value="" disabled selected>Select Amphoe</option>
+                        <!-- JS will display province -->
+                    </select>
+
+                    <h2>District</h2>
+                    <select id="district" name="address[district]" required disabled onchange="showPostCode()">
+                        <option value="" disabled selected>Select District</option>
+                        <!-- JS will display district -->
+                    </select>
+
+                    <h2>Postal Code</h2>
+                    <input type="text" class="input" id="postal_code" placeholder="Postal Code"
+                        name="address[postal_code]" required>
+
+                    <button class="btn" onclick="prevPage()">Previous</button>
+                    <button class="btn" onclick="addAddress()">Add</button>
+
+                </div>
+
+
+
+
+                <div class="setting tabshow">
+                    <h1>Email & Password</h1>
+                    <h2>Email</h2>
+                    <input type="text" class="input" value="">
+
+                    <h2>Password</h2>
+                    <input type="password" class="input" value="brightcode">
+
+                    <h2>Role</h2>
+                    <select class="input">
+                        <option value="ADMIN">ADMIN</option>
+
+                        <option value="USER">USER</option>
+
+                        <option value="STAFF">STAFF</option>
+
+                    </select>
+
+                    <button class="btn">Add</button>
+                </div>
+
+            </div>
+
+            <script>
+                const tabBtn = document.querySelectorAll('.tab');
+                const tab = document.querySelectorAll('.tabshow');
+
+                function tabs(panelIndex) {
+                    tab.forEach(function (node) {
+                        node.style.display = "none";
+                    });
+                    tab[panelIndex].style.display = "block";
+                }
+                tabs(0);
+
+                var currentPage = 1;
+                var totalPages = 2;
+
+                function nextPage() {
+                    document.getElementById("addressPage" + currentPage).style.display = "none";
+                    currentPage++;
+                    if (currentPage > totalPages) {
+                        currentPage = totalPages;
+                    }
+                    document.getElementById("addressPage" + currentPage).style.display = "block";
+                }
+
+                function prevPage() {
+                    document.getElementById("addressPage" + currentPage).style.display = "none";
+                    currentPage--;
+                    if (currentPage < 1) {
+                        currentPage = 1;
+                    }
+                    document.getElementById("addressPage" + currentPage).style.display = "block";
+                }
+
+                function addAddress() {
+                    // ทำสิ่งที่ต้องการเมื่อกดปุ่ม Add
+                }
+            </script>
+
+            <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+            <script type="text/javascript"
+                src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/JQL.min.js"></script>
+            <script type="text/javascript"
+                src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/typeahead.bundle.js"></script>
+            <script type="text/javascript"
+                src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.js"></script>
+            <script src="add_ user.ejs"></script>
+    </body>
+
+    </html>

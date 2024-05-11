@@ -415,17 +415,70 @@ ul li .active .uil{
 }
 
 #board table td:nth-child(3) {
+  width: 150px;
+  text-align: center;
+}
+
+#board table td:nth-child(4) {
   width: 350px;
   text-align: center;
 
 
 }
 
-#board table td:nth-child(4),
 #board table td:nth-child(5),
 #board table td:nth-child(6),
-#board table td:nth-child(7){
+#board table td:nth-child(7),
+#board table td:nth-child(8){
   width: 150px;
   text-align: center;
 }
 
+#remove {
+  color: red;
+  cursor: pointer;
+  scale: 1.5;
+  transition: 0.4s;
+}
+
+#remove:hover {
+  color: #541010;
+}
+
+#Pending{
+  padding: 7px;
+  background-color: #eafffa;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  width: 50%;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+#Shipping{
+  padding: 7px;
+  background-color: #fcefff;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  width: 50%;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#Delivered{
+  padding: 7px;
+  background-color: #dcffe0;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  width: 50%;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
