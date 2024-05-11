@@ -420,8 +420,9 @@ check_outBtn.addEventListener('click', async () => {
 
   shoppingCartItemsData.forEach(async item => {
     const shoppingCartItem = {
-      status: 'Order in Progress',
-      qty: item.qty
+      status: 'Pending',
+      qty: item.qty,
+      price: 1
     }
 
     const productId = item.product._id;

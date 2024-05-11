@@ -187,7 +187,7 @@
                         <td>${user.username}</td>
                         <td>${user.email}</td>
                         <td>${user.role}</td>
-                        <td class="view"><a href="/view">View</a></td>
+                        <td class="view"><a href="/view" onclick="sessionStorage.setItem('userId', '${user._id}')">View</a></td>
                         <td class="edit"><a href="/edit_by_admin">Edit</a></td>
                         `
 

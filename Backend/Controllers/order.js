@@ -19,7 +19,7 @@ exports.getAllOrders = async (req, res) => {
 exports.getOrder = async (req, res) => {
     try {
         const { order_id } = req.params;
-        const data = await Order.findById({ _id: order_id });
+        const data = await Order.findById(order_id);
         if (data.length === 0) {
             throw { message: "Order item Not Found" };
         }
@@ -30,7 +30,19 @@ exports.getOrder = async (req, res) => {
     }
 }
 
-
+exports.getOrderFromUser = async (req, res) => {
+    try {
+        const { user_id } = req.params;
+        const data = await Order.find({ user: user_id });
+        if (!data) {
+            throw { message: "Order Not Found" };
+        }
+        res.status(200).send(data);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}
 
 exports.addOrder = async (req, res) => {
     try {
