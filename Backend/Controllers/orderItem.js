@@ -6,14 +6,13 @@ const Product = require("../Models/Product.js");
 
 exports.getAllOrderItem = async (req, res) => {
     try {
-        const data = await OrderItem.find();
+        const data = await OrderItem.find().sort({ timestamp: -1 }); // Sort by timestamp in descending order
         res.status(200).send(data);
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
     }
 }
-
 exports.getOrderItem = async (req, res) => {
     try {
         const { order_id, product_id } = req.params;
