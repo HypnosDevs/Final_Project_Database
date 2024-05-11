@@ -429,6 +429,10 @@ check_outBtn.addEventListener('click', async () => {
     console.log('productId', productId)
 
     const orderItem = await axios.post(`http://localhost:8080/api/OrderItem/addOrderItem/${orderId}/${productId}`, shoppingCartItem);
+
+    await axios.delete(`http://localhost:8080/api/ShoppingCartItem/deleteAllShoppingCartItem`);
+
+    getCart();
   });
 
 });
@@ -455,12 +459,34 @@ function populateCouponList() {
   coupons.forEach(coupon => {
     const listItem = document.createElement('li');
     listItem.textContent = coupon;
-    listItem.addEventListener('click', () => {
+    listItem.addEventListener('click', async () => {
       document.getElementById('coupon-code').textContent = coupon;
       closePopup(couponPopup);
+
+      // const curUserId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+      //     withCredentials: true
+      // });
+      // const userId = curUserId.data;
+      // if (!userId) {
+      //     return window.location.href = `/signIn`;
+      // }
+      // const curUser = await axios.get(`http://localhost:8080/api/User/getUser/${userId}`)
+
+      // if (curUser.data.shoppingcart && curUser.data.shoppingcart.length > 0) {
+      //     console.log("here cart", curUser.data.shoppingcart);
+      //     const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${curUser.data._id}`);
+      //     console.log("Shopping Cart Items:", shoppingCartItems.data);
+      //     renderCartItems(shoppingCartItems.data); // Render cart items
+      //     renderCartTotals(shoppingCartItems.data);
+      // } else {
+      //     emptyPage("No products found");
+      // }
+
+
     });
     couponList.appendChild(listItem);
   });
+
 }
 
 chooseCouponBtn.addEventListener('click', () => {

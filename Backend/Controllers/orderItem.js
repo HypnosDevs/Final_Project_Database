@@ -56,6 +56,7 @@ exports.addOrderItem = async (req, res) => {
         const orderItem = new OrderItem(req.body);
         orderItem.order = order;
         orderItem.product = product;
+        orderItem.price = orderItem.product.price;
         orderItem.save();
         res.status(201).send({ message: "Create order item succesful" });
 
