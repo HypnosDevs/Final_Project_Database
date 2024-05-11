@@ -300,7 +300,26 @@ body {
   text-align: center;
 }
 
+#remove {
+  color: red;
+  cursor: pointer;
+  scale: 1.5;
+  transition: 0.4s;
+}
 
+#remove:hover {
+  color: #541010;
+}
+
+.selection {
+  padding: 7px;
+  background-color: #eafffa;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  position: relative;
+}
 
 
 
