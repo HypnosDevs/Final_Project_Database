@@ -39,6 +39,11 @@
         if (!userId) {
             adminPanel.remove()
             return;
+        } else {
+            if (navSignin) {
+                navSignin.innerHTML = 'History'
+                navSignin.setAttribute('href', '/trackOrder');
+            }
         }
         console.log("user", userId);
         const user = await axios.get(`http://localhost:8080/api/User/getUser/${userId}`);
@@ -48,8 +53,6 @@
         }
         else if (user && user.data.role !== "ADMIN") {
             adminPanel.remove()
-            navSignin.innerHTML = 'History'
-            navSignin.setAttribute('href', '/trackOrder');
         }
     }
     checkAdmin();
