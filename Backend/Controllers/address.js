@@ -5,7 +5,6 @@ exports.getAllAddressFromUser = async (req, res) => {
     try {
         const { user_id } = req.params;
         const addressData = await User.findById(user_id).populate('address');
-        console.log("Addr data", addressData);
         res.send(addressData);
 
     } catch (err) {

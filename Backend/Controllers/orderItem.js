@@ -1,5 +1,5 @@
 const Order = require("../Models/Order.js");
-const OrderItem = require("../Models/Orderitem.js");
+const OrderItem = require("../Models/OrderItem.js");
 const Product = require("../Models/Product.js");
 
 

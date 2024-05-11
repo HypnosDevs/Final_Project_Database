@@ -1,5 +1,5 @@
 const Order = require("../Models/Order.js");
-const OrderItem = require("../Models/Orderitem.js");
+const OrderItem = require("../Models/OrderItem.js");
 const PaymentMethod = require("../Models/PaymentMethod.js");
 const User = require("../Models/User.js");
 
@@ -35,11 +35,11 @@ exports.getOrder = async (req, res) => {
 exports.addOrder = async (req, res) => {
     try {
         const { payment_id, user_id } = req.params;
-        const paymentmethod = await PaymentMethod.findById({ _id: payment_id });
+        const paymentmethod = await PaymentMethod.findById(payment_id);
         if (paymentmethod.length === 0) {
             throw { message: "Paymentmethod Not Found" };
         }
-        const user = await User.findById({ _id: user_id });
+        const user = await User.findById(user_id);
         if (user.length === 0) {
             throw { message: "User Not Found" };
         }
