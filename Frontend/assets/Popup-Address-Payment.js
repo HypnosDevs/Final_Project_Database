@@ -362,6 +362,38 @@ submit_paymentBtn.addEventListener('click', async () => {
 
 });
 
-// submit_paymentBtn.addEventListener('click', () => {
-//   closePopup(add_paymentPopup);
-// });
+const check_outBtn = document.getElementById('check-out-btn');
+
+check_outBtn.addEventListener('click', async () => {
+  await getUserPaymentMethod().then(data => { userPaymentsInfo = data });
+  const paymentId = userPaymentsInfo[paymentIdx].id;
+
+  let userId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+    withCredentials: true
+  });
+  userId = userId.data
+
+  let address = await axios.get(`http://localhost:8080/api/Address/getAddress/${selectedAddressId}`)
+  address = address.data
+
+  const order = await axios.post(`http://localhost:8080/api/Order/addOrder/${paymentId}/${userId}`, address);
+  const orderId = order.data._id;
+
+  const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${userId}`);
+
+  console.log('shoppingCartItems', shoppingCartItems)
+
+  shoppingCartItems.forEach(async item => {
+    const shoppingCartItem = {
+      status: 'Order in Progress',
+      qty: item.qty
+    }
+
+    const productId = item.product._id;
+
+    console.log('productId', productId)
+    
+    const orderItem = await axios.post(`http://localhost:8080/api/OrderItem/addOrderItem/${orderId}/${productId}`, shoppingCartItem);
+  });
+
+});
