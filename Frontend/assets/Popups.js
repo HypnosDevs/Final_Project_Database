@@ -61,6 +61,7 @@ async function getUserPaymentMethod() {
       result.push({
         id: paymentsData[i]._id,
         account_number: paymentsData[i].account_number,
+        account_name: paymentsData[i].account_name,
         expiry_date: paymentsData[i].expiry_date
       });
     };
@@ -119,7 +120,6 @@ async function populateAddressList() {
 let selectedPaymentId = null;
 let userPayments = ['Credit Card', 'Debit Card'];
 let userPaymentsInfo = '';
-// //console.log("getUserPaymentMethodInfo ", userPaymentsInfo);
 let paymentIdx = -1;
 async function populatePaymentList() {
   await getUserPaymentMethod().then(data => { userPaymentsInfo = data });
@@ -355,6 +355,8 @@ const add_paymentPopup = document.getElementById('add-payment-popup');
 const cancel_add_paymentBtn = document.getElementById('cancel-add-payment-btn');
 const submit_paymentBtn = document.getElementById('submit-add-payment-btn');
 
+
+
 add_paymentBtn.addEventListener('click', () => {
   closePopup(paymentPopup);
   openPopup(add_paymentPopup);
@@ -411,7 +413,15 @@ check_outBtn.addEventListener('click', async () => {
   address = address.data
   address._id = undefined;
 
-  const order = await axios.post(`http://localhost:8080/api/Order/addOrder/${paymentId}/${userId}`, address);
+  let paymentType = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentTypeFromUserPaymentMethod/${paymentId}`)
+  console.log('paymenttype', paymentType.data);
+  userPaymentsInfo[paymentIdx].payment_type = paymentType.data.name;
+  userPaymentsInfo[paymentIdx].id = undefined;
+
+  const insertData =  {...address,...userPaymentsInfo[paymentIdx]};
+  console.log(insertData)
+
+  const order = await axios.post(`http://localhost:8080/api/Order/addOrder/${paymentId}/${userId}`, insertData);
   const orderId = order.data._id;
 
   const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${userId}`);
@@ -430,6 +440,7 @@ check_outBtn.addEventListener('click', async () => {
     console.log('productId', productId)
 
     const orderItem = await axios.post(`http://localhost:8080/api/OrderItem/addOrderItem/${orderId}/${productId}`, shoppingCartItem);
+
 
     await axios.delete(`http://localhost:8080/api/ShoppingCartItem/deleteAllShoppingCartItem`);
 

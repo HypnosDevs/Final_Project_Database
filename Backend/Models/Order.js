@@ -3,9 +3,22 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const orderSchema = new Schema({
-    paymentmethod: {
-        type: Schema.Types.ObjectId,
-        ref: 'PaymentMethod'
+    payment_type: {
+        type: String,
+        enum: ['Credit Card', 'Debit Card', 'Master Card'],
+        required: true
+    },
+    account_number: {
+        type: String,
+        required: true
+    },
+    account_name: {
+        type: String,
+        required: true
+    },
+    expiry_date: {
+        type: String,
+        required: true
     },
     user: {
         type: Schema.Types.ObjectId,

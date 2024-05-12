@@ -129,12 +129,24 @@ const getCart = async () => {
         const curUser = await axios.get(`http://localhost:8080/api/User/getUser/${userId}`)
 
         if (curUser.data.shoppingcart && curUser.data.shoppingcart.length > 0) {
+            const selectPaymentType = document.getElementById('selectPaymentType');
+            let allPaymentTypes =   await axios.get(`http://localhost:8080/api/PaymentType/getPaymentType`);
+            allPaymentTypes = allPaymentTypes.data;
+            allPaymentTypes.forEach(payment =>{
+                const option = document.createElement('option');
+                option.setAttribute('value',payment.name);
+                option.innerHTML = payment.name
+                selectPaymentType.appendChild(option);
+
+            })
             console.log("here cart", curUser.data.shoppingcart);
             const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${curUser.data._id}`);
             console.log("Shopping Cart Items:", shoppingCartItems.data);
             let cartSubtotal = 0;
             await renderCartItems(shoppingCartItems.data).then(subtotal => { cartSubtotal = subtotal }); // Render cart items
             renderCartTotals(cartSubtotal);
+
+            
         } else {
             emptyPage("No products found");
         }
