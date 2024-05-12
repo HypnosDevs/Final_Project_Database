@@ -78,9 +78,6 @@ const renderCartItems = async (items) => {
     const tbody = document.querySelector('#cart tbody');
     tbody.innerHTML = ''; // Clear existing content
 
-    sessionStorage.getItem('couponIdx')
-    sessionStorage.getItem('couponData')
-
     let categoryId = 'categoryId';
     if (couponIdx != -1) {
         const discountCategory = await axios.get(`http://localhost:8080/api/DiscountCategory/getDiscountCategory/${couponData[couponIdx].discountcategory}`)

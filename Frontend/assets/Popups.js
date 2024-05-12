@@ -456,8 +456,6 @@ const applyCouponBtn = document.getElementById('apply-coupon-btn');
 
 let couponIdx = -1;
 let couponData = [];
-sessionStorage.setItem('couponIdx', couponIdx);
-sessionStorage.setItem('couponData', couponData)
 
 async function populateCouponList() {
   couponList.innerHTML = '';
