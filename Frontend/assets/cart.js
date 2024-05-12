@@ -78,8 +78,6 @@ const renderCartItems = async (items) => {
     const tbody = document.querySelector('#cart tbody');
     tbody.innerHTML = ''; // Clear existing content
 
-    sessionStorage.getItem('couponIdx')
-    sessionStorage.getItem('couponData')
 
     let categoryId = 'categoryId';
     if (couponIdx != -1) {
