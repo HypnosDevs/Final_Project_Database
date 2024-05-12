@@ -41,7 +41,7 @@ exports.addCategory = async (req, res) => {
         const { name } = req.params;
         const existingCategory = await Category.findOne({ name: name });
 
-        if (existingCategory.length === 0) {
+        if (!existingCategory) {
             req.body.name = name;
             const newCategory = new Category(req.body);
             await newCategory.save();

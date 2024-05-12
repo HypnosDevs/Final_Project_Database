@@ -47,13 +47,10 @@ const deleteItem = async (shoppingcart_item_id) => {
 };
 
 
-const renderCartTotals = (items) => {
+const renderCartTotals = (cartSubtotal) => {
     const table = document.querySelector('#cart-add #subtotal table');
     //console(table);
     table.innerHTML = '';
-
-    const cartSubtotal = items.reduce((total, item) => total + (item.product.price * item.qty), 0);
-
 
     const subtotalTr = document.createElement('tr');
     subtotalTr.innerHTML = `
@@ -77,24 +74,49 @@ const renderCartTotals = (items) => {
     table.appendChild(TotalTr);
 };
 
-const renderCartItems = (items) => {
+const renderCartItems = async (items) => {
     const tbody = document.querySelector('#cart tbody');
     tbody.innerHTML = ''; // Clear existing content
 
+    sessionStorage.getItem('couponIdx')
+    sessionStorage.getItem('couponData')
+
+    let categoryId = 'categoryId';
+    if (couponIdx != -1) {
+        const discountCategory = await axios.get(`http://localhost:8080/api/DiscountCategory/getDiscountCategory/${couponData[couponIdx].discountcategory}`)
+        categoryId = await discountCategory.data.category; 
+    }
+
+    let cartSubtotal = 0;
+
     items.forEach(item => {
+        let discount = 0;
+
+        if (couponIdx != -1 && item.product.category.includes(categoryId) && item.product.price >= couponData[couponIdx].min_price) {
+            if (item.product.price*couponData[couponIdx].discount/100 > couponData[couponIdx].max_discount) {
+                discount = couponData[couponIdx].max_discount;
+            } else {
+                discount = item.product.price*couponData[couponIdx].discount/100;
+            }
+        }
+
         const row = document.createElement('tr');
         row.innerHTML = `
             <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deleteItem('${item._id}')"></i></a></td>
-
             <td><img src="data:image/png;base64, ${item.product.image}"></td>
             <td>${item.product.name}</td>
             <td>฿${item.product.price}</td>
             <td>${item.qty}</td>
-            <td>฿${item.product.price * item.qty}</td>
+            <td>${discount * item.qty}</td>
+            <td>฿${(item.product.price - discount) * item.qty}</td>
         `;
         row.setAttribute('id', item._id);
         tbody.appendChild(row);
+
+        cartSubtotal += (item.product.price - discount) * item.qty;
     });
+
+    return cartSubtotal;
 };
 
 const getCart = async () => {
@@ -112,8 +134,9 @@ const getCart = async () => {
             console.log("here cart", curUser.data.shoppingcart);
             const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${curUser.data._id}`);
             console.log("Shopping Cart Items:", shoppingCartItems.data);
-            renderCartItems(shoppingCartItems.data); // Render cart items
-            renderCartTotals(shoppingCartItems.data);
+            let cartSubtotal = 0;
+            await renderCartItems(shoppingCartItems.data).then(subtotal => { cartSubtotal = subtotal }); // Render cart items
+            renderCartTotals(cartSubtotal);
         } else {
             emptyPage("No products found");
         }
