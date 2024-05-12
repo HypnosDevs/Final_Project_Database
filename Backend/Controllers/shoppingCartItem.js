@@ -21,8 +21,11 @@ exports.getItemFromShoppingCart = async (req, res) => {
         const { user_id } = req.params;
         // console.log("getitemshoppingcart", req.params)
         // get shopping cart from specific user
-        const data = await ShoppingCartItem.find({ user: user_id }).populate('product');
-        // console.log("uesr", data);
+        const data = await ShoppingCartItem.find({ user: user_id })
+            .populate({
+                path: 'product',
+                populate: { path: 'category' } // Populate the 'category' field inside the 'product'
+            });        // console.log("uesr", data);
 
         // if (data.length === 0) {
         //     throw { message: "Data (product in that shopping cart id) Not Found" };

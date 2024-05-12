@@ -200,7 +200,9 @@ body {
 
 #cart table td:nth-child(4),
 #cart table td:nth-child(5),
-#cart table td:nth-child(6) {
+#cart table td:nth-child(6),
+#cart table td:nth-child(7),
+#cart table td:nth-child(8) {
   width: 150px;
   text-align: center;
 }
@@ -604,4 +606,20 @@ select:focus {
 
 .popup-buttons #submit-add-payment-btn:hover {
   background-color: #3e8440;
+}
+
+.choose-coupon {
+  padding: 12px 20px;
+  background: #087381;
+  color: #fff;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.choose-coupon:hover {
+  padding: 12px 20px;
+  background: #4d938d;
+  scale: 1.2;
 }

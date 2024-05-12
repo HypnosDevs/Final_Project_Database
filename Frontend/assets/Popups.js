@@ -418,7 +418,7 @@ check_outBtn.addEventListener('click', async () => {
   userPaymentsInfo[paymentIdx].payment_type = paymentType.data.name;
   userPaymentsInfo[paymentIdx].id = undefined;
 
-  const insertData =  {...address,...userPaymentsInfo[paymentIdx]};
+  const insertData = { ...address, ...userPaymentsInfo[paymentIdx] };
   console.log(insertData)
 
   const order = await axios.post(`http://localhost:8080/api/Order/addOrder/${paymentId}/${userId}`, insertData);
@@ -458,7 +458,7 @@ check_outBtn.addEventListener('click', async () => {
 /*------------------------------------------------------------------------*/
 /*                          Popup coupon code                             */
 /*------------------------------------------------------------------------*/
-const chooseCouponBtn = document.getElementById('choose-coupon-btn');
+const chooseCouponBtn = document.querySelectorAll('.choose-coupon-btn');
 const couponPopup = document.getElementById('coupon-popup');
 const couponList = document.getElementById('coupon-list');
 
@@ -468,7 +468,7 @@ const applyCouponBtn = document.getElementById('apply-coupon-btn');
 let couponIdx = -1;
 let couponData = [];
 
-async function populateCouponList() {
+async function populateCouponList(categoryProduct, productPrice, buttonId) {
   couponList.innerHTML = '';
   couponData = [];
 
@@ -483,15 +483,21 @@ async function populateCouponList() {
       const categoryId = discountCategory.data.category;
       // console.log('getCat1', discountCategory, promotion.discountcategory)
       const categoryName = await axios.get(`http://localhost:8080/api/Category/getCategory/${categoryId}`);
+      const allProdCatName = categoryProduct.map(ele => ele.name);
+      // console.log('allProdCatName', allProdCatName);
+      if (!allProdCatName.includes(categoryName.data.name)) {
+        continue;
+      }
       const listItem = document.createElement('li');
       // console.log('catname', categoryName.data)
       listItem.innerHTML = `Category: ${categoryName.data.name} ${coupon.discount}%</br>Min price: ${coupon.min_price} THB</br>Max discount ${coupon.max_discount}`;
       listItem.addEventListener('click', async () => {
-        document.getElementById('coupon-code').innerHTML = `Category: ${categoryName.data.name} ${coupon.discount}%</br>Min price: ${coupon.min_price} THB</br>Max discount ${coupon.max_discount}`;
-
+        // document.getElementById('coupon-code').innerHTML = `Category: ${categoryName.data.name} ${coupon.discount}%</br>Min price: ${coupon.min_price} THB</br>Max discount ${coupon.max_discount}`;
+        console.log('buttonid', buttonId, document.getElementById(buttonId));
+        document.getElementById(buttonId).innerHTML = `${coupon.discount}%`
         let j = 0;
         for (let i = 0; i < couponData.length; i++) {
-          if (i > 0 && couponData[i]._id === couponData[i-1]._id){
+          if (i > 0 && couponData[i]._id === couponData[i - 1]._id) {
             j++;
           } else {
             j = 0;
@@ -501,8 +507,8 @@ async function populateCouponList() {
           }
         }
 
-        getCart();
-        
+        // getCart();
+
         closePopup(couponPopup);
 
         // const curUserId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
@@ -536,11 +542,6 @@ async function populateCouponList() {
   });
 
 }
-
-chooseCouponBtn.addEventListener('click', () => {
-  openPopup(couponPopup);
-  populateCouponList();
-});
 
 cancelCouponBtn.addEventListener('click', () => {
   closePopup(couponPopup);

@@ -57,7 +57,7 @@ const loadData = async (req, res) => {
             const product = await axios.get(`http://localhost:8080/api/Product/getProduct/${orderItemData.product}`);
             productName.push(product.data.name);
             orderUserId.push(orderData.user);
-            allPaymentType.push(orderData.paymentType);
+            allPaymentType.push(orderData.payment_type);
         }
     }
 

@@ -82,19 +82,19 @@ const renderCartItems = async (items) => {
     let categoryId = 'categoryId';
     if (couponIdx != -1) {
         const discountCategory = await axios.get(`http://localhost:8080/api/DiscountCategory/getDiscountCategory/${couponData[couponIdx].discountcategory}`)
-        categoryId = await discountCategory.data.category; 
+        categoryId = await discountCategory.data.category;
     }
 
     let cartSubtotal = 0;
-
+    console.log(1);
     items.forEach(item => {
         let discount = 0;
 
         if (couponIdx != -1 && item.product.category.includes(categoryId) && item.product.price >= couponData[couponIdx].min_price) {
-            if (item.product.price*couponData[couponIdx].discount/100 > couponData[couponIdx].max_discount) {
+            if (item.product.price * couponData[couponIdx].discount / 100 > couponData[couponIdx].max_discount) {
                 discount = couponData[couponIdx].max_discount;
             } else {
-                discount = item.product.price*couponData[couponIdx].discount/100;
+                discount = item.product.price * couponData[couponIdx].discount / 100;
             }
         }
 
@@ -107,12 +107,26 @@ const renderCartItems = async (items) => {
             <td>${item.qty}</td>
             <td>${discount * item.qty}</td>
             <td>฿${(item.product.price - discount) * item.qty}</td>
+            <td>
+                <div class="coupon" id="coupon">
+                <button class="choose-coupon" id="choose-coupon-btn${item._id}" ><strong>Choose</strong></button>
+                 </div>
+            </td>
         `;
         row.setAttribute('id', item._id);
         tbody.appendChild(row);
+        const chooseCouponBtn = document.querySelector(`#choose-coupon-btn${item._id}`);
+        console.log('chooseCoupontBtn', chooseCouponBtn);
+        chooseCouponBtn.addEventListener('click', () => {
+            openPopup(couponPopup);
+
+            populateCouponList(item.product.category, item.product.price, `choose-coupon-btn${item._id}`);
+        });
 
         cartSubtotal += (item.product.price - discount) * item.qty;
     });
+
+
 
     return cartSubtotal;
 };
@@ -130,11 +144,11 @@ const getCart = async () => {
 
         if (curUser.data.shoppingcart && curUser.data.shoppingcart.length > 0) {
             const selectPaymentType = document.getElementById('selectPaymentType');
-            let allPaymentTypes =   await axios.get(`http://localhost:8080/api/PaymentType/getPaymentType`);
+            let allPaymentTypes = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentType`);
             allPaymentTypes = allPaymentTypes.data;
-            allPaymentTypes.forEach(payment =>{
+            allPaymentTypes.forEach(payment => {
                 const option = document.createElement('option');
-                option.setAttribute('value',payment.name);
+                option.setAttribute('value', payment.name);
                 option.innerHTML = payment.name
                 selectPaymentType.appendChild(option);
 
@@ -146,7 +160,7 @@ const getCart = async () => {
             await renderCartItems(shoppingCartItems.data).then(subtotal => { cartSubtotal = subtotal }); // Render cart items
             renderCartTotals(cartSubtotal);
 
-            
+
         } else {
             emptyPage("No products found");
         }
