@@ -411,3 +411,11 @@ footer {
     height: auto;
     /* รักษาสัดส่วนของรูปภาพ */
   }
+
+  .no-product {
+    text-align: center;
+    color: #b7b8bd;
+    font-size: x-large;
+    font-weight: bold;
+    padding: 150px 0;
+  }
