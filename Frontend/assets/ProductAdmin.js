@@ -48,7 +48,7 @@ const deleteProduct = async (product_id) => {
 
 const renderProducts = (products) => {
     const tbody = document.querySelector('#cart tbody');
-    tbody.innerHTML = ''; // Clear existing content
+    // tbody.innerHTML = ''; // Clear existing content
 
     products.forEach(async product => {
         // console.log(product);
@@ -68,6 +68,18 @@ const renderProducts = (products) => {
         } else {
             product.category = '';
         }
+
+        // console.log("loader", loader)
+
+
+        loader.classList.add("loader-hidden");
+
+        // loader.addEventListener("transitionend", () => {
+        //     document.body.removeChild("loader");
+        // })
+        loader.remove();
+
+
         row.innerHTML = `
             <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deleteProduct('${product._id}')"></i></a></td>
             ` + imgTd + `
@@ -79,6 +91,7 @@ const renderProducts = (products) => {
         row.setAttribute('id', product._id);
         tbody.appendChild(row);
     });
+
 };
 
 const getProducts = async () => {

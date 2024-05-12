@@ -154,6 +154,9 @@
             };
         </script>
         <script>
+            let productName = [];
+            let orderUserId = [];
+
             const loadUsers = async (allUsers) => {
                 const headerTable = document.querySelector("#header-table thead");
                 headerTable.innerHTML = '';
@@ -232,22 +235,17 @@
 
                 // Clear existing rows
                 tableBody.innerHTML = '';
-
+                let k = 0;
                 for (const orderData of allOrders) {
                     // console.log('kuy', order)
 
-                    const product = await axios.get(`http://localhost:8080/api/Product/getProduct/${orderData.product}`);
-                    const productName = product.data.name;
-
-                    const order = await axios.get(`http://localhost:8080/api/Order/getOrder/${orderData.order}`);
-                    const userId = order.data.user
 
                     const row = document.createElement("tr");
                     row.innerHTML = `
                         <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
                         <td>${orderData.order}</td>
                         <td>${orderData.createdAt}</td>
-                        <td>${productName}</td>
+                        <td>${productName[k]}</td>
                         <td>${orderData.price}</td>
                         <td>${orderData.qty}</td>
                         <td>
@@ -257,29 +255,30 @@
                                 <option value="Delivered">Delivered</option>
                             </select>
                         </td>
-                        <td>${userId}</td>
+                        <td>${orderUserId[k]}</td>
                     `;
                     tableBody.appendChild(row);
+                    k++;
 
                     // Change background color of select element based on selected value
-                    document.querySelectorAll(".selection").forEach(function(selectStatus) {
-                    selectStatus.addEventListener("change", function() {
-                        switch(selectStatus.value) {
-                            case "Pending":
-                                selectStatus.style.backgroundColor = "#eafffa";
-                                break;
-                            case "Shipping":
-                                selectStatus.style.backgroundColor = "#fcefff";
-                                break;
-                            case "Delivered":
-                                selectStatus.style.backgroundColor = "#dcffe0";
-                                break;
-                            default:
-                                selectStatus.style.backgroundColor = "eafffa"; // Reset background color if none of the cases match
-        }
-    });
-});
-                    
+                    document.querySelectorAll(".selection").forEach(function (selectStatus) {
+                        selectStatus.addEventListener("change", function () {
+                            switch (selectStatus.value) {
+                                case "Pending":
+                                    selectStatus.style.backgroundColor = "#eafffa";
+                                    break;
+                                case "Shipping":
+                                    selectStatus.style.backgroundColor = "#fcefff";
+                                    break;
+                                case "Delivered":
+                                    selectStatus.style.backgroundColor = "#dcffe0";
+                                    break;
+                                default:
+                                    selectStatus.style.backgroundColor = "eafffa"; // Reset background color if none of the cases match
+                            }
+                        });
+                    });
+
                 }
             };
             const loadProducts = async (allProducts) => {
@@ -412,9 +411,17 @@
                             productLength.innerHTML = products.length;
                             let discountLength = document.querySelector("#discounts-length")
                             discountLength.innerHTML = discounts.length;
+                            for (const orderData of orderItems) {
+                                const product = await axios.get(`http://localhost:8080/api/Product/getProduct/${orderData.product}`);
+                                productName.push(product.data.name);
+                                const order = await axios.get(`http://localhost:8080/api/Order/getOrder/${orderData.order}`);
+                                orderUserId.push(order.data.user);
 
+                            }
                             // Edit pls
                             let category = ""
+
+                            const loader = document.querySelector("#loader");
 
                             loader.classList.add("loader-hidden");
 
