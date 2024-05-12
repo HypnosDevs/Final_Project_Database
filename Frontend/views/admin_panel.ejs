@@ -219,14 +219,16 @@
                 headerTable.innerHTML = '';
                 const row = document.createElement("tr");
                 row.innerHTML = `
-                        <td>Remove</td>
+                <td>Remove</td>
+                <td>User</td>
+                        
                         <td>Order Id</td>
                         <td>Order Date</td>
                         <td>Product Name</td>
                         <td>Price</td>
                         <td>Quantity</td>
                         <td>Status</td>
-                        <td>User</td>
+                        
                         
                         `;
                 headerTable.appendChild(row);
@@ -237,47 +239,53 @@
                 tableBody.innerHTML = '';
                 let k = 0;
                 for (const orderData of allOrders) {
-                    // console.log('kuy', order)
-
+                    const createdAt = new Date(orderData.createdAt);
+                    //  format the date as "YYYY-MM-DD HH:MM:SS"
+                    const formattedDate = `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-${createdAt.getDate().toString().padStart(2, '0')} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
 
                     const row = document.createElement("tr");
                     row.innerHTML = `
-                        <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
-                        <td>${orderData.order}</td>
-                        <td>${orderData.createdAt}</td>
+                        
+                       <td><a href="#"><i id="remove" class="fa-solid fa-circle-xmark"></i></a></td>
+                        <td>${orderUserId[k]}</td>
+                        <td>${orderData._id}</td>
+                        <td>${formattedDate}</td>
                         <td>${productName[k]}</td>
                         <td>${orderData.price}</td>
                         <td>${orderData.qty}</td>
                         <td>
-                            <select class="selection" id="selectStatus">
-                                <option value="Pending">Pending</option>
-                                <option value="Shipping">Shipping</option>
-                                <option value="Delivered">Delivered</option>
+                            <select class="selection" id="selectStatus${orderData._id}">
+                                <option value="Pending" ${orderData.status === "Pending" ? "selected" : ""}>Pending</option>
+                                <option value="Shipping" ${orderData.status === "Shipping" ? "selected" : ""}>Shipping</option>
+                                <option value="Delivered" ${orderData.status === "Delivered" ? "selected" : ""}>Delivered</option>
                             </select>
                         </td>
-                        <td>${orderUserId[k]}</td>
+                        
                     `;
                     tableBody.appendChild(row);
                     k++;
 
                     // Change background color of select element based on selected value
-                    document.querySelectorAll(".selection").forEach(function (selectStatus) {
-                        selectStatus.addEventListener("change", function () {
-                            switch (selectStatus.value) {
-                                case "Pending":
-                                    selectStatus.style.backgroundColor = "#eafffa";
-                                    break;
-                                case "Shipping":
-                                    selectStatus.style.backgroundColor = "#fcefff";
-                                    break;
-                                case "Delivered":
-                                    selectStatus.style.backgroundColor = "#dcffe0";
-                                    break;
-                                default:
-                                    selectStatus.style.backgroundColor = "eafffa"; // Reset background color if none of the cases match
-                            }
-                        });
+                    document.querySelector(`#selectStatus${orderData._id}`).addEventListener("change", async function (event) {
+                        const selectStatus = event.target; // Get the select element that triggered the event
+                        switch (selectStatus.value) {
+                            case "Pending":
+                                selectStatus.style.backgroundColor = "#eafffa";
+                                break;
+                            case "Shipping":
+                                selectStatus.style.backgroundColor = "#fcefff";
+                                break;
+                            case "Delivered":
+                                selectStatus.style.backgroundColor = "#dcffe0";
+                                break;
+                            default:
+                                selectStatus.style.backgroundColor = "eafffa"; // Reset background color if none of the cases match
+                        }
+
+                        const updatedOrder = await axios.put(`http://localhost:8080/api/OrderItem/updateOrderItemStatus/${orderData._id}`, { status: selectStatus.value });
+                        console.log("update laew", updatedOrder);
                     });
+
 
                 }
             };
@@ -416,8 +424,10 @@
                                 productName.push(product.data.name);
                                 const order = await axios.get(`http://localhost:8080/api/Order/getOrder/${orderData.order}`);
                                 orderUserId.push(order.data.user);
+                                // console.log('order user', order.data);
 
                             }
+                            // console.log('order')
                             // Edit pls
                             let category = ""
 
