@@ -5,7 +5,6 @@ const { Schema } = mongoose;
 const orderSchema = new Schema({
     payment_type: {
         type: String,
-        enum: ['Credit Card', 'Debit Card', 'Master Card'],
         required: true
     },
     account_number: {

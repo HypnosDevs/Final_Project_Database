@@ -80,6 +80,13 @@ exports.deletePaymentMethod = async (req, res) => {
     try {
         const { id } = req.params;
         const data = await PaymentMethod.deleteOne({ _id: id })
+
+        await User.findOneAndUpdate(
+            { paymentmethod: id },
+            { $pull: { paymentmethod: id } },
+            { new: true }
+        );
+
         res.send(data)
 
     } catch (err) {

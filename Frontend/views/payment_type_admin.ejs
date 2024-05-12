@@ -18,8 +18,8 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/admin_panel">Dashboard</a></li>
                 <li><a href="/product_admin">Products</a></li>
-                <li><a class="active" href="/promotion_admin">Promotion</a></li>
-                <li><a href="/payment_type_admin">Payment</a></li>
+                <li><a href="/promotion_admin">Promotion</a></li>
+                <li><a class="active" href="/payment_type_admin">Payment</a></li>
               
                 <ul>
         </div>
@@ -27,14 +27,14 @@
 
     <section id="page-header">
 
-        <h2># Promotions</h2>
+        <h2># Payment Type</h2>
 
     </section>
 
 
     <section id="button_create">
-        <a href="/create_promotion">
-            <button>Add Promotion</button>
+        <a href="/create_payment_type">
+            <button>Add Payment Type</button>
         </a>
     </section> 
     
@@ -43,9 +43,7 @@
             <thead>
                 <tr>
                     <td>Remove</td>
-                    <td>Discount</td>
-                    <td>Category</td>
-                    <td></td>
+                    <td>Payment Type</td>
                 </tr>
             </thead>
             <tbody>
@@ -78,6 +76,6 @@
             </tbody>
         </table>
     </section>
-    <script src="PromotionAdmin.js"></script>
+    <script src="PaymentTypeAdmin.js"></script>
 
 <%- include('../partials/footer') %>
