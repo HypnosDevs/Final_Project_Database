@@ -93,12 +93,16 @@ const getUserOrder = async () => {
     let orders = await axios.get(`http://localhost:8080/api/Order/getOrderFromUser/${userId}`);
     orders = orders.data;
 
-    orders.forEach(async order => {
-        let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${order._id}`);
-        orderItems = orderItems.data;
+    if (orders && orders.length != 0) {
+        orders.forEach(async order => {
+            let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${order._id}`);
+            orderItems = orderItems.data;
 
-        renderOrderItems(orderItems);
-    });
+            renderOrderItems(orderItems);
+        });
+    } else {
+        emptyPage("No products found");
+    }
 };
 
 getUserOrder();
