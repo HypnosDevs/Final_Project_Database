@@ -46,11 +46,12 @@ const deleteProduct = async (product_id) => {
     }
 };
 
-const renderProducts= (products) => {
+const renderProducts = (products) => {
     const tbody = document.querySelector('#cart tbody');
     tbody.innerHTML = ''; // Clear existing content
 
     products.forEach(async product => {
+        // console.log(product);
         const row = document.createElement('tr');
         let imgTd = `<td><img src="data:image/png;base64, ${product.image}"></td>`;
         if (product.image == undefined) {
@@ -61,7 +62,7 @@ const renderProducts= (products) => {
             let categoryArr = [];
             for (category of product.category) {
                 const categoryName = await axios.get(`http://localhost:8080/api/Category/getCategory/${category}`);
-                categoryArr.push(categoryName.data[0].name);     
+                categoryArr.push(categoryName.data.name);
             }
             product.category = categoryArr;
         } else {

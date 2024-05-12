@@ -35,13 +35,14 @@ exports.addProduct = async (req, res) => {
         } else {
             const categories = req.body.category.split(' ');
             let categoryArr = [];
-            for(let category of categories) {
+            for (let category of categories) {
                 categoryArr.push(await Category.findOne({ name: category }))
             }
             req.body.category = categoryArr;
-        }    
+        }
         const newProd = new Product(req.body);
         await newProd.save();
+        // console.log('add', newProd);
         res.send(newProd)
     } catch (err) {
         console.log(err.message);
@@ -61,12 +62,12 @@ exports.updateProduct = async (req, res) => {
         } else {
             const categories = req.body.category.split(' ');
             let categoryArr = [];
-            for(let category of categories) {
+            for (let category of categories) {
                 categoryArr.push(await Category.findOne({ name: category }))
             }
             req.body.category = categoryArr;
-        }    
-        
+        }
+
         const data = await Product.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
         await data.save();
         res.send(data)
