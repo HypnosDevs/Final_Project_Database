@@ -1,79 +1,84 @@
 <%- include('../partials/head') %>
-<%- include('../partials/header') %>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Animated Step Progress Bar</title>
+    <%- include('../partials/header') %>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Animated Step Progress Bar</title>
 
 
-<body>
-    <section id="page-header">
+        <body>
+            <section id="page-header">
 
-        <h2># Track My Order</h2>
-        <p>Please check your Order! </p>
+                <h2># Track My Order</h2>
+                <p>Please check your Order! </p>
 
-    </section>
+            </section>
 
-    <div class="head">
-        <p class="head_1">My Purchases</span></p>
-       
-    </div>
+            <div class="head">
+                <p class="head_1">My Purchases</span></p>
 
-    <ul>
-        <li>
-            <i class="fa-solid fa-cart-plus"></i>
-            <div class="progress one">
-                <p>1</p>
-                <i class="uil uil-check"></i>
             </div>
-            <p class="text">Add To Cart</p>
-        </li>
-        <li>
-            <i class="fa-solid fa-credit-card"></i>
-            <div class="progress two">
-                <p>2</p>
-                <i class="uil uil-check"></i>
+
+            <ul>
+                <li>
+                    <i class="fa-solid fa-cart-plus"></i>
+                    <div class="progress one">
+                        <p>1</p>
+                        <i class="uil uil-check"></i>
+                    </div>
+                    <p class="text">Add To Cart</p>
+                </li>
+                <li>
+                    <i class="fa-solid fa-credit-card"></i>
+                    <div class="progress two">
+                        <p>2</p>
+                        <i class="uil uil-check"></i>
+                    </div>
+                    <p class="text">Make Payment</p>
+                </li>
+                <li>
+                    <i class="fa-solid fa-truck-fast"></i>
+                    <div class="progress three">
+                        <p>3</p>
+                        <i class="uil uil-check"></i>
+                    </div>
+                    <p class="text">Order in Progress</p>
+                </li>
+                <li>
+                    <i class="fa-solid fa-check"></i>
+                    <div class="progress four">
+                        <p>4</p>
+                        <i class="uil uil-check"></i>
+                    </div>
+                    <p class="text">Order Arrived</p>
+                </li>
+
+            </ul>
+
             </div>
-            <p class="text">Make Payment</p>
-        </li>
-        <li>
-            <i class="fa-solid fa-truck-fast"></i>
-            <div class="progress three">
-                <p>3</p>
-                <i class="uil uil-check"></i>
-            </div>
-            <p class="text">Order in Progress</p>
-        </li>
-        <li>
-            <i class="fa-solid fa-check"></i>
-            <div class="progress four">
-                <p>4</p>
-                <i class="uil uil-check"></i>
-            </div>
-            <p class="text">Order Arrived</p>
-        </li>
-
-    </ul>
-
-</div>
 
 
-<section id="board" class="">
-    <table id="user-table" width="100%">
-        <thead>
-            <tr>
-                <td>Remove</td>
-                <td>Order_ID</td>
-                <td>Order_Date</td>
-                <td>Product_Name</td>
-                <td>Price</td>
-                <td>Quantity</td>
-                <td>Status</td>
-                <td>Payment</td>
-            </tr>
-        </thead>
+            <section id="board" class="">
+                <table id="user-table" width="100%">
+                    <thead>
+                        <tr>
+                            <td>Remove</td>
+                            <td>Order_ID</td>
+                            <td>Order_Date</td>
+                            <td>Product_Name</td>
+                            <td>Price</td>
+                            <td>Quantity</td>
+                            <td>Status</td>
+                            <td>Payment</td>
+                        </tr>
+                    </thead>
 
-        <!-- Generate sample data -->
-        <tbody>
-            <tr>
+                    <!-- Generate sample data -->
+                    <tbody>
+                        <tr id="loader">
+                            <td colspan="8">
+                                <div class="loader"></div>
+                            </td>
+                        </tr>
+                        <!-- <tr>
                 <td><a onclick=""><i id="remove"class="fa-solid fa-circle-xmark"></i></a></td>
                 <td>1</td>
                 <td>2021-10-10</td>
@@ -110,14 +115,13 @@
                     <div class="selection" id="Pending">Pending</div>
                 </td>
                 <td>Card</td>
-            </tr>
+            </tr> -->
 
-        </tbody>
+                    </tbody>
 
-    </table>
-</section>
-   
-    <script src="trackOrder.js"></script>
+                </table>
+            </section>
 
-    <%- include('../partials/footer') %>
+            <script src="trackOrder.js"></script>
 
+            <%- include('../partials/footer') %>

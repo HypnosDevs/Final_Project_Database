@@ -27,6 +27,7 @@ exports.getOrderItem = async (req, res) => {
     }
 }
 
+
 exports.getOrderItemFromOrder = async (req, res) => {
     try {
         const { order_id } = req.params;
@@ -74,6 +75,19 @@ exports.addOrderItem = async (req, res) => {
         orderItem.save();
         res.status(201).send({ message: "Create order item succesful" });
 
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}
+
+exports.updateOrderItemStatus = async (req, res) => {
+    try {
+        const { order_item_id } = req.params;
+        const { status } = req.body;
+        const data = await OrderItem.updateOne({ _id: order_item_id }, { status: status });
+        // console.log(data);
+        res.status(204).send({ message: "Updated order item status succesful" })
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
