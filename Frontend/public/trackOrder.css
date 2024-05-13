@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -8,13 +9,15 @@
 
 h1 {
   font-size: 50px;
-  line-height:64px; /* ลดขนาดเล็กลง */
+  line-height: 64px;
+  /* ลดขนาดเล็กลง */
   color: #222;
 }
 
 h2 {
   font-size: 46px;
-  line-height: 64px; /* ปรับเป็นตัวหนา */
+  line-height: 64px;
+  /* ปรับเป็นตัวหนา */
   color: #222;
 }
 
@@ -27,22 +30,23 @@ h6 {
   font-weight: 700;
   font-size: 12px;
   color: #222;
-  
+
 }
 
 
 
-q{
-    quotes: none;
-    font-size: 16px;
-    font-weight: 700;
-    color: #222;
-    margin: 15px 0 20px 0; /* ปรับเว้นระยะห่าง */
-    
+q {
+  quotes: none;
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+  margin: 15px 0 20px 0;
+  /* ปรับเว้นระยะห่าง */
+
 }
 
 .section-p1 {
-  
+
   padding: 40px 80px;
 }
 
@@ -61,23 +65,24 @@ body {
 }
 
 /* header start */
-#header{
-    display: flex;
-    align-items:center;
-    justify-content: space-between;
-    padding: 20px 80px;
-    background : #E3E6F3;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.06);
-    z-index: 999; /* ให้เรียงหน้า */
-    position: sticky;
-    top: 0;
-    left: 0;
+#header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 80px;
+  background: #E3E6F3;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+  z-index: 999;
+  /* ให้เรียงหน้า */
+  position: sticky;
+  top: 0;
+  left: 0;
 }
 
 /* Search Bar */
 
 .search {
---padding: 14px;
+  --padding: 14px;
   width: max-content;
   display: flex;
   align-items: center;
@@ -101,271 +106,298 @@ body {
 }
 
 #navbar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ปรับระยะห่างของ navbar */
 #navbar li {
-    list-style: none;
-    padding: 0 20px;
-    position: relative;
+  list-style: none;
+  padding: 0 20px;
+  position: relative;
 
 }
 
 /* ปรับสีตัวอักษรของ navbar */
 #navbar li a {
-    text-decoration: none;
-    font-size:16 px;
-    font-weight:600;
-    color :#1a1a1a;
-    transition: 0.3s ease;
+  text-decoration: none;
+  font-size: 16 px;
+  font-weight: 600;
+  color: #1a1a1a;
+  transition: 0.3s ease;
 }
 
 /*เม้าไปชี้เเล้วเปลี่ยนสี*/
-#navbar li a:hover, 
+#navbar li a:hover,
 #navbar li a.active {
-     color: #088178;
+  color: #088178;
 }
+
 #navbar li a.active::after,
-#navbar li a:hover::after{
-    content: "";
-    width: 30%;
-    border-bottom: 2px solid;
-    background : #088178;
-    position: absolute;
-    bottom: -4px;
-    left:20px;
+#navbar li a:hover::after {
+  content: "";
+  width: 30%;
+  border-bottom: 2px solid;
+  background: #088178;
+  position: absolute;
+  bottom: -4px;
+  left: 20px;
 }
 
 
 
-#page-header{
-    background-image: url("/img/banner_shop.png");
-    width: 100%;
-    height: 40vh;
-    background-size: cover;
-    display : flex;
-    justify-content: center;
-    text-align: center;
-    flex-direction: column;
-    padding: 14px;
-  }
+#page-header {
+  background-image: url("/img/banner_shop.png");
+  width: 100%;
+  height: 40vh;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  padding: 14px;
+}
 
-  #page-header h2,
-  #page-header p{
-    color: #fff;
-  }
-  #pagination a {
-    text-decoration: none;
-    padding: 15px 20px;
-    background-color:#088178;
-    border-radius: 4px;
-    color: #fff;
-    font-weight: 600;
-  }
-  #pagination a i{
-    font-size: 16px;
-    font-weight: 600;
-  }
-  #pagination {
-    text-align: center;
-  }
+#page-header h2,
+#page-header p {
+  color: #fff;
+}
 
-  #pagination a:hover {
-    background-color: #088178;
-    color: #fff;
-  }
+#pagination a {
+  text-decoration: none;
+  padding: 15px 20px;
+  background-color: #088178;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 600;
+}
+
+#pagination a i {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+#pagination {
+  text-align: center;
+}
+
+#pagination a:hover {
+  background-color: #088178;
+  color: #fff;
+}
 
 
 
 /*footer ส่วนท้ายเว็บ*/
 footer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
-  footer .col {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 20px;
-  }
-  footer .logo{
-    margin-bottom: 30px;
-  }
-  
-  footer h4 {
-    font-size: 14px;
-    padding-bottom: 20px;
-  }
-  
-  footer p {
-    font-size: 14px;
-    margin-bottom: 0 0 8px 0;
-  }
-  
-  footer a {
-    font-size:13px;
-    text-decoration: none;
-    color: #222;
-    margin-bottom: 10px;
-  }
-  
-  footer .col img {
-    width: 200px; /* ปรับขนาดความกว้างของโลโก้ */
-    height: auto; /* รักษาสัดส่วนของรูปภาพ */
-  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+footer .col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+footer .logo {
+  margin-bottom: 30px;
+}
+
+footer h4 {
+  font-size: 14px;
+  padding-bottom: 20px;
+}
+
+footer p {
+  font-size: 14px;
+  margin-bottom: 0 0 8px 0;
+}
+
+footer a {
+  font-size: 13px;
+  text-decoration: none;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+footer .col img {
+  width: 200px;
+  /* ปรับขนาดความกว้างของโลโก้ */
+  height: auto;
+  /* รักษาสัดส่วนของรูปภาพ */
+}
 
 
-  
 
-  .main{
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: pop;
-    flex-direction: column;
-    margin:0 auto;
+
+.main {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: pop;
+  flex-direction: column;
+  margin: 0 auto;
 }
-.head{
-    text-align: center;
+
+.head {
+  text-align: center;
 }
-.head_1{
-    font-size: 30px;
-    font-weight: 600;
-    color: #333;
-    margin-top: 40px;
+
+.head_1 {
+  font-size: 30px;
+  font-weight: 600;
+  color: #333;
+  margin-top: 40px;
 }
-.head_1 span{
-    color: #ff4732;
+
+.head_1 span {
+  color: #ff4732;
 }
-.head_2{
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
-    margin-top: 3px;
+
+.head_2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-top: 3px;
 }
-ul{
-    display: flex;
-    justify-content: center;
-     
+
+ul {
+  display: flex;
+  justify-content: center;
+
 
 }
-ul li{
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+ul li {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-ul li .icon,.fa-cart-plus,
+
+ul li .icon,
+.fa-cart-plus,
 .fa-credit-card,
 .fa-truck-fast,
-.fa-check
- {
-    font-size: 30px;
-    color: #ff4732;
-    margin: 0 60px;
-    margin-top: 30px;
+.fa-check {
+  font-size: 30px;
+  color: #ff4732;
+  margin: 0 60px;
+  margin-top: 30px;
 }
 
 
-ul li .text{
-    font-size: 14px;
-    font-weight: 600;
-    color: #ff4732;
+ul li .text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ff4732;
 }
 
 /* Progress Div Css  */
 
-ul li .progress{
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: rgba(68, 68, 68, 0.781);
-    margin: 14px 0;
-    display: grid;
-    place-items: center;
-    color: #fff;
-    position: relative;
-    cursor: pointer;
+ul li .progress {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(68, 68, 68, 0.781);
+  margin: 14px 0;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  position: relative;
+  cursor: pointer;
 }
-.progress::after{
-    content: " ";
-    position: absolute;
-    width: 125px;
-    height: 5px;
-    background-color: rgba(68, 68, 68, 0.781);
-    right: 30px;
+
+.progress::after {
+  content: " ";
+  position: absolute;
+  width: 125px;
+  height: 5px;
+  background-color: rgba(68, 68, 68, 0.781);
+  right: 30px;
 }
-.one::after{
-    width: 0;
-    height: 0;
+
+.one::after {
+  width: 0;
+  height: 0;
 }
-ul li .progress .uil{
-    display: none;
+
+ul li .progress .uil {
+  display: none;
 }
-ul li .progress p{
-    font-size: 13px;
+
+ul li .progress p {
+  font-size: 13px;
 }
 
 /* Active Css  */
 
-ul li .active{
-    background-color: #ff4732;
-    display: grid;
-    place-items: center;
+ul li .active {
+  background-color: #ff4732;
+  display: grid;
+  place-items: center;
 }
-li .active::after{
-    background-color: #ff4732;
+
+li .active::after {
+  background-color: #ff4732;
 }
-ul li .active p{
-    display: none;
+
+ul li .active p {
+  display: none;
 }
-ul li .active .uil{
-    font-size: 20px;
-    display: flex;
+
+ul li .active .uil {
+  font-size: 20px;
+  display: flex;
 }
 
 /* Responsive Css  */
 
 @media (max-width: 980px) {
-    ul{
-        flex-direction: column;
-    }
-    ul li{
-        flex-direction: row;
-    }
-    ul li .progress{
-        margin: 0 30px;
-    }
-    .progress::after{
-        width: 5px;
-        height: 55px;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: -1;
-    }
-    .one::after{
-        height: 0;
-    }
-    ul li .icon{
-        margin: 15px 0;
-    }
+  ul {
+    flex-direction: column;
+  }
+
+  ul li {
+    flex-direction: row;
+  }
+
+  ul li .progress {
+    margin: 0 30px;
+  }
+
+  .progress::after {
+    width: 5px;
+    height: 55px;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+  }
+
+  .one::after {
+    height: 0;
+  }
+
+  ul li .icon {
+    margin: 15px 0;
+  }
 }
 
 @media (max-width:600px) {
-    .head .head_1{
-        font-size: 24px;
-    }
-    .head .head_2{
-        font-size: 16px;
-    }
+  .head .head_1 {
+    font-size: 24px;
+  }
+
+  .head .head_2 {
+    font-size: 16px;
+  }
 }
 
 
@@ -429,7 +461,9 @@ ul li .active .uil{
 #board table td:nth-child(5),
 #board table td:nth-child(6),
 #board table td:nth-child(7),
-#board table td:nth-child(8){
+#board table td:nth-child(8),
+#board table td:nth-child(9),
+#board table td:nth-child(10) {
   width: 150px;
   text-align: center;
 }
@@ -445,7 +479,7 @@ ul li .active .uil{
   color: #541010;
 }
 
-#Pending{
+#Pending {
   padding: 7px;
   background-color: #eafffa;
   border: 1px solid transparent;
@@ -457,7 +491,8 @@ ul li .active .uil{
   margin-left: auto;
   margin-right: auto;
 }
-#Shipping{
+
+#Shipping {
   padding: 7px;
   background-color: #fcefff;
   border: 1px solid transparent;
@@ -470,7 +505,7 @@ ul li .active .uil{
   margin-right: auto;
 }
 
-#Delivered{
+#Delivered {
   padding: 7px;
   background-color: #dcffe0;
   border: 1px solid transparent;
