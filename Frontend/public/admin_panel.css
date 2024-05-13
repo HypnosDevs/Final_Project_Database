@@ -257,7 +257,7 @@ body {
 }
 
 #board table td:nth-child(1) {
-  width: 100px;
+  width: 150px;
   text-align: center;
 }
 
