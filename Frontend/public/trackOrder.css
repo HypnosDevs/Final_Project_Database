@@ -481,7 +481,7 @@ ul li .active .uil {
 
 #Pending {
   padding: 7px;
-  background-color: #eafffa;
+  background-color: #ffffea;
   border: 1px solid transparent;
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -516,4 +516,107 @@ ul li .active .uil {
   align-items: center;
   margin-left: auto;
   margin-right: auto;
+}
+
+.wraporder {
+  height: 260px;
+  width: 50%;
+  margin: 20px auto;
+  border-radius: 15px;
+  background-color: #fcfcfc;
+}
+
+.orderstattus {
+  background-color: #f4f4f4;
+  text-align: right;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.orderstattus button {
+  background-color: #a7d6e7;
+  padding: 10px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.orderstattus span {
+  padding: 10px;
+
+  font-weight: bold;
+}
+
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  height: 150px;
+  justify-content: between;
+
+}
+
+
+.wrap-image {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: between;
+
+}
+
+.product-image {
+  width: 80px;
+  height: 80px;
+  margin: 35px 50px;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  border: solid 5px;
+}
+
+.product-name {
+  margin: 35px 0px;
+}
+
+.product-name div {
+  padding: 10px 0;
+}
+
+.product-price {
+  flex-grow: 1;
+  text-align: right;
+  padding-right: 15px;
+  align-content: space-around;
+
+}
+
+.product-price div {
+  padding-top: 5px;
+
+}
+
+
+
+
+.foot-order {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.total-price {
+  text-align: right;
+  padding: 15px;
+}
+
+.payment-type {
+  padding: 15px;
 }

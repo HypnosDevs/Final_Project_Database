@@ -263,15 +263,17 @@
                         </td>
                         
                     `;
+
                     tableBody.appendChild(row);
                     k++;
+
 
                     // Change background color of select element based on selected value
                     document.querySelector(`#selectStatus${orderData._id}`).addEventListener("change", async function (event) {
                         const selectStatus = event.target; // Get the select element that triggered the event
                         switch (selectStatus.value) {
                             case "Pending":
-                                selectStatus.style.backgroundColor = "#eafffa";
+                                selectStatus.style.backgroundColor = "#ffffea";
                                 break;
                             case "Shipping":
                                 selectStatus.style.backgroundColor = "#fcefff";
@@ -286,6 +288,16 @@
                         const updatedOrder = await axios.put(`http://localhost:8080/api/OrderItem/updateOrderItemStatus/${orderData._id}`, { status: selectStatus.value });
                         console.log("update laew", updatedOrder);
                     });
+                    const status = document.querySelector(`#selectStatus${orderData._id}`);
+                    if (orderData.status === "Pending") {
+                        status.style.backgroundColor = "#ffffea";
+                    }
+                    else if (orderData.status === "Shipping") {
+                        status.style.backgroundColor = "#fcefff";
+                    }
+                    else if (orderData.status === "Delivered") {
+                        status.style.backgroundColor = "#dcffe0";
+                    }
 
 
                 }
