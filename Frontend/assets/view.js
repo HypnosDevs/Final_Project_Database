@@ -1,107 +1,222 @@
-document.querySelectorAll(".selection").forEach(function(selectStatus) {
-    selectStatus.addEventListener("change", function() {
-        switch(selectStatus.value) {
-            case "Pending":
-                selectStatus.style.backgroundColor = "#eafffa";
-                break;
-            case "Shipping":
-                selectStatus.style.backgroundColor = "#fcefff";
-                break;
-            case "Delivered":
-                selectStatus.style.backgroundColor = "#dcffe0";
-                break;
-            default:
-                selectStatus.style.backgroundColor = "eafffa"; // Reset background color if none of the cases match
-        }
-    });
-});
-
 const emptyPage = (text) => {
-    // Remove the #board section
-    const boardSection = document.getElementById('board');
-    if (boardSection && boardSection.parentNode) boardSection.parentNode.removeChild(boardSection);
-
     // Create an h1 element with the text "No products found" and class "no-product"
     const h1Element = document.createElement('h1');
     h1Element.textContent = `${text}`;
     h1Element.classList.add('no-product');
 
     // Get the reference node after which the h1 will be inserted
-    const pageHeaderSection = document.getElementById('page-header');
-    const referenceNode = pageHeaderSection.nextElementSibling;
+    const boardHeaderSection = document.getElementById('board');
+    const referenceNode = boardHeaderSection.nextElementSibling;
 
     // Insert the h1 element after the page-header section
-    pageHeaderSection.parentNode.insertBefore(h1Element, referenceNode);
-}
+    boardHeaderSection.parentNode.insertBefore(h1Element, referenceNode);
+};
 
 const deleteOrderItem = async (order_item_id) => {
     try {
         // Delete the item from the server
         await axios.delete(`http://localhost:8080/api/OrderItem/deleteOrderItemByOrderItemId/${order_item_id}`);
+        
+        location.reload();
 
-        // Remove all td elements inside the corresponding row from the cart table
-        const rowToRemove = document.querySelector(`#user-table tbody tr[id="${order_item_id}"]`);
-        if (rowToRemove) {
-            const cellsToRemove = rowToRemove.querySelectorAll('td');
-            cellsToRemove.forEach(cell => {
-                cell.remove(); // Remove each td element from the row
-            });
-
-            rowToRemove.remove(); // Remove the row from the DOM
-        } else {
-            console.error('Row not found for item:', order_item_id);
-        }
-
-        const cartItemsCount = document.querySelectorAll('#user-table tbody tr').length;
-        if (cartItemsCount === 0) {
-            emptyPage("No products found");
-        }
     } catch (error) {
         console.error('Error deleting item:', error);
-    }
+        // Optionally, you can inform the user about the deletion error
+        // For example:
+        alert('An error occurred while deleting the order item. Please try again later.');
+    };
 };
 
-const renderOrderItems = (orderItems) => {
-    const tbody = document.querySelector('#user-table tbody');
+let orderItemPaymentType = [];
 
-    orderItems.forEach(async orderItem => {
-        const product = await axios.get(`http://localhost:8080/api/Product/getProduct/${orderItem.product}`);
-        const productName = product.data.name;
+const loadOrders = async (allOrderItems) => {
+    const headerTable = document.querySelector("#user-table thead");
+    // Clear existing rows
+    headerTable.innerHTML = '';
 
-        const order = await axios.get(`http://localhost:8080/api/Order/getOrder/${orderItem.order}`);
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td>Remove</td>
+        <td>Order Id</td> 
+        <td>Order Date</td>
+        <td>Product Name</td>
+        <td>Price</td>
+        <td>Quantity</td>
+        <td>Status</td>
+        <td>Payment Type</td>
+    `;
+    headerTable.appendChild(row);
 
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td><a onclick="deleteOrderItem('${orderItem._id}')"><i id="remove" class="fa-solid fa-circle-xmark"></i></a></td>
-            <td>${orderItem.order}</td>
-            <td>${orderItem.createdAt}</td>
-            <td>${productName}</td>
-            <td>฿${orderItem.price}</td>
-            <td>${orderItem.qty}</td>
-            <td>${orderItem.status}</td>
-            <td>${order.data.payment_type}</td>
-        `;
-        row.setAttribute('id', orderItem._id);
-        tbody.appendChild(row);
-    });
-};
+    if (allOrderItems.length > 0) {
+        const tableBody = document.querySelector("#user-table tbody");
+        // Clear existing rows
+        tableBody.innerHTML = '';
 
-const getUserOrder = async () => {
-    const userId = sessionStorage.getItem('userId')
+        let k = 0;
+        for (const orderItem of allOrderItems) { 
+            // Format the date as "YYYY-MM-DD HH:MM:SS"
+            const createdAt = new Date(orderItem.createdAt);
+            const formattedDate = `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-${createdAt.getDate().toString().padStart(2, '0')} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
 
-    let orders = await axios.get(`http://localhost:8080/api/Order/getOrderFromUser/${userId}`);
-    orders = orders.data;
-
-    if (orders && orders.length != 0) {
-        orders.forEach(async order => {
-            let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${order._id}`);
-            orderItems = orderItems.data;
-
-            renderOrderItems(orderItems);
-        });
+            const row = document.createElement("tr");
+            row.setAttribute("id", `${orderItem._id}`);
+            row.innerHTML = `             
+                <td><a onClick="deleteOrderItem('${orderItem._id}')"><i id="remove" class="fa-solid fa-circle-xmark"></i></a></td>
+                <td>${orderItem._id}</td>
+                <td>${formattedDate}</td>
+                <td>${orderItem.product_name}</td>
+                <td>฿${orderItem.price - orderItem.discount}</td>
+                <td>${orderItem.qty}</td>
+                <td>${orderItem.status}</td>
+                <td>${orderItemPaymentType[k]}</td>     
+            `;
+            tableBody.appendChild(row);
+            k++;
+        };
     } else {
-        emptyPage("No products found");
-    }
+        emptyPage("No order item found");
+    };
 };
 
-getUserOrder();
+const loadSpending = async (spendingData) => {
+    const headerTable = document.querySelector("#user-table thead");
+    // Clear existing rows
+    headerTable.innerHTML = '';
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td>Category</td>
+        <td>Number of Product</td> 
+        <td>Total Spending</td>
+    `;
+    headerTable.appendChild(row);
+
+    if (spendingData.length > 0) {
+        const tableBody = document.querySelector("#user-table tbody");
+        // Clear existing rows
+        tableBody.innerHTML = '';
+
+        for (const data of spendingData) { 
+            const row = document.createElement("tr");
+            row.innerHTML = `             
+                <td>${data.category}</td>
+                <td>${data.qty}</td>
+                <td>฿${data.price}</td> 
+            `;
+            tableBody.appendChild(row);
+        };
+    } else {
+        emptyPage("No order item found");
+    };
+};
+
+const allowedRole = ["ADMIN"];
+const allOrders = document.querySelector("#orders_page");
+const allSpending = document.querySelector("#spending_page");
+
+const loadData = async () => {
+    try {
+        let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+            withCredentials: true
+        });
+        if (!curUser.data) {
+            window.location.href = "/"
+        } else {
+            curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
+            const role = curUser.data.role;
+            if (allowedRole.includes(role)) {
+                const userId = sessionStorage.getItem('userId');
+
+                let orders = await axios.get(`http://localhost:8080/api/Order/getOrderFromUser/${userId}`);
+                orders = orders.data;
+
+                let allOrderItems = [];
+                for (const order of orders) {
+                    let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${order._id}`);
+                    orderItems = orderItems.data;
+
+                    for (const orderItem of orderItems) {
+                        // if (orderItem.status != 'Delivered') {
+                        //     continue;
+                        // };
+                        allOrderItems.push(orderItem)
+                    };
+                };
+
+                let allOrderItemCategories = [];
+                for (const orderItem of allOrderItems) {
+                    const order = await axios.get(`http://localhost:8080/api/Order/getOrder/${orderItem.order}`);
+                    orderItemPaymentType.push(order.data.payment_type);
+
+                    let categories = await axios.get(`http://localhost:8080/api/Category/getAllCategoryFromProduct/${orderItem.product}`);
+                    allOrderItemCategories.push(categories.data.category);
+                };
+
+                let spendingData = [];
+                let priceSum = 0;
+                for (let i = 0; i < allOrderItems.length; i++) {
+                    priceSum += allOrderItems[i].price - allOrderItems[i].discount;
+                    for (const category of allOrderItemCategories[i]) {
+                        const categoryName = category.name;
+
+                        const idx = spendingData.findIndex(e => e.category === categoryName);
+                        if (idx > -1) {
+                            spendingData[idx].qty += allOrderItems[i].qty;
+                            spendingData[idx].price += allOrderItems[i].price - allOrderItems[i].discount;
+                        } else {
+                            spendingData.push(
+                                { 
+                                    category: categoryName,
+                                    qty: allOrderItems[i].qty,
+                                    price: allOrderItems[i].price - allOrderItems[i].discount
+                                }
+                            );
+                        };
+                    };
+                };
+                spendingData.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+
+                let orderItemsLength = document.querySelector("#orderItems-length");
+                orderItemsLength.innerHTML = allOrderItems.length;
+                let totalSpending = document.querySelector("#totalSpending")
+                totalSpending.innerHTML = priceSum;
+                
+                const loader = document.querySelector("#loader");
+                loader.classList.add("loader-hidden");
+
+                loader.addEventListener("transitionend", () => {
+                    document.body.removeChild("loader");
+                });
+
+                const rowLoader = document.querySelector("#loader");
+                rowLoader.remove();
+
+                loadOrders(allOrderItems);
+
+                allOrders.addEventListener("click", async () => {
+                    const emptyPage = document.querySelector(".no-product");
+                    if (emptyPage && emptyPage.parentNode) {
+                        emptyPage.parentNode.removeChild(emptyPage);
+                    };
+                    await loadOrders(allOrderItems);
+                });
+
+                allSpending.addEventListener("click", async () => {
+                    const emptyPage = document.querySelector(".no-product");
+                    if (emptyPage && emptyPage.parentNode) {
+                        emptyPage.parentNode.removeChild(emptyPage);
+                    };
+                    await loadSpending(spendingData);
+                });
+
+            } else {
+                console.log("Permission not allowed");
+                window.location.href = "/"
+            };
+        };
+    } catch (err) {
+        emptyPage(`${err}`);
+    };
+};
+
+loadData();

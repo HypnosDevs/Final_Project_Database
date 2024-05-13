@@ -34,6 +34,9 @@
 
                         <h2>Price</h2>
                         <input type="number" class="input" placeholder="Price" name="price">
+
+                        <h2>Stock</h2>
+                        <input type="number" class="input" placeholder="Stock" name="stock">
                         
                         <button type="button" class="btn" id="cancelButton" onclick="window.location.href='/product_admin';">Cancel</button>
 
@@ -62,7 +65,7 @@
                     <div class="setting tabshow">
                         <h1>Product Detail</h1>
                         <h2>Detail</h2>
-                        <input type="text" class="input" placeholder="Detail" name="description">
+                        <textarea class="input" placeholder="Detail" name="description" cols="40" rows="5"></textarea>
                     
                         <button type="button" class="btn" id="submitButton">Update</button>
                         <button type="button" class="btn" id="cancelButton" onclick="window.location.href='/product_admin';">Cancel</button>

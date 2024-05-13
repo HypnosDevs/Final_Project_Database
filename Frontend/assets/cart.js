@@ -58,7 +58,7 @@ const renderCartTotals = (cartSubtotal) => {
     const subtotalTr = document.createElement('tr');
     subtotalTr.innerHTML = `
         <td>Cart Subtotal</td>
-        <td>฿${cartSubtotal}</td>
+        <td id="subtotal-value">฿${cartSubtotal}</td>
     `;
     table.appendChild(subtotalTr);
 
@@ -72,7 +72,7 @@ const renderCartTotals = (cartSubtotal) => {
     const TotalTr = document.createElement('tr');
     TotalTr.innerHTML = `
         <td>Total</td>
-        <td>฿${cartSubtotal}</td>
+        <td id="total-value">฿${cartSubtotal}</td>
     `;
     table.appendChild(TotalTr);
 };

@@ -508,6 +508,8 @@ async function populateCouponList(categoryProduct, productPrice, shoppingcartId,
         subtotal -= tmpDiscount;
         document.querySelector(`#${shoppingcartId} .discount`).innerHTML = tmpDiscount;
         document.querySelector(`#${shoppingcartId} .subtotal`).innerHTML = subtotal;
+        document.querySelector('#subtotal-value').innerHTML = '฿' + String( Number(document.querySelector('#subtotal-value').innerHTML.slice(1)) - tmpDiscount )
+        document.querySelector('#total-value').innerHTML = '฿' + String( Number(document.querySelector('#total-value').innerHTML.slice(1)) - tmpDiscount )
         document.getElementById(buttonId).innerHTML = `${coupon.discount}%`
 
 
