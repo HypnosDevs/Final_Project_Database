@@ -330,9 +330,17 @@ footer {
 
 
 #banner3 .banner-box2{
-  background-image:url("/img/promotion/pro1.png") ;
+  background-image:url("/img/promotion/pro4.jpg") ;
 }
 
 #banner3 .banner-box3{
-  background-image:url("/img/promotion/pro1.png") ;
+  background-image:url("/img/promotion/pro5.jpg") ;
+}
+
+.no-product {
+  text-align: center;
+  color: #b7b8bd;
+  font-size: x-large;
+  font-weight: bold;
+  padding: 150px 0;
 }

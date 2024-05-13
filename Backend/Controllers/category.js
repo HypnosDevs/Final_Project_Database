@@ -36,6 +36,18 @@ exports.getCategory = async (req, res) => {
     }
 }
 
+exports.getCategoryFromDiscountCategoryId = async (req, res) => {
+    try {
+        const { discount_category_id } = req.params;
+        const data = await Category.findOne({ discountcategory: discount_category_id })
+        res.send(data);
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}
+
 exports.addCategory = async (req, res) => {
     try {
         const { name } = req.params;

@@ -3,7 +3,7 @@ const DiscountCategory = require('../Models/DiscountCategory.js');
 
 exports.getAllDiscount = async (req, res) => {
     try {
-        const data = await Discount.find()
+        const data = await Discount.find().sort({ discount: -1 });
         res.send(data);
 
     } catch (err) {
