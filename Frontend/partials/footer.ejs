@@ -45,9 +45,9 @@
                 navSignin.setAttribute('href', '/trackOrder');
             }
         }
-        console.log("user", userId);
+        // console.log("user", userId);
         const user = await axios.get(`http://localhost:8080/api/User/getUser/${userId}`);
-        console.log("user", user);
+        // console.log("user", user);
         if (!user) {
             adminPanel.remove()
         }

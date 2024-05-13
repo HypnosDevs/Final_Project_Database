@@ -47,17 +47,42 @@ const loadData = async (req, res) => {
     console.log('curUser', userId);
     let orders = await axios.get(`http://localhost:8080/api/Order/getOrderFromUser/${userId}`)
     orders = orders.data;
-    let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${orders._id}`);
-    orderItems = orderItems.data;
+    console.log('order', orders);
 
+
+    tableBody.innerHTML = '';
     for (const orderData of orders) {
-        let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${orders._id}`);
+        let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${orderData._id}`);
         orderItems = orderItems.data;
         for (const orderItemData of orderItems) {
-            const product = await axios.get(`http://localhost:8080/api/Product/getProduct/${orderItemData.product}`);
-            productName.push(product.data.name);
-            orderUserId.push(orderData.user);
-            allPaymentType.push(orderData.payment_type);
+            const createdAt = new Date(orderData.createdAt);
+            //  format the date as "YYYY-MM-DD HH:MM:SS"
+            const formattedDate = `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-${createdAt.getDate().toString().padStart(2, '0')} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
+
+            const row = document.createElement("tr");
+            //<td><a href="#"><i id="remove" class="fa-solid fa-circle-xmark"></i></a></td>
+
+            row.innerHTML = `
+                        
+                        <td>${orderItemData._id}</td>
+                        <td>${formattedDate}</td>
+                        <td><img src="data:image/png;base64, ${orderItemData.product_image}"></td>
+                        <td>${orderItemData.product_name}</td>
+                        <td>${orderItemData.price}</td>
+                        <td>${orderItemData.qty}</td>
+                        <td>${orderItemData.discount}</td>
+                        <td>${orderItemData.price * orderItemData.qty - orderItemData.discount}</td>
+                        <td>
+                            ${orderItemData.status}
+                           
+                        </td>
+                        <td>
+                            ${orderData.payment_type}
+                           
+                        </td>
+                        
+                    `;
+            tableBody.appendChild(row);
         }
     }
 
@@ -65,34 +90,35 @@ const loadData = async (req, res) => {
 
     loader.remove();
     // Clear existing rows
-    tableBody.innerHTML = '';
-    let k = 0;
-    for (const orderData of orderItems) {
-        const createdAt = new Date(orderData.createdAt);
-        //  format the date as "YYYY-MM-DD HH:MM:SS"
-        const formattedDate = `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-${createdAt.getDate().toString().padStart(2, '0')} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
 
-        const row = document.createElement("tr");
-        row.innerHTML = `
-                        
-                       <td><a href="#"><i id="remove" class="fa-solid fa-circle-xmark"></i></a></td>
-                        <td>${orderData._id}</td>
-                        <td>${formattedDate}</td>
-                        <td>${productName[k]}</td>
-                        <td>${orderData.price}</td>
-                        <td>${orderData.qty}</td>
-                        <td>
-                            ${orderData.status}
-                           
-                        </td>
-                        <td>
-                            ${allPaymentType[k]}
-                           
-                        </td>
-                        
-                    `;
-        tableBody.appendChild(row);
-        k++;
-    }
+    // let k = 0;
+    // for (const orderData of orderItems) {
+    //     const createdAt = new Date(orderData.createdAt);
+    //     //  format the date as "YYYY-MM-DD HH:MM:SS"
+    //     const formattedDate = `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-${createdAt.getDate().toString().padStart(2, '0')} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
+
+    //     const row = document.createElement("tr");
+    //     //<td><a href="#"><i id="remove" class="fa-solid fa-circle-xmark"></i></a></td>
+
+    //     row.innerHTML = `
+
+    //                     <td>${orderData._id}</td>
+    //                     <td>${formattedDate}</td>
+    //                     <td>${productName[k]}</td>
+    //                     <td>${orderData.price}</td>
+    //                     <td>${orderData.qty}</td>
+    //                     <td>
+    //                         ${orderData.status}
+
+    //                     </td>
+    //                     <td>
+    //                         ${allPaymentType[k]}
+
+    //                     </td>
+
+    //                 `;
+    //     tableBody.appendChild(row);
+    //     k++;
+    // }
 }
 loadData();
