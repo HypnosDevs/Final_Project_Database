@@ -213,7 +213,7 @@ submit_addressBtn.addEventListener('click', async () => {
     tel_no: Array.from(formData)[8][1],
   };
 
-  console.log(address);
+  // console.log(address);
 
   let userId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
     withCredentials: true
@@ -334,7 +334,7 @@ function showPostCode() {
   let districtSelect = document.getElementById("district");
   let postalCode = document.getElementById("postal_code");
   let url = "https://ckartisan.com/api/zipcodes?province=" + provinceSelect.value + "&amphoe=" + amphoeSelect.value + "&tambon=" + districtSelect.value;
-  console.log(url);
+  // console.log(url);
   if (districtSelect.value !== "") {
     fetch(url)
       .then(response => response.json())
@@ -414,12 +414,12 @@ check_outBtn.addEventListener('click', async () => {
   address._id = undefined;
 
   let paymentType = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentTypeFromUserPaymentMethod/${paymentId}`)
-  console.log('paymenttype', paymentType.data);
+  // console.log('paymenttype', paymentType.data);
   userPaymentsInfo[paymentIdx].payment_type = paymentType.data.name;
   userPaymentsInfo[paymentIdx].id = undefined;
 
   const insertData = { ...address, ...userPaymentsInfo[paymentIdx] };
-  console.log(insertData)
+  // console.log(insertData)
 
   const order = await axios.post(`http://localhost:8080/api/Order/addOrder/${paymentId}/${userId}`, insertData);
   const orderId = order.data._id;
@@ -443,9 +443,9 @@ check_outBtn.addEventListener('click', async () => {
       product_name: document.querySelector(`#${shoppingcartId} .name`).textContent
     };
 
-    console.log('shoppingCartItem', shoppingCartItem);
-    console.log('productId', productId);
-    console.log('productImageSrc', productImageSrc);
+    // console.log('shoppingCartItem', shoppingCartItem);
+    // console.log('productId', productId);
+    // console.log('productImageSrc', productImageSrc);
 
     const orderItem = await axios.post(`http://localhost:8080/api/OrderItem/addOrderItem/${orderId}/${productId}`, shoppingCartItem);
 
@@ -491,7 +491,7 @@ async function populateCouponList(categoryProduct, productPrice, shoppingcartId,
       const categoryId = discountCategory.data.category;
       const categoryName = await axios.get(`http://localhost:8080/api/Category/getCategory/${categoryId}`);
       const allProdCatName = categoryProduct.map(ele => ele.name);
-      console.log('subprice', productPrice);
+      // console.log('subprice', productPrice);
       if (!allProdCatName.includes(categoryName.data.name) || productPrice < coupon.min_price) {
         continue;
       }
