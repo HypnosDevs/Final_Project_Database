@@ -384,9 +384,6 @@ submit_paymentBtn.addEventListener('click', async () => {
   });
   userId = userId.data
 
-  const paymentType = await axios.post("http://localhost:8080/api/PaymentType/addPaymentType", {
-    name: payment.type
-  })
 
   const paymentMethod = await axios.post(`http://localhost:8080/api/PaymentMethod/addPaymentMethod/${userId}`, payment)
 

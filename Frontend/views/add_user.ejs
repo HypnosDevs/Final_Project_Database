@@ -21,19 +21,21 @@
                     </a>
                 </nav>
             </div>
+
             <div class="rightbox">
                 <div class="profile tabshow">
                     <h1>Personal Info</h1>
                     <h2>Email</h2>
-                    <input type="text" class="input" value="">
+                    <input type="text" class="input" name="user[email]" value="" required>
                     <h2>First name</h2>
-                    <input type="text" class="input" value="">
+                    <input type="text" class="input" name="user[firstname]" value="" required>
 
                     <h2>Last name</h2>
-                    <input type="text" class="input" value="">
+                    <input type="text" class="input" name="user[lastname]" value="" required>
 
                     <h2>Gender</h2>
-                    <select class="input">
+                    <select class="input" name="user[gender]" required>
+                        <option value="" disabled selected>Select Gender</option>
                         <option value="Male">Male</option>
 
                         <option value="Female">Female</option>
@@ -52,19 +54,11 @@
                 <div class="payment tabshow">
                     <h1>Payment Info</h1>
                     <h2>Payment Type</h2>
-                    <select name="" id="paymentSelect" required>
+                    <select name="payment[type]" id="selectPaymentType" required>
                         <option value="" disabled selected>Select Payment</option>
                     </select>
 
-                    <div id="newPaymentInput" style="display: none;">
-                        <h2>METHOD</h2>
-                        <select name="payment[type]" required>
-                            <option value="" disabled selected>Select Payment Type</option>
-                            <option value="credit_card">Credit Card</option>
-                            <option value="debit_card">Debit Card</option>
-                            <option value="debit_card">Master Card</option>
-                        </select>
-                    </div>
+
 
                     <h2>Cardholder name</h2>
                     <input type="text" class="input" name="payment[account_name]">
@@ -83,12 +77,13 @@
                     <h1>Address Info</h1>
 
                     <h2>Address name</h2>
-                    <input type="text" class="input" value="" name="address[name]" placeholder="Enter a new address">
+                    <input type="text" class="input" value="" name="address[name]" placeholder="Enter a new address"
+                        required>
 
 
 
                     <h2>Address line1</h2>
-                    <input type="text" class="input" value="" name="address[address_line1]">
+                    <input type="text" class="input" value="" name="address[address_line1]" required>
 
                     <h2>Address line2</h2>
                     <input type="text" class="input" value="" name="address[address_line2]">
@@ -127,7 +122,7 @@
                     <input type="text" class="input" id="postal_code" placeholder="Postal Code"
                         name="address[postal_code]" required>
                     <h2>Phone Number</h2>
-                    <input type="text" class="input" value="">
+                    <input type="text" name="address[tel_no]" class="input" value="">
 
 
                     <button class="btn" onclick="prevPage()">Previous</button>
@@ -141,13 +136,13 @@
                 <div class="setting tabshow">
                     <h1>Username & Password</h1>
                     <h2>Username</h2>
-                    <input type="text" class="input" value="">
+                    <input type="text" class="input" value="" name="user[username]">
 
                     <h2>Password</h2>
-                    <input type="password" class="input" value="">
+                    <input type="password" name="user[password]" class="input" value="">
 
                     <h2>Role</h2>
-                    <select class="input">
+                    <select name="user[role]" class="input">
                         <option value="ADMIN">ADMIN</option>
 
                         <option value="USER">USER</option>
@@ -156,12 +151,109 @@
 
                     </select>
 
-                    <button class="btn">Add</button>
+                    <button id="addDataButton" class="btn">Add</button>
                 </div>
 
             </div>
-
             <script>
+                const addDataButton = document.querySelector("#addDataButton");
+                async function getFormData() {
+                    try {
+                        let formData = {};
+
+                        let tabshowElements = document.querySelectorAll('.tabshow');
+
+                        tabshowElements.forEach(tabshowElement => {
+                            let formElements = tabshowElement.querySelectorAll('input, select');
+
+                            formElements.forEach(formElement => {
+                                let name = formElement.getAttribute('name');
+
+                                if (formElement.tagName === 'SELECT') {
+                                    let selectedOption = formElement.options[formElement.selectedIndex];
+                                    let value = selectedOption.value;
+                                    formData[name] = value;
+                                } else {
+
+                                    let value = formElement.value;
+                                    formData[name] = value;
+                                }
+                                if (!formData[name]) {
+                                    const [prefix] = name.split('[');
+                                    throw `${prefix} field required !!!`.toUpperCase();
+                                }
+                            });
+                        });
+                        const user = {};
+                        const payment = {};
+                        const address = {};
+
+                        for (const key in formData) {
+                            const [prefix, fieldName] = key.split('[').map(str => str.replace(']', ''));
+                            if (prefix === 'user') {
+                                user[fieldName] = formData[key];
+                            } else if (prefix === 'payment') {
+                                payment[fieldName] = formData[key];
+                            } else if (prefix === 'address') {
+                                address[fieldName] = formData[key];
+                            }
+                        }
+
+                        const response = await axios.post("http://localhost:8080/api/Authentication/checkUsername", {
+                            username: user.username
+                        });
+
+
+                        const inValid = response.data.exists;
+                        if (inValid) {
+                            throw "Username already exist !!!".toUpperCase();
+                        }
+
+                        const data = await axios.post("http://localhost:8080/api/Admin/addUser", {
+                            user: user,
+                            payment: payment,
+                            address: address
+                        });
+
+                        window.location.href = '/admin_panel'
+                        // console.log(user, payment, address);
+
+                    } catch (err) {
+                        const existingErrorMessage = document.querySelector('.error-message');
+                        if (existingErrorMessage) {
+                            existingErrorMessage.parentNode.removeChild(existingErrorMessage);
+                        }
+                        const validateText = document.createElement('div');
+                        validateText.setAttribute('class', 'error-message');
+                        validateText.innerHTML = err;
+                        validateText.style.color = "red";
+                        validateText.style.fontWeight = "bold";
+                        validateText.style.padding = "15px 0px";
+                        addDataButton.style.margin = "0px"
+                        addDataButton.parentNode.insertBefore(validateText, addDataButton);
+
+                    }
+                }
+                addDataButton.addEventListener("click", () => {
+                    getFormData();
+                })
+
+            </script>
+            <script>
+
+                const loadPaymentType = async () => {
+                    const selectPaymentType = document.getElementById('selectPaymentType');
+                    let allPaymentTypes = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentType`);
+                    allPaymentTypes = allPaymentTypes.data;
+                    allPaymentTypes.forEach(payment => {
+                        const option = document.createElement('option');
+                        option.setAttribute('value', payment.name);
+                        option.innerHTML = payment.name
+                        selectPaymentType.appendChild(option);
+
+                    })
+                }
+                loadPaymentType();
                 let currentPage = 1;
                 let totalPages = 2;
                 const tabBtn = document.querySelectorAll('.tab');
