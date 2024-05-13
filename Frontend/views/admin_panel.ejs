@@ -66,7 +66,7 @@
                         <h3 id="products-length">
 
                         </h3>
-                        <span>Product Sell</span>
+                        <span>Product Sold</span>
                     </div>
                 </div>
                 <div class="val-box" id="promotions_page">
@@ -252,7 +252,7 @@
                         <td>${orderData._id}</td>
                         <td>${formattedDate}</td>
                         <td>${productName[k]}</td>
-                        <td>${orderData.price}</td>
+                        <td>${orderData.price - orderData.discount}</td>
                         <td>${orderData.qty}</td>
                         <td>
                             <select class="selection" id="selectStatus${orderData._id}">
@@ -302,7 +302,7 @@
 
                 }
             };
-            const loadProducts = async (allProducts) => {
+            const loadProducts = async (productSoldData) => {
                 const headerTable = document.querySelector("#header-table thead");
                 let countNoProduct = document.querySelector('.no-product');
                 if (countNoProduct) {
@@ -323,13 +323,13 @@
                 // Clear existing rows
                 tableBody.innerHTML = '';
 
-                for (const product of allProducts) {
+                for (const product of productSoldData) {
                     const row = document.createElement("tr");
                     row.innerHTML = `
-                        <td>${product._id}</td>
+                        <td>${product.id}</td>
                         <td>${product.name}</td>
+                        <td>${product.qty}</td>
                         <td>${product.price}</td>
-                        <td>${product.stock}</td>
                        
                     `;
                     tableBody.appendChild(row);
@@ -432,6 +432,8 @@
                             productLength.innerHTML = products.length;
                             let discountLength = document.querySelector("#discounts-length")
                             discountLength.innerHTML = discounts.length;
+
+                            let productSoldData = [];
                             for (const orderData of orderItems) {
                                 const product = await axios.get(`http://localhost:8080/api/Product/getProduct/${orderData.product}`);
                                 productName.push(product.data.name);
@@ -439,7 +441,22 @@
                                 orderUserId.push(order.data.user);
                                 // console.log('order user', order.data);
 
+                                const idx = productSoldData.findIndex(e => e.id === orderData.product);
+                                if (idx > -1) {
+                                    productSoldData[idx].qty += orderData.qty;
+                                    productSoldData[idx].price += orderData.price - orderData.discount;
+                                } else {
+                                    productSoldData.push(
+                                        {
+                                            id: orderData.product,
+                                            name: orderData.product_name,
+                                            qty: orderData.qty,
+                                            price: orderData.price - orderData.discount
+                                        }
+                                    );
+                                }
                             }
+
                             // console.log('order')
                             // Edit pls
                             let category = ""
@@ -473,7 +490,7 @@
                                 // console.log("here");
                                 // window.location.href = "/product_admin"
                                 // console.log(allProducts);
-                                loadProducts(products);
+                                loadProducts(productSoldData);
                             })
 
                             allPromotions.addEventListener("click", () => {
