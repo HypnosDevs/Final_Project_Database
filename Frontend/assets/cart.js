@@ -101,26 +101,26 @@ const renderCartItems = async (items) => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deleteItem('${item._id}')"></i></a></td>
-            <td><img src="data:image/png;base64, ${item.product.image}"></td>
-            <td>${item.product.name}</td>
-            <td>฿${item.product.price}</td>
-            <td>${item.qty}</td>
-            <td>${discount * item.qty}</td>
-            <td>฿${(item.product.price - discount) * item.qty}</td>
-            <td>
+            <td class="image"><img src="data:image/png;base64, ${item.product.image}"></td>
+            <td class="name">${item.product.name}</td>
+            <td class="price">฿${item.product.price}</td>
+            <td class="qty">${item.qty}</td>
+            <td class="discount">${discount * item.qty}</td>
+            <td class="subtotal">฿${(item.product.price - discount) * item.qty}</td>
+            <td class="coupon">
                 <div class="coupon" id="coupon">
                 <button class="choose-coupon" id="choose-coupon-btn${item._id}" ><strong>Choose</strong></button>
                  </div>
             </td>
         `;
-        row.setAttribute('id', item._id);
+        row.setAttribute('id', `shopitem${item._id}`);
         tbody.appendChild(row);
+
         const chooseCouponBtn = document.querySelector(`#choose-coupon-btn${item._id}`);
-        console.log('chooseCoupontBtn', chooseCouponBtn);
         chooseCouponBtn.addEventListener('click', () => {
             openPopup(couponPopup);
 
-            populateCouponList(item.product.category, item.product.price, `choose-coupon-btn${item._id}`);
+            populateCouponList(item.product.category, item.product.price * item.qty, `shopitem${item._id}`, `choose-coupon-btn${item._id}`);
         });
 
         cartSubtotal += (item.product.price - discount) * item.qty;

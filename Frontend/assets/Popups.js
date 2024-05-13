@@ -468,75 +468,49 @@ const applyCouponBtn = document.getElementById('apply-coupon-btn');
 let couponIdx = -1;
 let couponData = [];
 
-async function populateCouponList(categoryProduct, productPrice, buttonId) {
+async function populateCouponList(categoryProduct, productPrice, shoppingcartId, buttonId) {
   couponList.innerHTML = '';
-  couponData = [];
+  // couponData = [];
 
   let coupons = await axios.get("http://localhost:8080/api/Discount/getDiscount");
   coupons = coupons.data;
   coupons.forEach(async coupon => {
     // let categoryArr = [];
     for (const discountCategoryId of coupon.discountcategory) {
-      couponData.push(coupon);
-      // console.log("sad", coupon, coupon.discount);
+      // couponData.push(coupon);
       const discountCategory = await axios.get(`http://localhost:8080/api/DiscountCategory/getDiscountCategory/${discountCategoryId}`)
       const categoryId = discountCategory.data.category;
-      // console.log('getCat1', discountCategory, promotion.discountcategory)
       const categoryName = await axios.get(`http://localhost:8080/api/Category/getCategory/${categoryId}`);
       const allProdCatName = categoryProduct.map(ele => ele.name);
-      // console.log('allProdCatName', allProdCatName);
-      if (!allProdCatName.includes(categoryName.data.name)) {
+      console.log('subprice', productPrice);
+      if (!allProdCatName.includes(categoryName.data.name) || productPrice < coupon.min_price) {
         continue;
       }
       const listItem = document.createElement('li');
       // console.log('catname', categoryName.data)
       listItem.innerHTML = `Category: ${categoryName.data.name} ${coupon.discount}%</br>Min price: ${coupon.min_price} THB</br>Max discount ${coupon.max_discount}`;
       listItem.addEventListener('click', async () => {
-        // document.getElementById('coupon-code').innerHTML = `Category: ${categoryName.data.name} ${coupon.discount}%</br>Min price: ${coupon.min_price} THB</br>Max discount ${coupon.max_discount}`;
-        console.log('buttonid', buttonId, document.getElementById(buttonId));
-        document.getElementById(buttonId).innerHTML = `${coupon.discount}%`
-        let j = 0;
-        for (let i = 0; i < couponData.length; i++) {
-          if (i > 0 && couponData[i]._id === couponData[i - 1]._id) {
-            j++;
-          } else {
-            j = 0;
-          }
-          if (discountCategoryId === couponData[i].discountcategory[j]) {
-            couponIdx = i;
-          }
+
+        const prodPrice = parseInt(document.querySelector(`#${shoppingcartId} .price`).textContent.replace('฿', ''));
+        const qty = parseInt(document.querySelector(`#${shoppingcartId} .qty`).textContent);
+        let subtotal = prodPrice * qty;
+        let tmpDiscount = Math.ceil((subtotal * parseInt(coupon.discount)) / 100);
+        if (tmpDiscount > coupon.max_discount) {
+          tmpDiscount = coupon.max_discount;
         }
 
-        // getCart();
+        subtotal -= tmpDiscount;
+        document.querySelector(`#${shoppingcartId} .discount`).innerHTML = tmpDiscount;
+        document.querySelector(`#${shoppingcartId} .subtotal`).innerHTML = subtotal;
+        document.getElementById(buttonId).innerHTML = `${coupon.discount}%`
+
 
         closePopup(couponPopup);
-
-        // const curUserId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
-        //     withCredentials: true
-        // });
-        // const userId = curUserId.data;
-        // if (!userId) {
-        //     return window.location.href = `/signIn`;
-        // }
-        // const curUser = await axios.get(`http://localhost:8080/api/User/getUser/${userId}`)
-
-        // if (curUser.data.shoppingcart && curUser.data.shoppingcart.length > 0) {
-        //     console.log("here cart", curUser.data.shoppingcart);
-        //     const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${curUser.data._id}`);
-        //     console.log("Shopping Cart Items:", shoppingCartItems.data);
-        //     renderCartItems(shoppingCartItems.data); // Render cart items
-        //     renderCartTotals(shoppingCartItems.data);
-        // } else {
-        //     emptyPage("No products found");
-        // }
-
-
       });
-      // console.log('getCat2')
-      // categoryArr.push(categoryName.data[0].name);
+
       couponList.appendChild(listItem);
     }
-    // promotion.category = categoryArr;
+
 
 
   });
