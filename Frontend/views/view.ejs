@@ -32,21 +32,19 @@
 <section id="interface">
 
     <div class="values">
-        <div class="val-box">
+        <div class="val-box" id="orders_page">
             <i class="fa-solid fa-cart-shopping"></i>
             <div>
-                <h3 id="orderItems-length">
-
-                </h3>
+                <h3 id="orderItems-length"></h3>
                 <span>Total Orders</span>
             </div>
         </div>
 
-        <div class="val-box">
+        <div class="val-box" id="spending_page">
             <i class="fa-solid fa-baht-sign"></i>
             <div>
-                <h3>฿1400</h3>
-                <span>This Month</span>
+                <h3 id="totalSpending"></h3>
+                <span>Total Spending</span>
             </div>
         </div>
     </div>
@@ -54,22 +52,14 @@
 
 <section id="board" class="">
     <table id="user-table" width="100%">
-        <thead>
-            <tr>
-                <td>Remove</td>
-                <td>Order_ID</td>
-                <td>Order_Date</td>
-                <td>Product_Name</td>
-                <td>Price</td>
-                <td>Quantity</td>
-                <td>Status</td>
-                <td>Payment</td>
+        <thead></thead>
+        <tbody>
+            <tr id="loader">
+                <td colspan="8">
+                    <div class="loader"></div>
+                </td>
             </tr>
-        </thead>
-
-        <!-- Generate sample data -->
-        <tbody></tbody>
-
+        </tbody>
     </table>
 </section>
 
