@@ -233,6 +233,7 @@ footer {
     background-size:cover ;
     background-position: center;
     padding: 30px;
+    box-shadow: inset 0 0 0 1000px rgba(0,0,0,.5);
   }
 
 
@@ -307,6 +308,7 @@ footer {
   background-position: center;
   padding: 20px;
   margin-bottom: 20px;
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.5);
 }
 
 #banner3 h2{
@@ -316,7 +318,7 @@ footer {
 }
 
 #banner3 h3{
-  color: #ec544e;
+  color: #fff;
   font-weight: 900;
   font-size: 15px;
 }
