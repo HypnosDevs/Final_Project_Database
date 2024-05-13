@@ -452,8 +452,12 @@ footer .col img {
 
 }
 
+#prodetails .single-pro-details h5 {
+  padding: 10px 0 10px 0;
+}
+
 #prodetails .single-pro-details h4 {
-  padding: 40px 0 20px 0;
+  padding: 20px 0 10px 0;
 }
 
 #prodetails .single-pro-details h2 {
