@@ -23,7 +23,9 @@
             </div>
             <div class="rightbox">
                 <div class="profile tabshow">
-                    <h1>Prosonal Info</h1>
+                    <h1>Personal Info</h1>
+                    <h2>Email</h2>
+                    <input type="text" class="input" value="">
                     <h2>First name</h2>
                     <input type="text" class="input" value="">
 
@@ -41,23 +43,17 @@
                     </select>
 
 
-                    <h2>Phone Number</h2>
-                    <input type="text" class="input" value="">
 
 
-                    <button class="btn">Add</button>
+                    <!-- <button class="btn">Add</button> -->
 
                 </div>
 
                 <div class="payment tabshow">
                     <h1>Payment Info</h1>
-                    <h2>Payment Method</h2>
+                    <h2>Payment Type</h2>
                     <select name="" id="paymentSelect" required>
                         <option value="" disabled selected>Select Payment</option>
-                        <option value="credit_card">Credit Card, 12341234, Jarukit</option>
-                        <option value="debit_card">Debit Card, 093124, Pooh</option>
-                        <option value="debit_card">Debit Card, 13241235, Dola</option>
-                        <option value="add_new_payment">Add a new payment</option>
                     </select>
 
                     <div id="newPaymentInput" style="display: none;">
@@ -79,7 +75,7 @@
                     <h2>Expiration date</h2>
                     <input type="text" class="input" name="payment[expiry_date]">
 
-                    <button class="btn">Add</button>
+                    <!-- <button class="btn">Add</button> -->
 
                 </div>
 
@@ -87,17 +83,9 @@
                     <h1>Address Info</h1>
 
                     <h2>Address name</h2>
-                    <select name="address[name]" id="addressSelect" required>
-                        <option value="" disabled selected>Select Address</option>
-                        <option value="">Test1</option>
-                        <option value="">Test2</option>
-                        <option value="add_new_address">Add a new address</option>
-                    </select>
+                    <input type="text" class="input" value="" name="address[name]" placeholder="Enter a new address">
 
-                    <div id="newAddressInput" style="display: none;">
-                        <h2>New address name</h2>
-                        <input type="text" class="input" value="" name="address[name]" placeholder="Enter a new address" >
-                    </div>
+
 
                     <h2>Address line1</h2>
                     <input type="text" class="input" value="" name="address[address_line1]">
@@ -138,9 +126,12 @@
                     <h2>Postal Code</h2>
                     <input type="text" class="input" id="postal_code" placeholder="Postal Code"
                         name="address[postal_code]" required>
+                    <h2>Phone Number</h2>
+                    <input type="text" class="input" value="">
+
 
                     <button class="btn" onclick="prevPage()">Previous</button>
-                    <button class="btn" onclick="addAddress()">Add</button>
+                    <!-- <button class="btn" onclick="addAddress()">Add</button> -->
 
                 </div>
 
@@ -148,12 +139,12 @@
 
 
                 <div class="setting tabshow">
-                    <h1>Email & Password</h1>
-                    <h2>Email</h2>
+                    <h1>Username & Password</h1>
+                    <h2>Username</h2>
                     <input type="text" class="input" value="">
 
                     <h2>Password</h2>
-                    <input type="password" class="input" value="brightcode">
+                    <input type="password" class="input" value="">
 
                     <h2>Role</h2>
                     <select class="input">
@@ -161,7 +152,7 @@
 
                         <option value="USER">USER</option>
 
-                        <option value="STAFF">STAFF</option>
+                        <option value="PRODUCT MANAGER">PRODUCT MANAGER</option>
 
                     </select>
 
