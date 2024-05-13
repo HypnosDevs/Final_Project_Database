@@ -106,20 +106,20 @@
                     <h1>Address Info</h1>
 
                     <h2>Province</h2>
-                    <select id="province" name="address[province]" required onchange="showAmphoes()" disabled>
+                    <select id="province" name="address[province]" required onchange="showAmphoes()">
                         <option value="" disabled selected>Select Province</option>
                         <!-- JS will display province -->
                     </select>
 
                     <h2>Amphoe</h2>
-                    <select id="amphoe" name="address[amphoe]" required disabled onchange="showDistricts()">
+                    <select id="amphoe" name="address[amphoe]" required onchange="showDistricts()">
                         <option value="" disabled selected>Select Amphoe</option>
                         <!-- JS will display province -->
                     </select>
 
                     <h2>District</h2>
-                    <select id="district" name="address[district]" required disabled onchange="showPostCode()">
-                        <option value="" disabled selected>Select District</option>
+                    <select id="district" name="address[district]" required onchange="showPostCode()">
+                        <option value="" selected>Select District</option>
                         <!-- JS will display district -->
                     </select>
 
