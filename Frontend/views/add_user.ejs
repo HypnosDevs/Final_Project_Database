@@ -162,10 +162,14 @@
             </div>
 
             <script>
+                let currentPage = 1;
+                let totalPages = 2;
                 const tabBtn = document.querySelectorAll('.tab');
                 const tab = document.querySelectorAll('.tabshow');
 
                 function tabs(panelIndex) {
+                    currentPage = 1;
+                    totalPages = 2;
                     tab.forEach(function (node) {
                         node.style.display = "none";
                     });
@@ -173,8 +177,7 @@
                 }
                 tabs(0);
 
-                var currentPage = 1;
-                var totalPages = 2;
+
 
                 function nextPage() {
                     document.getElementById("addressPage" + currentPage).style.display = "none";
@@ -206,7 +209,7 @@
                 src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/typeahead.bundle.js"></script>
             <script type="text/javascript"
                 src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.js"></script>
-            <script src="add_ user.ejs"></script>
+            <script src="/add_user.js"></script>
     </body>
 
     </html>
