@@ -69,7 +69,6 @@ const renderOrderItems = (orderItems) => {
         const productName = product.data.name;
 
         const order = await axios.get(`http://localhost:8080/api/Order/getOrder/${orderItem.order}`);
-        const paymentType = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentTypeFromUserPaymentMethod/${order.data.paymentmethod}`);
 
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -80,7 +79,7 @@ const renderOrderItems = (orderItems) => {
             <td>฿${orderItem.price}</td>
             <td>${orderItem.qty}</td>
             <td>${orderItem.status}</td>
-            <td>${paymentType.data.name}</td>
+            <td>${order.data.payment_type}</td>
         `;
         row.setAttribute('id', orderItem._id);
         tbody.appendChild(row);
