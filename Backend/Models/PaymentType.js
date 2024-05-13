@@ -6,7 +6,6 @@ const paymentTypeSchema = new Schema(
 
         name: {
             type: String,
-            enum: ['Credit Card', 'Debit Card', 'Master Card'],
             required: true
 
         },

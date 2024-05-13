@@ -109,6 +109,14 @@ app.get('/cart', (req, res) => {
 
 })
 
+app.get('/create_payment_type', (req, res) => {
+    res.render('create_payment_type', {
+        title: "User Setting Page",
+        style: "create_edit.css"
+    })
+})
+
+
 app.get('/create_product', (req, res) => {
     res.render('create_product', {
         title: "User Setting Page",
@@ -194,6 +202,13 @@ app.post('/getProduct/:id', async (req, res) => {
     }
 })
 */
+
+app.get('/payment_type_admin', (req, res) => {
+    res.render('payment_type_admin', {
+        title: "Payment Admin",
+        style: "payment_type_admin.css"
+    })
+})
 
 app.get('/product_admin', (req, res) => {
     res.render('product_admin', {

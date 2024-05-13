@@ -27,7 +27,7 @@ exports.getPaymentTypeFromUserPaymentMethod = async (req, res) => {
 exports.getPaymentType = async (req, res) => {
     try {
         const { id } = req.params;
-        const data = await PaymentType.find({ _id: id })
+        const data = await PaymentType.findOne({ _id: id })
         res.send(data);
 
     } catch (err) {
