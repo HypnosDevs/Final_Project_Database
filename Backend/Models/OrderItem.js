@@ -13,6 +13,16 @@ const orderItemSchema = new Schema({
         type: Number,
         required: true
     },
+    discount: {
+        type: Number,
+        required: true
+    },
+    product_image: {
+        type: String
+    },
+    product_name: {
+        type: String
+    },
     product: {
         type: Schema.Types.ObjectId,
         ref: 'Product',

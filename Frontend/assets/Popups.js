@@ -424,20 +424,28 @@ check_outBtn.addEventListener('click', async () => {
   const order = await axios.post(`http://localhost:8080/api/Order/addOrder/${paymentId}/${userId}`, insertData);
   const orderId = order.data._id;
 
-  const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${userId}`);
-  const shoppingCartItemsData = shoppingCartItems.data
-  console.log('shoppingCartItems', shoppingCartItems)
+  // const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${userId}`);
+  // const shoppingCartItemsData = shoppingCartItems.data
+  const shoppingCartItems = document.querySelectorAll("#cart tbody tr")
+  // console.log('shoppingCartItems', shoppingCartItems)
 
-  shoppingCartItemsData.forEach(async item => {
+  shoppingCartItems.forEach(async item => {
+    const shoppingcartId = item.id;
+    const productId = document.querySelector(`#${shoppingcartId} .image`).id.replace('product', '');
+    const productImageSrc = document.querySelector(`#${shoppingcartId} .image img`).src;
+
     const shoppingCartItem = {
       status: 'Pending',
-      qty: item.qty,
-      price: 1
-    }
+      qty: parseInt(document.querySelector(`#${shoppingcartId} .qty`).textContent),
+      price: parseInt(document.querySelector(`#${shoppingcartId} .price`).textContent.replace('฿', '')),
+      discount: parseInt(document.querySelector(`#${shoppingcartId} .discount`).textContent),
+      product_image: productImageSrc.replace('data:image/png;base64, ', ''), // Corrected line
+      product_name: document.querySelector(`#${shoppingcartId} .name`).textContent
+    };
 
-    const productId = item.product._id;
-
-    console.log('productId', productId)
+    console.log('shoppingCartItem', shoppingCartItem);
+    console.log('productId', productId);
+    console.log('productImageSrc', productImageSrc);
 
     const orderItem = await axios.post(`http://localhost:8080/api/OrderItem/addOrderItem/${orderId}/${productId}`, shoppingCartItem);
 
@@ -446,6 +454,7 @@ check_outBtn.addEventListener('click', async () => {
 
     getCart();
   });
+
 
 });
 // submit_paymentBtn.addEventListener('click', () => {

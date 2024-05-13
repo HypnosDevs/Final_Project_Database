@@ -1,4 +1,7 @@
 const emptyPage = (text) => {
+    if (document.querySelector('.no-product')) {
+        return;
+    }
     // Remove the #cart-add section
     const cartAddSection = document.getElementById('cart-add');
     if (cartAddSection && cartAddSection.parentNode) cartAddSection.parentNode.removeChild(cartAddSection);
@@ -101,7 +104,7 @@ const renderCartItems = async (items) => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deleteItem('${item._id}')"></i></a></td>
-            <td class="image"><img src="data:image/png;base64, ${item.product.image}"></td>
+<td class="image" id="product${item.product._id}"><img src="data:image/png;base64, ${item.product.image}"></td>            
             <td class="name">${item.product.name}</td>
             <td class="price">฿${item.product.price}</td>
             <td class="qty">${item.qty}</td>
