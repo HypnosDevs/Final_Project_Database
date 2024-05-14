@@ -3,6 +3,7 @@ const Address = require('../Models/Address');
 const Order = require('../Models/Order');
 const PaymentMethod = require('../Models/PaymentMethod');
 const User = require('../Models/User');
+const bcrypt = require('bcrypt');
 
 exports.getAllUsers = async (req, res) => {
     try {
@@ -76,6 +77,9 @@ exports.editUser = async (req, res) => {
         if (!id) {
             return res.status(400).send({ message: 'ID parameter is missing' });
         }
+
+        const hash = await bcrypt.hash(req.body.password, 10);
+        req.body.password = hash;
 
         // Updating the user data
         const updatedUser = await User.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
