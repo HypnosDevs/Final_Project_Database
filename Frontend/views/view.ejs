@@ -1,0 +1,100 @@
+<%- include('../partials/head') %>
+
+    <section id="header">
+        <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
+        <div>
+            <ul id="navbar">
+
+                <form>
+                    <div class="search">
+                        <span class="search-icon material-symbols-outlined">search</span>
+                        <input class="search-input" type="search" placeholder="Search">
+                    </div>
+                </form>
+
+                <li><a href="/">Home</a></li>
+                <li><a class="active" href="/admin_panel">Dashboard</a></li>
+                <li><a href="/product_admin">Products</a></li>
+                <li><a href="/promotion_admin">Promotion</a></li>
+                <li><a href="/payment_type_admin">Payment</a></li>
+
+                <ul>
+        </div>
+    </section>
+
+    <section id="page-header">
+
+        <!-- Need to edit -->
+        <h2># User : Admin</h2>
+
+    </section>
+
+    <section id="interface">
+
+        <div class="values">
+            <div class="val-box" id="total-spending">
+                <i class="fa-solid fa-baht-sign"></i>
+                <div>
+                    <h3 id="totalSpending"></h3>
+                    <span>Total Spending</span>
+                </div>
+            </div>
+            <div class="val-box" id="orders_page">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <div>
+                    <h3 id="orderItems-length"></h3>
+                    <span>Total Orders</span>
+                </div>
+            </div>
+
+            <div class="val-box" id="category_page">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                <div>
+                    <h3 id="category"></h3>
+                    <span>Best category</span>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <section id="board" class="">
+        <table id="user-table" width="100%">
+            <thead></thead>
+            <tbody>
+                <tr id="loader">
+                    <td colspan="8">
+                        <div class="loader"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <script>
+        async function allowed(roles) {
+          let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+              withCredentials: true
+          });
+          if (!curUser.data) {
+            window.location.href = "/signIn";
+          }
+          else {
+            curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
+            const role = curUser.data.role;
+            console.log('role:', role)
+            if (!roles.includes(role)) {
+              window.location.href = "/";
+            }
+          }
+        }
+        let roles = "<%= roles %>";
+        roles = roles.split(',');
+        allowed(roles);
+      </script>
+
+    <script src="view.js"></script>
+
+
+    <%- include('../partials/footer') %>

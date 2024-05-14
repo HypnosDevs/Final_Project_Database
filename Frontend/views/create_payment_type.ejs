@@ -1,0 +1,69 @@
+<%- include('../partials/head') %>
+
+    <body>
+        <div class="container">
+            <div class="leftbox">
+                <nav>
+                    <a onclick="tabs(0)" class="tab">
+                        <i class="fa-solid fa-ticket"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <div class="rightbox">
+                <form id="form-create-payment_type">
+                    <div class="profile tabshow">
+                        <h1>Create Payment Type</h1>
+
+                        <h2>Name</h2>
+                        <input type="text" class="input" placeholder="Name" name="name">
+
+                        <button type="button" class="btn" id="submitButton">Create</button>
+                        <button type="button" class="btn" id="cancelButton"
+                            onclick="window.location.href='/payment_type_admin';">Cancel</button>
+                    </div>
+                </form>
+            </div>
+            <script src="CreatePaymentType.js"></script>
+            <script>
+                async function allowed(roles) {
+                  let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+                      withCredentials: true
+                  });
+                  if (!curUser.data) {
+                    window.location.href = "/signIn";
+                  }
+                  else {
+                    curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
+                    const role = curUser.data.role;
+                    console.log('role:', role)
+                    if (!roles.includes(role)) {
+                      window.location.href = "/";
+                    }else{
+                        createPayment();
+                    }
+                  }
+                }
+                let roles = "<%= roles %>";
+                roles = roles.split(',');
+                allowed(roles);
+              </script>
+
+            
+            <script>
+                const tabBtn = document.querySelectorAll('.tab');
+                const tab = document.querySelectorAll('.tabshow');
+
+                function tabs(panelIndex) {
+                    tab.forEach(function (node) {
+                        node.style.display = "none";
+                    });
+                    tab[panelIndex].style.display = "block";
+                }
+                tabs(0);
+            </script>
+
+
+    </body>
+
+    </html>

@@ -1,0 +1,88 @@
+<%- include('../partials/head') %>
+  <%- include('../partials/header') %>
+
+    <section id="page-header">
+
+      <h2># Collection</h2>
+      <p>Save more with coupons & up to 70% off! </p>
+
+    </section>
+
+    <section id="feature" class="section-p1">
+      <div id="feature" class="fe-box">
+        <img src="/img/features/f1.jpg" alt="">
+        <h6>Mystery Box</h6>
+      </div>
+      <div id="feature" class="fe-box">
+        <img src="/img/features/f2.jpg" alt="">
+        <h6>Figure</h6>
+      </div>
+      <div id="feature" class="fe-box">
+        <img src="/img/features/f3.jpg" alt="">
+        <h6>Toy</h6>
+      </div>
+      <div id="feature" class="fe-box">
+        <img src="/img/features/f4.png" alt="">
+        <h6>Promotions</h6>
+      </div>
+      <div id="feature" class="fe-box">
+        <img src="/img/features/f5.jpg" alt="">
+        <h6>Order tracking</h6>
+      </div>
+      <!-- <div id="feature" class="fe-box">
+        <img src="/img/features/f6.jpg" alt="">
+        <h6>Review product</h6>
+      </div> -->
+    </section>
+
+    <section id="product1" class="section-p1">
+      <h2>All Products</h2>
+
+      <div class="pro-container">
+        <% let x=0 %>
+          <% for(let product of products) { %>
+
+            <div class="pro" onclick="redirectToProduct('<%= product._id %>')">
+              <img src="data:image/png;base64, <%= product.image %>" alt="">
+              <div class="content">
+                <div class="des">
+                  <span>
+                    <%= product.name %>
+                  </span>
+                  <pre id="spanDesc"><%= product.description.replace(/^\s+/gm, '') %></pre>
+                  <div class="star">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                  </div>
+                </div>
+                <div class="price-cart">
+                  <h4>฿<%= product.price %>
+                  </h4>
+                  <a href="#">
+                    <div class="cart">
+                      <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <% } %>
+      </div>
+    </section>
+
+    <!-- <section id="pagination" class="section-p1">
+      <a href="#">1</a>
+      <a href="#">2</a>
+      <a href="#"><i class="fa-solid fa-arrow-right"></i></a>
+    </section> -->
+
+    <script>
+      function redirectToProduct(productId) {
+        window.location.href = `/getProduct/${productId}`;
+      }
+    </script>
+
+    <%- include('../partials/footer') %>

@@ -1,0 +1,418 @@
+<%- include('../partials/head') %>
+
+    <body>
+        <div class="container">
+            <div class="leftbox">
+                <nav>
+                    <a onclick="tabs(0)" class="tab">
+                        <i class='bx bxs-user'></i>
+                    </a>
+
+                    <a onclick="tabs(1)" class="tab">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </a>
+
+                    <a onclick="tabs(2)" class="tab">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </a>
+
+                    <a onclick="tabs(4)" class="tab">
+                        <i class="fa-solid fa-gear"></i>
+                    </a>
+                </nav>
+            </div>
+            <div class="rightbox">
+                <form id="form-update-profile">
+                    <div class="profile tabshow">
+                        <h1>Personal Info</h1>
+                        <h2>Email</h2>
+                        <input type="text" class="input" placeholder="Email" name="email" value="">
+
+                        <h2>Firstname</h2>
+                        <input type="text" class="input" placeholder="Firstname" name="firstname" value="">
+
+                        <h2>Lastname</h2>
+                        <input type="text" class="input" placeholder="Lastname" name="lastname" value="">
+
+                        <h2>Gender</h2>
+                        <select class="input" name="gender">
+                            <option value="" disabled selected>Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Others</option>
+                        </select>
+
+                        <button type="button" class="btn" onclick="updateProfile()">Update</button>
+
+                    </div>
+                </form>
+
+                <form id="form-update-payment" onsubmit="return false;">
+                    <div class="payment tabshow">
+                        <h1>Payment Info</h1>
+                        <h2>Payment Method</h2>
+                        <select name="payment_method" id="paymentSelect" required>
+                            <option value="" disabled selected>Select Payment Method</option>
+                        </select>
+
+                        <div id="newPaymentInput" style="display: none;">
+                            <h2>Payment Type</h2>
+                            <select name="payment_type" id="paymentTypeSelect">
+                                <option value="" disabled selected>Select Payment Type</option>
+                            </select>
+                        </div>
+
+                        <h2>Cardholder Name</h2>
+                        <input id="addAccountName" type="text" class="input" placeholder="Cardholder Name" name="account_name" value="">
+
+                        <h2>Card Number</h2>
+                        <input id="addAccountNumber" type="text" class="input" placeholder="Card Number" name="account_number" value="">
+
+                        <h2>Expiration Date</h2>
+                        <input id="addExpiryData" type="text" class="input" placeholder="Expiration Date" name="expiry_date" value="">
+
+                        <button class="btn" onclick="updatePayment()">Update</button>
+
+                    </div>
+                </form>
+
+                <form id="form-update-address">
+                    <div class="Address tabshow" id="addressPage1">
+                        <h1>Address Info</h1>
+                        <h2>Address</h2>
+                        <select name="address" id="addressSelect" required>
+                            <option value="" disabled selected>Select Address</option>
+                        </select>
+
+                        <h2>Address Name</h2>
+                        <input id="addName" type="text" class="input" value="" placeholder="Address Name" name="name" value="">
+
+                        <h2>Address Line1</h2>
+                        <input id="addAddressLine1" type="text" class="input" value="" placeholder="Address Line1" name="address_line1" value="">
+
+                        <h2>Address Line2</h2>
+                        <input type="text" class="input" value="" placeholder="Address Line2" name="address_line2" value="">
+
+                        <h2>Country</h2>
+                        <select id="country" name="country" onchange="showProvinces()">
+                            <option value="" disabled selected>Select Country</option>
+                            <option value="Thailand">Thailand</option>
+                        </select>
+
+                        <button type="button" class="btn" onclick="nextPage()">Next</button>
+                    </div>
+
+                    <div class="Address tabshow" id="addressPage2" style="display: none;">
+                        <h1>Address Info</h1>
+
+                        <h2>Province</h2>
+                        <select id="province" name="province" onchange="showAmphoes()" disabled>
+                            <option value="" disabled selected>Select Province</option>
+                            <!-- JS will display province -->
+                        </select>
+
+                        <h2>Amphoe</h2>
+                        <select id="amphoe" name="amphoe" onchange="showDistricts()" disabled>
+                            <option value="" disabled selected>Select Amphoe</option>
+                            <!-- JS will display province -->
+                        </select>
+
+                        <h2>District</h2>
+                        <select id="district" name="district" onchange="showPostCode()" disabled>
+                            <option value="" disabled selected>Select District</option>
+                            <!-- JS will display district -->
+                        </select>
+
+                        <h2>Postal Code</h2>
+                        <input type="text" class="input" id="postal_code" placeholder="Postal Code" name="postal_code" value="" disabled>
+
+                        <h2>Phone Number</h2>
+                        <input type="text" class="input" placeholder="Phone Number" name="tel_no" value="">
+
+                        <button type="button" class="btn" onclick="prevPage()">Previous</button>
+                        <button type="button" class="btn" onclick="updateAddress()">Update</button>
+
+                    </div>
+                </form>
+
+
+                <form id="form-update-setting">
+                    <div class="setting tabshow">
+                        <h1>Username & Password</h1>
+                        <h2>Username</h2>
+                        <input type="text" class="input" placeholder="Username" name="username" value="">
+
+                        <h2>Password</h2>
+                        <input type="password" class="input" placeholder="Password" name="password" value="">
+
+                        <h2>Role</h2>
+                        <select class="input" name="role">
+                            <option value="" disabled selected>Select Role</option>
+                            <option value="USER">USER</option>
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="PRODUCT MANAGER">PRODUCT MANAGER</option>
+                        </select>
+
+                        <button type="button" class="btn" onclick="updateSetting()">Update</button>
+                    </div>
+                </form>
+            </div>
+
+            <script>
+                async function allowed(roles) {
+                  let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+                      withCredentials: true
+                  });
+                  if (!curUser.data) {
+                    window.location.href = "/signIn";
+                  }
+                  else {
+                    curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
+                    const role = curUser.data.role;
+                    console.log('role:', role)
+                    if (!roles.includes(role)) {
+                      window.location.href = "/";
+                    }
+                  }
+                }
+                let roles = "<%= roles %>";
+                roles = roles.split(',');
+                allowed(roles);
+              </script>
+
+            <script>
+                const tabBtn = document.querySelectorAll('.tab');
+                const tab = document.querySelectorAll('.tabshow');
+
+                function tabs(panelIndex) {
+                    tab.forEach(function (node) {
+                        node.style.display = "none";
+                    });
+                    tab[panelIndex].style.display = "block";
+                }
+                tabs(0);
+
+                var currentPage = 1;
+                var totalPages = 2;
+
+                function nextPage() {
+                    document.getElementById("addressPage" + currentPage).style.display = "none";
+                    currentPage++;
+                    if (currentPage > totalPages) {
+                        currentPage = totalPages;
+                    }
+                    document.getElementById("addressPage" + currentPage).style.display = "block";
+                }
+
+                function prevPage() {
+                    document.getElementById("addressPage" + currentPage).style.display = "none";
+                    currentPage--;
+                    if (currentPage < 1) {
+                        currentPage = 1;
+                    }
+                    document.getElementById("addressPage" + currentPage).style.display = "block";
+                }
+
+                const userId = sessionStorage.getItem('userId');
+
+                async function loadPaymentMethod() {
+                    const paymentSelect = document.getElementById("paymentSelect");
+
+                    let paymentMethods = await axios.get(`http://localhost:8080/api/PaymentMethod/getAllPaymentMethodFromUser/${userId}`);
+                    paymentMethods = paymentMethods.data.paymentmethod;
+
+                    for (const paymentMethod of paymentMethods) {
+                        let paymentType = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentTypeFromUserPaymentMethod/${paymentMethod._id}`);
+                        paymentType = paymentType.data.name;
+
+                        const option = document.createElement('option');
+                        option.innerHTML = `${paymentType}, ${paymentMethod.account_number}, ${paymentMethod.account_name}`
+                        option.setAttribute('value', `${paymentMethod._id}`);
+                        paymentSelect.appendChild(option);
+                    }
+
+                    const option = document.createElement('option');
+                    option.innerHTML = "Add a new payment";
+                    option.setAttribute('value', "add_new_payment");
+                    paymentSelect.appendChild(option);
+                }
+                loadPaymentMethod();
+
+                async function loadPaymentType() {
+                    const paymentTypeSelect = document.getElementById("paymentTypeSelect");
+
+                    let paymentTypes = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentType`);
+                    paymentTypes = paymentTypes.data;
+                    
+                    for (const paymentType of paymentTypes) {
+                        const option = document.createElement('option');
+                        option.innerHTML = `${paymentType.name}`
+                        option.setAttribute('value', `${paymentType.name}`);
+                        paymentTypeSelect.appendChild(option);
+                    }
+                }
+                loadPaymentType();
+
+                async function loadAddress() {
+                    const addressSelect = document.getElementById("addressSelect");
+
+                    let addresses = await axios.get(`http://localhost:8080/api/Address/getAllAddressFromUser/${userId}`);
+                    addresses = addresses.data.address;
+
+                    for (const address of addresses) {
+                        const option = document.createElement('option');
+                        option.innerHTML = `${address.name} ${address.amphoe} ${address.province}`
+                        option.setAttribute('value', `${address._id}`);
+                        addressSelect.appendChild(option);
+                    }
+
+                    const option = document.createElement('option');
+                    option.innerHTML = "Add a new address";
+                    option.setAttribute('value', "add_new_address");
+                    addressSelect.appendChild(option);
+                }
+                loadAddress();
+
+                async function updateProfile() {
+                    const form = document.getElementById("form-update-profile");
+                    let formData = new FormData(form);
+                    formData = Array.from(formData);
+
+                    let data = {};
+
+                    const email = formData.find(e => e[0] === 'email');
+                    if (email && email[1] != '') data.email = email[1];
+
+                    const firstname = formData.find(e => e[0] === 'firstname');
+                    if (firstname && firstname[1] != '') data.firstname = firstname[1];
+
+                    const lastname = formData.find(e => e[0] === 'lastname');
+                    if (lastname && lastname[1] != '') data.lastname = lastname[1];
+
+                    const gender = formData.find(e => e[0] === 'gender');
+                    if (gender && gender[1] != '') data.gender = gender[1];
+
+                    await axios.patch(`http://localhost:8080/api/User/editUser/${userId}`, data);
+                    window.location.href = "/admin_panel";
+                }
+
+                async function updatePayment() {
+                    const form = document.getElementById("form-update-payment");
+                    let formData = new FormData(form);
+                    formData = Array.from(formData);
+
+                    let data = {};
+                  
+                    const payment_type = formData.find(e => e[0] === 'payment_type');
+                    if (payment_type && payment_type[1] != '') data.type = payment_type[1];
+
+                    const account_name = formData.find(e => e[0] === 'account_name');
+                    if (account_name && account_name[1] != '') data.account_name = account_name[1];
+
+                    const account_number = formData.find(e => e[0] === 'account_number');
+                    if (account_number && account_number[1] != '') data.account_number = account_number[1];
+
+                    const expiry_date = formData.find(e => e[0] === 'expiry_date');
+                    if (expiry_date && expiry_date[1] != '') data.expiry_date = expiry_date[1];
+
+                    const payment_method = formData.find(e => e[0] === 'payment_method');
+                    if (payment_method && payment_method[1] === 'add_new_payment') {
+                        if (payment_type && account_name[1] != '' && account_number[1] != '' && expiry_date[1] != '') {
+                            await axios.post(`http://localhost:8080/api/PaymentMethod/addPaymentMethod/${userId}`, data);
+                            window.location.href = "/admin_panel";
+                        }
+                    } else if (payment_method) {
+                        await axios.patch(`http://localhost:8080/api/PaymentMethod/${payment_method[1]}/updatePaymentMethod`, data);
+                        window.location.href = "/admin_panel";
+                    }
+                }
+
+                async function updateAddress() {
+                    const form = document.getElementById("form-update-address");
+                    let formData = new FormData(form);
+                    formData = Array.from(formData);
+
+                    let data = {};
+                  
+                    const name = formData.find(e => e[0] === 'name');
+                    if (name && name[1] != '') data.name = name[1];
+
+                    const address_line1 = formData.find(e => e[0] === 'address_line1');
+                    if (address_line1 && address_line1[1] != '') data.address_line1 = address_line1[1];
+
+                    const address_line2 = formData.find(e => e[0] === 'address_line2');
+                    if (address_line2 && address_line2[1] != '') data.address_line2 = address_line2[1];
+
+                    const country = formData.find(e => e[0] === 'country');
+                    if (country && country[1] != '') data.country = country[1];
+
+                    const province = formData.find(e => e[0] === 'province');
+                    if (province && province[1] != '') data.province = province[1];
+
+                    const amphoe = formData.find(e => e[0] === 'amphoe');
+                    if (amphoe && amphoe[1] != '') data.amphoe = amphoe[1];
+
+                    const district = formData.find(e => e[0] === 'district');
+                    if (district && district[1] != '') data.district = district[1];
+
+                    const postal_code = formData.find(e => e[0] === 'postal_code');
+                    if (postal_code && postal_code[1] != '') data.postal_code = postal_code[1];
+
+                    const tel_no = formData.find(e => e[0] === 'tel_no');
+                    if (tel_no && tel_no[1] != '') data.tel_no = tel_no[1];
+
+                    const address = formData.find(e => e[0] === 'address');
+                    if (address && address[1] === 'add_new_address') {
+                        if (name[1] != '' && address_line1[1] != '' && country && province && amphoe && district && postal_code && tel_no[1] != '') {
+                            await axios.post(`http://localhost:8080/api/Address/addAddress/${userId}`, data);
+                            window.location.href = "/admin_panel";
+                        } 
+                        else if (name[1] === '') alert('Please type address name before submitting');
+                        else if (address_line1[1] === '') alert('Please type address line 1 before submitting');
+                        else if (!country) alert('Please select a country before submitting');
+                        else if (!province) alert('Please select a province before submitting');
+                        else if (!amphoe) alert('Please select an amphoe before submitting');
+                        else if (!district) alert('Please select a district before submitting');
+                        else if (tel_no[1] === '') {
+                            alert('Please type phone number before submitting');
+                        }
+                    } else if (address) {
+                        await axios.patch(`http://localhost:8080/api/Address/updateAddress/${address[1]}`, data);
+                        window.location.href = "/admin_panel";
+                    } else {
+                        alert('Please select an address before submitting');
+                    }
+                }
+
+                async function updateSetting() {
+                    const form = document.getElementById("form-update-setting");
+                    let formData = new FormData(form);
+                    formData = Array.from(formData);
+
+                    let data = {};
+
+                    const username = formData.find(e => e[0] === 'username');
+                    if (username && username[1] != '') data.username = username[1];
+
+                    const password = formData.find(e => e[0] === 'password');
+                    if (password && password[1] != '') data.password = password[1];
+
+                    const role = formData.find(e => e[0] === 'role');
+                    if (role && role[1] != '') data.role = role[1];
+
+                    await axios.patch(`http://localhost:8080/api/User/editUser/${userId}`, data);
+                    window.location.href = "/admin_panel";
+                }
+            </script>
+
+            <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+            <script type="text/javascript"
+                src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/JQL.min.js"></script>
+            <script type="text/javascript"
+                src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/typeahead.bundle.js"></script>
+            <script type="text/javascript"
+                src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.js"></script>
+            <script src="edit.js"></script>
+    </body>
+
+    </html>

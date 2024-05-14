@@ -1,0 +1,468 @@
+@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Spartan', sans-serif;
+}
+
+h1 {
+  font-size: 50px;
+  line-height: 64px;
+  /* ลดขนาดเล็กลง */
+  color: #222;
+}
+
+h2 {
+  font-size: 46px;
+  line-height: 64px;
+  /* ปรับเป็นตัวหนา */
+  color: #222;
+}
+
+h4 {
+  font-size: 20px;
+  color: #222;
+}
+
+h6 {
+  font-weight: 700;
+  font-size: 12px;
+  color: #222;
+
+}
+
+p {
+  font-size: 16px;
+  color: #465b52;
+  margin: 15px 0 20px 0;
+  /* ปรับเว้นระยะห่าง */
+}
+
+q {
+  quotes: none;
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+  margin: 15px 0 20px 0;
+  /* ปรับเว้นระยะห่าง */
+
+}
+
+.section-p1 {
+
+  padding: 40px 80px;
+}
+
+.section-m1 {
+  margin: 40px 0;
+}
+
+body {
+  width: 100%;
+}
+
+
+.logo {
+  width: 150px;
+  height: auto;
+}
+
+/* header start */
+#header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 80px;
+  background: #E3E6F3;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+  z-index: 999;
+  /* ให้เรียงหน้า */
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+
+/* Search Bar */
+
+.search {
+  --padding: 14px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  padding: var(--padding);
+  border-radius: 28px;
+  background: #f6f6f6;
+}
+
+.search-input {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 16px;
+  color: #1a1a1a;
+  margin-left: var(--padding);
+}
+
+.search-input::placeholder {
+  position: relative;
+  top: 2px;
+}
+
+#navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ปรับระยะห่างของ navbar */
+#navbar li {
+  list-style: none;
+  padding: 0 20px;
+  position: relative;
+
+}
+
+/* ปรับสีตัวอักษรของ navbar */
+#navbar li a {
+  text-decoration: none;
+  font-size: 16 px;
+  font-weight: 600;
+  color: #1a1a1a;
+  transition: 0.3s ease;
+}
+
+/*เม้าไปชี้เเล้วเปลี่ยนสี*/
+#navbar li a:hover,
+#navbar li a.active {
+  color: #088178;
+}
+
+#navbar li a.active::after,
+#navbar li a:hover::after {
+  content: "";
+  width: 30%;
+  border-bottom: 2px solid;
+  background: #088178;
+  position: absolute;
+  bottom: -4px;
+  left: 20px;
+}
+
+/*footer ส่วนท้ายเว็บ*/
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+footer .col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+footer .logo {
+  margin-bottom: 30px;
+}
+
+footer h4 {
+  font-size: 14px;
+  padding-bottom: 20px;
+}
+
+footer p {
+  font-size: 14px;
+  margin-bottom: 0 0 8px 0;
+}
+
+footer a {
+  font-size: 13px;
+  text-decoration: none;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+footer .col img {
+  width: 200px;
+  /* ปรับขนาดความกว้างของโลโก้ */
+  height: auto;
+  /* รักษาสัดส่วนของรูปภาพ */
+}
+
+/* banner_promotion */
+#page-header {
+  background-image: url("/img/banner_shop.png");
+  width: 100%;
+  height: 40vh;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  padding: 14px;
+}
+
+#page-header h2,
+#page-header p {
+  color: #fff;
+}
+
+#pagination a {
+  text-decoration: none;
+  padding: 15px 20px;
+  background-color: #088178;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 600;
+}
+
+#pagination a i {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+#pagination {
+  text-align: center;
+}
+
+#pagination a:hover {
+  background-color: #088178;
+  color: #fff;
+}
+
+
+#sm-banner .banner-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+  background-image: url("/img/promotion/pro1.png");
+  min-width: 600px;
+  height: 50vh;
+  background-size: cover;
+  background-position: center;
+  padding: 30px;
+}
+
+
+#sm-banner .banner-box2 {
+  background-image: url("/img/promotion/pro2.png");
+
+}
+
+#sm-banner {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#sm-banner h4 {
+  color: #fff;
+  font-size: 28px;
+  font-weight: 300;
+
+}
+
+#sm-banner h2 {
+  color: #fff;
+  font-size: 28px;
+  font-weight: 800;
+
+}
+
+#sm-banner span {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+
+button.green {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 18px;
+  color: #fff;
+  background-color: #088178;
+  cursor: pointer;
+  border: 1px solid #fff;
+  outline: none;
+  transition: 0.2s;
+  border-radius: 20px;
+}
+
+button.green:hover {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 18px;
+  color: #fff;
+  background-color: #4da19d;
+  cursor: pointer;
+  border: 1px solid #fff;
+  outline: none;
+  transition: 0.2s;
+  border-radius: 20px;
+}
+
+button.pink {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 18px;
+  color: #fff;
+  background-color: #c782d3;
+  cursor: pointer;
+  border: 1px solid #fff;
+  outline: none;
+  transition: 0.2s;
+  border-radius: 20px;
+}
+
+button.pink:hover {
+
+  background-color: #daa0e4;
+
+}
+
+
+
+button.blue {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 18px;
+  color: #fff;
+  background-color: #2b9bb4;
+  cursor: pointer;
+  border: 1px solid #fff;
+  outline: none;
+  transition: 0.2s;
+  border-radius: 20px;
+}
+
+button.blue:hover {
+
+  background-color: #4ec2dc;
+
+}
+
+
+
+button.brown {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 18px;
+  color: #fff;
+  background-color: #875229;
+  cursor: pointer;
+  border: 1px solid #fff;
+  outline: none;
+  transition: 0.2s;
+  border-radius: 20px;
+}
+
+button.brown:hover {
+
+  background-color: #b07345;
+
+}
+
+button.yellow {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 18px;
+  color: #fff;
+  background-color: #e7c415;
+  cursor: pointer;
+  border: 1px solid #fff;
+  outline: none;
+  transition: 0.2s;
+  border-radius: 20px;
+}
+
+button.yellow:hover {
+
+  background-color: #edd769;
+
+}
+
+
+
+.banner-box h1,
+.banner-box h2,
+.banner-box h3,
+.banner-box h4,
+.banner-box h5,
+.banner-box h6,
+.banner-box button {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.banner-box h1 {
+  color: white
+}
+
+.banner-box button {
+  margin-top: 15px;
+}
+
+.banner-box span {
+  margin-bottom: 20px;
+  /* เพิ่มระยะห่างระหว่าง Mystery and figure กับปุ่ม */
+}
+
+
+/* banner3 คือ รูป promotion */
+#banner3 .banner-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+  background-image: url("/img/promotion/pro3.png");
+  min-width: 30%;
+  height: 30vh;
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, .5);
+}
+
+#banner3 h2 {
+  color: #fff;
+  font-weight: 900;
+  font-size: 22px;
+}
+
+
+#banner3 h3 {
+  color: #ec544e;
+  font-weight: 900;
+  font-size: 15px;
+}
+
+#banner3 {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  padding: 0 80px;
+}
+
+
+#banner3 .banner-box2 {
+  background-image: url("/img/promotion/pro4.jpg");
+}
+
+#banner3 .banner-box3 {
+  background-image: url("/img/promotion/pro5.jpg");
+}
+
+.no-product {
+  text-align: center;
+  color: #b7b8bd;
+  font-size: x-large;
+  font-weight: bold;
+  padding: 150px 0;
+}

@@ -1,0 +1,148 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito:400,900|Montserrat|Roboto");
+
+body{
+    background: linear-gradient(to right, #A8D1E7,#FFBBDA);
+    overflow-x:hidden;
+
+}
+
+.container{
+    width: 540px;
+    background: #fff;
+    margin:0 auto;
+    height:550px;;
+    position: relative;
+    margin-top:10%;
+    box-shadow: 2px 5px 20px 
+    #F8E8D3
+
+}
+
+.leftbox{
+    float:left;
+    top:-5%;
+    left:5%;
+    position:absolute;
+    width:15%;
+    height:110%;
+    background: #B3DBD8;
+    box-shadow: 3px 3px 10px
+    #F8E8D3;
+}
+
+nav a{
+    list-style: none;
+    padding:35px;
+    color: #fff;
+    font-size:1.1em;
+    display:block;
+    transition: all .3s ease-in-out;
+}
+nav a:hover{
+    color:#695A5B;
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+nav a:first-child{
+    margin-top:7px;
+
+}
+
+nav a.active{
+    color: #695A5B;
+}
+
+
+.rightbox{
+    width: 60%;
+    margin-left:27%;
+    padding-top: 1px;
+}
+
+.tapshow{
+    transition: all .5s ease-in;
+    width: 80%;
+    position: absolute;
+}
+
+h1{
+    font-family: "Montserrat",sans-serif;
+    color: #7ed386;
+    font-size: 1.5rem;
+    margin-top:40px;
+    margin-bottom: 35px;
+}
+
+h2{
+    color: #777;
+    font-family: "Roboto",sans-serif;
+    text-transform: uppercase;
+    font-size:14px;
+    letter-spacing: 1px;
+    margin-left: 2px;
+    margin-top: 10px;
+}
+
+.input, p{
+    border: 0;
+    border-bottom: 2px solid #3fb6a8;
+    width: 80%;
+    font-family: 'montserrat','sans-serif';
+    font-size:.9em;
+    padding: 7px 0;
+    color: #796e6e;
+    outline:none;
+
+}
+
+span{
+    font-size:.7em;
+    color:#777;
+}
+
+.btn{
+    font-family: "roboto",sans-serif;
+    text-transform: uppercase;
+    font-size:15px;
+    border:0;
+    color:#fff;
+    padding: 7px 15px;
+    box-shadow: 0px 2px 4px 0px #777;
+    cursor: pointer;
+    margin-top: 15px;
+    background-color: #3fb6a8;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover{
+    background-color: #7ed386;
+}
+#submitButton {
+    background:#7ed386;
+}
+
+#updateButton {
+    background:#7ed386;
+}
+
+#cancelButton {
+    background:#f44336;
+}
+
+.tabshow{
+    display:none;
+}
+
+select {
+    border: 0;
+    border-bottom: 2px solid #3fb6a8;
+    width: 80%;
+    font-family: 'montserrat','sans-serif';
+    font-size:.9em;
+    padding: 7px 0;
+    color: #796e6e;
+    outline:none;
+}
+

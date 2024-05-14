@@ -1,0 +1,68 @@
+<footer class="section-p1">
+    <div class="col">
+        <img src="/img/logo_footer.png" alt="">
+        <h4>Contact</h4>
+        <p><strong>Address:</strong> 126 Pracha Uthit Rd., Bang Mod,Bangkok 10140, Thailand.</p>
+        <p><strong>Phone:</strong> +01 1233 660</p>
+        <p><strong>Hours:</strong> 8:30 - 10:30,Mon-Sat</p>
+    </div>
+
+    <div class="col">
+        <h4>About</h4>
+        <a href="/about">About </a>
+        <a href="/contact">Contact </a>
+    </div>
+
+    <div class="col">
+        <h4>My Account</h4>
+        <a href="/signIn">Sign In </a>
+        <a href="/cart">View Cart </a>
+
+        <!-- Need to edit -->
+        <a href="/trackOrder">Track My Order </a>
+
+        <a id="admin" href="/admin_panel">Admin Panel</a>
+    </div>
+</footer>
+
+<script>
+    const checkAdmin = async (req, res) => {
+        const adminPanel = document.querySelector("#admin");
+        const navSignin = document.querySelector("#nav-signin");
+        const editByUser = document.querySelector("#edit-by-user");
+        const curUserId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+            withCredentials: true
+        });
+
+
+        userId = curUserId.data
+
+        if (!userId) {
+            adminPanel.remove()
+            if (editByUser) {
+                editByUser.remove();
+            }
+            return;
+        } else {
+            if (navSignin) {
+                navSignin.innerHTML = 'History'
+                navSignin.setAttribute('href', '/trackOrder');
+            }
+        }
+        // console.log("user", userId);
+        const user = await axios.get(`http://localhost:8080/api/User/getUser/${userId}`);
+        // console.log("user", user);
+        if (!user) {
+            adminPanel.remove()
+        }
+        else if (user && (user.data.role !== "ADMIN" && user.data.role !== "PRODUCT MANAGER")) {
+            adminPanel.remove()
+        }
+    }
+    checkAdmin();
+
+
+</script>
+</body>
+
+</html>

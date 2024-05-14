@@ -1,0 +1,633 @@
+<%- include('../partials/head') %>
+
+    <body>
+
+
+        <section id="header">
+            <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
+            <div>
+                <ul id="navbar">
+
+                    <form>
+                        <div class="search">
+                            <span class="search-icon material-symbols-outlined">search</span>
+                            <input class="search-input" type="search" placeholder="Search">
+                        </div>
+                    </form>
+
+                    <li><a href="/">Home</a></li>
+                    <li><a class="active" href="/admin_panel">Dashboard</a></li>
+                    <li><a href="/product_admin">Products</a></li>
+                    <li><a href="/promotion_admin">Promotion</a></li>
+                    <li id="payment-type-admin"><a href="/payment_type_admin">Payment</a></li>
+
+                    <ul>
+            </div>
+        </section>
+
+        <section id="page-header">
+
+            <h2># Dashboard</h2>
+
+        </section>
+
+        <section id="interface">
+            <h3 class="i-name" id="total-sales-topic">
+                Total sales
+            </h3>
+            <div id="button_create">
+                <a href="/add_user">
+                    <button>Add User</button>
+                </a>
+            </div>
+            <div class="values">
+                <div class="val-box" id="users_page">
+                    <i class="fa-solid fa-users"></i>
+                    <div>
+                        <h3 id="user-length">
+
+                        </h3>
+                        <span>Users</span>
+                    </div>
+                </div>
+                <div class="val-box" id="orders_page">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <div>
+                        <h3 id="orderItems-length">
+
+                        </h3>
+                        <span>Total Orders</span>
+                    </div>
+                </div>
+
+                <div class="val-box" id="products_page">
+                    <i class="fa-solid fa-box"></i>
+                    <div>
+                        <h3 id="products-length">
+
+                        </h3>
+                        <span>Product Sold</span>
+                    </div>
+                </div>
+                <div class="val-box" id="promotions_page">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                    <div>
+
+                        <span>Best category</span>
+                    </div>
+                </div>
+                <div class="val-box" id="analize-page">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <div>
+                        <span>Best province</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="board" class="">
+            <table id="header-table" width="100%">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr id="loader">
+                        <td colspan="6">
+                            <div class="loader"></div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+
+        <!-- <script src="/loader.js" defer></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            const emptyPage = (text) => {
+                // console.log(document.querySelector('.no-product'))
+                let h1Element = document.querySelector('.no-product');
+                if (h1Element) {
+                    h1Element.textContent = `${text}`;
+                    return;
+                }
+                const trList = document.querySelectorAll("#board tbody tr");
+                trList.forEach(tr => {
+                    tr.remove();
+                });
+
+                // Create an h1 element with the text "No products found" and class "no-product"
+                h1Element = document.createElement('h1');
+                h1Element.textContent = `${text}`;
+                h1Element.classList.add('no-product');
+
+                // Get the reference node after which the h1 will be inserted
+                const boardHeaderSection = document.getElementById('board');
+                const referenceNode = boardHeaderSection.nextElementSibling;
+
+                // Insert the h1 element after the page-header section
+                boardHeaderSection.parentNode.insertBefore(h1Element, referenceNode);
+            }
+
+            const deleteOrderItem = async (order_item_id) => {
+
+                try {
+                    // Delete the item from the server
+                    await axios.delete(`http://localhost:8080/api/OrderItem/deleteOrderItemByOrderItemId/${order_item_id}`);
+
+                    // Remove all td elements inside the corresponding row from the cart table
+                    const rowToRemove = document.querySelector(`#board tr[id="${order_item_id}"]`);
+                    if (rowToRemove) {
+                        const cellsToRemove = rowToRemove.querySelectorAll('td');
+                        cellsToRemove.forEach(cell => {
+                            cell.remove(); // Remove each td element from the row
+                        });
+
+                        rowToRemove.remove(); // Remove the row from the DOM
+                    } else {
+                        console.error('Row not found for item:', order_item_id);
+                    }
+
+
+
+                    const userCount = document.querySelectorAll('#board tbody tr').length;
+                    let userLength = document.querySelector("#orderItems-length");
+                    userLength.innerHTML = userCount;
+                    if (userCount === 0) {
+                        emptyPage("No Orders found");
+                    }
+                } catch (error) {
+                    console.error('Error deleting item:', error);
+                    // Optionally, you can inform the user about the deletion error
+                    // For example:
+                    alert('An error occurred while deleting the user. Please try again later.');
+                }
+            }
+
+            const deleteUser = async (user_id) => {
+                try {
+                    // Delete the item from the server
+                    await axios.delete(`http://localhost:8080/api/User/deleteUser/${user_id}`);
+
+                    // Remove all td elements inside the corresponding row from the cart table
+                    const rowToRemove = document.querySelector(`#board tr[id="${user_id}"]`);
+                    if (rowToRemove) {
+                        const cellsToRemove = rowToRemove.querySelectorAll('td');
+                        cellsToRemove.forEach(cell => {
+                            cell.remove(); // Remove each td element from the row
+                        });
+
+                        rowToRemove.remove(); // Remove the row from the DOM
+                    } else {
+                        console.error('Row not found for item:', user_id);
+                    }
+
+
+
+                    const userCount = document.querySelectorAll('#board tbody tr').length;
+                    let userLength = document.querySelector("#user-length");
+                    userLength.innerHTML = userCount;
+                    if (userCount === 0) {
+                        emptyPage("No Users found");
+                    }
+                } catch (error) {
+                    console.error('Error deleting item:', error);
+                    // Optionally, you can inform the user about the deletion error
+                    // For example:
+                    alert('An error occurred while deleting the user. Please try again later.');
+                }
+            };
+        </script>
+        <script>
+            let productName = [];
+            let orderUserId = [];
+
+            const loadUsers = async (allUsers) => {
+                const headerTable = document.querySelector("#header-table thead");
+                headerTable.innerHTML = '';
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                        <td>Remove</td>
+                        <td>Users</td>
+                        <td>Name</td>
+                        <td>Email</td>
+                        <td>Role</td>
+                        <td>History</td>
+                        <td>Edit</td>
+                        `
+                headerTable.appendChild(row);
+
+
+
+                const tableBody = document.querySelector("#board tbody");
+
+                // Clear existing rows
+                tableBody.innerHTML = '';
+                for (user of allUsers) {
+                    if (user.role === "ADMIN") {
+                        continue;
+                    }
+                    const row = document.createElement("tr");
+                    row.setAttribute("id", `${user._id}`);
+                    row.innerHTML = `
+                        <td><a onClick="deleteUser('${user._id}')"><i class="remove fa-solid fa-circle-xmark"></i></a></td>
+                        <td><img src="/img/user.png"></a></li></td>
+                        <td>${user.username}</td>
+                        <td>${user.email}</td>
+                        <td>${user.role}</td>
+                        <td class="view"><a href="/view" onclick="sessionStorage.setItem('userId', '${user._id}')">View</a></td>
+                        <td class="edit"><a href="/edit_by_admin" onclick="sessionStorage.setItem('userId', '${user._id}')">Edit</a></td>
+                        `
+
+                    tableBody.appendChild(row);
+                }
+
+                const userCount = document.querySelectorAll('#board tbody tr').length;
+                let userLength = document.querySelector("#user-length");
+                userLength.innerHTML = userCount;
+                if (userCount === 0) {
+                    emptyPage("No Users found");
+                }
+                else {
+                    let countNoProduct = document.querySelector('.no-product');
+                    if (countNoProduct) {
+                        countNoProduct.remove();
+                    }
+                }
+
+
+            }
+            const loadOrders = async (allOrders) => {
+                const headerTable = document.querySelector("#header-table thead");
+
+                // Clear existing rows
+                headerTable.innerHTML = '';
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                <td>Remove</td>
+                <td>User</td>
+                        
+                        <td>Order Id</td>
+                        <td>Order Date</td>
+                        <td>Product Name</td>
+                        <td>Price</td>
+                        <td>Quantity</td>
+                        <td>Status</td>
+                        
+                        
+                        `;
+                headerTable.appendChild(row);
+
+                const tableBody = document.querySelector("#board tbody");
+               
+                // Clear existing rows
+                tableBody.innerHTML = '';
+                let k = 0;
+                for (const orderData of allOrders) {
+                    const createdAt = new Date(orderData.createdAt);
+                    //  format the date as "YYYY-MM-DD HH:MM:SS"
+                    const formattedDate = `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-${createdAt.getDate().toString().padStart(2, '0')} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
+
+                    const row = document.createElement("tr");
+                    row.setAttribute("id", `${orderData._id}`);
+                    row.innerHTML = `
+                    <td><a onClick="deleteOrderItem('${orderData._id}')"><i class="remove fa-solid fa-circle-xmark"></i></a></td>
+
+                        <td>${orderUserId[k]}</td>
+                        <td>${orderData._id}</td>
+                        <td>${formattedDate}</td>
+                        <td>${orderData.product_name}</td>
+                        <td>${orderData.price - orderData.discount}</td>
+                        <td>${orderData.qty}</td>
+                        <td>
+                            <select class="selection" id="selectStatus${orderData._id}">
+                                <option value="Pending" ${orderData.status === "Pending" ? "selected" : ""}>Pending</option>
+                                <option value="Shipping" ${orderData.status === "Shipping" ? "selected" : ""}>Shipping</option>
+                                <option value="Delivered" ${orderData.status === "Delivered" ? "selected" : ""}>Delivered</option>
+                            </select>
+                        </td>
+                        
+                    `;
+
+                    tableBody.appendChild(row);
+                    k++;
+
+
+                    // Change background color of select element based on selected value
+                    document.querySelector(`#selectStatus${orderData._id}`).addEventListener("change", async function (event) {
+                        const selectStatus = event.target; // Get the select element that triggered the event
+                        switch (selectStatus.value) {
+                            case "Pending":
+                                selectStatus.style.backgroundColor = "#ffffea";
+                                break;
+                            case "Shipping":
+                                selectStatus.style.backgroundColor = "#fcefff";
+                                break;
+                            case "Delivered":
+                                selectStatus.style.backgroundColor = "#dcffe0";
+                                break;
+                            default:
+                                selectStatus.style.backgroundColor = "eafffa"; // Reset background color if none of the cases match
+                        }
+
+                        const updatedOrder = await axios.put(`http://localhost:8080/api/OrderItem/updateOrderItemStatus/${orderData._id}`, { status: selectStatus.value });
+                        console.log("update laew", updatedOrder);
+                    });
+                    const status = document.querySelector(`#selectStatus${orderData._id}`);
+                    if (orderData.status === "Pending") {
+                        status.style.backgroundColor = "#ffffea";
+                    }
+                    else if (orderData.status === "Shipping") {
+                        status.style.backgroundColor = "#fcefff";
+                    }
+                    else if (orderData.status === "Delivered") {
+                        status.style.backgroundColor = "#dcffe0";
+                    }
+
+
+                }
+            };
+            const loadProducts = async (productSoldData) => {
+                const headerTable = document.querySelector("#header-table thead");
+                let countNoProduct = document.querySelector('.no-product');
+                if (countNoProduct) {
+                    countNoProduct.remove();
+                }
+                headerTable.innerHTML = '';
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                        <td>Id</td>
+                        <td>Name</td>
+                        <td>Quantity</td>
+                        <td>Total Sales</td>
+                        `
+                headerTable.appendChild(row);
+
+                const tableBody = document.querySelector("#board tbody");
+
+                // Clear existing rows
+                tableBody.innerHTML = '';
+
+                for (const product of productSoldData) {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${product.productId}</td>
+                        <td>${product.productName}</td>
+                        <td>${product.totalQty}</td>
+                        <td>${product.totalSales}</td>
+                       
+                    `;
+                    tableBody.appendChild(row);
+                }
+            };
+
+
+            const loadAnalyzes = async (bestProvince) => {
+                const headerTable = document.querySelector("#header-table thead");
+                let countNoProduct = document.querySelector('.no-product');
+                if (countNoProduct) {
+                    countNoProduct.remove();
+                }
+                headerTable.innerHTML = '';
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                        <td>Province</td>
+                        <td>Quantity</td>
+                        <td class="total-sales">Total Sales</td>
+                        `
+                headerTable.appendChild(row);
+
+                const tableBody = document.querySelector("#board tbody");
+
+                // Clear existing rows
+                tableBody.innerHTML = '';
+
+                for (const province of bestProvince) {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${province.province}</td>
+                        <td>${province.totalQty}</td>
+                        <td >${province.totalSales}</td>
+                    `;
+
+                    tableBody.appendChild(row);
+
+                }
+                document.querySelector("#board table td:nth-child(3)").style.width = "150px";
+            };
+
+
+            const loadPromotions = async (bestCategory) => {
+                const headerTable = document.querySelector("#header-table thead");
+                let countNoProduct = document.querySelector('.no-product');
+                if (countNoProduct) {
+                    countNoProduct.remove();
+                }
+                headerTable.innerHTML = '';
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                        <td>Category Name</td>
+                        <td>Quantity</td>
+                        <td class="total-sales">Total Sales</td>
+                        `
+                headerTable.appendChild(row);
+
+                const tableBody = document.querySelector("#board tbody");
+
+                // Clear existing rows
+                tableBody.innerHTML = '';
+
+                for (const category of bestCategory) {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${category.categoryName}</td>
+                        <td>${category.totalQty}</td>
+                        <td >${category.totalSales}</td>
+                    `;
+
+                    tableBody.appendChild(row);
+
+                }
+                document.querySelector("#board table td:nth-child(3)").style.width = "150px";
+            };
+
+
+
+
+
+
+
+
+        </script>
+
+        <script>
+
+            const allowedRole = ["ADMIN", "PRODUCT MANAGER"];
+            const allProducts = document.querySelector("#products_page");
+            const allPromotions = document.querySelector("#promotions_page");
+            const allUsers = document.querySelector("#users_page");
+            const allOrders = document.querySelector("#orders_page");
+
+            const analize_page = document.querySelector("#analize-page");
+            const revenue = document.querySelector("#total-sales-topic");
+
+            const loadData = async () => {
+                try {
+
+                    let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+                        withCredentials: true
+                    });
+                    if (!curUser.data) {
+                        window.location.href = "/"
+                    }
+                    else {
+
+                        curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`)
+                        const role = curUser.data.role;
+                        if (allowedRole.includes(role)) {
+                            let users = await axios.get("http://localhost:8080/api/User/getUsers", {
+                                withCredentials: true
+                            })
+                            if (role === 'PRODUCT MANAGER') {
+                                revenue.remove();
+                                document.getElementById('button_create').remove();
+                                allUsers.remove();
+                                allProducts.remove();
+                                allPromotions.remove();
+                                analize_page.remove();
+                                document.getElementById('payment-type-admin').remove();
+                                
+                            }
+
+                            users = users.data;
+                            let orderItems = await axios.get("http://localhost:8080/api/OrderItem/getAllOrderItem");
+                            orderItems = orderItems.data;
+
+
+                            let orderItemsLength = document.querySelector("#orderItems-length");
+
+
+
+                            let orders = await axios.get(`http://localhost:8080/api/Order/getAllOrders`)
+                            orders = orders.data;
+
+
+                            let orderItemArr = [];
+                            let cur = 0;
+                            for (const orderData of orders) {
+                                let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${orderData._id}`);
+                                orderItems = orderItems.data;
+                                for (const orderItemData of orderItems) {
+                                    orderItemArr.push(orderItemData);
+                                    orderUserId.push(orderData.user)
+                                }
+                            }
+                           
+
+                            let revenueData = await axios.get("http://localhost:8080/api/Analyze/getTotalSpending");
+                            revenueData = revenueData.data[0];
+                            if (!revenueData) {
+                                revenueData = {
+                                    totalSales: 0,
+                                    totalQty: 0
+                                }
+                            }
+                            console.log(revenueData);
+                            if(revenue)revenue.innerHTML = `
+                            Total Sales: ${revenueData.totalSales}<br>
+                            Number of products: ${revenueData.totalQty}
+                        `
+
+                            let productSoldData = await axios.get("http://localhost:8080/api/Analyze/getProductSold");
+                            productSoldData = productSoldData.data;
+
+                            let bestCategory = await axios.get("http://localhost:8080/api/Analyze/bestCategory");
+                            bestCategory = bestCategory.data;
+
+                            let bestProvince = await axios.get("http://localhost:8080/api/Analyze/getBestProvince");
+                            bestProvince = bestProvince.data;
+
+                            let category = ""
+                            orderItemsLength.innerHTML = orderItemArr.length;
+                            const loader = document.querySelector("#loader");
+
+                            loader.classList.add("loader-hidden");
+
+                            loader.addEventListener("transitionend", () => {
+                                document.body.removeChild("loader");
+                            })
+
+                            const rowLoader = document.querySelector("#loader")
+                            rowLoader.remove();
+                            if(role === 'PRODUCT MANAGER'){
+                                await loadOrders(orderItemArr);
+                            }else{
+                                await loadUsers(users);
+                            }
+
+                            if(allUsers)allUsers.addEventListener("click", () => {
+
+                                loadUsers(users);
+
+                            })
+
+                            allOrders.addEventListener("click", async () => {
+
+                                await loadOrders(orderItemArr);
+                                if (orderItemArr.length === 0) {
+                                    emptyPage("No Orders found");
+                                }
+                            })
+
+                            if(allProducts)allProducts.addEventListener("click", () => {
+
+                                if (productSoldData.length === 0) {
+                                    emptyPage("No Products found");
+                                } else {
+                                    loadProducts(productSoldData);
+                                }
+
+                            })
+
+                            if(allPromotions)allPromotions.addEventListener("click", () => {
+
+                                if (bestCategory.length === 0) {
+
+                                    emptyPage("No Products found");
+                                } else {
+                                    loadPromotions(bestCategory);
+                                }
+
+                            })
+
+                            if(analize_page)analize_page.addEventListener("click", () => {
+
+                                if (bestProvince.length === 0) {
+
+                                    emptyPage("No Orders found");
+                                } else {
+                                    loadAnalyzes(bestProvince);
+                                }
+
+
+                            })
+
+                            
+
+                        }
+                        else {
+                            console.log("Permission not allowed");
+                            window.location.href = "/"
+                        }
+                    }
+                } catch (err) {
+                    emptyPage(`${err}`);
+                }
+
+            }
+
+            loadData();
+
+        </script>
+        <%- include('../partials/footer') %>

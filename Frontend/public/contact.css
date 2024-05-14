@@ -1,0 +1,327 @@
+@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Spartan', sans-serif;
+}
+
+h1 {
+  font-size: 50px;
+  line-height: 64px;
+  /* ลดขนาดเล็กลง */
+  color: #222;
+}
+
+h2 {
+  font-size: 46px;
+  line-height: 64px;
+  /* ปรับเป็นตัวหนา */
+  color: #222;
+}
+
+h4 {
+  font-size: 20px;
+  color: #222;
+}
+
+h6 {
+  font-weight: 700;
+  font-size: 12px;
+  color: #222;
+
+}
+
+p {
+  font-size: 16px;
+  color: #465b52;
+  margin: 15px 0 20px 0;
+  /* ปรับเว้นระยะห่าง */
+}
+
+q {
+  quotes: none;
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+  margin: 15px 0 20px 0;
+  /* ปรับเว้นระยะห่าง */
+
+}
+
+.section-p1 {
+
+  padding: 40px 80px;
+}
+
+.section-m1 {
+  margin: 40px 0;
+}
+
+body {
+  width: 100%;
+}
+
+
+.logo {
+  width: 150px;
+  height: auto;
+}
+
+/* header start */
+#header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 80px;
+  background: #E3E6F3;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+  z-index: 999;
+  /* ให้เรียงหน้า */
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+
+/* Search Bar */
+
+.search {
+  --padding: 14px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  padding: var(--padding);
+  border-radius: 28px;
+  background: #f6f6f6;
+}
+
+.search-input {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 16px;
+  color: #1a1a1a;
+  margin-left: var(--padding);
+}
+
+.search-input::placeholder {
+  position: relative;
+  top: 2px;
+}
+
+#navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ปรับระยะห่างของ navbar */
+#navbar li {
+  list-style: none;
+  padding: 0 20px;
+  position: relative;
+
+}
+
+/* ปรับสีตัวอักษรของ navbar */
+#navbar li a {
+  text-decoration: none;
+  font-size: 16 px;
+  font-weight: 600;
+  color: #1a1a1a;
+  transition: 0.3s ease;
+}
+
+/*เม้าไปชี้เเล้วเปลี่ยนสี และขีดเส้นใต้*/
+#navbar li a:hover,
+#navbar li a.active {
+  color: #088178;
+}
+
+#navbar li a.active::after,
+#navbar li a:hover::after {
+  content: "";
+  width: 30%;
+  border-bottom: 2px solid;
+  background: #088178;
+  position: absolute;
+  bottom: -4px;
+  left: 20px;
+}
+
+
+
+
+#page-header{
+  background-image: url("/img/banner_shop.png");
+  width: 100%;
+  height: 40vh;
+  background-size: cover;
+  display : flex;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  padding: 14px;
+}
+
+
+#page-header h2,
+#page-header p{
+  color: #fff;
+}
+
+#about-head{
+display: flex; 
+align-items:center ;
+}
+#about-head div {
+padding-left: 40px;
+}
+
+#about-head img{
+  width: 50%;
+  height: auto;
+}
+
+#about-us{
+position: relative;
+top: 35%
+}
+
+/*--------------google map--------*/
+#contact-details{
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+#contact-details .details{
+width: 40%;
+}
+#contact-details .detail span,
+#form-details form span
+{
+font-size: 12px;
+}
+#contact-details .details h2 ,
+#form-details form h2{
+font-size: 28px; /*26*/
+line-height: 35px;
+padding: 20px 0;
+text-align: left;
+}
+#contact-details .details h3{
+font-size: 16px;
+padding-bottom: 15px;
+}
+#contact-details .details li{
+list-style: none;
+display: flex;
+padding: 10px 0;
+}
+#contact-details .details li i{
+font-size: 14px;
+padding-right: 22px;
+}
+#contact-details .details li p{
+margin: 0;
+font-size: 14px;
+}
+#contact-details .map{
+width: 55%;
+height: 400px;
+}
+#contact-details .map iframe{
+width: 100%;
+height: 100%;
+}
+
+
+
+
+#contact-details .details img{
+  border-radius: 50%;
+  width: 100px; /* ปรับขนาดของรูปตามต้องการ */
+  height: 100px; /* ปรับขนาดของรูปตามต้องการ */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*footer ส่วนท้ายเว็บ*/
+footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  footer .col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  
+  footer .logo {
+    margin-bottom: 30px;
+  }
+  
+  footer h4 {
+    font-size: 14px;
+    padding-bottom: 20px;
+  }
+  
+  footer p {
+    font-size: 14px;
+    margin-bottom: 0 0 8px 0;
+  }
+  
+  footer a {
+    font-size: 13px;
+    text-decoration: none;
+    color: #222;
+    margin-bottom: 10px;
+  }
+  
+  footer .col img {
+    width: 200px;
+    /* ปรับขนาดความกว้างของโลโก้ /
+    height: auto; / รักษาสัดส่วนของรูปภาพ */
+  }

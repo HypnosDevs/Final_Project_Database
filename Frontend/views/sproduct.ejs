@@ -1,0 +1,117 @@
+<%- include('../partials/head') %>
+    <%- include('../partials/header') %>
+
+        <section id="prodetails" class="section-p1">
+            <div class="single-pro-image">
+                <img src="data:image/png;base64, <%= product.image %>" id="MainImg" alt="">
+            </div>
+            <div class="single-pro-details">
+                <h6>Home/Labubu</h6>
+                <h4><%= product.name %></h4>
+                <h2>฿<%= product.price %></h2>
+                <h5>Stock: <%= product.stock %><h5>
+                <!--<form action="/getProduct/<%= product._id %>" method="POST">-->
+                <input id="qty" name="qty" type="number" value="1" min="1" max="<%= product.stock %>">
+                <button id="addCart" onclick="addCart('<%=product._id%>')" class="normal" type="submit">Add To
+                    Cart</button>
+                <!--</form>-->
+                <h4>Product Details</h4>
+                <!-- Replace leading spaces with an empty string -->
+                <pre id="spanDesc"><%= product.description.replace(/^\s+/gm, '') %></pre>
+
+
+            </div>
+        </section>
+
+        <!--
+
+    <section id="prodetails" class="section-p1">
+        <div class="single-pro-image">
+            <img src="/img/products/p1.jpg" id="MainImg" alt="">
+            <div class="small-img-group">
+                <div class="small-img-col">
+                    <img src="/img/products/p1.jpg" class="small-img" alt="">
+                </div>
+                <div class="small-img-col">
+                    <img src="/img/products/p1.2.jpg" class="small-img" alt="">
+                </div>
+                <div class="small-img-col">
+                    <img src="/img/products/p1.3.jpg" class="small-img" alt="">
+                </div>
+                <div class="small-img-col">
+                    <img src="/img/products/p1.4.jpg" class="small-img" alt="">
+                </div>
+            </div>
+        </div>
+        <d class="single-pro-details">
+            <h6>Home/Labubu</h6>
+            <h4>THE MONSTERS Catch Me If You Like Me Series-Vinyl Doll Gift Box</h4>
+            <h2>฿380</h2>
+            <input type="number" value="1" min="1">
+            <button class="normal">Add To Cart</button>
+            <h4>Product Details</h4>
+            <span>Designer: POP MART<br>
+                Material: POLYESTER/PP COLLOIDAL PARTICLES<br>
+                Size: 8.66/5.91/14.96 INCHES<br>
+                Not suitable for persons under 15.</span>
+
+
+            </div>
+    </section>
+
+    -->
+        <!--
+        <script>
+            var MainImg = document.getElementById('MainImg');
+            var smallimg = document.getElementsByClassName('small-img');
+
+            smallimg[0].onclick = function () {
+                MainImg.src = smallimg[0].src;
+            }
+            smallimg[1].onclick = function () {
+                MainImg.src = smallimg[1].src;
+            }
+            smallimg[2].onclick = function () {
+                MainImg.src = smallimg[2].src;
+            }
+            smallimg[3].onclick = function () {
+                MainImg.src = smallimg[3].src;
+            }
+        </script>
+        <script>
+            function redirectToProduct(productId) {
+                window.location.href = `/getProduct/${productId}`;
+            }
+        </script>
+
+        <script>
+            var MainImg = document.getElementById('MainImg');
+            var smallimg = document.getElementsByClassName('small-img');
+
+            smallimg[0].onclick = function () {
+                MainImg.src = smallimg[0].src;
+
+            }
+
+            smallimg[1].onclick = function () {
+                MainImg.src = smallimg[1].src;
+
+            }
+
+            smallimg[2].onclick = function () {
+                MainImg.src = smallimg[2].src;
+
+            }
+
+            smallimg[3].onclick = function () {
+                MainImg.src = smallimg[3].src;
+
+            }
+        </script>
+        -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="/sproduct.js"></script>
+        <!-- <script src="/Authen.js"></script> -->
+
+
+        <%- include('../partials/footer') %>
