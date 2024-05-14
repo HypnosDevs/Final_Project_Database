@@ -33,6 +33,7 @@ exports.addAddress = async (req, res) => {
     try {
         const { user_id } = req.params;
         const user = await User.findById(user_id);
+        req.body.user = user;
         const newAddress = new Address(req.body);
         user.address.push(newAddress);
         await user.save();

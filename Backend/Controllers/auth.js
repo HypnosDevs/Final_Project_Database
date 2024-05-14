@@ -47,6 +47,7 @@ exports.register = async (req, res) => {
 
         const userData = new User(req.body.user);
         const addressData = new Address(req.body.address);
+        req.body.address.user = userData;
         userData.address.push(addressData);
 
         await userData.save();

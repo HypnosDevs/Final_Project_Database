@@ -19,6 +19,7 @@ exports.addUser = async (req, res) => {
         const userPaymentType = req.body.payment.type
         req.body.payment.type = undefined;
         const userData = new User(req.body.user);
+        req.body.address.user = userData;
         const addressData = new Address(req.body.address);
         ;
 

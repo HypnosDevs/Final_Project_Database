@@ -25,6 +25,7 @@ const shoppingCartItemRouters = require('./Routes/shoppingCartItem');
 const orderItemRouters = require('./Routes/orderItem');
 const orderRouters = require('./Routes/order');
 const adminRouters = require('./Routes/admin');
+const analyzeRouters = require('./Routes/analyze');
 
 app.use(
     cors({
@@ -68,6 +69,7 @@ app.use('/api/Order', orderRouters);
 // app.use('/api/ShoppingCart', shoppingCartRouters);
 app.use('/api/ShoppingCartItem', shoppingCartItemRouters);
 app.use('/api/Admin', adminRouters);
+app.use('/api/Analyze', analyzeRouters);
 
 app.get('/', (req, res) => {
     res.send("Hello world")
