@@ -23,20 +23,20 @@ const emptyPage = (text) => {
 const renderDiscount1 = (discount, categoryText) => {
     const div = document.querySelector('#sm-banner .banner-box');
     div.innerHTML = `
-        <h1>Crazy Deals</h1>
+        <h4>Crazy Deals</h4>
         <h2>${discount.discount}% Off Max ฿${discount.max_discount}</h2>
         <span>Category: ${categoryText}</span>  
-        <button class="pink" onclick="window.location.href='/shop';">Shop Now</button>
+        <button class="white" onclick="window.location.href='/shop';">Shop Now</button>
     `;
 }
 
 const renderDiscount2 = (discount, categoryText) => {
     const div = document.querySelector('#sm-banner .banner-box2');
     div.innerHTML = `
-        <h1>Crazy Deals</h1>
+        <h4>Crazy Deals</h4>
         <h2>${discount.discount}% Off Max ฿${discount.max_discount}</h2>
         <span>Category: ${categoryText}</span>  
-        <button class="green" onclick="window.location.href='/shop';">Shop Now</button>
+        <button class="white" onclick="window.location.href='/shop';">Shop Now</button>
     `;
 }
 
@@ -45,8 +45,7 @@ const renderDiscount3 = (discount, categoryText) => {
     div.innerHTML = `
         <h2>${discount.discount}% Off Max ฿${discount.max_discount}</h2>
         <h3>Minimum ฿${discount.min_price}</h3>
-        <h3>Category: ${categoryText}</h3>  
-        <button class="blue" onclick="window.location.href='/shop';">Shop Now</button>  
+        <h3>Category: ${categoryText}</h3>    
     `;
 }
 
@@ -55,9 +54,7 @@ const renderDiscount4 = (discount, categoryText) => {
     div.innerHTML = `
         <h2>${discount.discount}% Off Max ฿${discount.max_discount}</h2>
         <h3>Minimum ฿${discount.min_price}</h3>
-        <h3>Category: ${categoryText}</h3>  
-        <button class="brown" onclick="window.location.href='/shop';">Shop Now</button>  
-  
+        <h3>Category: ${categoryText}</h3>    
     `;
 }
 
@@ -66,9 +63,7 @@ const renderDiscount5 = (discount, categoryText) => {
     div.innerHTML = `
         <h2>${discount.discount}% Off Max ฿${discount.max_discount}</h2>
         <h3>Minimum ฿${discount.min_price}</h3>
-        <h3>Category: ${categoryText}</h3> 
-        <button class="yellow" onclick="window.location.href='/shop';">Shop Now</button>  
-   
+        <h3>Category: ${categoryText}</h3>    
     `;
 }
 
@@ -81,10 +76,10 @@ const getDiscount = async () => {
             let categoryText = '';
 
             if (discounts.data[i] === undefined) {
-                discounts.data[i] = discounts.data[i - 1];
+                discounts.data[i] = discounts.data[i-1];
             }
 
-            for (discountcategory of discounts.data[i].discountcategory) {
+            for(discountcategory of discounts.data[i].discountcategory) {
                 const category = await axios.get(`http://localhost:8080/api/Category/getCategoryFromDiscountCategoryId/${discountcategory}`);
                 console.log(discountcategory, category)
                 if (categoryText === '') {
@@ -105,13 +100,13 @@ const getDiscount = async () => {
             } else if (i === 4) {
                 renderDiscount5(discounts.data[i], categoryText);
             }
-
+                
         }
     } else {
         emptyPage("At the moment, there are no promotions available.");
     }
 
-
+    
 }
 
 getDiscount();

@@ -390,20 +390,7 @@ footer .col img {
   background-size: cover;
   background-position: center;
   padding: 30px;
-
 }
-
-h1,
-h4,
-h2,
-h3,
-span,
-button {
-  color: white;
-  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
-
-}
-
 
 
 #sm-banner .banner-box2 {
@@ -437,10 +424,6 @@ button {
   font-weight: 800;
 }
 
-
-button {
-  margin-top: 15px;
-}
 
 button.green {
   font-size: 14px;
@@ -549,9 +532,6 @@ button.yellow:hover {
 }
 
 
-
-
-
 .banner-box span {
   margin-bottom: 20px;
   /* เพิ่มระยะห่างระหว่าง Mystery and figure กับปุ่ม */
@@ -587,6 +567,12 @@ button.yellow:hover {
   =======#banner3 h3 {
     color: #fff;
     >>>>>>>e1e0b4de9f98aa5bc101a8d085ce006671d11727 font-weight: 900;
+    font-size: 15px;
+  }
+
+  #banner3 h3 {
+    color: #ec544e;
+    font-weight: 900;
     font-size: 15px;
   }
 
