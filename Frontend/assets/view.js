@@ -17,7 +17,7 @@ const deleteOrderItem = async (order_item_id) => {
         // Delete the item from the server
         await axios.delete(`http://localhost:8080/api/OrderItem/deleteOrderItemByOrderItemId/${order_item_id}`);
 
-        location.reload();
+        window.location.reload();
 
     } catch (error) {
         console.error('Error deleting item:', error);
@@ -74,7 +74,7 @@ const loadOrders = async (allOrderItems) => {
             k++;
         };
     } else {
-        emptyPage("No order item found");
+        emptyPage("No Orders found");
     };
 };
 
@@ -106,9 +106,21 @@ const loadSpending = async (spendingData) => {
             tableBody.appendChild(row);
         };
     } else {
-        emptyPage("No order item found");
+        emptyPage("No Orders found");
     };
 };
+
+const removeLoader = () => {
+    const loader = document.querySelector("#loader");
+    loader.classList.add("loader-hidden");
+
+    loader.addEventListener("transitionend", () => {
+        document.body.removeChild("loader");
+    });
+
+    const rowLoader = document.querySelector("#loader");
+    rowLoader.remove();
+}
 
 const allowedRole = ["ADMIN"];
 const allOrders = document.querySelector("#orders_page");
@@ -157,8 +169,12 @@ const loadData = async () => {
                 let spendingData = await axios.get(`http://localhost:8080/api/Analyze/bestCategoryFromUser/${userId}`);
                 spendingData = spendingData.data;
                 let priceSum = await axios.get(`http://localhost:8080/api/Analyze/getUserTotalSpending/${userId}`);
-                priceSum = priceSum.data[0].totalSpending
-                    ;
+                console.log(priceSum);
+                if (priceSum.data.length === 0) {
+                    removeLoader();
+                    throw "No Orders found";
+                }
+                priceSum = priceSum.data[0].totalSpending;
                 console.log("pooh 1", priceSum);
                 // for (let i = 0; i < allOrderItems.length; i++) {
                 //     priceSum += allOrderItems[i].price - allOrderItems[i].discount;
@@ -187,15 +203,7 @@ const loadData = async () => {
                 let totalSpending = document.querySelector("#totalSpending")
                 totalSpending.innerHTML = priceSum;
 
-                const loader = document.querySelector("#loader");
-                loader.classList.add("loader-hidden");
-
-                loader.addEventListener("transitionend", () => {
-                    document.body.removeChild("loader");
-                });
-
-                const rowLoader = document.querySelector("#loader");
-                rowLoader.remove();
+                removeLoader();
 
                 loadOrders(allOrderItems);
 

@@ -134,7 +134,7 @@
 
                         rowToRemove.remove(); // Remove the row from the DOM
                     } else {
-                        console.error('Row not found for item:', user_id);
+                        console.error('Row not found for item:', order_item_id);
                     }
 
 
@@ -143,7 +143,7 @@
                     let userLength = document.querySelector("#orderItems-length");
                     userLength.innerHTML = userCount;
                     if (userCount === 0) {
-                        emptyPage("No Users found");
+                        emptyPage("No Orders found");
                     }
                 } catch (error) {
                     console.error('Error deleting item:', error);
