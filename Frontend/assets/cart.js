@@ -28,7 +28,7 @@ const deleteItem = async (shoppingcart_item_id) => {
         await axios.delete(`http://localhost:8080/api/ShoppingCartItem/deleteShoppingCartItem/${shoppingcart_item_id}`);
 
         // Remove all td elements inside the corresponding row from the cart table
-        const rowToRemove = document.querySelector(`#cart tbody tr[id="${shoppingcart_item_id}"]`);
+        const rowToRemove = document.querySelector(`#cart tbody tr[id="shopitem${shoppingcart_item_id}"]`);
         if (rowToRemove) {
             const cellsToRemove = rowToRemove.querySelectorAll('td');
             cellsToRemove.forEach(cell => {

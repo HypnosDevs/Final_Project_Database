@@ -1,5 +1,5 @@
 const express = require('express');
-const { bestCategory, bestCategoryFromUser, getUserTotalSpending, getProductSold, getBestProvince } = require('../Controllers/analyze');
+const { bestCategory, bestCategoryFromUser, getUserTotalSpending, getProductSold, getBestProvince, getTotalSpending } = require('../Controllers/analyze');
 const router = express.Router()
 
 
@@ -13,6 +13,7 @@ router.get('/getProductSold', getProductSold);
 
 router.get('/getBestProvince', getBestProvince);
 
+router.get('/getTotalSpending', getTotalSpending);
 
 
 module.exports = router

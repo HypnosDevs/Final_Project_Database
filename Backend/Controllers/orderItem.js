@@ -74,9 +74,9 @@ exports.addOrderItem = async (req, res) => {
         orderItem.price = orderItem.product.price;
 
         console.log(product);
-        
+
         await Product.findByIdAndUpdate(product_id, { stock: product.stock - orderItem.qty }, { new: true, runValidators: true });
-        
+
         orderItem.save();
         res.status(201).send({ message: "Create order item succesful" });
 

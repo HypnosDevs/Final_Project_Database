@@ -363,14 +363,14 @@ footer .col img {
   padding: 150px 0;
 }
 
-#remove {
+.remove {
   color: red;
   cursor: pointer;
   scale: 1.5;
   transition: 0.4s;
 }
 
-#remove:hover {
+.remove:hover {
   color: #541010;
 }
 

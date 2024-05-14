@@ -36,7 +36,16 @@ exports.bestCategory = async (req, res) => {
                     categoryName: '$category.name'
                 },
                 totalQty: { $sum: '$qty' },
-                totalSales: { $sum: { $multiply: ['$qty', '$price'] } }
+                totalSales: {
+                    $sum: {
+                        $subtract: [
+                            {
+                                $multiply: ['$qty', '$price']
+                            },
+                            '$discount'
+                        ]
+                    }
+                }
             }
         },
         {
@@ -109,7 +118,16 @@ exports.bestCategoryFromUser = async (req, res) => {
                         categoryName: '$category.name'
                     },
                     totalQty: { $sum: '$orderItems.qty' },
-                    totalSales: { $sum: { $multiply: ['$orderItems.qty', '$orderItems.price'] } }
+                    totalSales: {
+                        $sum: {
+                            $subtract: [
+                                {
+                                    $multiply: ['$orderItems.qty', '$orderItems.price']
+                                },
+                                '$orderItems.discount'
+                            ]
+                        }
+                    }
                 }
             },
             {
@@ -163,8 +181,20 @@ exports.getUserTotalSpending = async (req, res) => {
                 $group: {
                     _id: null,
                     totalSpending: {
-                        $sum: { $multiply: ["$orderItems.qty", "$orderItems.price"] }
+                        $sum: {
+                            $subtract: [
+                                {
+                                    $multiply: ['$orderItems.qty', '$orderItems.price']
+                                },
+                                '$orderItems.discount'
+                            ]
+                        }
                     }
+                }
+            }, {
+                $project: {
+                    _id: 0,
+                    totalSpending: 1
                 }
             }
         ];
@@ -203,7 +233,16 @@ exports.getProductSold = async (req, res) => {
                     },
                     productName: { $first: '$product.name' },
                     totalQty: { $sum: '$qty' },
-                    totalSales: { $sum: { $multiply: ['$qty', '$price'] } }
+                    totalSales: {
+                        $sum: {
+                            $subtract: [
+                                {
+                                    $multiply: ['$qty', '$price']
+                                },
+                                '$discount'
+                            ]
+                        }
+                    }
                 }
             },
             {
@@ -232,17 +271,7 @@ exports.getProductSold = async (req, res) => {
 exports.getBestProvince = async (req, res) => {
     try {
         const pipeline = [
-            {
-                $lookup: {
-                    from: 'addresses',
-                    localField: '_id',
-                    foreignField: 'user',
-                    as: 'address'
-                }
-            },
-            {
-                $unwind: '$address'
-            },
+
             {
                 $lookup: {
                     from: 'orders',
@@ -268,10 +297,19 @@ exports.getBestProvince = async (req, res) => {
             {
                 $group: {
                     _id: {
-                        province: '$address.province',
+                        province: '$orders.province',
                     },
                     totalQty: { $sum: '$orderItems.qty' },
-                    totalSales: { $sum: { $multiply: ['$orderItems.qty', '$orderItems.price'] } }
+                    totalSales: {
+                        $sum: {
+                            $subtract: [
+                                {
+                                    $multiply: ['$orderItems.qty', '$orderItems.price']
+                                },
+                                '$orderItems.discount'
+                            ]
+                        }
+                    }
                 }
             },
             {
@@ -288,6 +326,45 @@ exports.getBestProvince = async (req, res) => {
         ];
 
         const data = await User.aggregate(pipeline);
+        res.status(200).send(data);
+    } catch (err) {
+        console.error("Error:", err);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+
+exports.getTotalSpending = async (req, res) => {
+    try {
+        const pipeline = [
+
+            {
+                $group: {
+                    _id: null,
+                    totalQty: { $sum: '$qty' },
+                    totalSales: {
+                        $sum: {
+                            $subtract: [
+                                {
+                                    $multiply: ['$qty', '$price']
+                                },
+                                '$discount'
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    totalQty: 1,
+                    totalSales: 1
+                }
+            }
+
+        ];
+
+        const data = await OrderItem.aggregate(pipeline);
         res.status(200).send(data);
     } catch (err) {
         console.error("Error:", err);

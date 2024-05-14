@@ -16,7 +16,7 @@ const deleteOrderItem = async (order_item_id) => {
     try {
         // Delete the item from the server
         await axios.delete(`http://localhost:8080/api/OrderItem/deleteOrderItemByOrderItemId/${order_item_id}`);
-        
+
         location.reload();
 
     } catch (error) {
@@ -53,7 +53,7 @@ const loadOrders = async (allOrderItems) => {
         tableBody.innerHTML = '';
 
         let k = 0;
-        for (const orderItem of allOrderItems) { 
+        for (const orderItem of allOrderItems) {
             // Format the date as "YYYY-MM-DD HH:MM:SS"
             const createdAt = new Date(orderItem.createdAt);
             const formattedDate = `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-${createdAt.getDate().toString().padStart(2, '0')} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
@@ -96,12 +96,12 @@ const loadSpending = async (spendingData) => {
         // Clear existing rows
         tableBody.innerHTML = '';
 
-        for (const data of spendingData) { 
+        for (const data of spendingData) {
             const row = document.createElement("tr");
             row.innerHTML = `             
-                <td>${data.category}</td>
-                <td>${data.qty}</td>
-                <td>฿${data.price}</td> 
+                <td>${data.categoryName}</td>
+                <td>${data.totalQty}</td>
+                <td>฿${data.totalSales}</td> 
             `;
             tableBody.appendChild(row);
         };
@@ -112,7 +112,7 @@ const loadSpending = async (spendingData) => {
 
 const allowedRole = ["ADMIN"];
 const allOrders = document.querySelector("#orders_page");
-const allSpending = document.querySelector("#spending_page");
+const allSpending = document.querySelector("#category_page");
 
 const loadData = async () => {
     try {
@@ -123,9 +123,11 @@ const loadData = async () => {
             window.location.href = "/"
         } else {
             curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
+            const userId = curUser.data._id;
+            console.log(userId);
             const role = curUser.data.role;
             if (allowedRole.includes(role)) {
-                const userId = sessionStorage.getItem('userId');
+                // const userId = sessionStorage.getItem('userId');
 
                 let orders = await axios.get(`http://localhost:8080/api/Order/getOrderFromUser/${userId}`);
                 orders = orders.data;
@@ -151,36 +153,40 @@ const loadData = async () => {
                     let categories = await axios.get(`http://localhost:8080/api/Category/getAllCategoryFromProduct/${orderItem.product}`);
                     allOrderItemCategories.push(categories.data.category);
                 };
+                console.log("pooh 0");
+                let spendingData = await axios.get(`http://localhost:8080/api/Analyze/bestCategoryFromUser/${userId}`);
+                spendingData = spendingData.data;
+                let priceSum = await axios.get(`http://localhost:8080/api/Analyze/getUserTotalSpending/${userId}`);
+                priceSum = priceSum.data[0].totalSpending
+                    ;
+                console.log("pooh 1", priceSum);
+                // for (let i = 0; i < allOrderItems.length; i++) {
+                //     priceSum += allOrderItems[i].price - allOrderItems[i].discount;
+                //     for (const category of allOrderItemCategories[i]) {
+                //         const categoryName = category.name;
 
-                let spendingData = [];
-                let priceSum = 0;
-                for (let i = 0; i < allOrderItems.length; i++) {
-                    priceSum += allOrderItems[i].price - allOrderItems[i].discount;
-                    for (const category of allOrderItemCategories[i]) {
-                        const categoryName = category.name;
-
-                        const idx = spendingData.findIndex(e => e.category === categoryName);
-                        if (idx > -1) {
-                            spendingData[idx].qty += allOrderItems[i].qty;
-                            spendingData[idx].price += allOrderItems[i].price - allOrderItems[i].discount;
-                        } else {
-                            spendingData.push(
-                                { 
-                                    category: categoryName,
-                                    qty: allOrderItems[i].qty,
-                                    price: allOrderItems[i].price - allOrderItems[i].discount
-                                }
-                            );
-                        };
-                    };
-                };
-                spendingData.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+                //         const idx = spendingData.findIndex(e => e.category === categoryName);
+                //         if (idx > -1) {
+                //             spendingData[idx].qty += allOrderItems[i].qty;
+                //             spendingData[idx].price += allOrderItems[i].price - allOrderItems[i].discount;
+                //         } else {
+                //             spendingData.push(
+                //                 {
+                //                     category: categoryName,
+                //                     qty: allOrderItems[i].qty,
+                //                     price: allOrderItems[i].price - allOrderItems[i].discount
+                //                 }
+                //             );
+                //         };
+                //     };
+                // };
+                // spendingData.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
 
                 let orderItemsLength = document.querySelector("#orderItems-length");
                 orderItemsLength.innerHTML = allOrderItems.length;
                 let totalSpending = document.querySelector("#totalSpending")
                 totalSpending.innerHTML = priceSum;
-                
+
                 const loader = document.querySelector("#loader");
                 loader.classList.add("loader-hidden");
 
