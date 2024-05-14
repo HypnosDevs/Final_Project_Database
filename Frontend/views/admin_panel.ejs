@@ -105,8 +105,19 @@
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
             const emptyPage = (text) => {
+                // console.log(document.querySelector('.no-product'))
+                let h1Element = document.querySelector('.no-product');
+                if (h1Element) {
+                    h1Element.textContent = `${text}`;
+                    return;
+                }
+                const trList = document.querySelectorAll("#board tbody tr");
+                trList.forEach(tr => {
+                    tr.remove();
+                });
+
                 // Create an h1 element with the text "No products found" and class "no-product"
-                const h1Element = document.createElement('h1');
+                h1Element = document.createElement('h1');
                 h1Element.textContent = `${text}`;
                 h1Element.classList.add('no-product');
 
@@ -467,7 +478,6 @@
                     let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
                         withCredentials: true
                     });
-                    // console.log(curUser.data)
                     if (!curUser.data) {
                         window.location.href = "/"
                     }
@@ -475,7 +485,6 @@
 
                         curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`)
                         const role = curUser.data.role;
-                        // console.log("role", role);
                         if (allowedRole.includes(role)) {
                             let users = await axios.get("http://localhost:8080/api/User/getUsers", {
                                 withCredentials: true
@@ -488,12 +497,11 @@
 
                             let orderItemsLength = document.querySelector("#orderItems-length");
 
-                            // let productLength = document.querySelector("#products-length")
-                            // productLength.innerHTML = products.length;
+
 
                             let orders = await axios.get(`http://localhost:8080/api/Order/getAllOrders`)
                             orders = orders.data;
-                            // console.log('order', orders);
+
 
                             let orderItemArr = [];
                             let cur = 0;
@@ -509,11 +517,17 @@
 
                             let revenueData = await axios.get("http://localhost:8080/api/Analyze/getTotalSpending");
                             revenueData = revenueData.data[0];
-                            // console.log(revenueData);
+                            if (!revenueData) {
+                                revenueData = {
+                                    totalSales: 0,
+                                    totalQty: 0
+                                }
+                            }
+                            console.log(revenueData);
                             revenue.innerHTML = `
-                Total Sales: ${revenueData.totalSales}<br>
-                Number of products: ${revenueData.totalQty}
-            `
+                            Total Sales: ${revenueData.totalSales}<br>
+                            Number of products: ${revenueData.totalQty}
+                        `
 
                             let productSoldData = await axios.get("http://localhost:8080/api/Analyze/getProductSold");
                             productSoldData = productSoldData.data;
@@ -523,31 +537,7 @@
 
                             let bestProvince = await axios.get("http://localhost:8080/api/Analyze/getBestProvince");
                             bestProvince = bestProvince.data;
-                            // for (const orderData of orderItems) {
-                            //     const product = await axios.get(`http://localhost:8080/api/Product/getProduct/${orderData.product}`);
-                            //     productName.push(product.data.name);
-                            //     const order = await axios.get(`http://localhost:8080/api/Order/getOrder/${orderData.order}`);
-                            //     orderUserId.push(order.data.user);
-                            //     // console.log('order user', order.data);
 
-                            //     const idx = productSoldData.findIndex(e => e.id === orderData.product);
-                            //     if (idx > -1) {
-                            //         productSoldData[idx].qty += orderData.qty;
-                            //         productSoldData[idx].price += orderData.price - orderData.discount;
-                            //     } else {
-                            //         productSoldData.push(
-                            //             {
-                            //                 id: orderData.product,
-                            //                 name: orderData.product_name,
-                            //                 qty: orderData.qty,
-                            //                 price: orderData.price - orderData.discount
-                            //             }
-                            //         );
-                            //     }
-                            // }
-
-                            // console.log('order')
-                            // Edit pls
                             let category = ""
                             orderItemsLength.innerHTML = orderItemArr.length;
                             const loader = document.querySelector("#loader");
@@ -563,35 +553,49 @@
                             loadUsers(users);
 
                             allUsers.addEventListener("click", () => {
-                                // console.log("here");
-                                // window.location.href = "/product_admin"
+
                                 loadUsers(users);
 
                             })
 
                             allOrders.addEventListener("click", async () => {
-                                // console.log("here");
-                                // window.location.href = "/product_admin"
+
                                 await loadOrders(orderItemArr);
+                                if (orderItemArr.length === 0) {
+                                    emptyPage("No Orders found");
+                                }
                             })
 
                             allProducts.addEventListener("click", () => {
-                                // console.log("here");
-                                // window.location.href = "/product_admin"
-                                // console.log(allProducts);
-                                loadProducts(productSoldData);
+
+                                if (productSoldData.length === 0) {
+                                    emptyPage("No Products found");
+                                } else {
+                                    loadProducts(productSoldData);
+                                }
+
                             })
 
                             allPromotions.addEventListener("click", () => {
-                                // console.log("here");
-                                // window.location.href = "/promotion_admin"
-                                loadPromotions(bestCategory);
+
+                                if (bestCategory.length === 0) {
+
+                                    emptyPage("No Products found");
+                                } else {
+                                    loadPromotions(bestCategory);
+                                }
+
                             })
 
                             analize_page.addEventListener("click", () => {
-                                // console.log("here");
-                                // window.location.href = "/analize-page"
-                                loadAnalyzes(bestProvince);
+
+                                if (bestProvince.length === 0) {
+
+                                    emptyPage("No Orders found");
+                                } else {
+                                    loadAnalyzes(bestProvince);
+                                }
+
 
                             })
 
