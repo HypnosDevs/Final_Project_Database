@@ -9,7 +9,7 @@ router.get('/getAddress/:id', getAddress);
 
 router.post('/addAddress/:user_id', addAddress);
 
-router.put('/updateAddress/:id', updateAddress);
+router.patch('/updateAddress/:id', updateAddress);
 
 router.post('/deleteAddress/:id', deleteAddress);
 

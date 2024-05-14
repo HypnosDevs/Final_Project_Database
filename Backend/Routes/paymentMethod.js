@@ -11,7 +11,7 @@ router.get('/getPaymentMethod/:id', getPaymentMethod)
 
 router.post('/addPaymentMethod/:id', addPaymentMethod)
 
-router.post('/:id/updatePaymentMethod', updatePaymentMethod)
+router.patch('/:id/updatePaymentMethod', updatePaymentMethod)
 
 router.delete('/:id/deletePaymentMethod', deletePaymentMethod)
 

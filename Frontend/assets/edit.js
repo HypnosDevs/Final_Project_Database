@@ -98,12 +98,14 @@ fetch(url)
 .then(response => response.json())
 .then(result => {
     for (let item of result) {
+        postalCode.disabled = false;
         postalCode.value = item.zipcode;
     }
 }
 );
 }
 else {
+postalCode.disabled = true;
 postalCode.value = "";
 }
 }
@@ -111,16 +113,18 @@ postalCode.value = "";
 // if select add a new address
 document.getElementById('addressSelect').addEventListener('change', function() {
     var selectAddressElement = document.getElementById('addressSelect');
-    var newAddressInput = document.getElementById('newAddressInput');
 
     if (selectAddressElement.value === 'add_new_address') {
         selectAddressElement.style.display = 'block    ';
-        newAddressInput.style.display = 'block';
-        newAddressInput.setAttribute('required', 'required');
+        document.getElementById("addName").required = true;
+        document.getElementById("addAddressLine1").required = true;
+        document.getElementById("country").required = true;
+        document.getElementById("province").required = true;
+        document.getElementById("amphoe").required = true;
+        document.getElementById("district").required = true;
+        document.getElementById("postal_code").required = true;
     } else {
         selectAddressElement.style.display = 'block';
-        newAddressInput.style.display = 'none';
-        newAddressInput.removeAttribute('required');
     }
 });
 
@@ -130,6 +134,11 @@ document.getElementById('paymentSelect').addEventListener('change', function() {
     var newPaymentInput = document.getElementById('newPaymentInput');
 
     if (selectPaymentElement.value === 'add_new_payment') {
+        document.getElementById("paymentTypeSelect").required = true;
+        document.getElementById("addAccountName").required = true;
+        document.getElementById("addAccountNumber").required = true;
+        document.getElementById("addExpiryData").required = true;
+
         selectPaymentElement.style.display = 'block    ';
         newPaymentInput.style.display = 'block';
         newPaymentInput.setAttribute('required', 'required');

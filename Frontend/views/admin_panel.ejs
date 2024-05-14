@@ -192,7 +192,7 @@
                         <td>${user.email}</td>
                         <td>${user.role}</td>
                         <td class="view"><a href="/view" onclick="sessionStorage.setItem('userId', '${user._id}')">View</a></td>
-                        <td class="edit"><a href="/edit_by_admin">Edit</a></td>
+                        <td class="edit"><a href="/edit_by_admin" onclick="sessionStorage.setItem('userId', '${user._id}')">Edit</a></td>
                         `
 
                     tableBody.appendChild(row);

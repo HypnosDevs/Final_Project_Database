@@ -10,16 +10,16 @@ router.get('/getUser/:id', getUser);
 
 router.get('/getAllUsernameEmail', getAllUsernameAndEmail);
 
-router.post('/addUser', checkUserRole(['ADMIN']), addUser);
+router.post('/addUser', addUser);
 
-router.post('/addUseWithAddress', checkUserRole(['ADMIN']), addUserWithAddress);
+router.post('/addUseWithAddress',  addUserWithAddress);
 
 
-router.put('/editUser/:id', checkUserRole(['ADMIN', 'USER']), editUser);
+router.patch('/editUser/:id',  editUser);
 
 router.delete('/deleteUser/:id', deleteUser);
 
-router.post('/addOrder', checkUserRole(['ADMIN', 'USER']), addOrder);
+router.post('/addOrder',  addOrder);
 // router.post('/addProduct', upload.single('image'), addProduct)
 
 // router.patch('/:id/updateProduct', upload.single('image'), updateProduct)
