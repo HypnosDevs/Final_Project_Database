@@ -345,20 +345,20 @@
                             await axios.post(`http://localhost:8080/api/Address/addAddress/${userId}`, data);
                             window.location.href = "/admin_panel";
                         } 
-                        else if (name[1] === '') alert('Type Address Name Gorn Di I Kwai');
-                        else if (address_line1[1] === '') alert('Type Address Line 1 Gorn Di I Kwai');
-                        else if (!country) alert('Select Country Gorn Di I Kwai');
-                        else if (!province) alert('Select Province Gorn Di I Kwai');
-                        else if (!amphoe) alert('Select Amphoe Gorn Di I Kwai');
-                        else if (!district) alert('Select District Gorn Di I Kwai');
+                        else if (name[1] === '') alert('Please type address name before submitting');
+                        else if (address_line1[1] === '') alert('Please type address line 1 before submitting');
+                        else if (!country) alert('Please select a country before submitting');
+                        else if (!province) alert('Please select a province before submitting');
+                        else if (!amphoe) alert('Please select an amphoe before submitting');
+                        else if (!district) alert('Please select a district before submitting');
                         else if (tel_no[1] === '') {
-                            alert('Type Phone Number Gorn Di I Kwai');
+                            alert('Please type phone number before submitting');
                         }
                     } else if (address) {
                         await axios.patch(`http://localhost:8080/api/Address/updateAddress/${address[1]}`, data);
                         window.location.href = "/admin_panel";
                     } else {
-                        alert('Select Address Gorn Di I Kwai');
+                        alert('Please select an address before submitting');
                     }
                 }
 
