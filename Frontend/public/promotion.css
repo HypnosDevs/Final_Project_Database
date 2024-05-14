@@ -389,6 +389,23 @@ button.yellow:hover {
 
 
 
+.banner-box h1,
+.banner-box h2,
+.banner-box h3,
+.banner-box h4,
+.banner-box h5,
+.banner-box h6,
+.banner-box button {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.banner-box h1 {
+  color: white
+}
+
+.banner-box button {
+  margin-top: 15px;
+}
 
 .banner-box span {
   margin-bottom: 20px;
@@ -428,7 +445,7 @@ button.yellow:hover {
 
 #banner3 {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-wrap: wrap;
   padding: 0 80px;
 }

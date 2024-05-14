@@ -43,6 +43,7 @@ const renderDiscount2 = (discount, categoryText) => {
 const renderDiscount3 = (discount, categoryText) => {
     const div = document.querySelector('#banner3 .banner-box');
     div.innerHTML = `
+    <h2>${discount.discount}% Off Max ฿${discount.max_discount}</h2>
     <h3>Category: ${categoryText}</h3>  
     <h3>Minimum ฿${discount.min_price}</h3>
     <button class="blue" onclick="window.location.href='/shop';">Shop Now</button>  
