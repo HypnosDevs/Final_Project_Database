@@ -42,7 +42,7 @@
       <div class="pro-container">
         <% let x=0 %>
           <% for(let product of products.reverse()) { %>
-            <% x++; if(x>=6) break; %>
+            <% x++; if(x>=9) break; %>
               <div class="pro" onclick="redirectToProduct('<%= product._id %>')">
                 <img src="data:image/png;base64, <%= product.image %>" alt="">
                 <div class="content">
