@@ -77,5 +77,37 @@
         </table>
     </section>
     <script src="PaymentTypeAdmin.js"></script>
+    <script>
+        async function allowed(roles) {
+          let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+              withCredentials: true
+          });
+          if (!curUser.data) {
+            window.location.href = "/signIn";
+          }
+          else {
+            curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
+            const role = curUser.data.role;
+            console.log('role:', role)
+            if (!roles.includes(role)) {
+              window.location.href = "/";
+            }
+            else{
+                const paymentTypes = await axios.get("http://localhost:8080/api/PaymentType/getPaymentType");
+        if (paymentTypes.data && paymentTypes.data.length > 0) {
+            renderPaymentTypes(paymentTypes.data);
+        } else {
+            emptyPage("No payment type found");
+        }
+            }
+          }
+        }
+        let roles = "<%= roles %>";
+        roles = roles.split(',');
+        allowed(roles);
+         
+      </script>
+      
+ 
 
 <%- include('../partials/footer') %>

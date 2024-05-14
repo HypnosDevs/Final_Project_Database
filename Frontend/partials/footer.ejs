@@ -55,7 +55,7 @@
         if (!user) {
             adminPanel.remove()
         }
-        else if (user && user.data.role !== "ADMIN") {
+        else if (user && (user.data.role !== "ADMIN" && user.data.role !== "PRODUCT MANAGER")) {
             adminPanel.remove()
         }
     }

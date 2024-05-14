@@ -67,6 +67,7 @@ const renderPaymentTypes = (paymentTypes) => {
 
 const getPaymentTypes = async () => {
     try {
+        
         const paymentTypes = await axios.get("http://localhost:8080/api/PaymentType/getPaymentType");
         if (paymentTypes.data && paymentTypes.data.length > 0) {
             renderPaymentTypes(paymentTypes.data);
@@ -80,4 +81,6 @@ const getPaymentTypes = async () => {
     }
 };
 
-getPaymentTypes();
+// getPaymentTypes();
+
+

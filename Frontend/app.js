@@ -81,6 +81,7 @@ app.get('/admin_panel', async (req, res) => {
             // products: products.data,
             // orderItems: orderItems.data,
             // discounts: discounts.data,
+            roles: ["ADMIN", "PRODUCT MANAGER"],
             title: "Admin Panel",
             style: "admin_panel.css"
         })
@@ -93,6 +94,7 @@ app.get('/admin_panel', async (req, res) => {
 
 app.get('/view', (req, res) => {
     res.render('view', {
+        roles: ["ADMIN"],
         title: "View",
         style: "/view.css"
     })
@@ -101,6 +103,7 @@ app.get('/view', (req, res) => {
 app.get('/cart', (req, res) => {
 
     res.render('cart', {
+        roles: ["ADMIN", "PRODUCT MANAGER", "USER"],
         title: "Cart",
         style: "/cart.css",
         cart: "active",
@@ -111,6 +114,7 @@ app.get('/cart', (req, res) => {
 
 app.get('/create_payment_type', (req, res) => {
     res.render('create_payment_type', {
+        roles: ["ADMIN"],
         title: "User Setting Page",
         style: "create_edit.css"
     })
@@ -119,6 +123,7 @@ app.get('/create_payment_type', (req, res) => {
 
 app.get('/create_product', (req, res) => {
     res.render('create_product', {
+        roles: ["ADMIN", "PRODUCT MANAGER"],
         title: "User Setting Page",
         style: "create_edit.css"
     })
@@ -126,6 +131,7 @@ app.get('/create_product', (req, res) => {
 
 app.get('/create_promotion', (req, res) => {
     res.render('create_promotion', {
+        roles: ["ADMIN", "PRODUCT MANAGER"],
         title: "User Setting Page",
         style: "create_edit.css",
     })
@@ -133,6 +139,7 @@ app.get('/create_promotion', (req, res) => {
 
 app.get('/edit_by_admin', (req, res) => {
     res.render('edit_by_admin', {
+        roles: ["ADMIN"],
         title: "User Setting Page",
         style: "create_edit.css"
     })
@@ -140,6 +147,7 @@ app.get('/edit_by_admin', (req, res) => {
 
 app.get('/edit_by_user', (req, res) => {
     res.render('edit_by_user', {
+        roles: ["ADMIN", "PRODUCT MANAGER", "USER"],
         title: "User Setting Page",
         style: "create_edit.css"
     })
@@ -148,6 +156,7 @@ app.get('/edit_by_user', (req, res) => {
 app.get('/edit_product/:id', (req, res) => {
     const { id } = req.params
     res.render('edit_product', {
+        roles: ["ADMIN", "PRODUCT MANAGER"],
         product_id: id,
         title: "User Setting Page",
         style: "/create_edit.css"
@@ -157,6 +166,7 @@ app.get('/edit_product/:id', (req, res) => {
 app.get('/edit_promotion/:id', (req, res) => {
     const { id } = req.params
     res.render('edit_promotion', {
+        roles: ["ADMIN", "PRODUCT MANAGER"],
         discount_id: id,
         title: "User Setting Page",
         style: "/create_edit.css"
@@ -205,6 +215,7 @@ app.post('/getProduct/:id', async (req, res) => {
 
 app.get('/payment_type_admin', (req, res) => {
     res.render('payment_type_admin', {
+        roles: ["ADMIN"],
         title: "Payment Admin",
         style: "payment_type_admin.css"
     })
@@ -212,6 +223,7 @@ app.get('/payment_type_admin', (req, res) => {
 
 app.get('/product_admin', (req, res) => {
     res.render('product_admin', {
+        roles: ["ADMIN", "PRODUCT MANAGER"],
         title: "Product Admin",
         style: "product_admin.css"
     })
@@ -219,6 +231,7 @@ app.get('/product_admin', (req, res) => {
 
 app.get('/promotion_admin', (req, res) => {
     res.render('promotion_admin', {
+        roles: ["ADMIN", "PRODUCT MANAGER"],
         title: "Product Admin",
         style: "promotion_admin.css"
     })
@@ -325,6 +338,7 @@ app.get('/Sup-product2', (req, res) => {
 
 app.get('/trackOrder', (req, res) => {
     res.render('trackOrder', {
+        roles: ["ADMIN", "PRODUCT MANAGER", "USER"],
         title: "Track Order",
         style: "/trackOrder.css",
     })
@@ -332,6 +346,7 @@ app.get('/trackOrder', (req, res) => {
 
 app.get('/add_user', (req, res) => {
     res.render('add_user', {
+        roles: ["ADMIN"],
         title: "Add User",
         style: "/add_user.css",
     })

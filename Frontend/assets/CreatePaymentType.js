@@ -1,3 +1,4 @@
+const createPayment = async()=>{
 const submitButton = document.querySelector("#submitButton");
 const form = document.querySelector("#form-create-payment_type");
 
@@ -17,3 +18,4 @@ submitButton.addEventListener("click", async () => {
 
     }
 });
+}

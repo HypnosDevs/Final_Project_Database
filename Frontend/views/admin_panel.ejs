@@ -19,7 +19,7 @@
                     <li><a class="active" href="/admin_panel">Dashboard</a></li>
                     <li><a href="/product_admin">Products</a></li>
                     <li><a href="/promotion_admin">Promotion</a></li>
-                    <li><a href="/payment_type_admin">Payment</a></li>
+                    <li id="payment-type-admin"><a href="/payment_type_admin">Payment</a></li>
 
                     <ul>
             </div>
@@ -280,7 +280,7 @@
                 headerTable.appendChild(row);
 
                 const tableBody = document.querySelector("#board tbody");
-
+               
                 // Clear existing rows
                 tableBody.innerHTML = '';
                 let k = 0;
@@ -463,7 +463,7 @@
 
         <script>
 
-            const allowedRole = ["ADMIN"];
+            const allowedRole = ["ADMIN", "PRODUCT MANAGER"];
             const allProducts = document.querySelector("#products_page");
             const allPromotions = document.querySelector("#promotions_page");
             const allUsers = document.querySelector("#users_page");
@@ -489,6 +489,16 @@
                             let users = await axios.get("http://localhost:8080/api/User/getUsers", {
                                 withCredentials: true
                             })
+                            if (role === 'PRODUCT MANAGER') {
+                                revenue.remove();
+                                document.getElementById('button_create').remove();
+                                allUsers.remove();
+                                allProducts.remove();
+                                allPromotions.remove();
+                                analize_page.remove();
+                                document.getElementById('payment-type-admin').remove();
+                                
+                            }
 
                             users = users.data;
                             let orderItems = await axios.get("http://localhost:8080/api/OrderItem/getAllOrderItem");
@@ -513,7 +523,7 @@
                                     orderUserId.push(orderData.user)
                                 }
                             }
-
+                           
 
                             let revenueData = await axios.get("http://localhost:8080/api/Analyze/getTotalSpending");
                             revenueData = revenueData.data[0];
@@ -524,7 +534,7 @@
                                 }
                             }
                             console.log(revenueData);
-                            revenue.innerHTML = `
+                            if(revenue)revenue.innerHTML = `
                             Total Sales: ${revenueData.totalSales}<br>
                             Number of products: ${revenueData.totalQty}
                         `
@@ -550,9 +560,13 @@
 
                             const rowLoader = document.querySelector("#loader")
                             rowLoader.remove();
-                            loadUsers(users);
+                            if(role === 'PRODUCT MANAGER'){
+                                await loadOrders(orderItemArr);
+                            }else{
+                                await loadUsers(users);
+                            }
 
-                            allUsers.addEventListener("click", () => {
+                            if(allUsers)allUsers.addEventListener("click", () => {
 
                                 loadUsers(users);
 
@@ -566,7 +580,7 @@
                                 }
                             })
 
-                            allProducts.addEventListener("click", () => {
+                            if(allProducts)allProducts.addEventListener("click", () => {
 
                                 if (productSoldData.length === 0) {
                                     emptyPage("No Products found");
@@ -576,7 +590,7 @@
 
                             })
 
-                            allPromotions.addEventListener("click", () => {
+                            if(allPromotions)allPromotions.addEventListener("click", () => {
 
                                 if (bestCategory.length === 0) {
 
@@ -587,7 +601,7 @@
 
                             })
 
-                            analize_page.addEventListener("click", () => {
+                            if(analize_page)analize_page.addEventListener("click", () => {
 
                                 if (bestProvince.length === 0) {
 
@@ -599,7 +613,7 @@
 
                             })
 
-
+                            
 
                         }
                         else {

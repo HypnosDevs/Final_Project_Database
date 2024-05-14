@@ -151,6 +151,28 @@
             </div>
 
             <script>
+                async function allowed(roles) {
+                  let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+                      withCredentials: true
+                  });
+                  if (!curUser.data) {
+                    window.location.href = "/signIn";
+                  }
+                  else {
+                    curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
+                    const role = curUser.data.role;
+                    console.log('role:', role)
+                    if (!roles.includes(role)) {
+                      window.location.href = "/";
+                    }
+                  }
+                }
+                let roles = "<%= roles %>";
+                roles = roles.split(',');
+                allowed(roles);
+              </script>
+
+            <script>
                 const tabBtn = document.querySelectorAll('.tab');
                 const tab = document.querySelectorAll('.tabshow');
 
