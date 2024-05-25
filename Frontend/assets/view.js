@@ -135,9 +135,9 @@ const loadData = async () => {
             window.location.href = "/"
         } else {
             curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
-            const userId = curUser.data._id;
+            const userId = curUser.data.user_id;
             console.log(userId);
-            const role = curUser.data.role;
+            const role = curUser.data.user_role;
             if (allowedRole.includes(role)) {
                 // const userId = sessionStorage.getItem('userId');
 
@@ -146,7 +146,7 @@ const loadData = async () => {
 
                 let allOrderItems = [];
                 for (const order of orders) {
-                    let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${order._id}`);
+                    let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${order.order_id}`);
                     orderItems = orderItems.data;
 
                     for (const orderItem of orderItems) {
@@ -229,7 +229,8 @@ const loadData = async () => {
             };
         };
     } catch (err) {
-        emptyPage(`${err}`);
+        removeLoader();
+        emptyPage("No Order Found");
     };
 };
 
