@@ -120,7 +120,7 @@ const renderPromotions = async (promotions) => {
         <td>Remove</td>
         <td>Discount</td>
         <td>Category</td>
-        <td>Edit</td>
+  
     `;
     headerTable.appendChild(headerRow);
 
@@ -146,7 +146,6 @@ const renderPromotions = async (promotions) => {
                     <td><i class="fa-solid fa-circle-xmark" onclick="deletePromotion('${promotion.discount_id}','${category_id}')"></i></a></td>
                     <td>${promotion.discount}%</td>
                     <td>${categoryName.data.category_name}</td>
-                    <td class="edit"><a href="/edit_promotion/${promotion.discount_id}">Edit</a></td>
                 `;
                 row.setAttribute('id', `${promotion.discount_id}${category_id}`);
                 tableBody.appendChild(row);

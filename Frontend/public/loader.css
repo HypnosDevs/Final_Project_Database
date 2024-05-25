@@ -34,12 +34,12 @@
     }
 }
 
-i {
+tbody i {
     color: #f13737;
     transition: 0.3s;
 }
 
-i:hover {
+tbody i:hover {
     color: rgb(148, 44, 44);
     cursor: pointer;
 }
