@@ -14,7 +14,9 @@ exports.bestCategory = async (req, res) => {
             INNER JOIN 
                 product p ON oi.product_id = p.id
             INNER JOIN 
-                category c ON p.category_id = c.category_id
+                ProductCategory pc ON p.id = p.product_id
+            INNER JOIN 
+                category c ON pc.category_id = c.category_id
             GROUP BY 
                 c.category_name
             ORDER BY 
@@ -46,7 +48,9 @@ exports.bestCategoryFromUser = async (req, res) => {
             INNER JOIN 
                 product p ON oi.product_id = p.id
             INNER JOIN 
-                category c ON p.category_id = c.category_id
+                ProductCategory pc ON p.id = p.product_id
+            INNER JOIN 
+                category c ON pc.category_id = c.category_id
             WHERE 
                 o.user_id = ?
             GROUP BY 
