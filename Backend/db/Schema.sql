@@ -114,16 +114,16 @@ CREATE TABLE IF NOT EXISTS shopping_cart_item (
 );
 
 CREATE TABLE IF NOT EXISTS Discount (
-    Discount_id INT AUTO_INCREMENT PRIMARY KEY,
+    discount_id INT AUTO_INCREMENT PRIMARY KEY,
     discount DECIMAL(10, 2) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS DiscountCategory (
-    categoryID INT,
-    discountID INT,
-    PRIMARY KEY (Categoryid, discountID),
+    category_id INT,
+    discount_id INT,
+    PRIMARY KEY (category_id, discount_id),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (Categoryid) REFERENCES category(category_id),
-    FOREIGN KEY (discountID) REFERENCES Discount(Discount_id)
+    FOREIGN KEY (category_id) REFERENCES category(category_id),
+    FOREIGN KEY (discount_id) REFERENCES Discount(discount_id)
 );
