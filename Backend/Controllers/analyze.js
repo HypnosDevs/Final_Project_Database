@@ -12,9 +12,9 @@ exports.bestCategory = async (req, res) => {
             FROM 
                 order_item oi
             INNER JOIN 
-                product p ON oi.product_id = p.id
+                product p ON oi.product_id = p.product_id
             INNER JOIN 
-                ProductCategory pc ON p.id = p.product_id
+                ProductCategory pc ON p.product_id = pc.product_id
             INNER JOIN 
                 category c ON pc.category_id = c.category_id
             GROUP BY 
@@ -46,9 +46,9 @@ exports.bestCategoryFromUser = async (req, res) => {
             INNER JOIN 
                 order_item oi ON o.order_id = oi.order_id
             INNER JOIN 
-                product p ON oi.product_id = p.id
+                product p ON oi.product_id = p.product_id
             INNER JOIN 
-                ProductCategory pc ON p.id = p.product_id
+                ProductCategory pc ON p.product_id = pc.product_id
             INNER JOIN 
                 category c ON pc.category_id = c.category_id
             WHERE 
@@ -131,7 +131,7 @@ exports.getBestProvince = async (req, res) => {
                 SUM((oi.qty * oi.price) - oi.discount) AS totalSales
             FROM \`order\` o
             JOIN order_item oi ON o.order_id = oi.order_id
-            JOIN product p ON oi.product_id = p.id
+            JOIN product p ON oi.product_id = p.product_id
             GROUP BY o.province
             ORDER BY totalQty DESC
         `;
@@ -151,7 +151,7 @@ exports.getTotalSpending = async (req, res) => {
                 SUM(oi.qty) AS totalQty,
                 SUM((oi.qty * oi.price) - oi.discount) AS totalSales
             FROM order_item oi
-            JOIN product p ON oi.product_id = p.id
+            JOIN product p ON oi.product_id = p.product_id
         `;
 
         const [rows] = await pool.query(query);

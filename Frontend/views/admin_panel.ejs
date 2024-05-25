@@ -224,19 +224,19 @@
                 // Clear existing rows
                 tableBody.innerHTML = '';
                 for (user of allUsers) {
-                    if (user.role === "ADMIN") {
+                    if (user.user_role === "ADMIN") {
                         continue;
                     }
                     const row = document.createElement("tr");
-                    row.setAttribute("id", `${user._id}`);
+                    row.setAttribute("id", `${user.user_id}`);
                     row.innerHTML = `
-                        <td><a onClick="deleteUser('${user._id}')"><i class="remove fa-solid fa-circle-xmark"></i></a></td>
+                        <td><a onClick="deleteUser('${user.user_id}')"><i class="remove fa-solid fa-circle-xmark"></i></a></td>
                         <td><img src="/img/user.png"></a></li></td>
                         <td>${user.username}</td>
                         <td>${user.email}</td>
-                        <td>${user.role}</td>
-                        <td class="view"><a href="/view" onclick="sessionStorage.setItem('userId', '${user._id}')">View</a></td>
-                        <td class="edit"><a href="/edit_by_admin" onclick="sessionStorage.setItem('userId', '${user._id}')">Edit</a></td>
+                        <td>${user.user_role}</td>
+                        <td class="view"><a href="/view" onclick="sessionStorage.setItem('userId', '${user.user_id}')">View</a></td>
+                        <td class="edit"><a href="/edit_by_admin" onclick="sessionStorage.setItem('userId', '${user.user_id}')">Edit</a></td>
                         `
 
                     tableBody.appendChild(row);
@@ -280,7 +280,7 @@
                 headerTable.appendChild(row);
 
                 const tableBody = document.querySelector("#board tbody");
-               
+
                 // Clear existing rows
                 tableBody.innerHTML = '';
                 let k = 0;
@@ -290,18 +290,18 @@
                     const formattedDate = `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-${createdAt.getDate().toString().padStart(2, '0')} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
 
                     const row = document.createElement("tr");
-                    row.setAttribute("id", `${orderData._id}`);
+                    row.setAttribute("id", `${orderData.order_id}`);
                     row.innerHTML = `
-                    <td><a onClick="deleteOrderItem('${orderData._id}')"><i class="remove fa-solid fa-circle-xmark"></i></a></td>
+                    <td><a onClick="deleteOrderItem('${orderData.order_id}')"><i class="remove fa-solid fa-circle-xmark"></i></a></td>
 
                         <td>${orderUserId[k]}</td>
-                        <td>${orderData._id}</td>
+                        <td>${orderData.order_id}</td>
                         <td>${formattedDate}</td>
                         <td>${orderData.product_name}</td>
                         <td>${orderData.price - orderData.discount}</td>
                         <td>${orderData.qty}</td>
                         <td>
-                            <select class="selection" id="selectStatus${orderData._id}">
+                            <select class="selection" id="selectStatus${orderData.order_id}">
                                 <option value="Pending" ${orderData.status === "Pending" ? "selected" : ""}>Pending</option>
                                 <option value="Shipping" ${orderData.status === "Shipping" ? "selected" : ""}>Shipping</option>
                                 <option value="Delivered" ${orderData.status === "Delivered" ? "selected" : ""}>Delivered</option>
@@ -315,7 +315,7 @@
 
 
                     // Change background color of select element based on selected value
-                    document.querySelector(`#selectStatus${orderData._id}`).addEventListener("change", async function (event) {
+                    document.querySelector(`#selectStatus${orderData.order_id}`).addEventListener("change", async function (event) {
                         const selectStatus = event.target; // Get the select element that triggered the event
                         switch (selectStatus.value) {
                             case "Pending":
@@ -331,10 +331,10 @@
                                 selectStatus.style.backgroundColor = "eafffa"; // Reset background color if none of the cases match
                         }
 
-                        const updatedOrder = await axios.put(`http://localhost:8080/api/OrderItem/updateOrderItemStatus/${orderData._id}`, { status: selectStatus.value });
+                        const updatedOrder = await axios.put(`http://localhost:8080/api/OrderItem/updateOrderItemStatus/${orderData.order_id}`, { status: selectStatus.value });
                         console.log("update laew", updatedOrder);
                     });
-                    const status = document.querySelector(`#selectStatus${orderData._id}`);
+                    const status = document.querySelector(`#selectStatus${orderData.order_id}`);
                     if (orderData.status === "Pending") {
                         status.style.backgroundColor = "#ffffea";
                     }
@@ -484,7 +484,7 @@
                     else {
 
                         curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`)
-                        const role = curUser.data.role;
+                        const role = curUser.data.user_role;
                         if (allowedRole.includes(role)) {
                             let users = await axios.get("http://localhost:8080/api/User/getUsers", {
                                 withCredentials: true
@@ -497,7 +497,7 @@
                                 allPromotions.remove();
                                 analize_page.remove();
                                 document.getElementById('payment-type-admin').remove();
-                                
+
                             }
 
                             users = users.data;
@@ -516,14 +516,14 @@
                             let orderItemArr = [];
                             let cur = 0;
                             for (const orderData of orders) {
-                                let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${orderData._id}`);
+                                let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${orderData.order_id}`);
                                 orderItems = orderItems.data;
                                 for (const orderItemData of orderItems) {
                                     orderItemArr.push(orderItemData);
                                     orderUserId.push(orderData.user)
                                 }
                             }
-                           
+
 
                             let revenueData = await axios.get("http://localhost:8080/api/Analyze/getTotalSpending");
                             revenueData = revenueData.data[0];
@@ -534,7 +534,7 @@
                                 }
                             }
                             console.log(revenueData);
-                            if(revenue)revenue.innerHTML = `
+                            if (revenue) revenue.innerHTML = `
                             Total Sales: ${revenueData.totalSales}<br>
                             Number of products: ${revenueData.totalQty}
                         `
@@ -560,13 +560,13 @@
 
                             const rowLoader = document.querySelector("#loader")
                             rowLoader.remove();
-                            if(role === 'PRODUCT MANAGER'){
+                            if (role === 'PRODUCT MANAGER') {
                                 await loadOrders(orderItemArr);
-                            }else{
+                            } else {
                                 await loadUsers(users);
                             }
 
-                            if(allUsers)allUsers.addEventListener("click", () => {
+                            if (allUsers) allUsers.addEventListener("click", () => {
 
                                 loadUsers(users);
 
@@ -580,7 +580,7 @@
                                 }
                             })
 
-                            if(allProducts)allProducts.addEventListener("click", () => {
+                            if (allProducts) allProducts.addEventListener("click", () => {
 
                                 if (productSoldData.length === 0) {
                                     emptyPage("No Products found");
@@ -590,7 +590,7 @@
 
                             })
 
-                            if(allPromotions)allPromotions.addEventListener("click", () => {
+                            if (allPromotions) allPromotions.addEventListener("click", () => {
 
                                 if (bestCategory.length === 0) {
 
@@ -601,7 +601,7 @@
 
                             })
 
-                            if(analize_page)analize_page.addEventListener("click", () => {
+                            if (analize_page) analize_page.addEventListener("click", () => {
 
                                 if (bestProvince.length === 0) {
 
@@ -613,7 +613,7 @@
 
                             })
 
-                            
+
 
                         }
                         else {

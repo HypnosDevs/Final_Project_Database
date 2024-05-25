@@ -38,12 +38,14 @@
         userId = curUserId.data
 
         if (!userId) {
+
             adminPanel.remove()
             if (editByUser) {
                 editByUser.remove();
             }
             return;
         } else {
+
             if (navSignin) {
                 navSignin.innerHTML = 'History'
                 navSignin.setAttribute('href', '/trackOrder');
@@ -53,9 +55,10 @@
         const user = await axios.get(`http://localhost:8080/api/User/getUser/${userId}`);
         // console.log("user", user);
         if (!user) {
+
             adminPanel.remove()
         }
-        else if (user && (user.data.role !== "ADMIN" && user.data.role !== "PRODUCT MANAGER")) {
+        else if (user && (user.data.user_role !== "ADMIN" && user.data.user_role !== "PRODUCT MANAGER")) {
             adminPanel.remove()
         }
     }
