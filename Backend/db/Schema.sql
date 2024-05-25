@@ -56,7 +56,6 @@ CREATE TABLE IF NOT EXISTS category (
 
 CREATE TABLE IF NOT EXISTS product (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
-    category_id INT,
     product_name VARCHAR(255) NOT NULL,
     product_description TEXT,
     product_image MEDIUMTEXT,
