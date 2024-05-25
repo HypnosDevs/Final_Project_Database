@@ -15,7 +15,7 @@ exports.getAllDiscountCategory = async (req, res) => {
 exports.getDiscountCategory = async (req, res) => {
     try {
         const { id } = req.params;
-        const [rows] = await pool.query('SELECT * FROM DiscountCategory WHERE Categoryid = ?', [id]);
+        const [rows] = await pool.query('SELECT * FROM DiscountCategory WHERE category_id = ?', [id]);
         res.send(rows);
     } catch (err) {
         console.error(err.message);
@@ -27,7 +27,7 @@ exports.getDiscountCategory = async (req, res) => {
 exports.getDiscountCategoryByDiscountId = async (req, res) => {
     try {
         const { id } = req.params;
-        const [rows] = await pool.query('SELECT * FROM DiscountCategory WHERE discountID = ?', [id]);
+        const [rows] = await pool.query('SELECT * FROM DiscountCategory WHERE discount_id = ?', [id]);
         res.send(rows);
     } catch (err) {
         console.error(err.message);
@@ -38,9 +38,9 @@ exports.getDiscountCategoryByDiscountId = async (req, res) => {
 // Add a new discount category
 exports.addDiscountCategory = async (req, res) => {
     try {
-        const { categoryId, discountId } = req.body;
+        const { category_id, discount_id } = req.body;
 
-        await pool.query('INSERT INTO DiscountCategory (categoryID, discountID) VALUES (?, ?)', [categoryId, discountId]);
+        await pool.query('INSERT INTO DiscountCategory (category_id, discount_id) VALUES (?, ?)', [category_id, discount_id]);
         res.send({ message: "Discount category added successfully" });
     } catch (err) {
         console.error(err.message);
@@ -53,7 +53,7 @@ exports.deleteDiscountCategoryByDiscountId = async (req, res) => {
     try {
         const { id } = req.params;
 
-        await pool.query('DELETE FROM DiscountCategory WHERE discountID = ?', [id]);
+        await pool.query('DELETE FROM DiscountCategory WHERE discount_id = ?', [id]);
         res.send({ message: "Discount categories deleted successfully" });
     } catch (err) {
         console.error(err.message);

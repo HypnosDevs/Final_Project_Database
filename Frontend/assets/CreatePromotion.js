@@ -12,7 +12,7 @@ submitButton.addEventListener("click", async () => {
                 const categories = item[1].split(' ');
                 for (let i = 0; i < categories.length; i++) {
                     const category = await axios.post(`http://localhost:8080/api/Category/addCategory/${categories[i]}`);
-                    categoriesId.push(category.data._id);
+                    categoriesId.push(category.data.category_id);
                 }
             }
         };
@@ -24,10 +24,11 @@ submitButton.addEventListener("click", async () => {
         })
 
 
-        for (const categoryId of categoriesId) {
+        for (const category_id of categoriesId) {
+            console.log("category_id", category_id);
             const discountCategory = await axios.post('http://localhost:8080/api/DiscountCategory/addDiscountCategory', {
-                categoryId: categoryId,
-                discountId: discount.data._id
+                category_id: category_id,
+                discount_id: discount.data.discount_id
             })
         }
 
@@ -35,7 +36,5 @@ submitButton.addEventListener("click", async () => {
 
     } catch (err) {
         console.log(err.message);
-        res.status(500).send({ message: err.message });
-
     }
 });
