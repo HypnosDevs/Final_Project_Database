@@ -13,7 +13,5 @@ router.post('/addDiscountCategory', addDiscountCategory);
 
 router.delete('/:id/deleteDiscountCategoryByDiscountId', deleteDiscountCategoryByDiscountId);
 
-router.delete('/:id/deleteDiscountCategory', deleteDiscountCategory);
-
 
 module.exports = router

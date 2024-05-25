@@ -133,4 +133,6 @@ CREATE TABLE IF NOT EXISTS ProductCategory (
     category_id INT,
     PRIMARY KEY (product_id, category_id),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES category(category_id),
+    FOREIGN KEY (product_id) REFERENCES product(product_id)
 );
