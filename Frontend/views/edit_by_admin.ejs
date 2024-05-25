@@ -234,15 +234,15 @@
                     const paymentSelect = document.getElementById("paymentSelect");
 
                     let paymentMethods = await axios.get(`http://localhost:8080/api/PaymentMethod/getAllPaymentMethodFromUser/${userId}`);
-                    paymentMethods = paymentMethods.data.paymentmethod;
+                    paymentMethods = paymentMethods.data.paymentMethods;
 
                     for (const paymentMethod of paymentMethods) {
-                        let paymentType = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentTypeFromUserPaymentMethod/${paymentMethod._id}`);
-                        paymentType = paymentType.data.name;
+                        let paymentType = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentType/${paymentMethod.payment_type_id}`);
+                        paymentType = paymentType.data.payment_name;
 
                         const option = document.createElement('option');
                         option.innerHTML = `${paymentType}, ${paymentMethod.account_number}, ${paymentMethod.account_name}`
-                        option.setAttribute('value', `${paymentMethod._id}`);
+                        option.setAttribute('value', `${paymentMethod.payment_id}`);
                         paymentSelect.appendChild(option);
                     }
 
@@ -261,8 +261,8 @@
 
                     for (const paymentType of paymentTypes) {
                         const option = document.createElement('option');
-                        option.innerHTML = `${paymentType.name}`
-                        option.setAttribute('value', `${paymentType.name}`);
+                        option.innerHTML = `${paymentType.payment_name}`
+                        option.setAttribute('value', `${paymentType.payment_name}`);
                         paymentTypeSelect.appendChild(option);
                     }
                 }
@@ -272,12 +272,12 @@
                     const addressSelect = document.getElementById("addressSelect");
 
                     let addresses = await axios.get(`http://localhost:8080/api/Address/getAllAddressFromUser/${userId}`);
-                    addresses = addresses.data.address;
+                    addresses = addresses.data;
 
                     for (const address of addresses) {
                         const option = document.createElement('option');
-                        option.innerHTML = `${address.name} ${address.amphoe} ${address.province}`
-                        option.setAttribute('value', `${address._id}`);
+                        option.innerHTML = `${address.address_name} ${address.amphoe} ${address.province}`
+                        option.setAttribute('value', `${address.address_id}`);
                         addressSelect.appendChild(option);
                     }
 
@@ -319,7 +319,7 @@
                     let data = {};
 
                     const payment_type = formData.find(e => e[0] === 'payment_type');
-                    if (payment_type && payment_type[1] != '') data.type = payment_type[1];
+                    if (payment_type && payment_type[1] != '') data.payment_type = payment_type[1];
 
                     const account_name = formData.find(e => e[0] === 'account_name');
                     if (account_name && account_name[1] != '') data.account_name = account_name[1];
@@ -328,7 +328,7 @@
                     if (account_number && account_number[1] != '') data.account_number = account_number[1];
 
                     const expiry_date = formData.find(e => e[0] === 'expiry_date');
-                    if (expiry_date && expiry_date[1] != '') data.expiry_date = expiry_date[1];
+                    if (expiry_date && expiry_date[1] != '') data.payment_expiry_date = expiry_date[1];
 
                     const payment_method = formData.find(e => e[0] === 'payment_method');
                     if (payment_method && payment_method[1] === 'add_new_payment') {
@@ -350,7 +350,7 @@
                     let data = {};
 
                     const name = formData.find(e => e[0] === 'name');
-                    if (name && name[1] != '') data.name = name[1];
+                    if (name && name[1] != '') data.address_name = name[1];
 
                     const address_line1 = formData.find(e => e[0] === 'address_line1');
                     if (address_line1 && address_line1[1] != '') data.address_line1 = address_line1[1];
@@ -359,7 +359,7 @@
                     if (address_line2 && address_line2[1] != '') data.address_line2 = address_line2[1];
 
                     const country = formData.find(e => e[0] === 'country');
-                    if (country && country[1] != '') data.country = country[1];
+                    if (country && country[1] != '') data.country_name = country[1];
 
                     const province = formData.find(e => e[0] === 'province');
                     if (province && province[1] != '') data.province = province[1];
@@ -392,8 +392,11 @@
                             alert('Please type phone number before submitting');
                         }
                     } else if (address) {
-                        await axios.patch(`http://localhost:8080/api/Address/updateAddress/${address[1]}`, data);
-                        window.location.href = "/admin_panel";
+                        if (country && !district) alert('Please select a district before submitting');
+                        else {
+                            await axios.patch(`http://localhost:8080/api/Address/updateAddress/${address[1]}`, data);
+                            window.location.href = "/admin_panel";
+                        }
                     } else {
                         alert('Please select an address before submitting');
                     }

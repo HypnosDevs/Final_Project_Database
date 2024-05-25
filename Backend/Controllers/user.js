@@ -106,13 +106,29 @@ exports.editUser = async (req, res) => {
 
         const { username, password, firstname, lastname, gender, email, user_role } = req.body;
 
-        const hash = await bcrypt.hash(password, 10);
+        let updateUserQuery = `UPDATE user SET`;
+        let updateUserValue = [];
+        
+        if (password !== undefined) {
+            const hash = await bcrypt.hash(password, 10);
+            updateUserQuery += ' password = ?,';
+            updateUserValue.push(hash);
+        }
+        if (username !== undefined) updateUserQuery += ' username = ?,', updateUserValue.push(username);
+        if (firstname !== undefined) updateUserQuery += ' firstname = ?,', updateUserValue.push(firstname);
+        if (lastname !== undefined) updateUserQuery += ' lastname = ?,', updateUserValue.push(lastname);
+        if (gender !== undefined) updateUserQuery += ' gender = ?,', updateUserValue.push(gender);
+        if (email !== undefined) updateUserQuery += ' email = ?,', updateUserValue.push(email);
+        if (user_role !== undefined) updateUserQuery += ' user_role = ?,', updateUserValue.push(user_role);
 
-        const updateUserQuery = `
-            UPDATE user SET username = ?, password = ?, firstname = ?, lastname = ?, gender = ?, email = ?, user_role = ?
-            WHERE user_id = ?
-        `;
-        const [result] = await pool.query(updateUserQuery, [username, hash, firstname, lastname, gender, email, user_role, id]);
+        if (updateUserQuery.slice(-1) === ',') updateUserQuery = updateUserQuery.slice(0, -1);
+        else {
+            return res.status(200).send({ message: 'User update nothing'});
+        }
+        updateUserQuery += ' WHERE user_id = ?';
+        updateUserValue.push(id);
+
+        const [result] = await pool.query(updateUserQuery, updateUserValue);
 
         if (result.affectedRows === 0) {
             return res.status(404).send({ message: 'User not found' });

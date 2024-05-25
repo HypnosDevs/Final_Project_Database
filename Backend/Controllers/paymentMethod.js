@@ -45,9 +45,10 @@ exports.getPaymentMethod = async (req, res) => {
 exports.addPaymentMethod = async (req, res) => {
     const connection = await pool.getConnection();
     try {
-        const { user_id, payment_type, account_name, account_number, expiry_date } = req.body;
+        const { id } = req.params;
+        const { payment_type, account_name, account_number, payment_expiry_date } = req.body;
 
-        const [userRows] = await connection.query('SELECT * FROM user WHERE user_id = ?', [user_id]);
+        const [userRows] = await connection.query('SELECT * FROM user WHERE user_id = ?', [id]);
         if (userRows.length === 0) {
             throw { message: "User not found" };
         }
@@ -58,7 +59,7 @@ exports.addPaymentMethod = async (req, res) => {
         }
 
         await connection.beginTransaction();
-        const [result] = await connection.query('INSERT INTO user_payment_method (user_id, payment_type_id, account_name, account_number, payment_expiry_date) VALUES (?, ?, ?, ?, ?)', [user_id, paymentTypeRows[0].id, account_name, account_number, expiry_date]);
+        const [result] = await connection.query('INSERT INTO user_payment_method (user_id, payment_type_id, account_name, account_number, payment_expiry_date) VALUES (?, ?, ?, ?, ?)', [id, paymentTypeRows[0].payment_type_id, account_name, account_number, payment_expiry_date]);
         await connection.commit();
 
         res.send({ message: "Payment method added successfully", payment_id: result.insertId });
@@ -74,9 +75,24 @@ exports.addPaymentMethod = async (req, res) => {
 exports.updatePaymentMethod = async (req, res) => {
     try {
         const { id } = req.params;
-        const { account_number, expiry_date } = req.body;
+        const { account_name, account_number, payment_expiry_date } = req.body;
 
-        const [result] = await pool.query('UPDATE user_payment_method SET account_number = ?, payment_expiry_date = ? WHERE payment_id = ?', [account_number, expiry_date, id]);
+        let updateQuery = `UPDATE user_payment_method SET`;
+        let updateValue = [];
+
+        if (account_name !== undefined) updateQuery += ' account_name = ?,', updateValue.push(account_name);
+        if (account_number !== undefined) updateQuery += ' account_number = ?,', updateValue.push(account_number);
+        if (payment_expiry_date !== undefined) updateQuery += ' payment_expiry_date = ?,', updateValue.push(payment_expiry_date);
+
+        if (updateQuery.slice(-1) === ',') updateQuery = updateQuery.slice(0, -1);
+        else {
+            return res.status(200).send({ message: 'Payment method update nothing'});
+        }
+        updateQuery += ' WHERE payment_id = ?';
+        updateValue.push(id);
+
+        const [result] = await pool.query(updateQuery, updateValue);
+
         if (result.affectedRows === 0) {
             throw { message: "Payment method not found" };
         }

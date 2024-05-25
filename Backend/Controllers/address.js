@@ -62,13 +62,30 @@ exports.updateAddress = async (req, res) => {
         const { id } = req.params;
         const {
             address_name, province, amphoe, district,address_line1,
-            address_line2, postal_code, country, tel_no
+            address_line2, postal_code, country_name, tel_no
         } = req.body;
 
-        const [result] = await pool.query(
-            'UPDATE address SET address_name = ?, province = ?, amphoe = ?, district = ?, address_line1 = ?, address_line2 = ?, postal_code = ?, country_name = ?, tel_no = ? WHERE address_id = ?',
-            [address_name, province, amphoe, district, address_line1, address_line2, postal_code, country, tel_no, id]
-        );
+        let updateQuery = `UPDATE address SET`;
+        let updateValue = [];
+
+        if (address_name !== undefined) updateQuery += ' address_name = ?,', updateValue.push(address_name);
+        if (address_line1 !== undefined) updateQuery += ' address_line1 = ?,', updateValue.push(address_line1);
+        if (address_line2 !== undefined) updateQuery += ' address_line2 = ?,', updateValue.push(address_line2);
+        if (country_name !== undefined) updateQuery += ' country_name = ?,', updateValue.push(country_name);
+        if (province !== undefined) updateQuery += ' province = ?,', updateValue.push(province);
+        if (amphoe !== undefined) updateQuery += ' amphoe = ?,', updateValue.push(amphoe);
+        if (district !== undefined) updateQuery += ' district = ?,', updateValue.push(district);
+        if (postal_code !== undefined) updateQuery += ' postal_code = ?,', updateValue.push(postal_code);
+        if (tel_no !== undefined) updateQuery += ' tel_no = ?,', updateValue.push(tel_no);
+
+        if (updateQuery.slice(-1) === ',') updateQuery = updateQuery.slice(0, -1);
+        else {
+            return res.status(200).send({ message: 'Address update nothing'});
+        }
+        updateQuery += ' WHERE address_id = ?';
+        updateValue.push(id);
+
+        const [result] = await pool.query(updateQuery, updateValue);
 
         if (result.affectedRows === 0) {
             return res.status(404).send({ message: "Address not found" });

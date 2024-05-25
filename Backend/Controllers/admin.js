@@ -76,7 +76,7 @@ exports.addUser = async (req, res) => {
         if (paymentTypeRows.length === 0) {
             throw "Payment type not define"
         } else {
-            payment_type_id = paymentTypeRows[0].id;
+            payment_type_id = paymentTypeRows[0].payment_type_id;
         }
 
         const insertPaymentMethodQuery = `
