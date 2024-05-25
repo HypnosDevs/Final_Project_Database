@@ -78,19 +78,34 @@ app.get('/', (req, res) => {
 
 
 
-const database = () => {
-    try {
-        mongoose.connect(env.MONGOURI)
-        console.log("connecting to db success")
-    } catch (error) {
-        console.log(error)
-        console.log("Something went wrong when connecting to db")
-    }
-}
+// const database = () => {
+//     try {
+//         mongoose.connect(env.MONGOURI)
+//         console.log("connecting to db success")
+//     } catch (error) {
+//         console.log(error)
+//         console.log("Something went wrong when connecting to db")
+//     }
+// }
 
-database();
+// database();
 
 const PORT = env.PORT || 8080;
+
+const { pool } = require('./db/db.js');
+
+app.get('/testConnection', (req, res) => {
+    const query = "SELECT * FROM user";
+
+    pool.query(query)
+        .then(([rows, fields]) => {
+            res.status(200).send(rows);
+        })
+        .catch(err => {
+            console.log("Error from backend:", err);
+            res.status(500).send({ msg: err });
+        });
+})
 
 app.listen(PORT, () => {
     console.log(`Open server on port ${PORT} complete`)
