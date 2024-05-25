@@ -1,3 +1,6 @@
+const { pool } = require('../db/db.js');
+
+
 exports.getAllCategory = async (req, res) => {
     try {
         const query = `

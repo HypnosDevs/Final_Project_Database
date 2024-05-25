@@ -1,29 +1,32 @@
-const Product = require('../Models/Product.js')
-const Category = require('../Models/Category.js');
 const fs = require('fs');
+const { pool } = require('../db/db.js');
 
 exports.getAllProduct = async (req, res) => {
     try {
-        const data = await Product.find()
+        const [data] = await pool.query('SELECT * FROM product');
         res.send(data);
-
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
     }
-}
+};
 
 exports.getProduct = async (req, res) => {
     try {
         const { id } = req.params;
-        const data = await Product.findById(id)
-        res.send(data);
+        const [data] = await pool.query('SELECT * FROM product WHERE id = ?', [id]);
 
+        if (data.length === 0) {
+            res.status(404).send({ message: 'Product not found' });
+        } else {
+            res.send(data[0]);
+        }
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
     }
-}
+};
+
 
 exports.addProduct = async (req, res) => {
     try {
@@ -34,21 +37,27 @@ exports.addProduct = async (req, res) => {
             req.body.category = undefined;
         } else {
             const categories = req.body.category.split(' ');
-            let categoryArr = [];
             for (let category of categories) {
-                categoryArr.push(await Category.findOne({ name: category }))
+                const [categoryResult] = await pool.query('SELECT category_id FROM category WHERE category_name = ?', [category]);
+                if (categoryResult.length > 0) {
+                    continue;
+                }
+                else {
+                    await pool.query(
+                        `INSERT INTO product (category_id, product_name, product_description, product_image, price, stock) VALUES (?, ?, ?, ?, ?, ?)`,
+                        [category_id, product_name, product_description, product_image, price, stock]
+                    );
+                }
             }
-            req.body.category = categoryArr;
         }
-        const newProd = new Product(req.body);
-        await newProd.save();
-        // console.log('add', newProd);
-        res.send(newProd)
+
+        res.send('add product & cat success')
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
     }
 }
+
 
 exports.updateProduct = async (req, res) => {
     try {

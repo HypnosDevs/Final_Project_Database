@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS product (
     category_id INT,
     product_name VARCHAR(255) NOT NULL,
     product_description TEXT,
-    product_image VARCHAR(255),
+    product_image MEDIUMTEXT,
     price DECIMAL(10, 2) NOT NULL,
     stock INT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -126,4 +126,11 @@ CREATE TABLE IF NOT EXISTS DiscountCategory (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (category_id) REFERENCES category(category_id),
     FOREIGN KEY (discount_id) REFERENCES Discount(discount_id)
+);
+
+CREATE TABLE IF NOT EXISTS ProductCategory (
+    product_id INT,
+    category_id INT,
+    PRIMARY KEY (product_id, category_id),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 );
