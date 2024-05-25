@@ -46,15 +46,15 @@ exports.register = async (req, res) => {
         const hash = await bcrypt.hash(password, 10);
 
         await pool.query('INSERT INTO user (username, password, firstname, lastname, gender, email, user_role) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [username, hash, req.body.user.firstname, req.body.user.lastname, req.body.user.gender, req.body.user.email, 'USER']);
+            [username, hash, req.body.user.firstname, req.body.user.lastname, req.body.user.gender, req.body.user.email, 'ADMIN']);
 
         const [userRows] = await pool.query('SELECT * FROM user WHERE username = ?', [username]);
         const userData = userRows[0];
 
-        const { address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no } = req.body.address;
+        const { address_name, province, amphoe, district, address_line1, address_line2, postal_code, country_name, tel_no } = req.body.address;
 
-        await pool.query('INSERT INTO address (user_id, address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [userData.user_id, address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no]);
+        await pool.query('INSERT INTO address (user_id, address_name, province, amphoe, district, address_line1, address_line2, postal_code, country_name, tel_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [userData.user_id, address_name, province, amphoe, district, address_line1, address_line2, postal_code, country_name, tel_no]);
 
         res.status(201).send({ message: "Register successful" });
     } catch (err) {

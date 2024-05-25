@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS test_nodejs;
+CREATE DATABASE IF NOT EXISTS test_nodejs CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 use test_nodejs;
 
@@ -17,15 +17,12 @@ CREATE TABLE IF NOT EXISTS user (
 CREATE TABLE IF NOT EXISTS `address` (
     address_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
-    address_name VARCHAR(255) NOT NULL,
-    province VARCHAR(100),
-    amphoe VARCHAR(100),
-    district VARCHAR(100),
-    sub_district VARCHAR(100),
-    street_number VARCHAR(100),
-    address_line1 VARCHAR(255),
-    address_line2 VARCHAR(255),
-    city VARCHAR(100),
+    address_name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    province VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    amphoe VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    district VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    address_line1 VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    address_line2 VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
     postal_code VARCHAR(20),
     country_name VARCHAR(100),
     tel_no VARCHAR(15),
@@ -43,6 +40,7 @@ CREATE TABLE IF NOT EXISTS user_payment_method (
     payment_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     payment_type_id INT,
+    account_name VARCHAR(50) NOT NULL,
     account_number VARCHAR(50) NOT NULL,
     payment_expiry_date DATE,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -77,11 +75,8 @@ CREATE TABLE IF NOT EXISTS `order` (
     address_name VARCHAR(255),
     province VARCHAR(100),
     district VARCHAR(100),
-    sub_district VARCHAR(100),
-    street_number VARCHAR(100),
     address_line1 VARCHAR(255),
     address_line2 VARCHAR(255),
-    city VARCHAR(100),
     postal_code VARCHAR(20),
     country_name VARCHAR(100),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,

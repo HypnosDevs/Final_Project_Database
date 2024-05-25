@@ -56,20 +56,20 @@ exports.addUser = async (req, res) => {
         const [[{ user_id }]] = await pool.query(getUserIdQuery);
 
         // Handle address creation
-        const { address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no } = req.body.address;
+        const { address_name, province, amphoe, district, address_line1, address_line2, postal_code, country_name, tel_no } = req.body.address;
 
         const insertAddressQuery = `
-            INSERT INTO address (user_id, address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO address (user_id, address_name, province, amphoe, district, address_line1, address_line2, postal_code, country_name, tel_no)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
-        const addressValues = [user_id, address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no];
+        const addressValues = [user_id, address_name, province, amphoe, district, address_line1, address_line2, postal_code, country_name, tel_no];
         await pool.query(insertAddressQuery, addressValues);
 
         // Handle payment method creation
-        const { payment_type, account_number, payment_expiry_date } = req.body.payment;
+        const { payment_type, account_name, account_number, payment_expiry_date } = req.body.payment;
 
         // Check if payment type exists or insert it if not
-        let findPaymentTypeQuery = `SELECT id FROM payment_type WHERE payment_name = ?`;
+        let findPaymentTypeQuery = `SELECT payment_type_id FROM payment_type WHERE payment_name = ?`;
         let [paymentTypeRows] = await pool.query(findPaymentTypeQuery, [payment_type]);
 
         let payment_type_id;
@@ -80,10 +80,10 @@ exports.addUser = async (req, res) => {
         }
 
         const insertPaymentMethodQuery = `
-            INSERT INTO user_payment_method (user_id, payment_type_id, account_number, payment_expiry_date)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO user_payment_method (user_id, payment_type_id, account_name, account_number, payment_expiry_date)
+            VALUES (?, ?, ?, ?, ?)
         `;
-        const paymentMethodValues = [user_id, payment_type_id, account_number, payment_expiry_date];
+        const paymentMethodValues = [user_id, payment_type_id, account_name, account_number, payment_expiry_date];
         await pool.query(insertPaymentMethodQuery, paymentMethodValues);
 
         res.status(201).json({ message: "User registration successful" });
