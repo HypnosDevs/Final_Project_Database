@@ -79,12 +79,13 @@ const renderProducts = (products) => {
         // })
         loader.remove();
 
+        const categoryName = await axios.get(`http://localhost:8080/api/Product/getCategoryFromProduct/${product.product_id}`)
 
         row.innerHTML = `
-            <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deleteProduct('${product._id}')"></i></a></td>
+            <td><i class="fa-solid fa-circle-xmark" onclick="deleteProduct('${product.product_id}')"></i></td>
             ` + imgTd + `
             <td>${product.product_name}</td>
-            <td>${product.category}</td>
+            <td>${categoryName.data}</td>
             <td>฿${product.price}</td>
             <td>${product.stock}</td>
             <td class="edit"><a href="/edit_product/${product.product_id}">Edit</a></td>

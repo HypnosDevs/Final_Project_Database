@@ -1,12 +1,14 @@
 const express = require('express')
 const router = express.Router()
 
-const { getAllProduct, getProduct, addProduct, updateProduct, deleteProduct } = require('../Controllers/product')
+const { getAllProduct, getProduct, addProduct, updateProduct, deleteProduct, getCategoryFromProduct } = require('../Controllers/product')
 const upload = require('../Middleware/upload')
 
 router.get('/getProduct', getAllProduct)
 
 router.get('/getProduct/:id', getProduct)
+
+router.get('/getCategoryFromProduct/:id', getCategoryFromProduct)
 
 router.post('/addProduct', upload.single('image'), addProduct)
 

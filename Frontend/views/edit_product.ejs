@@ -24,7 +24,7 @@
                         <h1>Edit Product</h1>
 
                         <h2>Product Name</h2>
-                        <input type="text" class="input" placeholder="Product Name" name="name">
+                        <input type="text" class="input" placeholder="Product Name" name="product_name">
 
                         <h2>Category</h2>
                         <input type="text" class="input" placeholder="Category" name="category">
@@ -64,7 +64,7 @@
                     <div class="setting tabshow">
                         <h1>Product Detail</h1>
                         <h2>Detail</h2>
-                        <textarea class="input" placeholder="Detail" name="description" cols="40" rows="5"></textarea>
+                        <textarea class="input" placeholder="Detail" name="product_description" cols="40" rows="5"></textarea>
 
                         <button type="button" class="btn" id="submitButton">Update</button>
                         <button type="button" class="btn" id="cancelButton"
@@ -115,6 +115,8 @@
                                 }
                             }
                         };
+
+                        await axios.delete(`http://localhost:8080/api/Category/deleteProductCategory/<%= product_id %>`);
 
                         await fetch(`http://localhost:8080/api/Product/<%= product_id %>/updateProduct`, {
                             method: "PATCH",

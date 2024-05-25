@@ -21,7 +21,8 @@ exports.getAllCategoryFromProduct = async (req, res) => {
         const query = `
             SELECT c.*
             FROM category c
-            JOIN product p ON c.category_id = p.category_id
+            JOIN ProductCategory pc ON c.category_id = pc.category_id
+            JOIN product p ON pc.product_id = p.product_id
             WHERE p.id = ?
         `;
         const [rows] = await pool.query(query, [id]);
@@ -110,6 +111,21 @@ exports.deleteCategory = async (req, res) => {
         await pool.query('DELETE FROM category WHERE category_id = ?', [id]);
 
         res.status(200).send({ message: 'Category deleted successfully' });
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send({ message: err.message });
+    }
+};
+
+exports.deleteProductCategory = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Delete the category
+        await pool.query('DELETE FROM ProductCategory WHERE product_id = ?', [id]);
+
+        res.status(200).send({ message: 'ProductCategory deleted successfully' });
 
     } catch (err) {
         console.error(err.message);

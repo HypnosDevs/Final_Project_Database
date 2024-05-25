@@ -249,6 +249,16 @@ body {
 #button_create button:hover {
   background: #ADD495; /* เปลี่ยนสีเมื่อชี้เมาส์ */
 }
+
+i {
+  color: #f13737;
+}
+
+i:hover {
+  color: rgb(148, 44, 44);
+}
+
+
 /*ท้ายเว็บ*/
 footer {
     display: flex;
