@@ -14,7 +14,6 @@ router.post('/addUser', addUser);
 
 router.post('/addUseWithAddress',  addUserWithAddress);
 
-
 router.patch('/editUser/:id',  editUser);
 
 router.delete('/deleteUser/:id', deleteUser);
