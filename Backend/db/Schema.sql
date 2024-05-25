@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `address` (
 );
 
 CREATE TABLE IF NOT EXISTS payment_type (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    payment_type_id INT AUTO_INCREMENT PRIMARY KEY,
     payment_name VARCHAR(50) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS user_payment_method (
     payment_expiry_date DATE,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES user(user_id),
-    FOREIGN KEY (payment_type_id) REFERENCES payment_type(id)
+    FOREIGN KEY (payment_type_id) REFERENCES payment_type(payment_type_id)
 );
 
 CREATE TABLE IF NOT EXISTS category (
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS category (
 );
 
 CREATE TABLE IF NOT EXISTS product (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT AUTO_INCREMENT PRIMARY KEY,
     category_id INT,
     product_name VARCHAR(255) NOT NULL,
     product_description TEXT,
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS order_item (
     qty INT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (order_id) REFERENCES `order`(order_id),
-    FOREIGN KEY (product_id) REFERENCES product(id)
+    FOREIGN KEY (product_id) REFERENCES product(product_id)
 );
 
 CREATE TABLE IF NOT EXISTS shopping_cart_item (
@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS shopping_cart_item (
     qty INT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES user(user_id),
-    FOREIGN KEY (product_item_id) REFERENCES product(id)
+    FOREIGN KEY (product_item_id) REFERENCES product(product_id)
 );
 
 CREATE TABLE IF NOT EXISTS Discount (
