@@ -45,7 +45,7 @@ exports.addAddress = async (req, res) => {
         } = req.body;
 
         await pool.query(
-            'INSERT INTO address (user_id, address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            'INSERT INTO address (user_id, address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [user_id, address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country, tel_no]
         );
 
