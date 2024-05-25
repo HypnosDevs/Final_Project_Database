@@ -20,11 +20,6 @@ const deletePaymentType = async (payment_type_id) => {
     try {
         const paymentType = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentType/${payment_type_id}`);
 
-        // Delete the payment method from the server
-        for (const payment_method_id of paymentType.data.paymentmethod) {
-            await axios.delete(`http://localhost:8080/api/PaymentMethod/${payment_method_id}/deletePaymentMethod`);
-        }
-
         // Delete the payment type from the server
         await axios.delete(`http://localhost:8080/api/PaymentType/${payment_type_id}/deletePaymentType`);
 

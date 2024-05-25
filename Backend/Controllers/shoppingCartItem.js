@@ -41,7 +41,7 @@ exports.addShoppingCartItem = async (req, res) => {
             throw { message: "User Not Found" };
         }
 
-        const productQuery = 'SELECT * FROM product WHERE id = ?';
+        const productQuery = 'SELECT * FROM product WHERE product_id = ?';
         const [products] = await connection.query(productQuery, [product_id]);
 
         if (products.length === 0) {
