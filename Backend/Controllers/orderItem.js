@@ -45,7 +45,7 @@ exports.getProductFromOrderItem = async (req, res) => {
         if (rows.length === 0) {
             throw { message: "Data (product in that order id) Not Found" };
         }
-        const [productRows] = await pool.query('SELECT * FROM product WHERE id = ?', [product_id]);
+        const [productRows] = await pool.query('SELECT * FROM product WHERE product_id = ?', [product_id]);
         if (productRows.length === 0) {
             throw { message: "Product Not Found" };
         }
@@ -64,7 +64,7 @@ exports.addOrderItem = async (req, res) => {
         if (orderRows.length === 0) {
             throw { message: "Order Not Found" };
         }
-        const [productRows] = await connection.query('SELECT * FROM product WHERE id = ?', [product_id]);
+        const [productRows] = await connection.query('SELECT * FROM product WHERE product_id = ?', [product_id]);
         if (productRows.length === 0) {
             throw { message: "Product Not Found" };
         }
@@ -82,7 +82,7 @@ exports.addOrderItem = async (req, res) => {
 
         await connection.beginTransaction();
         await connection.query('INSERT INTO order_item SET ?', orderItem);
-        await connection.query('UPDATE product SET stock = ? WHERE id = ?', [product.stock - orderItem.qty, product_id]);
+        await connection.query('UPDATE product SET stock = ? WHERE product_id = ?', [product.stock - orderItem.qty, product_id]);
         await connection.commit();
 
         res.status(201).send({ message: "Create order item successful" });

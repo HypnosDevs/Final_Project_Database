@@ -32,7 +32,7 @@ exports.getPaymentTypeFromUserPaymentMethod = async (req, res) => {
 exports.getPaymentType = async (req, res) => {
     try {
         const { id } = req.params;
-        const [rows] = await pool.query('SELECT * FROM payment_type WHERE id = ?', [id]);
+        const [rows] = await pool.query('SELECT * FROM payment_type WHERE payment_type_id = ?', [id]);
         
         if (rows.length === 0) {
             throw { message: "Payment type not found" };
@@ -67,7 +67,8 @@ exports.addPaymentType = async (req, res) => {
 exports.deletePaymentType = async (req, res) => {
     try {
         const { id } = req.params;
-        const [result] = await pool.query('DELETE FROM payment_type WHERE id = ?', [id]);
+        await pool.query('DELETE FROM user_payment_method WHERE payment_type_id = ?', [id]);
+        const [result] = await pool.query('DELETE FROM payment_type WHERE payment_type_id = ?', [id]);
         
         if (result.affectedRows === 0) {
             throw { message: "Payment type not found" };
