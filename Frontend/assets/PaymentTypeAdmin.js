@@ -57,10 +57,10 @@ const renderPaymentTypes = (paymentTypes) => {
     paymentTypes.forEach(paymentType => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deletePaymentType('${paymentType._id}')"></i></a></td>
-            <td>${paymentType.name}</td>
+            <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deletePaymentType('${paymentType.payment_type_id}')"></i></a></td>
+            <td>${paymentType.payment_name}</td>
         `;
-        row.setAttribute('id', paymentType._id);
+        row.setAttribute('id', paymentType.payment_type_id);
         tbody.appendChild(row);
     });
 };

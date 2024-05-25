@@ -45,7 +45,7 @@ exports.getPaymentMethod = async (req, res) => {
 exports.addPaymentMethod = async (req, res) => {
     const connection = await pool.getConnection();
     try {
-        const { user_id, payment_type, account_number, expiry_date } = req.body;
+        const { user_id, payment_type, account_name, account_number, expiry_date } = req.body;
 
         const [userRows] = await connection.query('SELECT * FROM user WHERE user_id = ?', [user_id]);
         if (userRows.length === 0) {
@@ -58,7 +58,7 @@ exports.addPaymentMethod = async (req, res) => {
         }
 
         await connection.beginTransaction();
-        const [result] = await connection.query('INSERT INTO user_payment_method (user_id, payment_type_id, account_number, payment_expiry_date) VALUES (?, ?, ?, ?)', [user_id, paymentTypeRows[0].id, account_number, expiry_date]);
+        const [result] = await connection.query('INSERT INTO user_payment_method (user_id, payment_type_id, account_name, account_number, payment_expiry_date) VALUES (?, ?, ?, ?, ?)', [user_id, paymentTypeRows[0].id, account_name, account_number, expiry_date]);
         await connection.commit();
 
         res.send({ message: "Payment method added successfully", payment_id: result.insertId });
