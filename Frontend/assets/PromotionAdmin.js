@@ -16,16 +16,16 @@ const emptyPage = (text) => {
     pageHeaderSection.parentNode.insertBefore(h1Element, referenceNode);
 }
 
-const deletePromotion = async (discount_id) => {
+const deletePromotion = async (discount_id, category_id) => {
     try {
         // Delete the discount category from the server
-        await axios.delete(`http://localhost:8080/api/DiscountCategory/${discount_id}/deleteDiscountCategoryByDiscountId`);
+        // await axios.delete(`http://localhost:8080/api/DiscountCategory/${discount_id}/deleteDiscountCategoryByDiscountId`);
 
         // Delete the discount from the server
-        await axios.delete(`http://localhost:8080/api/Discount/${discount_id}/deleteDiscount`);
+        await axios.delete(`http://localhost:8080/api/DiscountCategory/deleteDiscountCategoryById/${discount_id}/${category_id}`);
 
         // Remove all td elements inside the corresponding row from the cart table
-        const rowToRemove = document.querySelector(`#cart tbody tr[id="${discount_id}"]`);
+        const rowToRemove = document.querySelector(`#cart tbody tr[id="${discount_id}${category_id}"]`);
         if (rowToRemove) {
             const cellsToRemove = rowToRemove.querySelectorAll('td');
             cellsToRemove.forEach(cell => {
@@ -51,29 +51,38 @@ const renderPromotions = (promotions) => {
     tbody.innerHTML = ''; // Clear existing content
 
     promotions.forEach(async promotion => {
-        const row = document.createElement('tr');
-        if (promotion.discountcategory && promotion.discountcategory.length != 0) {
-            let categoryArr = [];
-            for (const discountCategoryId of promotion.discountcategory) {
-                const discountCategory = await axios.get(`http://localhost:8080/api/DiscountCategory/getDiscountCategory/${discountCategoryId}`)
-                const categoryId = discountCategory.data.category;
-                console.log('getCat1', discountCategory, promotion.discountcategory)
-                const categoryName = await axios.get(`http://localhost:8080/api/Category/getCategory/${categoryId}`);
-                // console.log('getCat2')
-                categoryArr.push(categoryName.data.name);
+
+        // console.log('promotion', promotion);
+        const discountCats = await axios.get(`http://localhost:8080/api/DiscountCategory/getDiscountCategoryByDiscountId/${promotion.discount_id}`)
+        console.log('discountCats', discountCats);
+
+        if (discountCats.data.length > 0) {
+            // let categoryArr = [];
+            for (const dataDiscountCats of discountCats.data) {
+                const row = document.createElement('tr');
+                const category_id = dataDiscountCats.category_id;
+                const categoryName = await axios.get(`http://localhost:8080/api/Category/getCategory/${category_id}`);
+                console.log('getCat2', category_id)
+                // categoryArr.push(categoryName.data.category_name);
+                row.innerHTML = `
+                <td><a href=""><i class="fa-solid fa-circle-xmark" onclick="deletePromotion('${promotion.discount_id}','${category_id}')"></i></a></td>
+                <td>${promotion.discount}%</td>
+                <td>${categoryName.data.category_name}</td>
+                <td class="edit"><a href="/edit_promotion/${promotion.discount_id}">Edit</a></td>
+              `;
+                row.setAttribute('id', `${promotion.discount_id}${category_id}`);
+                tbody.appendChild(row);
+                console.log('row', row);
             }
-            promotion.category = categoryArr;
-        } else {
-            promotion.category = '';
+            // promotion.category = categoryArr;
         }
-        row.innerHTML = `
-            <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deletePromotion('${promotion._id}')"></i></a></td>
-            <td>${promotion.discount}%</td>
-            <td>${promotion.category}</td>
-            <td class="edit"><a href="/edit_promotion/${promotion._id}">Edit</a></td>
-        `;
-        row.setAttribute('id', promotion._id);
-        tbody.appendChild(row);
+        // else {
+        //     promotion.category = '';
+        // }
+        // console.log('promotion category', promotion);
+
+        // row.setAttribute('id', promotion.discount_id);
+        // tbody.appendChild(row);
     });
 };
 

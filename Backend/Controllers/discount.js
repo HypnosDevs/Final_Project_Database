@@ -47,7 +47,7 @@ exports.addDiscount = async (req, res) => {
         const [result] = await pool.query('INSERT INTO Discount (discount) VALUES (?)', [discount]);
         const newDiscountId = result.insertId;
         const [newDiscount] = await pool.query('SELECT * FROM Discount WHERE Discount_id = ?', [newDiscountId]);
-        res.send(newDiscount);
+        res.send(newDiscount[0]);
     } catch (err) {
         console.error(err.message);
         res.status(500).send({ message: err.message });

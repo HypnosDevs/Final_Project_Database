@@ -51,10 +51,34 @@ exports.addDiscountCategory = async (req, res) => {
 // Delete discount categories by discount ID
 exports.deleteDiscountCategoryByDiscountId = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { discount_id } = req.params;
 
-        await pool.query('DELETE FROM DiscountCategory WHERE discount_id = ?', [id]);
+        await pool.query('DELETE FROM DiscountCategory WHERE discount_id = ?', [discount_id]);
         res.send({ message: "Discount categories deleted successfully" });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send({ message: err.message });
+    }
+};
+
+exports.deleteDiscountCategoryByCategoryId = async (req, res) => {
+    try {
+        const { category_id } = req.params;
+        await pool.query('DELETE FROM DiscountCategory WHERE discount_id = ? AND category_id = ?', [category_id]);
+
+        res.send({ message: "Discount and related categories deleted successfully" });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send({ message: err.message });
+    }
+};
+
+exports.deleteDiscountCategoryById = async (req, res) => {
+    try {
+        const { discount_id, category_id } = req.params;
+        await pool.query('DELETE FROM DiscountCategory WHERE discount_id = ? AND category_id = ?', [discount_id, category_id]);
+
+        res.send({ message: "Discount and related categories deleted successfully" });
     } catch (err) {
         console.error(err.message);
         res.status(500).send({ message: err.message });

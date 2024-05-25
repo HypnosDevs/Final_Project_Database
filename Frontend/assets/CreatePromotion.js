@@ -23,7 +23,7 @@ submitButton.addEventListener("click", async () => {
             max_discount: Array.from(formData)[3][1]
         })
 
-
+        console.log('discount', discount);
         for (const category_id of categoriesId) {
             console.log("category_id", category_id);
             const discountCategory = await axios.post('http://localhost:8080/api/DiscountCategory/addDiscountCategory', {

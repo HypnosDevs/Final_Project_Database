@@ -116,6 +116,8 @@ CREATE TABLE IF NOT EXISTS shopping_cart_item (
 CREATE TABLE IF NOT EXISTS Discount (
     discount_id INT AUTO_INCREMENT PRIMARY KEY,
     discount DECIMAL(10, 2) NOT NULL,
+    min_price INT,
+    max_discount INT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
