@@ -11,7 +11,7 @@ router.post('/addDiscount', addDiscount)
 
 router.post('/:id/updateDiscount', updateDiscount)
 
-router.delete('/:id/deleteDiscount', deleteDiscount)
+router.delete('/deleteDiscount/:id', deleteDiscount)
 
 
 

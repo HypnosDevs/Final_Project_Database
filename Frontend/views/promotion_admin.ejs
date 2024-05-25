@@ -40,47 +40,36 @@
 
         <section>
             <div class="values">
-                <div class="val-box" id="users_page">
-                    <i class="fa-solid fa-users"></i>
-                    <div>
-                        <h3 id="user-length">
 
-                        </h3>
-                        <span>Users</span>
-                    </div>
-                </div>
-                <div class="val-box" id="orders_page">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <div>
-                        <h3 id="orderItems-length">
-
-                        </h3>
-                        <span>Total Orders</span>
-                    </div>
-                </div>
-
-                <div class="val-box" id="products_page">
+                <div class="val-box" id="promotions_page">
                     <i class="fa-solid fa-box"></i>
                     <div>
-                        <h3 id="products-length">
+                        <h3 id="promotions-length">
 
                         </h3>
-                        <span>Product Sold</span>
+                        <span>Promotion</span>
                     </div>
                 </div>
-                <div class="val-box" id="promotions_page">
-                    <i class="fa-solid fa-boxes-stacked"></i>
+                <div class="val-box" id="discounts_page">
+                    <i class="fa-solid fa-users"></i>
                     <div>
+                        <h3 id="discounts-length">
 
-                        <span>Best category</span>
+                        </h3>
+                        <span>Discounts</span>
                     </div>
                 </div>
-                <div class="val-box" id="analize-page">
-                    <i class="fa-solid fa-location-dot"></i>
+                <div class="val-box" id="categories_page">
+                    <i class="fa-solid fa-cart-shopping"></i>
                     <div>
-                        <span>Best province</span>
+                        <h3 id="categories-length">
+
+                        </h3>
+                        <span>Categories</span>
                     </div>
                 </div>
+
+
             </div>
         </section>
 
@@ -101,358 +90,6 @@
 
         <!-- <script src="/loader.js" defer></script> -->
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script>
-            const emptyPage = (text) => {
-                // console.log(document.querySelector('.no-product'))
-                let h1Element = document.querySelector('.no-product');
-                if (h1Element) {
-                    h1Element.textContent = `${text}`;
-                    return;
-                }
-                const trList = document.querySelectorAll("#board tbody tr");
-                trList.forEach(tr => {
-                    tr.remove();
-                });
-
-                // Create an h1 element with the text "No products found" and class "no-product"
-                h1Element = document.createElement('h1');
-                h1Element.textContent = `${text}`;
-                h1Element.classList.add('no-product');
-
-                // Get the reference node after which the h1 will be inserted
-                const boardHeaderSection = document.getElementById('board');
-                const referenceNode = boardHeaderSection.nextElementSibling;
-
-                // Insert the h1 element after the page-header section
-                boardHeaderSection.parentNode.insertBefore(h1Element, referenceNode);
-            }
-
-            const deleteOrderItem = async (order_item_id) => {
-
-                try {
-                    // Delete the item from the server
-                    await axios.delete(`http://localhost:8080/api/OrderItem/deleteOrderItemByOrderItemId/${order_item_id}`);
-
-                    // Remove all td elements inside the corresponding row from the cart table
-                    const rowToRemove = document.querySelector(`#board tr[id="${order_item_id}"]`);
-                    if (rowToRemove) {
-                        const cellsToRemove = rowToRemove.querySelectorAll('td');
-                        cellsToRemove.forEach(cell => {
-                            cell.remove(); // Remove each td element from the row
-                        });
-
-                        rowToRemove.remove(); // Remove the row from the DOM
-                    } else {
-                        console.error('Row not found for item:', order_item_id);
-                    }
-
-
-
-                    const userCount = document.querySelectorAll('#board tbody tr').length;
-                    let userLength = document.querySelector("#orderItems-length");
-                    userLength.innerHTML = userCount;
-                    if (userCount === 0) {
-                        emptyPage("No Orders found");
-                    }
-                } catch (error) {
-                    console.error('Error deleting item:', error);
-                    // Optionally, you can inform the user about the deletion error
-                    // For example:
-                    alert('An error occurred while deleting the user. Please try again later.');
-                }
-            }
-
-            const deleteUser = async (user_id) => {
-                try {
-                    // Delete the item from the server
-                    await axios.delete(`http://localhost:8080/api/User/deleteUser/${user_id}`);
-
-                    // Remove all td elements inside the corresponding row from the cart table
-                    const rowToRemove = document.querySelector(`#board tr[id="${user_id}"]`);
-                    if (rowToRemove) {
-                        const cellsToRemove = rowToRemove.querySelectorAll('td');
-                        cellsToRemove.forEach(cell => {
-                            cell.remove(); // Remove each td element from the row
-                        });
-
-                        rowToRemove.remove(); // Remove the row from the DOM
-                    } else {
-                        console.error('Row not found for item:', user_id);
-                    }
-
-
-
-                    const userCount = document.querySelectorAll('#board tbody tr').length;
-                    let userLength = document.querySelector("#user-length");
-                    userLength.innerHTML = userCount;
-                    if (userCount === 0) {
-                        emptyPage("No Users found");
-                    }
-                } catch (error) {
-                    console.error('Error deleting item:', error);
-                    // Optionally, you can inform the user about the deletion error
-                    // For example:
-                    alert('An error occurred while deleting the user. Please try again later.');
-                }
-            };
-        </script>
-
-        <script>
-            let productName = [];
-            let orderUserId = [];
-
-            const loadUsers = async (allUsers) => {
-                const headerTable = document.querySelector("#header-table thead");
-                headerTable.innerHTML = '';
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                        <td>Remove</td>
-                        <td>Users</td>
-                        <td>Name</td>
-                        <td>Email</td>
-                        <td>Role</td>
-                        <td>History</td>
-                        <td>Edit</td>
-                        `
-                headerTable.appendChild(row);
-
-
-
-                const tableBody = document.querySelector("#board tbody");
-
-                // Clear existing rows
-                tableBody.innerHTML = '';
-                for (user of allUsers) {
-                    if (user.user_role === "ADMIN") {
-                        continue;
-                    }
-                    const row = document.createElement("tr");
-                    row.setAttribute("id", `${user.user_id}`);
-                    row.innerHTML = `
-                        <td><a onClick="deleteUser('${user.user_id}')"><i class="remove fa-solid fa-circle-xmark"></i></a></td>
-                        <td><img src="/img/user.png"></a></li></td>
-                        <td>${user.username}</td>
-                        <td>${user.email}</td>
-                        <td>${user.user_role}</td>
-                        <td class="view"><a href="/view" onclick="sessionStorage.setItem('userId', '${user.user_id}')">View</a></td>
-                        <td class="edit"><a href="/edit_by_admin" onclick="sessionStorage.setItem('userId', '${user.user_id}')">Edit</a></td>
-                        `
-
-                    tableBody.appendChild(row);
-                }
-
-                const userCount = document.querySelectorAll('#board tbody tr').length;
-                let userLength = document.querySelector("#user-length");
-                userLength.innerHTML = userCount;
-                if (userCount === 0) {
-                    emptyPage("No Users found");
-                }
-                else {
-                    let countNoProduct = document.querySelector('.no-product');
-                    if (countNoProduct) {
-                        countNoProduct.remove();
-                    }
-                }
-
-
-            }
-            const loadOrders = async (allOrders) => {
-                const headerTable = document.querySelector("#header-table thead");
-
-                // Clear existing rows
-                headerTable.innerHTML = '';
-                const row = document.createElement("tr");
-
-                row.innerHTML = `
-                <td>Remove</td>
-                <td>User</td>
-                        
-                        <td>Order Id</td>
-                        <td>Order Date</td>
-                        <td>Product Name</td>
-                        <td>Price</td>
-                        <td>Quantity</td>
-                        <td>Status</td>
-                        
-                        
-                        `;
-                headerTable.appendChild(row);
-
-                const tableBody = document.querySelector("#board tbody");
-
-                // Clear existing rows
-                tableBody.innerHTML = '';
-                let k = 0;
-                for (const orderData of allOrders) {
-                    const createdAt = new Date(orderData.createdAt);
-                    //  format the date as "YYYY-MM-DD HH:MM:SS"
-                    const formattedDate = `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-${createdAt.getDate().toString().padStart(2, '0')} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
-
-                    const row = document.createElement("tr");
-                    row.setAttribute("id", `${orderData.order_id}`);
-                    row.innerHTML = `
-                    <td><a onClick="deleteOrderItem('${orderData.order_id}')"><i class="remove fa-solid fa-circle-xmark"></i></a></td>
-
-                        <td>${orderUserId[k]}</td>
-                        <td>${orderData.order_id}</td>
-                        <td>${formattedDate}</td>
-                        <td>${orderData.product_name}</td>
-                        <td>${orderData.price - orderData.discount}</td>
-                        <td>${orderData.qty}</td>
-                        <td>
-                            <select class="selection" id="selectStatus${orderData.order_id}">
-                                <option value="Pending" ${orderData.status === "Pending" ? "selected" : ""}>Pending</option>
-                                <option value="Shipping" ${orderData.status === "Shipping" ? "selected" : ""}>Shipping</option>
-                                <option value="Delivered" ${orderData.status === "Delivered" ? "selected" : ""}>Delivered</option>
-                            </select>
-                        </td>
-                        
-                    `;
-
-                    tableBody.appendChild(row);
-                    k++;
-
-
-                    // Change background color of select element based on selected value
-                    document.querySelector(`#selectStatus${orderData.order_id}`).addEventListener("change", async function (event) {
-                        const selectStatus = event.target; // Get the select element that triggered the event
-                        switch (selectStatus.value) {
-                            case "Pending":
-                                selectStatus.style.backgroundColor = "#ffffea";
-                                break;
-                            case "Shipping":
-                                selectStatus.style.backgroundColor = "#fcefff";
-                                break;
-                            case "Delivered":
-                                selectStatus.style.backgroundColor = "#dcffe0";
-                                break;
-                            default:
-                                selectStatus.style.backgroundColor = "eafffa"; // Reset background color if none of the cases match
-                        }
-
-                        const updatedOrder = await axios.put(`http://localhost:8080/api/OrderItem/updateOrderItemStatus/${orderData.order_id}`, { status: selectStatus.value });
-                        console.log("update laew", updatedOrder);
-                    });
-                    const status = document.querySelector(`#selectStatus${orderData.order_id}`);
-                    if (orderData.status === "Pending") {
-                        status.style.backgroundColor = "#ffffea";
-                    }
-                    else if (orderData.status === "Shipping") {
-                        status.style.backgroundColor = "#fcefff";
-                    }
-                    else if (orderData.status === "Delivered") {
-                        status.style.backgroundColor = "#dcffe0";
-                    }
-
-
-                }
-            };
-            const loadProducts = async (productSoldData) => {
-                const headerTable = document.querySelector("#header-table thead");
-                let countNoProduct = document.querySelector('.no-product');
-                if (countNoProduct) {
-                    countNoProduct.remove();
-                }
-                headerTable.innerHTML = '';
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                        <td>Id</td>
-                        <td>Name</td>
-                        <td>Quantity</td>
-                        <td>Total Sales</td>
-                        `
-                headerTable.appendChild(row);
-
-                const tableBody = document.querySelector("#board tbody");
-
-                // Clear existing rows
-                tableBody.innerHTML = '';
-
-                for (const product of productSoldData) {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${product.productId}</td>
-                        <td>${product.productName}</td>
-                        <td>${product.totalQty}</td>
-                        <td>${product.totalSales}</td>
-                    
-                    `;
-                    tableBody.appendChild(row);
-                }
-            };
-
-
-            const loadAnalyzes = async (bestProvince) => {
-                const headerTable = document.querySelector("#header-table thead");
-                let countNoProduct = document.querySelector('.no-product');
-                if (countNoProduct) {
-                    countNoProduct.remove();
-                }
-                headerTable.innerHTML = '';
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                        <td>Province</td>
-                        <td>Quantity</td>
-                        <td class="total-sales">Total Sales</td>
-                        `
-                headerTable.appendChild(row);
-
-                const tableBody = document.querySelector("#board tbody");
-
-                // Clear existing rows
-                tableBody.innerHTML = '';
-
-                for (const province of bestProvince) {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${province.province}</td>
-                        <td>${province.totalQty}</td>
-                        <td >${province.totalSales}</td>
-                    `;
-
-                    tableBody.appendChild(row);
-
-                }
-                document.querySelector("#board table td:nth-child(3)").style.width = "150px";
-            };
-
-
-            const loadPromotions = async (bestCategory) => {
-                const headerTable = document.querySelector("#header-table thead");
-                let countNoProduct = document.querySelector('.no-product');
-                if (countNoProduct) {
-                    countNoProduct.remove();
-                }
-                headerTable.innerHTML = '';
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                        <td>Category Name</td>
-                        <td>Quantity</td>
-                        <td class="total-sales">Total Sales</td>
-                        `
-                headerTable.appendChild(row);
-
-                const tableBody = document.querySelector("#board tbody");
-
-                // Clear existing rows
-                tableBody.innerHTML = '';
-
-                for (const category of bestCategory) {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${category.categoryName}</td>
-                        <td>${category.totalQty}</td>
-                        <td >${category.totalSales}</td>
-                    `;
-
-                    tableBody.appendChild(row);
-
-                }
-                document.querySelector("#board table td:nth-child(3)").style.width = "150px";
-            };
-        </script>
-
-        
 
         <script>
             async function allowed(roles) {
@@ -477,5 +114,57 @@
         </script>
 
         <script src="PromotionAdmin.js"></script>
+        <script>
+            const loadData = async () => {
+                const allPromotions = document.querySelector("#promotions_page");
+                const allDiscounts = document.querySelector("#discounts_page");
+                const allCategories = document.querySelector("#categories_page");
+                const discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
+                const categories = await axios.get("http://localhost:8080/api/Category/getCategory");
+                const promotions = await axios.get("http://localhost:8080/api/DiscountCategory/getDiscountCategory")
+                const loader = document.querySelector("#loader");
+
+
+                loader.classList.add("loader-hidden");
+
+                loader.addEventListener("transitionend", () => {
+                    document.body.removeChild("loader");
+                })
+
+                const rowLoader = document.querySelector("#loader")
+                rowLoader.remove();
+                document.querySelector("#promotions-length").innerHTML = promotions.data.length;
+                document.querySelector("#discounts-length").innerHTML = discounts.data.length;
+                document.querySelector("#categories-length").innerHTML = categories.data.length;
+                getPromotions(discounts);
+                allPromotions.addEventListener("click", async () => {
+                    await renderPromotions(discounts.data);
+                    if (discounts.data.length === 0) {
+                        emptyPage("No Promotion found");
+                    }
+                })
+
+                allDiscounts.addEventListener("click", async () => {
+                    await renderDiscounts(discounts.data);
+                    if (discounts.data.length === 0) {
+                        emptyPage("No Discount found");
+                    }
+                })
+
+                allCategories.addEventListener("click", async () => {
+                    await renderCategories(categories.data);
+                    if (categories.data.length === 0) {
+                        emptyPage("No Category found");
+                    }
+                })
+            }
+
+            loadData();
+
+
+        </script>
+
+
+
 
         <%- include('../partials/footer') %>

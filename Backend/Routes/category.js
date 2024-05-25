@@ -13,7 +13,7 @@ router.get('/getCategoryFromDiscountCategoryId/:discount_category_id', getCatego
 
 router.post('/addCategory/:name', addCategory)
 
-router.delete('/:id/deleteCategory', deleteCategory)
+router.delete('/deleteCategory/:id', deleteCategory)
 
 
 
