@@ -36,7 +36,7 @@ exports.getOrderFromUser = async (req, res) => {
         const [rows] = await pool.query('SELECT * FROM `order` WHERE user_id = ?', [user_id]);
 
         if (rows.length === 0) {
-            res.status(404).send({ message: "Order Not Found" });
+            res.status(404).json({ message: "Order Not Found" });
             return;
         }
 

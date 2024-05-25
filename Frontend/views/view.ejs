@@ -82,7 +82,7 @@
           }
           else {
             curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
-            const role = curUser.data.role;
+            const role = curUser.data.user_role;
             console.log('role:', role)
             if (!roles.includes(role)) {
               window.location.href = "/";
