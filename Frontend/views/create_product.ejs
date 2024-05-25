@@ -1,63 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>User Setting Page</title>
-        <link rel="stylesheet" href="create_edit.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
-    </head>
-    
-    <body>
-        <div class="container">
-            <div class="leftbox">
-                <nav>
-                    <a onclick="tabs(0)" 
-                    class="tab">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Setting Page</title>
+    <link rel="stylesheet" href="create_edit.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="leftbox">
+            <nav>
+                <a onclick="tabs(0)" class="tab">
                     <i class="fa-solid fa-cart-plus"></i>
-                    </a>
-                    
-                    <a onclick="tabs(1)" 
-                    class="tab">
+                </a>
+
+                <a onclick="tabs(1)" class="tab">
                     <i class="fa-solid fa-image"></i>
-                    </a>
+                </a>
 
-                    <a onclick="tabs(2)" 
-                    class="tab">
+                <a onclick="tabs(2)" class="tab">
                     <i class="fa-solid fa-circle-info"></i>
-                    </a>
+                </a>
 
-                </nav>
-            </div>
-            <div class="rightbox">
-                <form id="form-create-product">
-                    <div class="profile tabshow">
-                        <h1>Create Product</h1>
-        
-                        <h2>Product Name</h2>
-                        <input type="text" class="input" placeholder="Product Name" name="name">
+            </nav>
+        </div>
+        <div class="rightbox">
+            <form id="form-create-product">
+                <div class="profile tabshow">
+                    <h1>Create Product</h1>
 
-                        <h2>Category</h2>
-                        <input type="text" class="input" placeholder="Category" name="category">
+                    <h2>Product Name</h2>
+                    <input type="text" class="input" placeholder="Product Name" name="name">
 
-                        <h2>Price</h2>
-                        <input type="number" class="input" placeholder="Price" name="price">
+                    <h2>Category</h2>
+                    <input type="text" class="input" placeholder="Category" name="category">
 
-                        <h2>Stock</h2>
-                        <input type="number" class="input" placeholder="Stock" name="stock">
+                    <h2>Price</h2>
+                    <input type="number" class="input" placeholder="Price" name="price">
 
-                        <button type="button" class="btn" id="cancelButton" onclick="window.location.href='/product_admin';">Cancel</button>
-                        
-                    </div>
+                    <h2>Stock</h2>
+                    <input type="number" class="input" placeholder="Stock" name="stock">
 
-                    <div class="payment tabshow">
-                        <h1>Image Product</h1>
-                        <!-- <h2>Image Product NO.1</h2> -->
-                        <input type="file" accept="image/*" name="image">
-                        
+                    <button type="button" class="btn" id="cancelButton"
+                        onclick="window.location.href='/product_admin';">Cancel</button>
 
-                        <!-- <h2>Image Product NO.2</h2>
+                </div>
+
+                <div class="payment tabshow">
+                    <h1>Image Product</h1>
+                    <!-- <h2>Image Product NO.1</h2> -->
+                    <input type="file" accept="image/*" name="image">
+
+
+                    <!-- <h2>Image Product NO.2</h2>
                         <input type="file" accept="image/*">
 
                         <h2>Image Product NO.3</h2>
@@ -65,62 +67,65 @@
 
                         <h2>Image Product NO.4</h2>
                         <input type="file" accept="image/*"> -->
-                    
-                        <button type="button" class="btn" id="cancelButton" onclick="window.location.href='/product_admin';">Cancel</button>
-                        
-                    </div>
 
-                    
-                    <div class="setting tabshow">
-                        <h1>Product Detail</h1>
-                        <h2>Detail</h2>
-                        <textarea class="input" placeholder="Detail" name="description" cols="40" rows="5"></textarea>
-                    
-                        <button type="button" class="btn" id="submitButton">Create</button>
-                        <button type="button" class="btn" id="cancelButton" onclick="window.location.href='/product_admin';">Cancel</button>
-                    
-                    </div>
-                </form>
+                    <button type="button" class="btn" id="cancelButton"
+                        onclick="window.location.href='/product_admin';">Cancel</button>
 
-            </div>
+                </div>
 
-            <script>
-                async function allowed(roles) {
-                  let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
-                      withCredentials: true
-                  });
-                  if (!curUser.data) {
+
+                <div class="setting tabshow">
+                    <h1>Product Detail</h1>
+                    <h2>Detail</h2>
+                    <textarea class="input" placeholder="Detail" name="description" cols="40" rows="5"></textarea>
+
+                    <button type="button" class="btn" id="submitButton">Create</button>
+                    <button type="button" class="btn" id="cancelButton"
+                        onclick="window.location.href='/product_admin';">Cancel</button>
+
+                </div>
+            </form>
+
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        <script>
+            async function allowed(roles) {
+                let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+                    withCredentials: true
+                });
+                if (!curUser.data) {
                     window.location.href = "/signIn";
-                  }
-                  else {
+                }
+                else {
                     curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
-                    const role = curUser.data.role;
+                    const role = curUser.data.user_role;
                     console.log('role:', role)
                     if (!roles.includes(role)) {
-                      window.location.href = "/";
+                        window.location.href = "/";
                     }
-                  }
                 }
-                let roles = "<%= roles %>";
-                roles = roles.split(',');
-                allowed(roles);
-              </script>
-             
-            <script src="CreateProduct.js"></script>
-            <script>
-                const tabBtn = document.querySelectorAll('.tab');
-                const tab = document.querySelectorAll('.tabshow');
-            
-                function tabs(panelIndex) {
-                    tab.forEach(function(node) {
-                        node.style.display = "none";
-                    });
-                    tab[panelIndex].style.display = "block";
-                }
-                tabs(0);
-            </script>
-            
-                
-    </body>
+            }
+            let roles = "<%= roles %>";
+            roles = roles.split(',');
+            allowed(roles);
+        </script>
+
+        <script src="CreateProduct.js"></script>
+        <script>
+            const tabBtn = document.querySelectorAll('.tab');
+            const tab = document.querySelectorAll('.tabshow');
+
+            function tabs(panelIndex) {
+                tab.forEach(function (node) {
+                    node.style.display = "none";
+                });
+                tab[panelIndex].style.display = "block";
+            }
+            tabs(0);
+        </script>
+
+
+</body>
 
 </html>

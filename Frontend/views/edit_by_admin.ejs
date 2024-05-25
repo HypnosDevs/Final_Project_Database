@@ -63,13 +63,16 @@
                         </div>
 
                         <h2>Cardholder Name</h2>
-                        <input id="addAccountName" type="text" class="input" placeholder="Cardholder Name" name="account_name" value="">
+                        <input id="addAccountName" type="text" class="input" placeholder="Cardholder Name"
+                            name="account_name" value="">
 
                         <h2>Card Number</h2>
-                        <input id="addAccountNumber" type="text" class="input" placeholder="Card Number" name="account_number" value="">
+                        <input id="addAccountNumber" type="text" class="input" placeholder="Card Number"
+                            name="account_number" value="">
 
                         <h2>Expiration Date</h2>
-                        <input id="addExpiryData" type="text" class="input" placeholder="Expiration Date" name="expiry_date" value="">
+                        <input id="addExpiryData" type="text" class="input" placeholder="Expiration Date"
+                            name="expiry_date" value="">
 
                         <button class="btn" onclick="updatePayment()">Update</button>
 
@@ -85,13 +88,16 @@
                         </select>
 
                         <h2>Address Name</h2>
-                        <input id="addName" type="text" class="input" value="" placeholder="Address Name" name="name" value="">
+                        <input id="addName" type="text" class="input" value="" placeholder="Address Name" name="name"
+                            value="">
 
                         <h2>Address Line1</h2>
-                        <input id="addAddressLine1" type="text" class="input" value="" placeholder="Address Line1" name="address_line1" value="">
+                        <input id="addAddressLine1" type="text" class="input" value="" placeholder="Address Line1"
+                            name="address_line1" value="">
 
                         <h2>Address Line2</h2>
-                        <input type="text" class="input" value="" placeholder="Address Line2" name="address_line2" value="">
+                        <input type="text" class="input" value="" placeholder="Address Line2" name="address_line2"
+                            value="">
 
                         <h2>Country</h2>
                         <select id="country" name="country" onchange="showProvinces()">
@@ -124,7 +130,8 @@
                         </select>
 
                         <h2>Postal Code</h2>
-                        <input type="text" class="input" id="postal_code" placeholder="Postal Code" name="postal_code" value="" disabled>
+                        <input type="text" class="input" id="postal_code" placeholder="Postal Code" name="postal_code"
+                            value="" disabled>
 
                         <h2>Phone Number</h2>
                         <input type="text" class="input" placeholder="Phone Number" name="tel_no" value="">
@@ -160,25 +167,25 @@
 
             <script>
                 async function allowed(roles) {
-                  let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
-                      withCredentials: true
-                  });
-                  if (!curUser.data) {
-                    window.location.href = "/signIn";
-                  }
-                  else {
-                    curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
-                    const role = curUser.data.role;
-                    console.log('role:', role)
-                    if (!roles.includes(role)) {
-                      window.location.href = "/";
+                    let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+                        withCredentials: true
+                    });
+                    if (!curUser.data) {
+                        window.location.href = "/signIn";
                     }
-                  }
+                    else {
+                        curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
+                        const role = curUser.data.user_role;
+                        console.log('role:', role)
+                        if (!roles.includes(role)) {
+                            window.location.href = "/";
+                        }
+                    }
                 }
                 let roles = "<%= roles %>";
                 roles = roles.split(',');
                 allowed(roles);
-              </script>
+            </script>
 
             <script>
                 const tabBtn = document.querySelectorAll('.tab');
@@ -243,7 +250,7 @@
 
                     let paymentTypes = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentType`);
                     paymentTypes = paymentTypes.data;
-                    
+
                     for (const paymentType of paymentTypes) {
                         const option = document.createElement('option');
                         option.innerHTML = `${paymentType.name}`
@@ -302,7 +309,7 @@
                     formData = Array.from(formData);
 
                     let data = {};
-                  
+
                     const payment_type = formData.find(e => e[0] === 'payment_type');
                     if (payment_type && payment_type[1] != '') data.type = payment_type[1];
 
@@ -333,7 +340,7 @@
                     formData = Array.from(formData);
 
                     let data = {};
-                  
+
                     const name = formData.find(e => e[0] === 'name');
                     if (name && name[1] != '') data.name = name[1];
 
@@ -366,7 +373,7 @@
                         if (name[1] != '' && address_line1[1] != '' && country && province && amphoe && district && postal_code && tel_no[1] != '') {
                             await axios.post(`http://localhost:8080/api/Address/addAddress/${userId}`, data);
                             window.location.href = "/admin_panel";
-                        } 
+                        }
                         else if (name[1] === '') alert('Please type address name before submitting');
                         else if (address_line1[1] === '') alert('Please type address line 1 before submitting');
                         else if (!country) alert('Please select a country before submitting');
@@ -398,7 +405,7 @@
                     if (password && password[1] != '') data.password = password[1];
 
                     const role = formData.find(e => e[0] === 'role');
-                    if (role && role[1] != '') data.role = role[1];
+                    if (role && role[1] != '') data.user_role = role[1];
 
                     await axios.patch(`http://localhost:8080/api/User/editUser/${userId}`, data);
                     window.location.href = "/admin_panel";

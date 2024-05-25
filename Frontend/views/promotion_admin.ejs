@@ -1,55 +1,55 @@
 <%- include('../partials/head') %>
 
-<body>
+    <body>
 
 
-    <section id="header">
-        <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
-        <div>
-            <ul id="navbar">
+        <section id="header">
+            <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
+            <div>
+                <ul id="navbar">
 
-                <form>
-                    <div class="search">
-                        <span class="search-icon material-symbols-outlined">search</span>
-                        <input class="search-input" type="search" placeholder="Search">
-                    </div>
-                </form>
+                    <form>
+                        <div class="search">
+                            <span class="search-icon material-symbols-outlined">search</span>
+                            <input class="search-input" type="search" placeholder="Search">
+                        </div>
+                    </form>
 
-                <li><a href="/">Home</a></li>
-                <li><a href="/admin_panel">Dashboard</a></li>
-                <li><a href="/product_admin">Products</a></li>
-                <li><a class="active" href="/promotion_admin">Promotion</a></li>
-                <li><a href="/payment_type_admin">Payment</a></li>
-              
-                <ul>
-        </div>
-    </section>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/admin_panel">Dashboard</a></li>
+                    <li><a href="/product_admin">Products</a></li>
+                    <li><a class="active" href="/promotion_admin">Promotion</a></li>
+                    <li><a href="/payment_type_admin">Payment</a></li>
 
-    <section id="page-header">
+                    <ul>
+            </div>
+        </section>
 
-        <h2># Promotions</h2>
+        <section id="page-header">
 
-    </section>
+            <h2># Promotions</h2>
+
+        </section>
 
 
-    <section id="button_create">
-        <a href="/create_promotion">
-            <button>Add Promotion</button>
-        </a>
-    </section> 
-    
-    <section id="cart" class="">
-        <table width="100%">
-            <thead>
-                <tr>
-                    <td>Remove</td>
-                    <td>Discount</td>
-                    <td>Category</td>
-                    <td></td>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- <tr>
+        <section id="button_create">
+            <a href="/create_promotion">
+                <button>Add Promotion</button>
+            </a>
+        </section>
+
+        <section id="cart" class="">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <td>Remove</td>
+                        <td>Discount</td>
+                        <td>Category</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr>
                     <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
                     <td><img src="/img/products/p1.jpg"></td>
                     <td>crazy deals 30% off Mystery and figure</td>
@@ -75,32 +75,32 @@
                     <td class="edit"><a href="/edit_promotion">Edit</a></td>
                 </tr> -->
 
-            </tbody>
-        </table>
-    </section>
+                </tbody>
+            </table>
+        </section>
 
-    <script>
-        async function allowed(roles) {
-          let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
-              withCredentials: true
-          });
-          if (!curUser.data) {
-            window.location.href = "/signIn";
-          }
-          else {
-            curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
-            const role = curUser.data.role;
-            console.log('role:', role)
-            if (!roles.includes(role)) {
-              window.location.href = "/";
+        <script>
+            async function allowed(roles) {
+                let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+                    withCredentials: true
+                });
+                if (!curUser.data) {
+                    window.location.href = "/signIn";
+                }
+                else {
+                    curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
+                    const role = curUser.data.user_role;
+                    console.log('role:', role)
+                    if (!roles.includes(role)) {
+                        window.location.href = "/";
+                    }
+                }
             }
-          }
-        }
-        let roles = "<%= roles %>";
-        roles = roles.split(',');
-        allowed(roles);
-      </script>
+            let roles = "<%= roles %>";
+            roles = roles.split(',');
+            allowed(roles);
+        </script>
 
-    <script src="PromotionAdmin.js"></script>
+        <script src="PromotionAdmin.js"></script>
 
-<%- include('../partials/footer') %>
+        <%- include('../partials/footer') %>
