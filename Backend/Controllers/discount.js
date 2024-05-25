@@ -43,10 +43,15 @@ exports.getDiscount = async (req, res) => {
 // Add a new discount
 exports.addDiscount = async (req, res) => {
     try {
-        const { discount } = req.body;
-        const [result] = await pool.query('INSERT INTO Discount (discount) VALUES (?)', [discount]);
+        const { discount, min_price, max_discount } = req.body;
+        const sql = 'INSERT INTO Discount (discount, min_price, max_discount) VALUES (?, ?, ?)';
+        const values = [discount, min_price, max_discount];
+
+        const [result] = await pool.query(sql, values);
         const newDiscountId = result.insertId;
+
         const [newDiscount] = await pool.query('SELECT * FROM Discount WHERE Discount_id = ?', [newDiscountId]);
+
         res.send(newDiscount[0]);
     } catch (err) {
         console.error(err.message);

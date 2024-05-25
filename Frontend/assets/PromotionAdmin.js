@@ -24,6 +24,7 @@ const emptyPage = (text) => {
 }
 
 const deletePromotion = async (discount_id, category_id) => {
+
     try {
         // Delete the discount category from the server
         // await axios.delete(`http://localhost:8080/api/DiscountCategory/${discount_id}/deleteDiscountCategoryByDiscountId`);
@@ -43,6 +44,7 @@ const deletePromotion = async (discount_id, category_id) => {
         } else {
             console.error('Row not found for promotion:', discount_id);
         }
+
 
         const promotionsCount = document.querySelectorAll('#cart tbody tr').length;
         if (promotionsCount === 0) {
