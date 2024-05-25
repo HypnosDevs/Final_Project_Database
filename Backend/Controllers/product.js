@@ -14,7 +14,7 @@ exports.getAllProduct = async (req, res) => {
 exports.getProduct = async (req, res) => {
     try {
         const { id } = req.params;
-        const [data] = await pool.query('SELECT * FROM product WHERE id = ?', [id]);
+        const [data] = await pool.query('SELECT * FROM product WHERE product_id = ?', [id]);
 
         if (data.length === 0) {
             res.status(404).send({ message: 'Product not found' });
@@ -25,6 +25,25 @@ exports.getProduct = async (req, res) => {
         console.log(err.message);
         res.status(500).send({ message: err.message });
     }
+};
+
+exports.getCategoryFromProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const [data] = await pool.query(
+            'SELECT category_name FROM category INNER JOIN ProductCategory ON category.category_id = ProductCategory.category_id WHERE ProductCategory.product_id = ?', [id]);
+
+        console.log(data)
+        if (data.length === 0) {
+            res.status(404).send({ message: 'Product not found' });
+        } else {
+            res.send(data.map((item) => item.category_name).join(', '));
+        }
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    }
+
 };
 
 
@@ -90,7 +109,7 @@ exports.updateProduct = async (req, res) => {
                 product_image = ?, 
                 price = ?, 
                 stock = ?
-            WHERE id = ?
+            WHERE product_id = ?
         `;
         const updateProductValues = [product_name, product_description, image, price, stock, id];
         await pool.query(updateProductQuery, updateProductValues);
@@ -125,12 +144,12 @@ exports.deleteProduct = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const [existingProduct] = await pool.query('SELECT * FROM product WHERE id = ?', [id]);
+        const [existingProduct] = await pool.query('SELECT * FROM product WHERE product_id = ?', [id]);
         if (existingProduct.length === 0) {
             return res.status(404).send({ message: 'Product not found' });
         }
-        await pool.query('DELETE FROM product WHERE id = ?', [id]);
         await pool.query('DELETE FROM ProductCategory WHERE product_id = ?', [id]);
+        await pool.query('DELETE FROM product WHERE product_id = ?', [id]);
         res.send({ message: 'Product deleted successfully' });
     } catch (err) {
         console.error(err.message);
