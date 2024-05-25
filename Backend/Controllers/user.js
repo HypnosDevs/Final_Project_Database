@@ -79,11 +79,11 @@ exports.addUserWithAddress = async (req, res) => {
         const userId = userResult.insertId;
 
         const insertAddressQuery = `
-            INSERT INTO address (user_id, address_name, province, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no)
+            INSERT INTO address (user_id, address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
-        const { address_name, province, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no } = address;
-        await connection.query(insertAddressQuery, [userId, address_name, province, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no]);
+        const { address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no } = address;
+        await connection.query(insertAddressQuery, [userId, address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no]);
 
         await connection.commit();
         res.sendStatus(201);

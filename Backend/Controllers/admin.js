@@ -56,13 +56,13 @@ exports.addUser = async (req, res) => {
         const [[{ user_id }]] = await pool.query(getUserIdQuery);
 
         // Handle address creation
-        const { address_name, province, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no } = req.body.address;
+        const { address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no } = req.body.address;
 
         const insertAddressQuery = `
-            INSERT INTO address (user_id, address_name, province, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no)
+            INSERT INTO address (user_id, address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
-        const addressValues = [user_id, address_name, province, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no];
+        const addressValues = [user_id, address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no];
         await pool.query(insertAddressQuery, addressValues);
 
         // Handle payment method creation

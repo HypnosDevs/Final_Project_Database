@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS `address` (
     user_id INT,
     address_name VARCHAR(255) NOT NULL,
     province VARCHAR(100),
+    amphoe VARCHAR(100),
     district VARCHAR(100),
     sub_district VARCHAR(100),
     street_number VARCHAR(100),

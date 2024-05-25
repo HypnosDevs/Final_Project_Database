@@ -40,13 +40,13 @@ exports.addAddress = async (req, res) => {
         }
 
         const {
-            address_name, province, district, sub_district, street_number, address_line1,
+            address_name, province, amphoe, district, sub_district, street_number, address_line1,
             address_line2, city, postal_code, country, tel_no
         } = req.body;
 
         await pool.query(
-            'INSERT INTO address (user_id, address_name, province, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [user_id, address_name, province, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country, tel_no]
+            'INSERT INTO address (user_id, address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [user_id, address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country, tel_no]
         );
 
         res.status(201).send({ message: "Address added successfully" });
@@ -61,13 +61,13 @@ exports.updateAddress = async (req, res) => {
     try {
         const { id } = req.params;
         const {
-            address_name, province, district, sub_district, street_number, address_line1,
+            address_name, province, amphoe, district, sub_district, street_number, address_line1,
             address_line2, city, postal_code, country, tel_no
         } = req.body;
 
         const [result] = await pool.query(
-            'UPDATE address SET address_name = ?, province = ?, district = ?, sub_district = ?, street_number = ?, address_line1 = ?, address_line2 = ?, city = ?, postal_code = ?, country_name = ?, tel_no = ? WHERE address_id = ?',
-            [address_name, province, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country, tel_no, id]
+            'UPDATE address SET address_name = ?, province = ?, amphoe = ?, district = ?, sub_district = ?, street_number = ?, address_line1 = ?, address_line2 = ?, city = ?, postal_code = ?, country_name = ?, tel_no = ? WHERE address_id = ?',
+            [address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country, tel_no, id]
         );
 
         if (result.affectedRows === 0) {
