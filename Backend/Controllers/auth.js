@@ -150,8 +150,6 @@
 //     }
 // };
 
-
-const mysql = require('mysql2/promise');
 const bcrypt = require('bcrypt');
 
 const { pool } = require('../db/db.js');

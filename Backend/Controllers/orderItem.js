@@ -1,122 +1,139 @@
-const Order = require("../Models/Order.js");
-const OrderItem = require("../Models/OrderItem.js");
-const Product = require("../Models/Product.js");
-
-
+const { pool } = require('../db/db.js');
 
 exports.getAllOrderItem = async (req, res) => {
     try {
-        const data = await OrderItem.find().sort({ timestamp: -1 }); // Sort by timestamp in descending order
-        res.status(200).send(data);
+        const [rows] = await pool.query('SELECT * FROM order_item ORDER BY created_at DESC');
+        res.status(200).send(rows);
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
     }
-}
+};
+
 exports.getOrderItem = async (req, res) => {
     try {
         const { order_id, product_id } = req.params;
-        const data = await OrderItem.findById({ order: order_id, product: product_id });
-        if (data.length === 0) {
+        const [rows] = await pool.query('SELECT * FROM order_item WHERE order_id = ? AND product_id = ?', [order_id, product_id]);
+        if (rows.length === 0) {
             throw { message: "Order item Not Found" };
         }
-        res.status(200).send(data);
+        res.status(200).send(rows[0]);
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
     }
-}
-
+};
 
 exports.getOrderItemFromOrder = async (req, res) => {
     try {
         const { order_id } = req.params;
-        const data = await OrderItem.find({ order: order_id });
-        if (!data) {
+        const [rows] = await pool.query('SELECT * FROM order_item WHERE order_id = ?', [order_id]);
+        if (rows.length === 0) {
             throw { message: "Order item Not Found" };
         }
-        res.status(200).send(data);
+        res.status(200).send(rows);
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
     }
-}
+};
 
 exports.getProductFromOrderItem = async (req, res) => {
     try {
         const { order_id, product_id } = req.params;
-        const data = await OrderItem.findById({ order: order_id, product: product_id });
-        if (data.length === 0) {
+        const [rows] = await pool.query('SELECT * FROM order_item WHERE order_id = ? AND product_id = ?', [order_id, product_id]);
+        if (rows.length === 0) {
             throw { message: "Data (product in that order id) Not Found" };
         }
-        data = data.populate("product")
-        res.status(200).send(data);
-    } catch (err) {
-        console.log(err.message);
-        res.status(500).send({ message: err.message });
-    }
-}
-
-exports.addOrderItem = async (req, res) => {
-    try {
-        const { order_id, product_id } = req.params;
-        const order = await Order.findById({ _id: order_id });
-        if (order.length === 0) {
-            throw { message: "Order Not Found" };
-        }
-        const product = await Product.findById({ _id: product_id });
-        if (product.length === 0) {
+        const [productRows] = await pool.query('SELECT * FROM product WHERE id = ?', [product_id]);
+        if (productRows.length === 0) {
             throw { message: "Product Not Found" };
         }
-        const orderItem = new OrderItem(req.body);
-        orderItem.order = order;
-        orderItem.product = product;
-        orderItem.price = orderItem.product.price;
-
-        console.log(product);
-
-        await Product.findByIdAndUpdate(product_id, { stock: product.stock - orderItem.qty }, { new: true, runValidators: true });
-
-        orderItem.save();
-        res.status(201).send({ message: "Create order item succesful" });
-
+        res.status(200).send({ orderItem: rows[0], product: productRows[0] });
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
     }
-}
+};
+
+exports.addOrderItem = async (req, res) => {
+    const connection = await pool.getConnection();
+    try {
+        const { order_id, product_id } = req.params;
+        const [orderRows] = await connection.query('SELECT * FROM `order` WHERE order_id = ?', [order_id]);
+        if (orderRows.length === 0) {
+            throw { message: "Order Not Found" };
+        }
+        const [productRows] = await connection.query('SELECT * FROM product WHERE id = ?', [product_id]);
+        if (productRows.length === 0) {
+            throw { message: "Product Not Found" };
+        }
+        const product = productRows[0];
+        const orderItem = {
+            order_id,
+            product_id,
+            product_name: product.product_name,
+            product_image: product.product_image,
+            price: product.price,
+            qty: req.body.qty,
+            discount: req.body.discount || 0,
+            order_status: req.body.order_status || 'pending'
+        };
+
+        await connection.beginTransaction();
+        await connection.query('INSERT INTO order_item SET ?', orderItem);
+        await connection.query('UPDATE product SET stock = ? WHERE id = ?', [product.stock - orderItem.qty, product_id]);
+        await connection.commit();
+
+        res.status(201).send({ message: "Create order item successful" });
+    } catch (err) {
+        await connection.rollback();
+        console.log(err.message);
+        res.status(500).send({ message: err.message });
+    } finally {
+        connection.release();
+    }
+};
 
 exports.updateOrderItemStatus = async (req, res) => {
     try {
         const { order_item_id } = req.params;
         const { status } = req.body;
-        const data = await OrderItem.updateOne({ _id: order_item_id }, { status: status });
-        // console.log(data);
-        res.status(204).send({ message: "Updated order item status succesful" })
+        const [result] = await pool.query('UPDATE order_item SET order_status = ? WHERE order_item_id = ?', [status, order_item_id]);
+        if (result.affectedRows === 0) {
+            throw { message: "Order item Not Found" };
+        }
+        res.status(204).send({ message: "Updated order item status successful" });
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
     }
-}
+};
 
 exports.deleteOrderItem = async (req, res) => {
     try {
         const { order_id, product_id } = req.params;
-        await OrderItem.deleteOne({ order: order_id, product: product_id })
-        res.status(204).send({ message: "Delete order item succesful" });
+        const [result] = await pool.query('DELETE FROM order_item WHERE order_id = ? AND product_id = ?', [order_id, product_id]);
+        if (result.affectedRows === 0) {
+            throw { message: "Order item Not Found" };
+        }
+        res.status(204).send({ message: "Delete order item successful" });
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
     }
-}
+};
 
 exports.deleteOrderItemByOrderItemId = async (req, res) => {
     try {
         const { order_item_id } = req.params;
-        await OrderItem.deleteOne({ _id: order_item_id })
-        res.status(204).send({ message: "Delete order item succesful" });
+        const [result] = await pool.query('DELETE FROM order_item WHERE order_item_id = ?', [order_item_id]);
+        if (result.affectedRows === 0) {
+            throw { message: "Order item Not Found" };
+        }
+        res.status(204).send({ message: "Delete order item successful" });
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });
     }
-}
+};
