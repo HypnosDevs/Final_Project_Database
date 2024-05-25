@@ -118,7 +118,7 @@ exports.getProductSold = async (req, res) => {
     }
 };
 
-const getBestProvinceSQL = async (req, res) => {
+exports.getBestProvince = async (req, res) => {
     try {
         const query = `
             SELECT 
@@ -140,7 +140,7 @@ const getBestProvinceSQL = async (req, res) => {
     }
 };
 
-const getTotalSpendingSQL = async (req, res) => {
+exports.getTotalSpending = async (req, res) => {
     try {
         const query = `
             SELECT 
