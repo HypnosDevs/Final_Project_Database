@@ -117,9 +117,9 @@ const renderPromotions = async (promotions) => {
     // Create header row
     const headerRow = document.createElement("tr");
     headerRow.innerHTML = `
-        <td>Remove</td>
-        <td>Discount</td>
-        <td>Category</td>
+        <td style="width: 150px;">Remove</td>
+        <td style="width: 150px;">Discount</td>
+        <td style="width: 150px;">Category</td>
   
     `;
     headerTable.appendChild(headerRow);
