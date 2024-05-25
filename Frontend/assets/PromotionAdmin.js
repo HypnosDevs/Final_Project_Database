@@ -33,7 +33,7 @@ const deletePromotion = async (discount_id, category_id) => {
         await axios.delete(`http://localhost:8080/api/DiscountCategory/deleteDiscountCategoryById/${discount_id}/${category_id}`);
 
         // Remove all td elements inside the corresponding row from the cart table
-        const rowToRemove = document.querySelector(`#cart tbody tr[id="${discount_id}${category_id}"]`);
+        const rowToRemove = document.querySelector(` tbody tr[id="${discount_id}${category_id}"]`);
         if (rowToRemove) {
             const cellsToRemove = rowToRemove.querySelectorAll('td');
             cellsToRemove.forEach(cell => {
@@ -46,7 +46,9 @@ const deletePromotion = async (discount_id, category_id) => {
         }
 
 
-        const promotionsCount = document.querySelectorAll('#cart tbody tr').length;
+        const promotionsCount = document.querySelectorAll(' tbody tr').length;
+        document.querySelector("#promotions-length").innerHTML = promotionsCount;
+
         if (promotionsCount === 0) {
             emptyPage("No promotions found");
         }
@@ -58,11 +60,11 @@ const deletePromotion = async (discount_id, category_id) => {
 const deleteDiscount = async (discount_id) => {
     try {
         // Delete the discount and associated categories from the server
-        await axios.delete(`http://localhost:8080/api/Discount/deleteDiscount/${discount_id}`);
         await axios.delete(`http://localhost:8080/api/DiscountCategory/deleteDiscountCategoryByDiscountId/${discount_id}`);
+        await axios.delete(`http://localhost:8080/api/Discount/deleteDiscount/${discount_id}`);
 
         // Remove the corresponding row from the HTML table
-        const rowToRemove = document.querySelector(`#cart tbody tr[id="${discount_id}"]`);
+        const rowToRemove = document.querySelector(` tbody tr[id="${discount_id}"]`);
         if (rowToRemove) {
             rowToRemove.remove(); // Remove the row from the DOM
         } else {
@@ -71,7 +73,8 @@ const deleteDiscount = async (discount_id) => {
         }
 
         // Check if there are no discounts left in the table
-        const discountCount = document.querySelectorAll('#cart tbody tr').length;
+        const discountCount = document.querySelectorAll(' tbody tr').length;
+        document.querySelector("#discounts-length").innerHTML = discountCount;
         if (discountCount === 0) {
             emptyPage("No Discount found");
         }
@@ -83,11 +86,11 @@ const deleteDiscount = async (discount_id) => {
 const deleteCategory = async (category_id) => {
     try {
         // Delete the discount and associated categories from the server
-        await axios.delete(`http://localhost:8080/api/Category/deleteCategory/${category_id}`);
         await axios.delete(`http://localhost:8080/api/DiscountCategory/deleteDiscountCategoryByCategoryId/${category_id}`);
+        await axios.delete(`http://localhost:8080/api/Category/deleteCategory/${category_id}`);
 
         // Remove the corresponding row from the HTML table
-        const rowToRemove = document.querySelector(`#cart tbody tr[id="${category_id}"]`);
+        const rowToRemove = document.querySelector(` tbody tr[id="${category_id}"]`);
         if (rowToRemove) {
             rowToRemove.remove(); // Remove the row from the DOM
         } else {
@@ -96,7 +99,9 @@ const deleteCategory = async (category_id) => {
         }
 
         // Check if there are no discounts left in the table
-        const categoryCount = document.querySelectorAll('#cart tbody tr').length;
+        const categoryCount = document.querySelectorAll(' tbody tr').length;
+        document.querySelector("#categories-length").innerHTML = categoryCount;
+
         if (categoryCount === 0) {
             emptyPage("No Category found");
         }
@@ -138,7 +143,7 @@ const renderPromotions = async (promotions) => {
                 // Create row for each category
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td><a href=""><i class="fa-solid fa-circle-xmark" onclick="deletePromotion('${promotion.discount_id}','${category_id}')"></i></a></td>
+                    <td><i class="fa-solid fa-circle-xmark" onclick="deletePromotion('${promotion.discount_id}','${category_id}')"></i></a></td>
                     <td>${promotion.discount}%</td>
                     <td>${categoryName.data.category_name}</td>
                     <td class="edit"><a href="/edit_promotion/${promotion.discount_id}">Edit</a></td>
@@ -191,7 +196,7 @@ const renderDiscounts = async (discounts) => {
     for (const discount of discounts) {
         const row = document.createElement('tr');
         row.innerHTML = `
-                <td><a href=""><i class="fa-solid fa-circle-xmark" onclick="deleteDiscount('${discount.discount_id}')"></i></a></td>
+                <td><i class="fa-solid fa-circle-xmark" onclick="deleteDiscount('${discount.discount_id}')"></i></a></td>
                 <td>${discount.discount}%</td>
                 <td>${discount.min_price}</td>
                 <td>${discount.max_discount}</td>
@@ -239,7 +244,7 @@ const renderCategories = async (categories) => {
     for (const category of categories) {
         const row = document.createElement('tr');
         row.innerHTML = `
-                <td><a href=""><i class="fa-solid fa-circle-xmark" onclick="deleteCategory('${category.category_id}')"></i></a></td>
+                <td><i class="fa-solid fa-circle-xmark" onclick="deleteCategory('${category.category_id}')"></i></a></td>
                 <td>${category.category_name}</td>
 
                 <td class="edit"><a href="/edit_promotion/${category.category_id}">Edit</a></td>

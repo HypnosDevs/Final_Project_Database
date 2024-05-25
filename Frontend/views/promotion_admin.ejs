@@ -119,9 +119,9 @@
                 const allPromotions = document.querySelector("#promotions_page");
                 const allDiscounts = document.querySelector("#discounts_page");
                 const allCategories = document.querySelector("#categories_page");
-                const discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
-                const categories = await axios.get("http://localhost:8080/api/Category/getCategory");
-                const promotions = await axios.get("http://localhost:8080/api/DiscountCategory/getDiscountCategory")
+                let discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
+                let categories = await axios.get("http://localhost:8080/api/Category/getCategory");
+                let promotions = await axios.get("http://localhost:8080/api/DiscountCategory/getDiscountCategory")
                 const loader = document.querySelector("#loader");
 
 
@@ -138,6 +138,7 @@
                 document.querySelector("#categories-length").innerHTML = categories.data.length;
                 getPromotions(discounts);
                 allPromotions.addEventListener("click", async () => {
+                    promotions = await axios.get("http://localhost:8080/api/DiscountCategory/getDiscountCategory")
                     await renderPromotions(discounts.data);
                     if (discounts.data.length === 0) {
                         emptyPage("No Promotion found");
@@ -145,6 +146,7 @@
                 })
 
                 allDiscounts.addEventListener("click", async () => {
+                    discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
                     await renderDiscounts(discounts.data);
                     if (discounts.data.length === 0) {
                         emptyPage("No Discount found");
@@ -152,6 +154,7 @@
                 })
 
                 allCategories.addEventListener("click", async () => {
+                    categories = await axios.get("http://localhost:8080/api/Category/getCategory");
                     await renderCategories(categories.data);
                     if (categories.data.length === 0) {
                         emptyPage("No Category found");

@@ -64,7 +64,7 @@ exports.deleteDiscountCategoryByDiscountId = async (req, res) => {
 exports.deleteDiscountCategoryByCategoryId = async (req, res) => {
     try {
         const { category_id } = req.params;
-        await pool.query('DELETE FROM DiscountCategory WHERE discount_id = ? AND category_id = ?', [category_id]);
+        await pool.query('DELETE FROM DiscountCategory WHERE category_id = ?', [category_id]);
 
         res.send({ message: "Discount and related categories deleted successfully" });
     } catch (err) {
