@@ -51,10 +51,10 @@ exports.register = async (req, res) => {
         const [userRows] = await pool.query('SELECT * FROM user WHERE username = ?', [username]);
         const userData = userRows[0];
 
-        const { address_name, province, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no } = req.body.address;
+        const { address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no } = req.body.address;
 
-        await pool.query('INSERT INTO address (user_id, address_name, province, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [userData.user_id, address_name, province, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no]);
+        await pool.query('INSERT INTO address (user_id, address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [userData.user_id, address_name, province, amphoe, district, sub_district, street_number, address_line1, address_line2, city, postal_code, country_name, tel_no]);
 
         res.status(201).send({ message: "Register successful" });
     } catch (err) {
