@@ -64,7 +64,6 @@ CREATE TABLE IF NOT EXISTS product (
     price DECIMAL(10, 2) NOT NULL,
     stock INT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (category_id) REFERENCES category(category_id)
 );
 
 
@@ -134,5 +133,5 @@ CREATE TABLE IF NOT EXISTS ProductCategory (
     PRIMARY KEY (product_id, category_id),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (category_id) REFERENCES category(category_id),
-    FOREIGN KEY (product_id) REFERENCES product(product_id)
+    FOREIGN KEY (product_id) REFERENCES product(id)
 );
