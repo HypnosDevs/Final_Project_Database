@@ -199,7 +199,7 @@ const renderDiscounts = async (discounts) => {
                 <td>${discount.discount}%</td>
                 <td>${discount.min_price}</td>
                 <td>${discount.max_discount}</td>
-                <td class="edit"><a href="/edit_promotion/${discount.discount_id}">Edit</a></td>
+                <td class="edit"><a href="/edit_discounts/${discount.discount_id}">Edit</a></td>
             `;
         row.setAttribute('id', `${discount.discount_id}`);
         tableBody.appendChild(row);
@@ -246,7 +246,7 @@ const renderCategories = async (categories) => {
                 <td><i class="fa-solid fa-circle-xmark" onclick="deleteCategory('${category.category_id}')"></i></a></td>
                 <td>${category.category_name}</td>
 
-                <td class="edit"><a href="/edit_promotion/${category.category_id}">Edit</a></td>
+                <td class="edit"><a href="/edit_categories/${category.category_id}">Edit</a></td>
             `;
         row.setAttribute('id', `${category.category_id}`);
         tableBody.appendChild(row);
