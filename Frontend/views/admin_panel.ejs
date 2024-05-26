@@ -291,18 +291,18 @@
                     const formattedDate = `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-${createdAt.getDate().toString().padStart(2, '0')} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
 
                     const row = document.createElement("tr");
-                    row.setAttribute("id", `${orderData.order_id}`);
+                    row.setAttribute("id", `${orderData.order_item_id}`);
                     row.innerHTML = `
-                    <td><a onClick="deleteOrderItem('${orderData.order_id}')"><i class="remove fa-solid fa-circle-xmark"></i></a></td>
+                    <td><a onClick="deleteOrderItem('${orderData.order_item_id}')"><i class="remove fa-solid fa-circle-xmark"></i></a></td>
 
                         <td>${orderUserId[k]}</td>
-                        <td>${orderData.order_id}</td>
+                        <td>${orderData.order_item_id}</td>
                         <td>${formattedDate}</td>
                         <td>${orderData.product_name}</td>
                         <td>${orderData.price - orderData.discount}</td>
                         <td>${orderData.qty}</td>
                         <td>
-                            <select class="selection" id="selectStatus${orderData.order_id}">
+                            <select class="selection" id="selectStatus${orderData.order_item_id}">
                                 <option value="Pending" ${orderData.order_status === "Pending" ? "selected" : ""}>Pending</option>
                                 <option value="Shipping" ${orderData.order_status === "Shipping" ? "selected" : ""}>Shipping</option>
                                 <option value="Delivered" ${orderData.order_status === "Delivered" ? "selected" : ""}>Delivered</option>
@@ -316,7 +316,7 @@
 
 
                     // Change background color of select element based on selected value
-                    document.querySelector(`#selectStatus${orderData.order_id}`).addEventListener("change", async function (event) {
+                    document.querySelector(`#selectStatus${orderData.order_item_id}`).addEventListener("change", async function (event) {
                         const selectStatus = event.target; // Get the select element that triggered the event
                         switch (selectStatus.value) {
                             case "Pending":
@@ -332,10 +332,10 @@
                                 selectStatus.style.backgroundColor = "eafffa"; // Reset background color if none of the cases match
                         }
 
-                        const updatedOrder = await axios.put(`http://localhost:8080/api/OrderItem/updateOrderItemStatus/${orderData.order_id}`, { order_status: selectStatus.value });
+                        const updatedOrder = await axios.put(`http://localhost:8080/api/OrderItem/updateOrderItemStatus/${orderData.order_item_id}`, { status: selectStatus.value });
                         console.log("update laew", updatedOrder);
                     });
-                    const status = document.querySelector(`#selectStatus${orderData.order_id}`);
+                    const status = document.querySelector(`#selectStatus${orderData.order_item_id}`);
                     if (orderData.status === "Pending") {
                         status.style.backgroundColor = "#ffffea";
                     }
