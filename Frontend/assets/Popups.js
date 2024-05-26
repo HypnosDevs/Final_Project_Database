@@ -26,19 +26,33 @@ async function getUserAddress() {
 
     let result = [];
     for (let i = 0; i < addressesData.length; i++) {
-      if (addressesData[i].address_line2 === null) addressesData[i].address_line2 = '';
+      // Ensure address_line2 is empty string if it's null
+      if (addressesData[i].address_line2 === null) {
+        addressesData[i].address_line2 = '';
+      }
+
+      // Construct the text property with non-null values only
+      let textParts = [
+        addressesData[i].address_line1,
+        addressesData[i].address_line2,
+        addressesData[i].district,
+        addressesData[i].amphoe,
+        addressesData[i].province,
+        addressesData[i].country_name,
+        addressesData[i].postal_code,
+        addressesData[i].tel_no
+      ];
+
+      // Filter out null values and join with a space
+      let text = textParts.filter(part => part !== null && part !== '').join(' ');
+
+      // Push the formatted address object to result array
       result.push({
-        id: addressesData[i].address_id, name: addressesData[i].address_name, text: `${addressesData[i].address_line1 + ' ' +
-          addressesData[i].address_line2 + ' ' +
-          addressesData[i].district + ' ' +
-          addressesData[i].amphoe + ' ' +
-          addressesData[i].province + ' ' +
-          addressesData[i].country_name + ' ' +
-          addressesData[i].postal_code + ' ' +
-          addressesData[i].tel_no
-          }`
+        id: addressesData[i].address_id,
+        name: addressesData[i].address_name,
+        text: text
       });
-    };
+    }
 
     return result;
 
@@ -442,7 +456,7 @@ check_outBtn.addEventListener('click', async () => {
     // console.log('shoppingCartItem', shoppingCartItem);
     // console.log('productId', productId);
     // console.log('productImageSrc', productImageSrc);
-
+    // console.log(shoppingCartItem);
     const orderItem = await axios.post(`http://localhost:8080/api/OrderItem/addOrderItem/${orderId}/${productId}`, shoppingCartItem);
 
 
@@ -503,8 +517,8 @@ async function populateCouponList(categoryProduct, productPrice, shoppingcartId,
         subtotal -= tmpDiscount;
         document.querySelector(`#${shoppingcartId} .discount`).innerHTML = '฿' + tmpDiscount;
         document.querySelector(`#${shoppingcartId} .subtotal`).innerHTML = '฿' + subtotal;
-        document.querySelector('#subtotal-value').innerHTML = '฿' + String( Number(document.querySelector('#subtotal-value').innerHTML.slice(1)) - tmpDiscount )
-        document.querySelector('#total-value').innerHTML = '฿' + String( Number(document.querySelector('#total-value').innerHTML.slice(1)) - tmpDiscount )
+        document.querySelector('#subtotal-value').innerHTML = '฿' + String(Number(document.querySelector('#subtotal-value').innerHTML.slice(1)) - tmpDiscount)
+        document.querySelector('#total-value').innerHTML = '฿' + String(Number(document.querySelector('#total-value').innerHTML.slice(1)) - tmpDiscount)
         document.getElementById(buttonId).innerHTML = `${coupon.discount}%`
 
 

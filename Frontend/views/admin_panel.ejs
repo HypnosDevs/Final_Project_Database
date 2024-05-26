@@ -285,6 +285,7 @@
                 tableBody.innerHTML = '';
                 let k = 0;
                 for (const orderData of allOrders) {
+                    console.log(orderData);
                     const createdAt = new Date(orderData.created_at);
                     //  format the date as "YYYY-MM-DD HH:MM:SS"
                     const formattedDate = `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-${createdAt.getDate().toString().padStart(2, '0')} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
@@ -302,9 +303,9 @@
                         <td>${orderData.qty}</td>
                         <td>
                             <select class="selection" id="selectStatus${orderData.order_id}">
-                                <option value="Pending" ${orderData.status === "Pending" ? "selected" : ""}>Pending</option>
-                                <option value="Shipping" ${orderData.status === "Shipping" ? "selected" : ""}>Shipping</option>
-                                <option value="Delivered" ${orderData.status === "Delivered" ? "selected" : ""}>Delivered</option>
+                                <option value="Pending" ${orderData.order_status === "Pending" ? "selected" : ""}>Pending</option>
+                                <option value="Shipping" ${orderData.order_status === "Shipping" ? "selected" : ""}>Shipping</option>
+                                <option value="Delivered" ${orderData.order_status === "Delivered" ? "selected" : ""}>Delivered</option>
                             </select>
                         </td>
                         
@@ -331,7 +332,7 @@
                                 selectStatus.style.backgroundColor = "eafffa"; // Reset background color if none of the cases match
                         }
 
-                        const updatedOrder = await axios.put(`http://localhost:8080/api/OrderItem/updateOrderItemStatus/${orderData.order_id}`, { status: selectStatus.value });
+                        const updatedOrder = await axios.put(`http://localhost:8080/api/OrderItem/updateOrderItemStatus/${orderData.order_id}`, { order_status: selectStatus.value });
                         console.log("update laew", updatedOrder);
                     });
                     const status = document.querySelector(`#selectStatus${orderData.order_id}`);
@@ -527,7 +528,7 @@
 
                             let revenueData = await axios.get("http://localhost:8080/api/Analyze/getTotalSpending");
                             revenueData = revenueData.data;
-                            if (!revenueData) {
+                            if (!revenueData.totalQty) {
                                 revenueData = {
                                     totalSales: 0,
                                     totalQty: 0
@@ -537,7 +538,7 @@
                             if (revenue) revenue.innerHTML = `
                             Total Sales: ${revenueData.totalSales}<br>
                             Number of products: ${revenueData.totalQty}
-                        `
+                          `
 
                             let productSoldData = await axios.get("http://localhost:8080/api/Analyze/getProductSold");
                             productSoldData = productSoldData.data;

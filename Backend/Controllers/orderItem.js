@@ -77,7 +77,7 @@ exports.addOrderItem = async (req, res) => {
             price: product.price,
             qty: req.body.qty,
             discount: req.body.discount || 0,
-            order_status: req.body.order_status || 'pending'
+            order_status: req.body.status
         };
 
         await connection.beginTransaction();
