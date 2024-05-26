@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS user_payment_method (
     payment_type_id INT,
     account_name VARCHAR(50) NOT NULL,
     account_number VARCHAR(50) NOT NULL,
-    payment_expiry_date DATE,
+    payment_expiry_date VARCHAR(10),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES user(user_id),
     FOREIGN KEY (payment_type_id) REFERENCES payment_type(payment_type_id)

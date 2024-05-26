@@ -262,7 +262,7 @@
                     const paymentSelect = document.getElementById("paymentSelect");
 
                     let paymentMethods = await axios.get(`http://localhost:8080/api/PaymentMethod/getAllPaymentMethodFromUser/${userId}`);
-                    paymentMethods = paymentMethods.data.paymentMethods;
+                    paymentMethods = paymentMethods.data;
 
                     for (const paymentMethod of paymentMethods) {
                         let paymentType = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentType/${paymentMethod.payment_type_id}`);
