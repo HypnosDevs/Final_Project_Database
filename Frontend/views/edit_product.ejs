@@ -101,7 +101,27 @@
                 const submitButton = document.querySelector("#submitButton");
                 const form = document.querySelector("#form-update-product");
 
-                submitButton.addEventListener("click", async () => {
+                document.addEventListener("DOMContentLoaded", () => {
+                    const inputCategory = document.querySelector('#input-category');
+
+                    const editData = async () => {
+                        try {
+                            const product_id = "<%= product_id %>";
+                            const product = await axios.get(`http://localhost:8080/api/Product/getProduct/${product_id}`);
+                            const productData = product.data;
+                            console.log(productData);
+                            form.product_name.value = productData.product_name;
+                            form.category.value = productData.category;
+                            form.price.value = productData.price;
+                            form.stock.value = productData.stock;
+                            form.product_description.value = productData.product_description;
+                        } catch (err) {
+                            console.log(err.message);
+                            res.status(500).send({ message: err.message });
+                        }
+                    }
+                
+                    submitButton.addEventListener("click", async () => {
                     try {
                         const formData = new FormData(form);
 
@@ -129,8 +149,14 @@
                         console.log(err.message);
                         res.status(500).send({ message: err.message });
 
-                    }
+                    }});
+                    editData();
                 });
+
+
+
+
+
             </script>
 
             <script>

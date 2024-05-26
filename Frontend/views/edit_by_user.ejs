@@ -35,7 +35,7 @@
                         <input type="text" class="input" placeholder="Lastname" name="lastname" value="">
 
                         <h2>Gender</h2>
-                        <select class="input" name="gender">
+                        <select class="input" name="gender" id="genderSelect">
                             <option value="" disabled selected>Select Gender</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -53,7 +53,7 @@
                     <div class="payment tabshow">
                         <h1>Payment Info</h1>
                         <h2>Payment Method</h2>
-                        <select name="payment_method" id="paymentSelect" required>
+                        <select name="payment_method" id="paymentSelect" onchange="loadPaymentInfo()" required>
                             <option value="" disabled selected>Select Payment Method</option>
                         </select>
 
@@ -87,7 +87,7 @@
                     <div class="Address tabshow" id="addressPage1">
                         <h1>Address Info</h1>
                         <h2>Address</h2>
-                        <select name="address" id="addressSelect" required>
+                        <select name="address" id="addressSelect" onchange="loadAddressInfo()" required>
                             <option value="" disabled selected>Select Address</option>
                         </select>
 
@@ -153,10 +153,10 @@
                     <div class="setting tabshow">
                         <h1>Username & Password</h1>
                         <h2>Username</h2>
-                        <input type="text" class="input" placeholder="Username" name="username" value="">
+                        <input type="text" class="input" placeholder="Username" name="username" value="" id="input-username">
 
                         <h2>Password</h2>
-                        <input type="password" class="input" placeholder="Password" name="password" value="">
+                        <input type="password" class="input" placeholder="Password" name="password" value="" id="input-password">
 
                         <button type="button" class="btn" onclick="updateSetting()">Update</button>
                         <button type="button" class="btn" id="cancelButton"
@@ -228,6 +228,35 @@
                     return curUser.data.user_id;
                 }
 
+
+                async function loadPersonInfo(){
+                    const userId = await getUser();
+                    const form = document.getElementById("form-update-profile");
+                    const email = form.querySelector('input[name="email"]');
+                    const firstname = form.querySelector('input[name="firstname"]');
+                    const lastname = form.querySelector('input[name="lastname"]');
+                    const genderSelect = form.querySelector('#genderSelect');
+
+                    try {
+                        const user = await axios.get(`http://localhost:8080/api/User/getUser/${userId}`);
+                        email.value = user.data.email;
+                        firstname.value = user.data.firstname;
+                        lastname.value = user.data.lastname;
+                        
+                        const gender = user.data.gender;
+                        for (const option of genderSelect.options) {
+                            if (option.value === gender) {
+                                option.selected = true;
+                                break;
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error fetching user data:', error);
+                    }
+                }
+                loadPersonInfo();
+
+
                 async function loadPaymentMethod() {
                     const userId = await getUser();
                     const paymentSelect = document.getElementById("paymentSelect");
@@ -267,6 +296,31 @@
                 }
                 loadPaymentType();
 
+                async function loadPaymentInfo(){
+                    const cardName = document.getElementById("addAccountName");
+                    const cardNumber = document.getElementById("addAccountNumber");
+                    const expiryDate = document.getElementById("addExpiryData");
+
+                    const paymentSelect = document.getElementById("paymentSelect");
+
+                    try {
+                        const paymentId = paymentSelect.value;
+                        if (paymentId === 'add_new_payment') {
+                            cardName.value = '';
+                            cardNumber.value = '';
+                            expiryDate.value = '';
+                        } else {
+                            const paymentMethod = await axios.get(`http://localhost:8080/api/PaymentMethod/getPaymentMethod/${paymentId}`);
+                            cardName.value = paymentMethod.data.account_name;
+                            cardNumber.value = paymentMethod.data.account_number;
+                            expiryDate.value = paymentMethod.data.payment_expiry_date;
+                        }
+                    } catch (error) {
+                        console.error('Error fetching payment data:', error);
+                    }
+                }
+                loadPaymentInfo();
+
                 async function loadAddress() {
                     const userId = await getUser();
                     const addressSelect = document.getElementById("addressSelect");
@@ -287,6 +341,95 @@
                     addressSelect.appendChild(option);
                 }
                 loadAddress();
+
+                async function loadAddressInfo(){
+                    const userId = await getUser();
+                    const addName = document.getElementById("addName");
+                    const addAddressLine1 = document.getElementById("addAddressLine1");
+                    const addAddressLine2 = document.getElementById("addAddressLine2");
+                    const country = document.getElementById("country");
+                    const province = document.getElementById("province");
+                    const amphoe = document.getElementById("amphoe");
+                    const district = document.getElementById("district");
+                    const postalCode = document.getElementById("postal_code");
+                    const telNo = document.getElementById("tel_no");
+
+                    const addressSelect = document.getElementById("addressSelect");
+                    console.log(addressSelect);
+                    try {
+                        const addressId = addressSelect.value;
+                        if (addressId === 'add_new_address') {
+                            addName.value = '';
+                            addAddressLine1.value = '';
+                            addAddressLine2.value = '';
+                            country.value = '';
+                            province.value = '';
+                            amphoe.value = '';
+                            district.value = '';
+                            postalCode.value = '';
+                            telNo.value = '';
+                        } else {
+                            const address = await axios.get(`http://localhost:8080/api/Address/getAddress/${addressId}`);
+                            addName.value = address.data.address_name;
+                            addAddressLine1.value = address.data.address_line1;
+                            addAddressLine2.value = address.data.address_line2;
+
+                            const countryName = address.data.country_name;
+                            for (const option of country.options) {
+                                if (option.value === countryName) {
+                                    option.selected = true;
+                                    break;
+                                }
+                            }
+
+                            const provinceName = address.data.province;
+                            for (const option of province.options) {
+                                if (option.value === provinceName) {
+                                    option.selected = true;
+                                    break;
+                                }
+                            }
+
+                            const amphoeName = address.data.amphoe;
+                            for (const option of amphoe.options) {
+                                if (option.value === amphoeName) {
+                                    option.selected = true;
+                                    break;
+                                }
+                            }
+
+                            const districtName = address.data.district;
+                            for (const option of district.options) {
+                                if (option.value === districtName) {
+                                    option.selected = true;
+                                    break;
+                                }
+                            }
+                            postalCode.value = address.data.postal_code;
+                            telNo.value = address.data.tel_no;
+                        }
+                    } catch (error) {
+                        console.error('Error fetching address data:', error);
+                    }
+                }
+
+                async function loadUsername(){
+                    const userId = await getUser();
+                    const form = document.getElementById("form-update-setting");
+                    const username = form.querySelector('#input-username');
+                    const password = form.querySelector('#input-password');
+
+                    try {
+                        const user = await axios.get(`http://localhost:8080/api/User/getUser/${userId}`);
+                        username.value = user.data.username;
+                    } catch (error) {
+                        console.error('Error fetching username data:', error);
+                    }
+                }
+                loadUsername();
+
+
+
 
                 async function updateProfile() {
                     const userId = await getUser();
@@ -309,7 +452,7 @@
                     if (gender && gender[1] != '') data.gender = gender[1];
 
                     await axios.patch(`http://localhost:8080/api/User/editUser/${userId}`, data);
-                    window.location.href = "/admin_panel";
+                    window.location.href = "/";
                 }
 
                 async function updatePayment() {
@@ -336,11 +479,11 @@
                     if (payment_method && payment_method[1] === 'add_new_payment') {
                         if (payment_type && account_name[1] != '' && account_number[1] != '' && expiry_date[1] != '') {
                             await axios.post(`http://localhost:8080/api/PaymentMethod/addPaymentMethod/${userId}`, data);
-                            window.location.href = "/admin_panel";
+                            window.location.href = "/";
                         }
                     } else if (payment_method) {
                         await axios.patch(`http://localhost:8080/api/PaymentMethod/${payment_method[1]}/updatePaymentMethod`, data);
-                        window.location.href = "/admin_panel";
+                        window.location.href = "/";
                     }
                 }
 
@@ -383,7 +526,7 @@
                     if (address && address[1] === 'add_new_address') {
                         if (name[1] != '' && address_line1[1] != '' && country && province && amphoe && district && postal_code && tel_no[1] != '') {
                             await axios.post(`http://localhost:8080/api/Address/addAddress/${userId}`, data);
-                            window.location.href = "/admin_panel";
+                            window.location.href = "/";
                         }
                         else if (name[1] === '') alert('Please type address name before submitting');
                         else if (address_line1[1] === '') alert('Please type address line 1 before submitting');
@@ -398,7 +541,7 @@
                         if (country && !district) alert('Please select a district before submitting');
                         else {
                             await axios.patch(`http://localhost:8080/api/Address/updateAddress/${address[1]}`, data);
-                            window.location.href = "/admin_panel";
+                            window.location.href = "/";
                         }
                     } else {
                         alert('Please select an address before submitting');
@@ -420,7 +563,7 @@
                     if (password && password[1] != '') data.password = password[1];
 
                     await axios.patch(`http://localhost:8080/api/User/editUser/${userId}`, data);
-                    window.location.href = "/admin_panel";
+                    window.location.href = "/";
                 }
             </script>
 
