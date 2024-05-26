@@ -154,7 +154,6 @@ exports.getTotalSpending = async (req, res) => {
                 SUM(oi.qty) AS totalQty,
                 SUM((oi.qty * oi.price) - oi.discount) AS totalSales
             FROM order_item oi
-            JOIN product p ON oi.product_id = p.product_id
         `;
 
         const [rows] = await pool.query(query);

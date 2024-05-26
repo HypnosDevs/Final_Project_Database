@@ -285,7 +285,7 @@
                 tableBody.innerHTML = '';
                 let k = 0;
                 for (const orderData of allOrders) {
-                    const createdAt = new Date(orderData.createdAt);
+                    const createdAt = new Date(orderData.created_at);
                     //  format the date as "YYYY-MM-DD HH:MM:SS"
                     const formattedDate = `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-${createdAt.getDate().toString().padStart(2, '0')} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
 
@@ -520,13 +520,13 @@
                                 orderItems = orderItems.data;
                                 for (const orderItemData of orderItems) {
                                     orderItemArr.push(orderItemData);
-                                    orderUserId.push(orderData.user)
+                                    orderUserId.push(orderData.user_id)
                                 }
                             }
 
 
                             let revenueData = await axios.get("http://localhost:8080/api/Analyze/getTotalSpending");
-                            revenueData = revenueData.data[0];
+                            revenueData = revenueData.data;
                             if (!revenueData) {
                                 revenueData = {
                                     totalSales: 0,
