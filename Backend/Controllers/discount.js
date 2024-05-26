@@ -33,7 +33,7 @@ exports.getDiscount = async (req, res) => {
     try {
         const { id } = req.params;
         const [rows] = await pool.query('SELECT * FROM Discount WHERE Discount_id = ?', [id]);
-        res.send(rows);
+        res.send(rows[0]);
     } catch (err) {
         console.error(err.message);
         res.status(500).send({ message: err.message });
@@ -63,9 +63,9 @@ exports.addDiscount = async (req, res) => {
 exports.updateDiscount = async (req, res) => {
     try {
         const { id } = req.params;
-        const { discount } = req.body;
+        const { discount, min_price, max_discount } = req.body;
 
-        await pool.query('UPDATE Discount SET discount = ? WHERE Discount_id = ?', [discount, id]);
+        await pool.query('UPDATE Discount SET discount = ?,min_price = ?,max_discount = ? WHERE Discount_id = ?', [discount, min_price, max_discount, id]);
 
         const [updatedDiscount] = await pool.query('SELECT * FROM Discount WHERE Discount_id = ?', [id]);
 

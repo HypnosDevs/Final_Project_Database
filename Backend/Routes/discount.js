@@ -9,7 +9,7 @@ router.get('/getDiscount/:id', getDiscount)
 
 router.post('/addDiscount', addDiscount)
 
-router.post('/:id/updateDiscount', updateDiscount)
+router.put('/updateDiscount/:id', updateDiscount)
 
 router.delete('/deleteDiscount/:id', deleteDiscount)
 
