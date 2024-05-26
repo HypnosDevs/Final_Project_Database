@@ -271,7 +271,7 @@
                         <td>Order Id</td>
                         <td>Order Date</td>
                         <td>Product Name</td>
-                        <td>Price</td>
+                        <td>Total Price</td>
                         <td>Quantity</td>
                         <td>Status</td>
                         
@@ -299,7 +299,7 @@
                         <td>${orderData.order_item_id}</td>
                         <td>${formattedDate}</td>
                         <td>${orderData.product_name}</td>
-                        <td>${orderData.price - orderData.discount}</td>
+                        <td>${orderData.price * orderData.qty - orderData.discount}</td>
                         <td>${orderData.qty}</td>
                         <td>
                             <select class="selection" id="selectStatus${orderData.order_item_id}">
@@ -325,7 +325,7 @@
                             statusELe.style.backgroundColor = "#dcffe0";
                             break;
                         default:
-                            sstatusELe.style.backgroundColor = "eafffa"; // Reset background color if none of the cases match
+                            statusELe.style.backgroundColor = "eafffa"; // Reset background color if none of the cases match
                     }
 
                     // Change background color of select element based on selected value
