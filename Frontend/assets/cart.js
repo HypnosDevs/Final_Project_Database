@@ -92,41 +92,42 @@ const renderCartItems = async (items) => {
     console.log(1);
     items.forEach(item => {
         let discount = 0;
+        item.price = parseFloat(item.price);
 
-        if (couponIdx != -1 && item.product.category.includes(categoryId) && item.product.price >= couponData[couponIdx].min_price) {
-            if (item.product.price * couponData[couponIdx].discount / 100 > couponData[couponIdx].max_discount) {
+        if (couponIdx != -1 && item.category_id.includes(categoryId) && item.price >= couponData[couponIdx].min_price) {
+            if (item.price * couponData[couponIdx].discount / 100 > couponData[couponIdx].max_discount) {
                 discount = couponData[couponIdx].max_discount;
             } else {
-                discount = item.product.price * couponData[couponIdx].discount / 100;
+                discount = item.price * couponData[couponIdx].discount / 100;
             }
         }
 
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deleteItem('${item._id}')"></i></a></td>
-<td class="image" id="product${item.product._id}"><img src="data:image/png;base64, ${item.product.image}"></td>            
-            <td class="name">${item.product.name}</td>
-            <td class="price">฿${item.product.price}</td>
+            <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deleteItem('${item.shopping_cart_item_id}')"></i></a></td>
+<td class="image" id="product${item.product_item_id}"><img src="data:image/png;base64, ${item.product_image}"></td>            
+            <td class="name">${item.product_name}</td>
+            <td class="price">฿${item.price}</td>
             <td class="qty">${item.qty}</td>
-            <td class="discount">${discount * item.qty}</td>
-            <td class="subtotal">฿${(item.product.price - discount) * item.qty}</td>
+            <td class="discount">฿${discount * item.qty}</td>
+            <td class="subtotal">฿${(item.price - discount) * item.qty}</td>
             <td class="coupon">
                 <div class="coupon" id="coupon">
-                <button class="choose-coupon" id="choose-coupon-btn${item._id}" ><strong>Choose</strong></button>
+                <button class="choose-coupon" id="choose-coupon-btn${item.shopping_cart_item_id}" ><strong>Choose</strong></button>
                  </div>
             </td>
         `;
-        row.setAttribute('id', `shopitem${item._id}`);
+        row.setAttribute('id', `shopitem${item.shopping_cart_item_id}`);
         tbody.appendChild(row);
 
-        const chooseCouponBtn = document.querySelector(`#choose-coupon-btn${item._id}`);
+        const chooseCouponBtn = document.querySelector(`#choose-coupon-btn${item.shopping_cart_item_id}`);
         chooseCouponBtn.addEventListener('click', () => {
             openPopup(couponPopup);
 
-            populateCouponList(item.product.category, item.product.price * item.qty, `shopitem${item._id}`, `choose-coupon-btn${item._id}`);
+            populateCouponList(item.category_name, item.price * item.qty, `shopitem${item.shopping_cart_item_id}`, `choose-coupon-btn${item.shopping_cart_item_id}`);
         });
 
-        cartSubtotal += (item.product.price - discount) * item.qty;
+        cartSubtotal += (item.price - discount) * item.qty;
     });
 
 
@@ -144,23 +145,25 @@ const getCart = async () => {
             return window.location.href = `/signIn`;
         }
         const curUser = await axios.get(`http://localhost:8080/api/User/getUser/${userId}`)
+        
+        let shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${curUser.data.user_id}`);
+        shoppingCartItems = shoppingCartItems.data;
 
-        if (curUser.data.shoppingcart && curUser.data.shoppingcart.length > 0) {
+        if (shoppingCartItems && shoppingCartItems.length > 0) {
             const selectPaymentType = document.getElementById('selectPaymentType');
             let allPaymentTypes = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentType`);
             allPaymentTypes = allPaymentTypes.data;
             allPaymentTypes.forEach(payment => {
                 const option = document.createElement('option');
-                option.setAttribute('value', payment.name);
-                option.innerHTML = payment.name
+                option.setAttribute('value', payment.payment_name);
+                option.innerHTML = payment.payment_name
                 selectPaymentType.appendChild(option);
 
             })
-            console.log("here cart", curUser.data.shoppingcart);
-            const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${curUser.data._id}`);
-            console.log("Shopping Cart Items:", shoppingCartItems.data);
+            console.log("Shopping Cart Items:", shoppingCartItems);
+
             let cartSubtotal = 0;
-            await renderCartItems(shoppingCartItems.data).then(subtotal => { cartSubtotal = subtotal }); // Render cart items
+            await renderCartItems(shoppingCartItems).then(subtotal => { cartSubtotal = subtotal }); // Render cart items
             renderCartTotals(cartSubtotal);
 
 

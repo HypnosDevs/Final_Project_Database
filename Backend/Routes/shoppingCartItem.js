@@ -14,7 +14,7 @@ router.post('/addShoppingCartItem/:user_id/:product_id', addShoppingCartItem)
 
 router.delete('/deleteShoppingCartItem/:shoppingcart_item_id', deleteShoppingCartItem)
 
-router.delete('/deleteAllShoppingCartItem', deleteAllShoppingCartItem)
+router.delete('/deleteAllShoppingCartItem/:user_id', deleteAllShoppingCartItem)
 
 router.delete('/deleteShoppingCartItemByProduct/:product_id', deleteShoppingCartItemByProduct)
 

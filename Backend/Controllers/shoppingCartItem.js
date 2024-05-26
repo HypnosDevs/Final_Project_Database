@@ -16,11 +16,30 @@ exports.getItemFromShoppingCart = async (req, res) => {
         const query = `
             SELECT sci.*, p.*, c.*
             FROM shopping_cart_item sci
-            JOIN product p ON sci.product_item_id = p.id
-            JOIN category c ON p.category_id = c.category_id
+            JOIN product p ON sci.product_item_id = p.product_id
+            JOIN ProductCategory pc ON p.product_id = pc.product_id
+            JOIN category c ON pc.category_id = c.category_id
             WHERE sci.user_id = ?
+            ORDER BY sci.shopping_cart_item_id ASC
         `;
-        const [data] = await pool.query(query, [user_id]);
+        let [data] = await pool.query(query, [user_id]);
+
+        for (let i = 0; i < data.length; i++) {
+            if (i === 0) continue;
+            if (data[i-1].shopping_cart_item_id === data[i].shopping_cart_item_id) {
+                if (typeof(data[i-1].category_id) === 'number') {
+                    data[i-1].category_id = [data[i-1].category_id, data[i].category_id];
+                    data[i-1].category_name = [data[i-1].category_name, data[i].category_name];
+                } else {
+                    data[i-1].category_id.push(data[i].category_id);
+                    data[i-1].category_name.push(data[i].category_name);
+                }
+
+                data.splice(i, 1);
+                i--;
+            }
+        }
+
         res.status(200).send(data);
     } catch (err) {
         console.log(err.message);
@@ -31,7 +50,8 @@ exports.getItemFromShoppingCart = async (req, res) => {
 exports.addShoppingCartItem = async (req, res) => {
     const connection = await pool.getConnection();
     try {
-        const { user_id, product_id, qty } = req.body;
+        const { user_id, product_id } = req.params;
+        const { qty } = req.body;
         await connection.beginTransaction();
 
         const userQuery = 'SELECT * FROM user WHERE user_id = ?';
@@ -93,16 +113,15 @@ exports.deleteShoppingCartItem = async (req, res) => {
 exports.deleteAllShoppingCartItem = async (req, res) => {
     const connection = await pool.getConnection();
     try {
+        const { user_id } = req.params;
+
         await connection.beginTransaction();
 
-        const deleteAllItemsQuery = 'DELETE FROM shopping_cart_item';
+        const deleteAllItemsQuery = `DELETE FROM shopping_cart_item WHERE user_id = ${user_id}`;
         await connection.query(deleteAllItemsQuery);
 
-        const clearUserCartQuery = 'UPDATE user SET shoppingcart = NULL';
-        await connection.query(clearUserCartQuery);
-
         await connection.commit();
-        res.status(204).send({ message: "Delete all shopping cart items and update users successful" });
+        res.status(204).send({ message: "Delete all shopping cart items successful" });
     } catch (err) {
         await connection.rollback();
         console.error(err.message);
