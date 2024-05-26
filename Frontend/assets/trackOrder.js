@@ -65,10 +65,11 @@ const loadData = async (req, res) => {
 
 
     for (const orderData of orders) {
-        let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${orderData._id}`);
+        let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${orderData.order_id}`);
         orderItems = orderItems.data;
         for (const orderItemData of orderItems) {
-            const createdAt = new Date(orderData.createdAt);
+            console.log('hereee', orderItemData);
+            const createdAt = new Date(orderData.created_at);
             //  format the date as "YYYY-MM-DD HH:MM:SS"
             const formattedDate = `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-${createdAt.getDate().toString().padStart(2, '0')} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
             // Create wraporder div
@@ -80,20 +81,20 @@ const loadData = async (req, res) => {
             orderstattusDiv.classList.add("orderstattus");
             const orderIdSpan = document.createElement("span");
             orderIdSpan.classList.add("order-id");
-            orderIdSpan.textContent = `Order id: ${orderItemData._id}`;
+            orderIdSpan.textContent = `Order id: ${orderItemData.order_item_id}`;
             const orderStatusButton = document.createElement("button");
-            if (orderItemData.status === "Pending") {
+            if (orderItemData.order_status === "Pending") {
                 orderStatusButton.style.backgroundColor = "#ffffea";
             }
-            else if (orderItemData.status === "Shipping") {
+            else if (orderItemData.order_status === "Shipping") {
                 orderStatusButton.style.backgroundColor = "#fcefff";
             }
-            else if (orderItemData.status === "Delivered") {
+            else if (orderItemData.order_status === "Delivered") {
                 orderStatusButton.style.backgroundColor = "#dcffe0";
             }
             orderStatusButton.classList.add("order-status");
             orderStatusButton.setAttribute("type", "button");
-            orderStatusButton.textContent = `${orderItemData.status}`;
+            orderStatusButton.textContent = `${orderItemData.order_status}`;
             orderstattusDiv.appendChild(orderIdSpan);
             orderstattusDiv.appendChild(orderStatusButton);
             wraporderDiv.appendChild(orderstattusDiv);
@@ -143,7 +144,7 @@ const loadData = async (req, res) => {
             dateDiv.textContent = `Date: ${formattedDate}`;
             const priceDiv = document.createElement("div");
             priceDiv.classList.add("price");
-            priceDiv.textContent = `Price: ${orderItemData.price / orderItemData.qty} THB`;
+            priceDiv.textContent = `Price: ${orderItemData.price * orderItemData.qty} THB`;
             const discountDiv = document.createElement("div");
             discountDiv.classList.add("discount");
             const iElement = document.createElement("i");

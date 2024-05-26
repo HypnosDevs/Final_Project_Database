@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS order_item (
     order_id INT,
     product_id INT,
     product_name VARCHAR(255),
-    product_image VARCHAR(255),
+    product_image MEDIUMTEXT,
     discount DECIMAL(10, 2),
     price DECIMAL(10, 2) NOT NULL,
     order_status VARCHAR(50),

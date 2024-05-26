@@ -434,7 +434,7 @@ check_outBtn.addEventListener('click', async () => {
       status: 'Pending',
       qty: parseInt(document.querySelector(`#${shoppingcartId} .qty`).textContent),
       price: parseInt(document.querySelector(`#${shoppingcartId} .price`).textContent.replace('฿', '')),
-      discount: parseInt(document.querySelector(`#${shoppingcartId} .discount`).textContent),
+      discount: parseInt(document.querySelector(`#${shoppingcartId} .discount`).textContent.replace('฿', '')),
       product_image: productImageSrc.replace('data:image/png;base64, ', ''), // Corrected line
       product_name: document.querySelector(`#${shoppingcartId} .name`).textContent
     };
@@ -448,7 +448,7 @@ check_outBtn.addEventListener('click', async () => {
 
     await axios.delete(`http://localhost:8080/api/ShoppingCartItem/deleteAllShoppingCartItem/${userId}`);
 
-    getCart();
+    return window.location.href = `/trackOrder`;
   });
 
 
