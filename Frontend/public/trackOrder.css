@@ -620,3 +620,11 @@ ul li .active .uil {
 .payment-type {
   padding: 15px;
 }
+
+.no-product {
+  text-align: center;
+  color: #b7b8bd;
+  font-size: x-large;
+  font-weight: bold;
+  padding: 150px 0;
+}

@@ -37,9 +37,9 @@ app.get('/contact', (req, res) => {
 
 app.get('/', async (req, res) => {
     try {
-        //console.log('kuy');
+        // console.log('kuy');
         const products = await axios.get("http://localhost:8080/api/Product/getProduct");
-        //console.log(products.data);
+        // console.log(products.data);
         res.render('index', {
             products: products.data,
             title: "Home",

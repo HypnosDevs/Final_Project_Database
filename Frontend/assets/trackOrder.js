@@ -30,6 +30,26 @@ four.onclick = function () {
     four.classList.add("active");
 }
 
+const emptyPage = (text) => {
+    let h1Element = document.querySelector('.no-product');
+    if (h1Element) {
+        h1Element.textContent = `${text}`;
+        return;
+    }
+    h1Element = document.createElement('h1');
+    h1Element.textContent = `${text}`;
+    h1Element.classList.add('no-product');
+
+    // Get the reference node after which the h1 will be inserted
+    const boardHeaderSection = document.querySelector('#order-head');
+    const referenceNode = boardHeaderSection.nextElementSibling;
+    // console.log(referenceNode)
+    // Insert the h1 element after the page-header section
+    boardHeaderSection.parentNode.insertBefore(h1Element, referenceNode);
+}
+
+
+
 const loadData = async (req, res) => {
     const loader = document.querySelector('.loader')
 
@@ -194,36 +214,10 @@ const loadData = async (req, res) => {
     loader.classList.add("loader-hidden");
 
     loader.remove();
-    // Clear existing rows
 
-    // let k = 0;
-    // for (const orderData of orderItems) {
-    //     const createdAt = new Date(orderData.createdAt);
-    //     //  format the date as "YYYY-MM-DD HH:MM:SS"
-    //     const formattedDate = `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-${createdAt.getDate().toString().padStart(2, '0')} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
+    if (orders.length === 0) {
+        emptyPage('No Order');
+    }
 
-    //     const row = document.createElement("tr");
-    //     //<td><a href="#"><i id="remove" class="fa-solid fa-circle-xmark"></i></a></td>
-
-    //     row.innerHTML = `
-
-    //                     <td>${orderData._id}</td>
-    //                     <td>${formattedDate}</td>
-    //                     <td>${productName[k]}</td>
-    //                     <td>${orderData.price}</td>
-    //                     <td>${orderData.qty}</td>
-    //                     <td>
-    //                         ${orderData.status}
-
-    //                     </td>
-    //                     <td>
-    //                         ${allPaymentType[k]}
-
-    //                     </td>
-
-    //                 `;
-    //     tableBody.appendChild(row);
-    //     k++;
-    // }
 }
 loadData();
