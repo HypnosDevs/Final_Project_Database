@@ -3,21 +3,21 @@
 
         <section id="prodetails" class="section-p1">
             <div class="single-pro-image">
-                <img src="data:image/png;base64, <%= product.image %>" id="MainImg" alt="">
+                <img src="data:image/png;base64, <%= product.product_image %>" id="MainImg" alt="">
             </div>
             <div class="single-pro-details">
                 <h6>Home/Labubu</h6>
-                <h4><%= product.name %></h4>
+                <h4><%= product.product_name %></h4>
                 <h2>฿<%= product.price %></h2>
                 <h5>Stock: <%= product.stock %><h5>
                 <!--<form action="/getProduct/<%= product._id %>" method="POST">-->
                 <input id="qty" name="qty" type="number" value="1" min="1" max="<%= product.stock %>">
-                <button id="addCart" onclick="addCart('<%=product._id%>')" class="normal" type="submit">Add To
+                <button id="addCart" onclick="addCart('<%=product.product_id%>')" class="normal" type="submit">Add To
                     Cart</button>
                 <!--</form>-->
                 <h4>Product Details</h4>
                 <!-- Replace leading spaces with an empty string -->
-                <pre id="spanDesc"><%= product.description.replace(/^\s+/gm, '') %></pre>
+                <pre id="spanDesc"><%= product.product_description.replace(/^\s+/gm, '') %></pre>
 
 
             </div>

@@ -34,14 +34,14 @@ submitButton.addEventListener("click", async (event) => {
                     max_discount: updatedData.max_discount
                 });
             } else {
-                discount = isExists;
+                discount = isExists.data.discountMatch;
             }
 
-            console.log(isExists);
+            // console.log(isExists);
 
             for (const category_id of categoriesId) {
                 // console.log("category_id", category_id);
-                const res = await axios.get(`http://localhost:8080/api/DiscountCategory/getDiscountCategoryByDiscountCategoryID/${discount.data.discount_id}/${category_id}`)
+                const res = await axios.get(`http://localhost:8080/api/DiscountCategory/getDiscountCategoryByDiscountCategoryID/${discount.discount_id}/${category_id}`)
                 if (res.data.length === 0) {
                     await axios.post('http://localhost:8080/api/DiscountCategory/addDiscountCategory', {
                         category_id: category_id,

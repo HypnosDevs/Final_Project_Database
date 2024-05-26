@@ -22,17 +22,18 @@ async function getUserAddress() {
       withCredentials: true
     });
     const addresses = await axios.get(`http://localhost:8080/api/Address/getAllAddressFromUser/${curUserId.data}`)
-    const addressesData = addresses.data.address;
+    const addressesData = addresses.data;
 
     let result = [];
     for (let i = 0; i < addressesData.length; i++) {
+      if (addressesData[i].address_line2 === null) addressesData[i].address_line2 = '';
       result.push({
-        id: addressesData[i]._id, name: addressesData[i].name, text: `${addressesData[i].address_line1 + ' ' +
+        id: addressesData[i].address_id, name: addressesData[i].address_name, text: `${addressesData[i].address_line1 + ' ' +
           addressesData[i].address_line2 + ' ' +
           addressesData[i].district + ' ' +
           addressesData[i].amphoe + ' ' +
           addressesData[i].province + ' ' +
-          addressesData[i].country + ' ' +
+          addressesData[i].country_name + ' ' +
           addressesData[i].postal_code + ' ' +
           addressesData[i].tel_no
           }`
@@ -53,24 +54,23 @@ async function getUserPaymentMethod() {
       withCredentials: true
     });
     const payments = await axios.get(`http://localhost:8080/api/PaymentMethod/getAllPaymentMethodFromUser/${curUserId.data}`)
-    const paymentsData = payments.data.paymentmethod;
-    //console.log("payment", paymentsData)
+    const paymentsData = payments.data;
 
     let result = [];
     for (let i = 0; i < paymentsData.length; i++) {
       result.push({
-        id: paymentsData[i]._id,
+        id: paymentsData[i].payment_id,
         account_number: paymentsData[i].account_number,
         account_name: paymentsData[i].account_name,
-        expiry_date: paymentsData[i].expiry_date
+        expiry_date: paymentsData[i].payment_expiry_date
       });
     };
-    //console.log("in function pay", result);
+
     return result;
 
   } catch (err) {
-    //console.log(err.message);
-    // res.status(500).send({ message: err.message });
+    console.log(err.message);
+    res.status(500).send({ message: err.message });
   }
 }
 
@@ -123,7 +123,6 @@ let userPaymentsInfo = '';
 let paymentIdx = -1;
 async function populatePaymentList() {
   await getUserPaymentMethod().then(data => { userPaymentsInfo = data });
-  console.log(userPaymentsInfo)
   paymentList.innerHTML = '';
   for (let i = 0; i < userPaymentsInfo.length; i++) {
     const listItem = document.createElement('li');
@@ -131,7 +130,7 @@ async function populatePaymentList() {
     listItem.addEventListener('click', async () => {
       selectedPaymentId = userPaymentsInfo[i].id;
       const data = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentTypeFromUserPaymentMethod/${userPaymentsInfo[i].id}`);
-      document.querySelector("#user-payment").innerHTML = `Type: ${data.data.name}<div><br></div>Account number: ${userPaymentsInfo[i].account_number}<div><br></div>Expiry date: ${userPaymentsInfo[i].expiry_date}`;
+      document.querySelector("#user-payment").innerHTML = `Type: ${data.data.payment_name}<div><br></div>Account number: ${userPaymentsInfo[i].account_number}<div><br></div>Expiry date: ${userPaymentsInfo[i].expiry_date}`;
 
       //console.log("selected payment id", selectedPaymentId);
       // document.getElementById('user-payment').textContent = userPaymentsInfo[i].expiry_date;
@@ -202,7 +201,7 @@ submit_addressBtn.addEventListener('click', async () => {
   const formData = new FormData(addressForm);
 
   const address = {
-    name: Array.from(formData)[0][1],
+    address_name: Array.from(formData)[0][1],
     address_line1: Array.from(formData)[1][1],
     address_line2: Array.from(formData)[2][1],
     country: Array.from(formData)[3][1],
@@ -373,10 +372,10 @@ submit_paymentBtn.addEventListener('click', async () => {
   const formData = new FormData(paymentForm);
 
   const payment = {
-    type: Array.from(formData)[0][1],
+    payment_type: Array.from(formData)[0][1],
     account_name: Array.from(formData)[1][1],
     account_number: Array.from(formData)[2][1],
-    expiry_date: Array.from(formData)[3][1],
+    payment_expiry_date: Array.from(formData)[3][1],
   };
 
   let userId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
@@ -412,14 +411,14 @@ check_outBtn.addEventListener('click', async () => {
 
   let paymentType = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentTypeFromUserPaymentMethod/${paymentId}`)
   // console.log('paymenttype', paymentType.data);
-  userPaymentsInfo[paymentIdx].payment_type = paymentType.data.name;
+  userPaymentsInfo[paymentIdx].payment_type = paymentType.data.payment_name;
   userPaymentsInfo[paymentIdx].id = undefined;
 
   const insertData = { ...address, ...userPaymentsInfo[paymentIdx] };
-  // console.log(insertData)
+  console.log('knee', insertData)
 
   const order = await axios.post(`http://localhost:8080/api/Order/addOrder/${paymentId}/${userId}`, insertData);
-  const orderId = order.data._id;
+  const orderId = order.data.order_id;
 
   // const shoppingCartItems = await axios.get(`http://localhost:8080/api/ShoppingCartItem/getItemFromShoppingCart/${userId}`);
   // const shoppingCartItemsData = shoppingCartItems.data
@@ -435,7 +434,7 @@ check_outBtn.addEventListener('click', async () => {
       status: 'Pending',
       qty: parseInt(document.querySelector(`#${shoppingcartId} .qty`).textContent),
       price: parseInt(document.querySelector(`#${shoppingcartId} .price`).textContent.replace('฿', '')),
-      discount: parseInt(document.querySelector(`#${shoppingcartId} .discount`).textContent),
+      discount: parseInt(document.querySelector(`#${shoppingcartId} .discount`).textContent.replace('฿', '')),
       product_image: productImageSrc.replace('data:image/png;base64, ', ''), // Corrected line
       product_name: document.querySelector(`#${shoppingcartId} .name`).textContent
     };
@@ -447,9 +446,9 @@ check_outBtn.addEventListener('click', async () => {
     const orderItem = await axios.post(`http://localhost:8080/api/OrderItem/addOrderItem/${orderId}/${productId}`, shoppingCartItem);
 
 
-    await axios.delete(`http://localhost:8080/api/ShoppingCartItem/deleteAllShoppingCartItem`);
+    await axios.delete(`http://localhost:8080/api/ShoppingCartItem/deleteAllShoppingCartItem/${userId}`);
 
-    getCart();
+    return window.location.href = `/trackOrder`;
   });
 
 
@@ -476,38 +475,34 @@ let couponData = [];
 
 async function populateCouponList(categoryProduct, productPrice, shoppingcartId, buttonId) {
   couponList.innerHTML = '';
-  // couponData = [];
 
   let coupons = await axios.get("http://localhost:8080/api/Discount/getDiscount");
   coupons = coupons.data;
   coupons.forEach(async coupon => {
-    // let categoryArr = [];
-    for (const discountCategoryId of coupon.discountcategory) {
-      // couponData.push(coupon);
-      const discountCategory = await axios.get(`http://localhost:8080/api/DiscountCategory/getDiscountCategory/${discountCategoryId}`)
-      const categoryId = discountCategory.data.category;
+    const discountCategories = await axios.get(`http://localhost:8080/api/DiscountCategory/getDiscountCategoryByDiscountId/${coupon.discount_id}`)
+    for (const discountCategory of discountCategories.data) {
+      const categoryId = discountCategory.category_id;
       const categoryName = await axios.get(`http://localhost:8080/api/Category/getCategory/${categoryId}`);
-      const allProdCatName = categoryProduct.map(ele => ele.name);
-      // console.log('subprice', productPrice);
-      if (!allProdCatName.includes(categoryName.data.name) || productPrice < coupon.min_price) {
+      const allProdCatName = categoryProduct;
+
+      if (!allProdCatName.includes(categoryName.data.category_name) || productPrice < coupon.min_price) {
         continue;
       }
       const listItem = document.createElement('li');
-      // console.log('catname', categoryName.data)
-      listItem.innerHTML = `Category: ${categoryName.data.name} ${coupon.discount}%</br>Min price: ${coupon.min_price} THB</br>Max discount ${coupon.max_discount}`;
+      listItem.innerHTML = `Category: ${categoryName.data.category_name} ${coupon.discount}%</br>Min price: ${coupon.min_price} THB</br>Max discount ${coupon.max_discount}`;
       listItem.addEventListener('click', async () => {
 
         const prodPrice = parseInt(document.querySelector(`#${shoppingcartId} .price`).textContent.replace('฿', ''));
         const qty = parseInt(document.querySelector(`#${shoppingcartId} .qty`).textContent);
         let subtotal = prodPrice * qty;
         let tmpDiscount = Math.ceil((subtotal * parseInt(coupon.discount)) / 100);
-        if (tmpDiscount > coupon.max_discount) {
-          tmpDiscount = coupon.max_discount;
+        if (tmpDiscount > coupon.max_discount * qty) {
+          tmpDiscount = coupon.max_discount * qty;
         }
 
         subtotal -= tmpDiscount;
-        document.querySelector(`#${shoppingcartId} .discount`).innerHTML = tmpDiscount;
-        document.querySelector(`#${shoppingcartId} .subtotal`).innerHTML = subtotal;
+        document.querySelector(`#${shoppingcartId} .discount`).innerHTML = '฿' + tmpDiscount;
+        document.querySelector(`#${shoppingcartId} .subtotal`).innerHTML = '฿' + subtotal;
         document.querySelector('#subtotal-value').innerHTML = '฿' + String( Number(document.querySelector('#subtotal-value').innerHTML.slice(1)) - tmpDiscount )
         document.querySelector('#total-value').innerHTML = '฿' + String( Number(document.querySelector('#total-value').innerHTML.slice(1)) - tmpDiscount )
         document.getElementById(buttonId).innerHTML = `${coupon.discount}%`

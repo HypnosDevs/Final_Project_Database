@@ -19,9 +19,10 @@ exports.getAllPaymentMethodFromUser = async (req, res) => {
         }
 
         const [paymentMethods] = await pool.query('SELECT * FROM user_payment_method WHERE user_id = ?', [id]);
-        userRows[0].paymentMethods = paymentMethods;
+        // userRows[0].paymentMethods = paymentMethods;
 
-        res.send(userRows[0]);
+        //res.send(userRows[0]);
+        res.send(paymentMethods);
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ message: err.message });

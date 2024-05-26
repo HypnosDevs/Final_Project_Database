@@ -46,7 +46,7 @@ exports.register = async (req, res) => {
         const hash = await bcrypt.hash(password, 10);
 
         await pool.query('INSERT INTO user (username, password, firstname, lastname, gender, email, user_role) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [username, hash, req.body.user.firstname, req.body.user.lastname, req.body.user.gender, req.body.user.email, 'ADMIN']);
+            [username, hash, req.body.user.firstname, req.body.user.lastname, req.body.user.gender, req.body.user.email, 'USER']);
 
         const [userRows] = await pool.query('SELECT * FROM user WHERE username = ?', [username]);
         const userData = userRows[0];
