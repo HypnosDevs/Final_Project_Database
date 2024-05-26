@@ -313,7 +313,20 @@
 
                     tableBody.appendChild(row);
                     k++;
-
+                    const statusELe = document.querySelector(`#selectStatus${orderData.order_item_id}`);
+                    switch (statusELe.value) {
+                        case "Pending":
+                            statusELe.style.backgroundColor = "#ffffea";
+                            break;
+                        case "Shipping":
+                            statusELe.style.backgroundColor = "#fcefff";
+                            break;
+                        case "Delivered":
+                            statusELe.style.backgroundColor = "#dcffe0";
+                            break;
+                        default:
+                            sstatusELe.style.backgroundColor = "eafffa"; // Reset background color if none of the cases match
+                    }
 
                     // Change background color of select element based on selected value
                     document.querySelector(`#selectStatus${orderData.order_item_id}`).addEventListener("change", async function (event) {
