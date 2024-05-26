@@ -201,7 +201,7 @@ submit_addressBtn.addEventListener('click', async () => {
   const formData = new FormData(addressForm);
 
   const address = {
-    name: Array.from(formData)[0][1],
+    address_name: Array.from(formData)[0][1],
     address_line1: Array.from(formData)[1][1],
     address_line2: Array.from(formData)[2][1],
     country: Array.from(formData)[3][1],
