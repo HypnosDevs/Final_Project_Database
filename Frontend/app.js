@@ -163,9 +163,19 @@ app.get('/edit_product/:id', (req, res) => {
     })
 })
 
-app.get('/edit_promotion/:id', (req, res) => {
+app.get('/edit_discounts/:id', (req, res) => {
     const { id } = req.params
-    res.render('edit_promotion', {
+    res.render('edit_discounts', {
+        roles: ["ADMIN", "PRODUCT MANAGER"],
+        discount_id: id,
+        title: "User Setting Page",
+        style: "/create_edit.css"
+    })
+})
+
+app.get('/edit_categories/:id', (req, res) => {
+    const { id } = req.params
+    res.render('edit_categories', {
         roles: ["ADMIN", "PRODUCT MANAGER"],
         discount_id: id,
         title: "User Setting Page",
