@@ -29,7 +29,7 @@ exports.getOrderItemFromOrder = async (req, res) => {
         const { order_id } = req.params;
         const [rows] = await pool.query('SELECT * FROM order_item WHERE order_id = ?', [order_id]);
         if (rows.length === 0) {
-            throw { message: "Order item Not Found" };
+            return res.status(200).send(null);
         }
         res.status(200).send(rows);
     } catch (err) {

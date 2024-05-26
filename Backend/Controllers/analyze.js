@@ -70,6 +70,7 @@ exports.bestCategoryFromUser = async (req, res) => {
 exports.getUserTotalSpending = async (req, res) => {
     try {
         const { user_id } = req.params;
+        console.log('ididi', user_id)
 
         // SQL query to calculate total spending for a user
         const query = `
@@ -80,6 +81,8 @@ exports.getUserTotalSpending = async (req, res) => {
         `;
 
         const [rows] = await pool.query(query, [user_id]);
+
+        console.log('kuy', rows);
 
         // Extracting total spending from the result
         const totalSpendingResult = rows[0].totalSpending || 0;

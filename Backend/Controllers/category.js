@@ -23,7 +23,7 @@ exports.getAllCategoryFromProduct = async (req, res) => {
             FROM category c
             JOIN ProductCategory pc ON c.category_id = pc.category_id
             JOIN product p ON pc.product_id = p.product_id
-            WHERE p.id = ?
+            WHERE p.product_id = ?
         `;
         const [rows] = await pool.query(query, [id]);
         res.send(rows);
