@@ -44,7 +44,7 @@ const loadOrders = async (allOrderItems) => {
         <td>Order Item Id</td> 
         <td>Order Date</td>
         <td>Product Name</td>
-        <td>Price</td>
+        <td>Total Price</td>
         <td>Quantity</td>
         <td>Status</td>
         <td>Payment Type</td>
@@ -69,7 +69,7 @@ const loadOrders = async (allOrderItems) => {
                 <td>${orderItem.order_item_id}</td>
                 <td>${formattedDate}</td>
                 <td>${orderItem.product_name}</td>
-                <td>฿${orderItem.price - orderItem.discount}</td>
+                <td>฿${orderItem.price * orderItem.qty - orderItem.discount}</td>
                 <td>${orderItem.qty}</td>
                 <td>${orderItem.order_status}</td>
                 <td>${orderItemPaymentType[k]}</td>     
