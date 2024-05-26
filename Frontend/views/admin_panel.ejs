@@ -18,7 +18,7 @@
                     <li><a href="/">Home</a></li>
                     <li><a class="active" href="/admin_panel">Dashboard</a></li>
                     <li><a href="/product_admin">Products</a></li>
-                    <li><a href="/promotion_admin">Promotion</a></li>
+                    <li id="promotion-admin"><a href="/promotion_admin">Promotion</a></li>
                     <li id="payment-type-admin"><a href="/payment_type_admin">Payment</a></li>
 
                     <ul>
@@ -511,7 +511,7 @@
                                 allPromotions.remove();
                                 analize_page.remove();
                                 document.getElementById('payment-type-admin').remove();
-
+                                document.getElementById('promotion-admin').remove();
                             }
 
                             users = users.data;

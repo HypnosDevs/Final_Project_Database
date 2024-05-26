@@ -57,14 +57,13 @@ exports.getProductFromOrderItem = async (req, res) => {
 };
 
 exports.addOrderItem = async (req, res) => {
-    const connection = await pool.getConnection();
     try {
         const { order_id, product_id } = req.params;
-        const [orderRows] = await connection.query('SELECT * FROM `order` WHERE order_id = ?', [order_id]);
+        const [orderRows] = await pool.query('SELECT * FROM `order` WHERE order_id = ?', [order_id]);
         if (orderRows.length === 0) {
             throw { message: "Order Not Found" };
         }
-        const [productRows] = await connection.query('SELECT * FROM product WHERE product_id = ?', [product_id]);
+        const [productRows] = await pool.query('SELECT * FROM product WHERE product_id = ?', [product_id]);
         if (productRows.length === 0) {
             throw { message: "Product Not Found" };
         }
@@ -80,18 +79,14 @@ exports.addOrderItem = async (req, res) => {
             order_status: req.body.order_status
         };
 
-        await connection.beginTransaction();
-        await connection.query('INSERT INTO order_item SET ?', orderItem);
-        await connection.query('UPDATE product SET stock = ? WHERE product_id = ?', [product.stock - orderItem.qty, product_id]);
-        await connection.commit();
+        await pool.query('INSERT INTO order_item SET ?', orderItem);
+        await pool.query('UPDATE product SET stock = ? WHERE product_id = ?', [product.stock - orderItem.qty, product_id]);
 
         res.status(201).send({ message: "Create order item successful" });
     } catch (err) {
         await connection.rollback();
         console.log(err.message);
         res.status(500).send({ message: err.message });
-    } finally {
-        connection.release();
     }
 };
 
