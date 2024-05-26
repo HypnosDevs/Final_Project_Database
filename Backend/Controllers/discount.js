@@ -92,19 +92,18 @@ exports.checkDiscountMatch = async (req, res) => {
     try {
         const { discount, min_price, max_discount } = req.body;
 
-        const [rows] = await pool.query('SELECT * FROM Discount WHERE discount = ? AND min_price = ? AND max_discount = ?', [discount, min_price, max_discount]);
+        const [rows] = await pool.query(
+            'SELECT * FROM Discount WHERE discount = ? AND min_price = ? AND max_discount = ?',
+            [discount, min_price, max_discount]
+        );
 
         console.log('Query parameters:', discount, min_price, max_discount);
         console.log('Query result:', rows);
 
-        let data = {};
-        if (rows.length > 0) {
-            data = rows[0];
-            data.isExists = "1";
-        } else {
-            data = rows[0];
-            data.isExists = "0";
-        }
+        let data = {
+            isExists: rows.length > 0 ? "1" : "0", // Set isExists based on rows length
+            discountMatch: rows.length > 0 ? rows[0] : null // Optionally return the matched discount details
+        };
 
         res.send(data);
     } catch (err) {
