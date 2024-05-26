@@ -69,8 +69,8 @@ exports.addOrder = async (req, res) => {
         // Insert new order
         const { payment_type, account_name, account_number, address_name, province, amphoe, district, address_line1, address_line2, postal_code, country_name } = req.body;
         const [result] = await pool.query(
-            'INSERT INTO `order` (user_id, payment_type, account_name, account_number, address_name, province, amphoe, district, address_line1, address_line2, postal_code, country_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [user_id, payment_type, account_name, account_number, address_name, province, amphoe, district, address_line1, address_line2, postal_code, country_name]
+            'INSERT INTO `order` (user_id, payment_type, account_number, address_name, province, amphoe, district, address_line1, address_line2, postal_code, country_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [user_id, payment_type, account_number, address_name, province, amphoe, district, address_line1, address_line2, postal_code, country_name]
         );
 
         const newOrderId = result.insertId;

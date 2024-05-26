@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `order` (
     account_number VARCHAR(50),
     address_name VARCHAR(255),
     province VARCHAR(100),
+    amphoe VARCHAR(100),
     district VARCHAR(100),
     address_line1 VARCHAR(255),
     address_line2 VARCHAR(255),

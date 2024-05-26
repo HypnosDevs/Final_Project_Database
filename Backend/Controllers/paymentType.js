@@ -15,7 +15,7 @@ exports.getPaymentTypeFromUserPaymentMethod = async (req, res) => {
         const { payment_method_id } = req.params;
         const [rows] = await pool.query(`
             SELECT pt.* FROM payment_type pt
-            JOIN user_payment_method upm ON pt.id = upm.payment_type_id
+            JOIN user_payment_method upm ON pt.payment_type_id = upm.payment_type_id
             WHERE upm.payment_id = ?`, [payment_method_id]);
         
         if (rows.length === 0) {
