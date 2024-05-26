@@ -12,6 +12,19 @@ exports.getAllDiscountCategory = async (req, res) => {
 };
 
 // Get a specific discount category by ID
+exports.getDiscountCategoryByDiscountCategoryID = async (req, res) => {
+    try {
+        const { category_id, discount_id } = req.params;
+        const [rows] = await pool.query('SELECT * FROM DiscountCategory WHERE category_id = ? AND discount_id = ?', [category_id, discount_id]);
+        res.send(rows[0]);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send({ message: err.message });
+    }
+};
+
+
+// Get a specific discount category by ID
 exports.getDiscountCategory = async (req, res) => {
     try {
         const { id } = req.params;

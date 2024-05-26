@@ -19,7 +19,7 @@
                         <input type="number" class="input" placeholder="Discount" name="discount" min="1" max="99"> -->
 
                         <h2>Category</h2>
-                        <input type="text" class="input" placeholder="Category" name="category">
+                        <input id="input-category" type="text" class="input" placeholder="Category" name="category">
                         <!-- <h2>Min price (Thai baht)</h2>
                         <input type="text" class="input" placeholder="Min price" name="min_price">
                         <h2>Max discount (Thai baht)</h2>
@@ -58,67 +58,40 @@
                 const submitButton = document.querySelector("#submitButton");
                 const form = document.querySelector("#form-update-promotion");
 
-                submitButton.addEventListener("click", async () => {
-                    try {
-                        const formData = new FormData(form);
+                document.addEventListener("DOMContentLoaded", () => {
+                    const submitButton = document.querySelector("#submitButton");
+                    const form = document.querySelector("#form-update-promotion");
+                    const inputCategory = document.querySelector('#input-category');
 
-                        for (item of formData) {
-                            if (item[0] == 'category' && item[1] != '') {
-                                const categories = item[1].split(' ');
-                                for (let i = 0; i < categories.length; i++) {
-                                    await fetch(`http://localhost:8080/api/Category/addCategory/${categories[i]}`, {
-                                        method: "POST"
-                                    });
-                                }
-                            }
-                        };
 
-                        const id = `<%= discount_id %>`;
-
-                        // Get old discount category id
-                        let discountCategoriesId = [];
-                        const discountCategories = await axios.get(`http://localhost:8080/api/DiscountCategory/getDiscountCategoryByDiscountId/${id}`);
-                        for (let i = 0; i < discountCategories.data.length; i++) {
-                            discountCategoriesId.push(discountCategories.data[i]._id)
+                    const editData = async () => {
+                        try {
+                            const response = await axios.get(`http://localhost:8080/api/Category/getCategory/<%= category_id %>`);
+                            const catData = response.data;
+                            inputCategory.value = catData.category_name;
+                        } catch (error) {
+                            console.error('Error fetching discount data:', error);
                         }
+                    };
 
+                    submitButton.addEventListener("click", async (event) => {
+                        event.preventDefault(); // Prevent form from submitting the default way
+                        try {
+                            const formData = new FormData(form);
+                            const updatedData = {
+                                category: formData.get('category'),
+                            };
 
+                            console.log('data', updatedData);
 
-                        // Remove old discount category
-                        await axios.delete(`http://localhost:8080/api/DiscountCategory/${id}/deleteDiscountCategoryByDiscountId`);
-
-                        // Create new category
-                        let categoriesId = [];
-                        if (Array.from(formData)[1][1] != '') {
-                            const categories = Array.from(formData)[1][1].split(' ');
-                            for (let i = 0; i < categories.length; i++) {
-                                const category = await axios.post(`http://localhost:8080/api/Category/addCategory/${categories[i]}`);
-                                categoriesId.push(category.data._id);
-                            }
+                            await axios.put(`http://localhost:8080/api/Category/updateCategory/<%= category_id %>`, updatedData);
+                            location.replace("http://localhost:9090/promotion_admin");
+                        } catch (err) {
+                            console.error('Error updating discount:', err);
                         }
+                    });
 
-                        // Create new discount category
-                        for (const categoryId of categoriesId) {
-                            const discountCategory = await axios.post('http://localhost:8080/api/DiscountCategory/addDiscountCategory', {
-                                categoryId: categoryId,
-                                discountId: id
-                            })
-                        }
-
-                        await axios.post(`http://localhost:8080/api/Discount/<%= discount_id %>/updateDiscount`, {
-                            discount: Array.from(formData)[0][1],
-                            min_price: Array.from(formData)[2][1],
-                            max_discount: Array.from(formData)[3][1],
-                            discountCategory: discountCategoriesId
-                        })
-
-                        location.replace("http://localhost:9090/promotion_admin")
-
-                    } catch (err) {
-                        console.log(err.message);
-                        res.status(500).send({ message: err.message });
-
-                    }
+                    editData();
                 });
             </script>
 

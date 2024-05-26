@@ -82,12 +82,19 @@
                                 max_discount: formData.get('max_discount')
                             };
 
+                            // console.log('updated', updatedData)
+                            const isExists = await axios.post(`http://localhost:8080/api/Discount/checkDiscountMatch`, updatedData);
+                            // console.log("isExists", isExists);
+                            if (isExists.data.isExists === "1") {
+                                throw "Sorry combined data must unique";
+                            }
                             console.log('data', updatedData);
 
                             await axios.put(`http://localhost:8080/api/Discount/updateDiscount/<%= discount_id %>`, updatedData);
-                            location.replace("http://localhost:9090/promotion_admin");
+                            // location.replace("http://localhost:9090/promotion_admin");
                         } catch (err) {
                             console.error('Error updating discount:', err);
+                            alert(err);
                         }
                     });
 

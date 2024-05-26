@@ -7,7 +7,6 @@
                     <a onclick="tabs(0)" class="tab">
                         <i class="fa-solid fa-ticket"></i>
                     </a>
-
                 </nav>
             </div>
             <div class="rightbox">
@@ -16,15 +15,19 @@
                         <h1>Create Promotion</h1>
 
                         <h2>Discount (%)</h2>
-                        <input type="number" class="input" placeholder="Discount" name="discount" min="1" max="99">
+                        <input type="number" class="input" placeholder="Discount" name="discount" min="1" max="99"
+                            required>
 
                         <h2>Category</h2>
-                        <input type="text" class="input" placeholder="Category" name="category">
+                        <input type="text" class="input" placeholder="Category" name="category" required>
+
                         <h2>Min price (Thai baht)</h2>
-                        <input type="text" class="input" placeholder="Min price" name="min_price">
+                        <input type="text" class="input" placeholder="Min price" name="min_price" required>
+
                         <h2>Max discount (Thai baht)</h2>
-                        <input type="text" class="input" placeholder="Max discount" name="max_discount">
-                        <button type="button" class="btn" id="submitButton">Create</button>
+                        <input type="text" class="input" placeholder="Max discount" name="max_discount" required>
+
+                        <button type="submit" class="btn" id="submitButton">Create</button>
                         <button type="button" class="btn" id="cancelButton"
                             onclick="window.location.href='/promotion_admin';">Cancel</button>
                     </div>
@@ -38,8 +41,7 @@
                     });
                     if (!curUser.data) {
                         window.location.href = "/signIn";
-                    }
-                    else {
+                    } else {
                         curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
                         const role = curUser.data.user_role;
                         console.log('role:', role)
@@ -52,6 +54,7 @@
                 roles = roles.split(',');
                 allowed(roles);
             </script>
+
 
             <script src="CreatePromotion.js"></script>
             <script>

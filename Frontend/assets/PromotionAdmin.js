@@ -118,6 +118,7 @@ const renderPromotions = async (promotions) => {
     const headerRow = document.createElement("tr");
     headerRow.innerHTML = `
         <td style="width: 150px;">Remove</td>
+        <td style="width: 150px;">DiscountID</td>
         <td style="width: 150px;">Discount</td>
         <td style="width: 150px;">Category</td>
   
@@ -144,6 +145,7 @@ const renderPromotions = async (promotions) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td><i class="fa-solid fa-circle-xmark" onclick="deletePromotion('${promotion.discount_id}','${category_id}')"></i></a></td>
+                    <td>${promotion.discount_id}</td>
                     <td>${promotion.discount}%</td>
                     <td>${categoryName.data.category_name}</td>
                 `;
@@ -181,6 +183,7 @@ const renderDiscounts = async (discounts) => {
     const headerRow = document.createElement("tr");
     headerRow.innerHTML = `
         <td>Remove</td>
+        <td>ID</td>
         <td>Discount</td>
         <td>Min Price</td>
         <td>Max Price</td>
@@ -196,6 +199,7 @@ const renderDiscounts = async (discounts) => {
         const row = document.createElement('tr');
         row.innerHTML = `
                 <td><i class="fa-solid fa-circle-xmark" onclick="deleteDiscount('${discount.discount_id}')"></i></a></td>
+                <td>${discount.discount_id}</td>
                 <td>${discount.discount}%</td>
                 <td>${discount.min_price}</td>
                 <td>${discount.max_discount}</td>

@@ -132,3 +132,19 @@ exports.deleteProductCategory = async (req, res) => {
         res.status(500).send({ message: err.message });
     }
 };
+
+exports.updateCategory = async (req, res) => {
+    try {
+
+        const { id } = req.params;
+        const { category } = req.body;
+
+        await pool.query('UPDATE Category SET category_name = ? WHERE category_id = ?', [category, id]);
+
+        res.status(200).send({ message: 'ProductCategory deleted successfully' });
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send({ message: err.message });
+    }
+}

@@ -87,3 +87,28 @@ exports.deleteDiscount = async (req, res) => {
         res.status(500).send({ message: err.message });
     }
 };
+
+exports.checkDiscountMatch = async (req, res) => {
+    try {
+        const { discount, min_price, max_discount } = req.body;
+
+        const [rows] = await pool.query('SELECT * FROM Discount WHERE discount = ? AND min_price = ? AND max_discount = ?', [discount, min_price, max_discount]);
+
+        console.log('Query parameters:', discount, min_price, max_discount);
+        console.log('Query result:', rows);
+
+        let data = {};
+        if (rows.length > 0) {
+            data = rows[0];
+            data.isExists = "1";
+        } else {
+            data = rows[0];
+            data.isExists = "0";
+        }
+
+        res.send(data);
+    } catch (err) {
+        console.error('Error executing query:', err.message);
+        res.status(500).send({ message: err.message });
+    }
+}

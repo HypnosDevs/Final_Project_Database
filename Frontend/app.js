@@ -177,7 +177,7 @@ app.get('/edit_categories/:id', (req, res) => {
     const { id } = req.params
     res.render('edit_categories', {
         roles: ["ADMIN", "PRODUCT MANAGER"],
-        discount_id: id,
+        category_id: id,
         title: "User Setting Page",
         style: "/create_edit.css"
     })
