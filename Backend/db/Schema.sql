@@ -1,6 +1,9 @@
 CREATE DATABASE IF NOT EXISTS test_nodejs CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 use test_nodejs;
+-- CREATE USER 'admin'@'%' IDENTIFIED BY '123456';
+-- GRANT ALL PRIVILEGES ON test_nodejs.* TO 'admin'@'%' IDENTIFIED BY '123456';
+-- FLUSH PRIVILEGES;
 
 CREATE TABLE IF NOT EXISTS user (
     user_id INT AUTO_INCREMENT PRIMARY KEY,

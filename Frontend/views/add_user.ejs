@@ -71,7 +71,7 @@
 
                     <h2>Expiration date</h2>
                     <input type="text" class="input" name="payment[payment_expiry_date]">
-                    
+
                     <button type="button" class="btn" id="cancelButton"
                         onclick="window.location.href='/admin_panel';">Cancel</button>
 
@@ -83,8 +83,8 @@
                     <h1>Address Info</h1>
 
                     <h2>Address name</h2>
-                    <input type="text" class="input" value="" name="address[address_name]" placeholder="Enter a new address"
-                        required>
+                    <input type="text" class="input" value="" name="address[address_name]"
+                        placeholder="Enter a new address" required>
 
 
 
@@ -272,10 +272,10 @@
 
             </script>
             <script>
-
+                const { BACKEND_SERVICE } = require('../app.js');
                 const loadPaymentType = async () => {
                     const selectPaymentType = document.getElementById('selectPaymentType');
-                    let allPaymentTypes = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentType`);
+                    let allPaymentTypes = await axios.get(`${BACKEND_SERVICE}/api/PaymentType/getPaymentType`);
                     allPaymentTypes = allPaymentTypes.data;
                     allPaymentTypes.forEach(payment => {
                         const option = document.createElement('option');

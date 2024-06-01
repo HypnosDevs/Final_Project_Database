@@ -29,11 +29,10 @@ const analyzeRouters = require('./Routes/analyze');
 
 app.use(
     cors({
-        origin: 'http://localhost:9090',
+        origin: ["http://localhost:9090"],
         credentials: true
     }),
 );
-
 
 
 app.use(

@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS user (
     firstname VARCHAR(100) NOT NULL,
     lastname VARCHAR(100) NOT NULL,
     gender VARCHAR(10),
-    email VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(255) NOT NULL,
     user_role VARCHAR(50),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );

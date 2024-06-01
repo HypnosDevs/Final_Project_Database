@@ -28,13 +28,16 @@
 </footer>
 
 <script>
+
     const checkAdmin = async (req, res) => {
+
         const adminPanel = document.querySelector("#admin");
         const navSignin = document.querySelector("#nav-signin");
         const editByUser = document.querySelector("#edit-by-user");
         const sign_in = document.querySelector("#sign_in");
         const sign_out = document.querySelector("#sign_out");
-        const curUserId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+
+        const curUserId = await axios.get(`http://localhost:8080/api/Authentication/currentUser`, {
             withCredentials: true
         });
 
@@ -42,7 +45,7 @@
             event.preventDefault();
 
             try {
-                await axios.post("http://localhost:8080/api/Authentication/logout", {}, {
+                await axios.post(`http://localhost:8080/api/Authentication/logout`, {}, {
                     withCredentials: true
                 });
 
