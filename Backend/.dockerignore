@@ -1,8 +1,8 @@
 # Node modules
-node_modules/
+node_modules
 
 # Environment variables file
 .env
+    
 
-# Package lock file
-package-lock.json
+Mariadb

@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  my-shop-frontend:
+    #container_name: "my-shop-frontend"
+    image: "sealcandywar2/my-shop-frontend:v1"
+    ports:
+      - "9090"
+    depends_on:
+      - my-shop-backend
+    networks:
+      - "frontend"
+
+  my-shop-backend:
+    #container_name: "my-shop-backend"
+    image: "sealcandywar2/my-shop-backend:v2"
+    ports:
+      - "8080"
+    depends_on:
+      - my-shop-db
+    networks:
+      - "backend"
+      - "frontend"
+
+  my-shop-db:
+    #container_name: "my-shop-db"
+    image: "sealcandywar2/my-shop-db:v0"
+    ports:
+      - "3306"
+    networks:
+      - "backend"
+
+networks:
+  frontend:
+  backend:
