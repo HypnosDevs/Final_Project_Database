@@ -1,45 +1,97 @@
-const Address = require("../Models/Address");
-const PaymentMethod = require("../Models/PaymentMethod");
-const PaymentType = require("../Models/PaymentType");
-const User = require("../Models/User");
 const bcrypt = require('bcrypt');
+const { pool } = require('../db/db.js');
+
+
+exports.adminRegister = async (req, res) => {
+    try {
+        const { username, password, firstname, lastname, email, gender } = req.body;
+
+        // Check if username already exists
+        const findUserQuery = `SELECT username FROM user WHERE username = ?`;
+        const [existingUsers] = await pool.query(findUserQuery, [username]);
+
+        if (existingUsers.length > 0) {
+            return res.status(400).json({ message: "This username has already been used" });
+        }
+
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Insert new admin user
+        const insertAdminQuery = `INSERT INTO user (username, password, firstname, lastname, gender, email, user_role) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+        await pool.query(insertAdminQuery, [username, hashedPassword, firstname, lastname, gender, email, 'ADMIN']);
+
+        res.status(201).json({ message: "Registration successful" });
+    } catch (err) {
+        console.error("Error in adminRegister:", err);
+        res.status(500).json({ message: err.message });
+    }
+};
 
 exports.addUser = async (req, res) => {
     try {
+        const { username, password, firstname, lastname, gender, email, user_role } = req.body.user;
 
-        const { username, password } = req.body.user;
-        const user = await User.find({ username: username });
-        if (user.length > 0) {
-            return res.status(400).send({ message: "This usesername has been already used" })
+        // Check if username already exists
+        const findUserQuery = `SELECT * FROM user WHERE username = ?`;
+        const [existingUsers] = await pool.query(findUserQuery, [username]);
+
+        if (existingUsers.length > 0) {
+            return res.status(400).json({ message: "This username has already been used" });
         }
 
-        const hash = await bcrypt.hash(password, 10);
-        req.body.user.password = hash;
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-        const userPaymentType = req.body.payment.type
-        req.body.payment.type = undefined;
-        const userData = new User(req.body.user);
-        req.body.address.user = userData;
-        const addressData = new Address(req.body.address);
-        ;
+        // Insert new user into user table
+        const insertUserQuery = `
+            INSERT INTO user (username, password, firstname, lastname, gender, email, user_role)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        `;
+        const userValues = [username, hashedPassword, firstname, lastname, gender, email, user_role];
+        await pool.query(insertUserQuery, userValues);
 
-        const paymentData = new PaymentMethod(req.body.payment);
+        // Retrieve the newly inserted user's ID
+        const getUserIdQuery = `SELECT LAST_INSERT_ID() as user_id`;
+        const [[{ user_id }]] = await pool.query(getUserIdQuery);
 
-        const paymentType = await PaymentType.findOne({ name: userPaymentType })
+        // Handle address creation
+        const { address_name, province, amphoe, district, address_line1, address_line2, postal_code, country_name, tel_no } = req.body.address;
 
-        userData.address.push(addressData);
-        userData.paymentmethod.push(paymentData);
-        paymentType.paymentmethod.push(paymentData);
+        const insertAddressQuery = `
+            INSERT INTO address (user_id, address_name, province, amphoe, district, address_line1, address_line2, postal_code, country_name, tel_no)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        const addressValues = [user_id, address_name, province, amphoe, district, address_line1, address_line2, postal_code, country_name, tel_no];
+        await pool.query(insertAddressQuery, addressValues);
 
-        await userData.save();
-        await addressData.save();
-        await paymentType.save();
+        // Handle payment method creation
+        const { payment_type, account_name, account_number, payment_expiry_date } = req.body.payment;
 
+        // Check if payment type exists or insert it if not
+        let findPaymentTypeQuery = `SELECT payment_type_id FROM payment_type WHERE payment_name = ?`;
+        let [paymentTypeRows] = await pool.query(findPaymentTypeQuery, [payment_type]);
 
-        res.status(201).send({ message: "Address added successfully" });
+        let payment_type_id;
+        if (paymentTypeRows.length === 0) {
+            throw "Payment type not define"
+        } else {
+            payment_type_id = paymentTypeRows[0].payment_type_id;
+        }
+
+        const insertPaymentMethodQuery = `
+            INSERT INTO user_payment_method (user_id, payment_type_id, account_name, account_number, payment_expiry_date)
+            VALUES (?, ?, ?, ?, ?)
+        `;
+        const paymentMethodValues = [user_id, payment_type_id, account_name, account_number, payment_expiry_date];
+        await pool.query(insertPaymentMethodQuery, paymentMethodValues);
+
+        res.status(201).json({ message: "User registration successful" });
     } catch (err) {
-        console.log(err.message);
-        res.status(500).send({ message: err.message });
+        console.error("Error in addUser:", err);
+        res.status(500).json({ message: err.message });
     }
-}
+};
+
+
 

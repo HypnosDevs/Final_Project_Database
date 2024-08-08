@@ -1,101 +1,99 @@
-const Category =  require('../Models/Category.js')
-const Discount = require('../Models/Discount.js');
-const DiscountCategory = require('../Models/DiscountCategory.js');
+const { pool } = require('../db/db.js');
 
+// Get all discount categories
 exports.getAllDiscountCategory = async (req, res) => {
     try {
-        const data = await DiscountCategory.find()
-        res.send(data);
-
+        const [rows] = await pool.query('SELECT * FROM DiscountCategory');
+        res.send(rows);
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
         res.status(500).send({ message: err.message });
     }
-}
+};
 
+// Get a specific discount category by ID
+exports.getDiscountCategoryByDiscountCategoryID = async (req, res) => {
+    try {
+        const { category_id, discount_id } = req.params;
+        const [rows] = await pool.query('SELECT * FROM DiscountCategory WHERE category_id = ? AND discount_id = ?', [category_id, discount_id]);
+        res.send(rows[0]);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send({ message: err.message });
+    }
+};
+
+
+// Get a specific discount category by ID
 exports.getDiscountCategory = async (req, res) => {
     try {
         const { id } = req.params;
-        const data = await DiscountCategory.findById(id)
-        res.send(data);
-
+        const [rows] = await pool.query('SELECT * FROM DiscountCategory WHERE category_id = ?', [id]);
+        res.send(rows);
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
         res.status(500).send({ message: err.message });
     }
-}
+};
 
+// Get discount categories by discount ID
 exports.getDiscountCategoryByDiscountId = async (req, res) => {
     try {
         const { id } = req.params;
-        const data = await DiscountCategory.find({ discount:id })
-        res.send(data);
-
+        const [rows] = await pool.query('SELECT * FROM DiscountCategory WHERE discount_id = ?', [id]);
+        res.send(rows);
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
         res.status(500).send({ message: err.message });
     }
-}
+};
 
+// Add a new discount category
 exports.addDiscountCategory = async (req, res) => {
     try {
+        const { category_id, discount_id } = req.body;
 
-        const category = await Category.findById(req.body.categoryId);
-        const discount = await Discount.findById(req.body.discountId);
-
-        req.body.category = category;
-        req.body.discount = discount;
-        const newDiscountCategory = new DiscountCategory(req.body);
-
-        category.discountcategory.push(newDiscountCategory);
-        discount.discountcategory.push(newDiscountCategory);
-
-        await newDiscountCategory.save();
-        await category.save()
-        await discount.save()
-        res.send();
-
+        await pool.query('INSERT INTO DiscountCategory (category_id, discount_id) VALUES (?, ?)', [category_id, discount_id]);
+        res.send({ message: "Discount category added successfully" });
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
         res.status(500).send({ message: err.message });
     }
-}
+};
 
+// Delete discount categories by discount ID
 exports.deleteDiscountCategoryByDiscountId = async (req, res) => {
     try {
-        const { id } = req.params;
-        const discountCategories = await DiscountCategory.find({ discount: id })
-        for (let i = 0; i < discountCategories.length; i++) {
-            discountCategories[i] = discountCategories[i]._id;
-        }
-        
-        await DiscountCategory.deleteMany({ discount: id })
+        const { discount_id } = req.params;
 
-        // Remove the reference from the shopping cart model
-        for (let i = 0; i < discountCategories.length; i++) {
-            await Category.updateOne(
-                { discountcategory: discountCategories[i] },
-                { $pull: { discountcategory: discountCategories[i] } },
-                { new: true }
-            );
-        }
-
-        res.send()
-
+        await pool.query('DELETE FROM DiscountCategory WHERE discount_id = ?', [discount_id]);
+        res.send({ message: "Discount categories deleted successfully" });
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
         res.status(500).send({ message: err.message });
     }
-}
+};
 
-exports.deleteDiscountCategory = async (req, res) => {
+exports.deleteDiscountCategoryByCategoryId = async (req, res) => {
     try {
-        const { id } = req.params;
-        const data = await DiscountCategory.deleteOne({ _id: id })
-        res.send(data)
+        const { category_id } = req.params;
+        await pool.query('DELETE FROM DiscountCategory WHERE category_id = ?', [category_id]);
 
+        res.send({ message: "Discount and related categories deleted successfully" });
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
         res.status(500).send({ message: err.message });
     }
-}
+};
+
+exports.deleteDiscountCategoryById = async (req, res) => {
+    try {
+        const { discount_id, category_id } = req.params;
+        await pool.query('DELETE FROM DiscountCategory WHERE discount_id = ? AND category_id = ?', [discount_id, category_id]);
+
+        res.send({ message: "Discount and related categories deleted successfully" });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send({ message: err.message });
+    }
+};

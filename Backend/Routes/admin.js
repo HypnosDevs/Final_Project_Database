@@ -1,10 +1,14 @@
 const express = require('express');
-const { addUser } = require('../Controllers/admin');
+const { addUser, adminRegister } = require('../Controllers/admin');
 const router = express.Router()
 
 
 
+// router.post('/addUser', addUser);
+
 router.post('/addUser', addUser);
+
+router.post('/adminRegister', adminRegister);
 
 
 

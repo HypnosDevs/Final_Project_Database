@@ -1,0 +1,114 @@
+<%- include('../partials/head') %>
+
+    <body>
+        <div class="container">
+            <div class="leftbox">
+                <nav>
+                    <a onclick="tabs(0)" class="tab">
+                        <i class="fa-solid fa-ticket"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <div class="rightbox">
+                <form id="form-update-promotion">
+                    <div class="profile tabshow">
+                        <h1>Edit Category</h1>
+
+                        <!-- <h2>Discount (%)</h2>
+                        <input type="number" class="input" placeholder="Discount" name="discount" min="1" max="99"> -->
+
+                        <h2>Category</h2>
+                        <input id="input-category" type="text" class="input" placeholder="Category" name="category">
+                        <!-- <h2>Min price (Thai baht)</h2>
+                        <input type="text" class="input" placeholder="Min price" name="min_price">
+                        <h2>Max discount (Thai baht)</h2>
+                        <input type="text" class="input" placeholder="Max discount" name="max_discount"> -->
+                        <button type="button" class="btn" id="submitButton">Update</button>
+                        <button type="button" class="btn" id="cancelButton"
+                            onclick="window.location.href='/promotion_admin';">Cancel</button>
+
+                    </div>
+                </form>
+            </div>
+
+            <script>
+                async function allowed(roles) {
+                    let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+                        withCredentials: true
+                    });
+                    if (!curUser.data) {
+                        window.location.href = "/signIn";
+                    }
+                    else {
+                        curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
+                        const role = curUser.data.user_role;
+                        console.log('role:', role)
+                        if (!roles.includes(role)) {
+                            window.location.href = "/";
+                        }
+                    }
+                }
+                let roles = "<%= roles %>";
+                roles = roles.split(',');
+                allowed(roles);
+            </script>
+
+            <script>
+                const submitButton = document.querySelector("#submitButton");
+                const form = document.querySelector("#form-update-promotion");
+
+                document.addEventListener("DOMContentLoaded", () => {
+                    const submitButton = document.querySelector("#submitButton");
+                    const form = document.querySelector("#form-update-promotion");
+                    const inputCategory = document.querySelector('#input-category');
+
+
+                    const editData = async () => {
+                        try {
+                            const response = await axios.get(`http://localhost:8080/api/Category/getCategory/<%= category_id %>`);
+                            const catData = response.data;
+                            inputCategory.value = catData.category_name;
+                        } catch (error) {
+                            console.error('Error fetching discount data:', error);
+                        }
+                    };
+
+                    submitButton.addEventListener("click", async (event) => {
+                        event.preventDefault(); // Prevent form from submitting the default way
+                        try {
+                            const formData = new FormData(form);
+                            const updatedData = {
+                                category: formData.get('category'),
+                            };
+
+                            console.log('data', updatedData);
+
+                            await axios.put(`http://localhost:8080/api/Category/updateCategory/<%= category_id %>`, updatedData);
+                            location.replace("http://localhost:9090/promotion_admin");
+                        } catch (err) {
+                            console.error('Error updating discount:', err);
+                        }
+                    });
+
+                    editData();
+                });
+            </script>
+
+            <script>
+                const tabBtn = document.querySelectorAll('.tab');
+                const tab = document.querySelectorAll('.tabshow');
+
+                function tabs(panelIndex) {
+                    tab.forEach(function (node) {
+                        node.style.display = "none";
+                    });
+                    tab[panelIndex].style.display = "block";
+                }
+                tabs(0);
+            </script>
+
+
+    </body>
+
+    </html>

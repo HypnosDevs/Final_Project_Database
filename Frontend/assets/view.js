@@ -12,10 +12,14 @@ const emptyPage = (text) => {
     boardHeaderSection.parentNode.insertBefore(h1Element, referenceNode);
 };
 
-const deleteOrderItem = async (order_item_id) => {
+const deleteOrderItem = async (order_item_id, order_id) => {
     try {
         // Delete the item from the server
         await axios.delete(`http://localhost:8080/api/OrderItem/deleteOrderItemByOrderItemId/${order_item_id}`);
+        const order = axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${order_id}`);
+        if (order === null) {
+            await axios.delete(`http://localhost:8080/api/Order/deleteOrder/${order_id}`);
+        }
 
         window.location.reload();
 
@@ -37,10 +41,10 @@ const loadOrders = async (allOrderItems) => {
     const row = document.createElement("tr");
     row.innerHTML = `
         <td>Remove</td>
-        <td>Order Id</td> 
+        <td>Order Item Id</td> 
         <td>Order Date</td>
         <td>Product Name</td>
-        <td>Price</td>
+        <td>Total Price</td>
         <td>Quantity</td>
         <td>Status</td>
         <td>Payment Type</td>
@@ -55,19 +59,19 @@ const loadOrders = async (allOrderItems) => {
         let k = 0;
         for (const orderItem of allOrderItems) {
             // Format the date as "YYYY-MM-DD HH:MM:SS"
-            const createdAt = new Date(orderItem.createdAt);
+            const createdAt = new Date(orderItem.created_at);
             const formattedDate = `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-${createdAt.getDate().toString().padStart(2, '0')} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
 
             const row = document.createElement("tr");
-            row.setAttribute("id", `${orderItem._id}`);
+            row.setAttribute("id", `${orderItem.order_item_id}`);
             row.innerHTML = `             
-                <td><a onClick="deleteOrderItem('${orderItem._id}')"><i id="remove" class="fa-solid fa-circle-xmark"></i></a></td>
-                <td>${orderItem._id}</td>
+                <td><a onClick="deleteOrderItem('${orderItem.order_item_id}, ${orderItem.order_id}')"><i id="remove" class="fa-solid fa-circle-xmark"></i></a></td>
+                <td>${orderItem.order_item_id}</td>
                 <td>${formattedDate}</td>
                 <td>${orderItem.product_name}</td>
-                <td>฿${orderItem.price - orderItem.discount}</td>
+                <td>฿${orderItem.price * orderItem.qty - orderItem.discount}</td>
                 <td>${orderItem.qty}</td>
-                <td>${orderItem.status}</td>
+                <td>${orderItem.order_status}</td>
                 <td>${orderItemPaymentType[k]}</td>     
             `;
             tableBody.appendChild(row);
@@ -135,18 +139,20 @@ const loadData = async () => {
             window.location.href = "/"
         } else {
             curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
-            const userId = curUser.data._id;
+            const userId = curUser.data.user_id;
             console.log(userId);
-            const role = curUser.data.role;
+            const role = curUser.data.user_role;
             if (allowedRole.includes(role)) {
-                // const userId = sessionStorage.getItem('userId');
+                const userViewId = sessionStorage.getItem('userId');
 
-                let orders = await axios.get(`http://localhost:8080/api/Order/getOrderFromUser/${userId}`);
+                let orders = await axios.get(`http://localhost:8080/api/Order/getOrderFromUser/${userViewId}`);
                 orders = orders.data;
+
+                console.log('kuykuy', orders)
 
                 let allOrderItems = [];
                 for (const order of orders) {
-                    let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${order._id}`);
+                    let orderItems = await axios.get(`http://localhost:8080/api/OrderItem/getOrderItemFromOrder/${order.order_id}`);
                     orderItems = orderItems.data;
 
                     for (const orderItem of orderItems) {
@@ -159,22 +165,22 @@ const loadData = async () => {
 
                 let allOrderItemCategories = [];
                 for (const orderItem of allOrderItems) {
-                    const order = await axios.get(`http://localhost:8080/api/Order/getOrder/${orderItem.order}`);
+                    const order = await axios.get(`http://localhost:8080/api/Order/getOrder/${orderItem.order_id}`);
                     orderItemPaymentType.push(order.data.payment_type);
 
-                    let categories = await axios.get(`http://localhost:8080/api/Category/getAllCategoryFromProduct/${orderItem.product}`);
+                    let categories = await axios.get(`http://localhost:8080/api/Category/getAllCategoryFromProduct/${orderItem.product_id}`);
                     allOrderItemCategories.push(categories.data.category);
                 };
                 console.log("pooh 0");
-                let spendingData = await axios.get(`http://localhost:8080/api/Analyze/bestCategoryFromUser/${userId}`);
+                let spendingData = await axios.get(`http://localhost:8080/api/Analyze/bestCategoryFromUser/${userViewId}`);
                 spendingData = spendingData.data;
-                let priceSum = await axios.get(`http://localhost:8080/api/Analyze/getUserTotalSpending/${userId}`);
+                let priceSum = await axios.get(`http://localhost:8080/api/Analyze/getUserTotalSpending/${userViewId}`);
                 console.log(priceSum);
                 if (priceSum.data.length === 0) {
                     removeLoader();
                     throw "No Orders found";
                 }
-                priceSum = priceSum.data[0].totalSpending;
+                priceSum = priceSum.data.totalSpending;
                 console.log("pooh 1", priceSum);
                 // for (let i = 0; i < allOrderItems.length; i++) {
                 //     priceSum += allOrderItems[i].price - allOrderItems[i].discount;
@@ -203,6 +209,8 @@ const loadData = async () => {
                 let totalSpending = document.querySelector("#totalSpending")
                 totalSpending.innerHTML = priceSum;
 
+
+                console.log('adadsd', allOrderItems);
                 removeLoader();
 
                 loadOrders(allOrderItems);
@@ -229,7 +237,8 @@ const loadData = async () => {
             };
         };
     } catch (err) {
-        emptyPage(`${err}`);
+        removeLoader();
+        emptyPage("No Order Found");
     };
 };
 

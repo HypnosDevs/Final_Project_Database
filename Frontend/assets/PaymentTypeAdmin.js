@@ -20,11 +20,6 @@ const deletePaymentType = async (payment_type_id) => {
     try {
         const paymentType = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentType/${payment_type_id}`);
 
-        // Delete the payment method from the server
-        for (const payment_method_id of paymentType.data.paymentmethod) {
-            await axios.delete(`http://localhost:8080/api/PaymentMethod/${payment_method_id}/deletePaymentMethod`);
-        }
-
         // Delete the payment type from the server
         await axios.delete(`http://localhost:8080/api/PaymentType/${payment_type_id}/deletePaymentType`);
 
@@ -57,10 +52,10 @@ const renderPaymentTypes = (paymentTypes) => {
     paymentTypes.forEach(paymentType => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deletePaymentType('${paymentType._id}')"></i></a></td>
-            <td>${paymentType.name}</td>
+            <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deletePaymentType('${paymentType.payment_type_id}')"></i></a></td>
+            <td>${paymentType.payment_name}</td>
         `;
-        row.setAttribute('id', paymentType._id);
+        row.setAttribute('id', paymentType.payment_type_id);
         tbody.appendChild(row);
     });
 };

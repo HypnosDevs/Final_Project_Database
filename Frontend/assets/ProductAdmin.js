@@ -53,8 +53,8 @@ const renderProducts = (products) => {
     products.forEach(async product => {
         // console.log(product);
         const row = document.createElement('tr');
-        let imgTd = `<td><img src="data:image/png;base64, ${product.image}"></td>`;
-        if (product.image == undefined) {
+        let imgTd = `<td><img src="data:image/png;base64, ${product.product_image}"></td>`;
+        if (product.product_image == undefined) {
             imgTd = `<td> </td>`;
         }
 
@@ -79,17 +79,18 @@ const renderProducts = (products) => {
         // })
         loader.remove();
 
+        const categoryName = await axios.get(`http://localhost:8080/api/Product/getCategoryFromProduct/${product.product_id}`)
 
         row.innerHTML = `
-            <td><a href="#"><i class="fa-solid fa-circle-xmark" onclick="deleteProduct('${product._id}')"></i></a></td>
+            <td><i class="fa-solid fa-circle-xmark" onclick="deleteProduct('${product.product_id}')"></i></td>
             ` + imgTd + `
-            <td>${product.name}</td>
-            <td>${product.category}</td>
+            <td>${product.product_name}</td>
+            <td>${categoryName.data}</td>
             <td>฿${product.price}</td>
             <td>${product.stock}</td>
-            <td class="edit"><a href="/edit_product/${product._id}">Edit</a></td>
+            <td class="edit"><a href="/edit_product/${product.product_id}">Edit</a></td>
         `;
-        row.setAttribute('id', product._id);
+        row.setAttribute('id', product.product_id);
         tbody.appendChild(row);
     });
 

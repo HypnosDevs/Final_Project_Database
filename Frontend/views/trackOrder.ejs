@@ -17,7 +17,7 @@
 
             </div>
 
-            <ul>
+            <ul id="order-head">
                 <li>
                     <i class="fa-solid fa-cart-plus"></i>
                     <div class="progress one">
@@ -53,99 +53,32 @@
 
             </ul>
 
-            </div>
+
 
 
             <div class="loader"></div>
 
-            <!-- <div class="wraporder">
-                <div class="orderstattus"> <span class="order-id">Order id: 65502323435353</span><button
-                        class="order-status" type="button">Pending</button> </div>
-                <hr>
-                <div class="container">
-                    <div class="wrap-image">
-                        <div class="product-image">
-                            <img src="https://th.bing.com/th/id/OIP.4-9JNzipXkoBlH9AUx_-hAHaIM?rs=1&pid=ImgDetMain"
-                                alt="">
-                        </div>
-                        <div class="product-name">
-                            <div class="name">Bear</div>
-                            <div class="qty">
-                                x2
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="product-price">
-                        <div class="date">Date: 22/22/22 : 14:55:66</div>
-                        <div class="price">Price: 500 THB</div>
-                        <div class="discount"><i class="fa-solid fa-ticket"></i>: -50 THB</div>
-
-
-                    </div>
-                </div>
-                <hr>
-                <div class="foot-order">
-                    <div class="payment-type">Payment type: Master Card</div>
-                    <div class="total-price">Total: 450 THB</div>
-
-                </div>
-
-
-            </div> -->
-
-            <!-- <section id="board" class="">
-                <table id="user-table" width="100%">
-                    <thead>
-                        <tr>
-                         
-                            <td>Order_ID</td>
-                            <td>Order_Date</td>
-                            <td>Product_Image</td>
-                            <td>Product_Name</td>
-                            <td>Price</td>
-                            <td>Quantity</td>
-                            <td>Discount</td>
-                            <td>Total</td>
-                            <td>Status</td>
-                            <td>Payment</td>
-                        </tr>
-                    </thead>
-
-             
-                    <tbody>
-                        <tr id="loader">
-                            <td colspan="8">
-                                <div class="loader"></div>
-                            </td>
-                        </tr>
-                
-                    </tbody>
-
-                </table>
-            </section> -->
-
             <script>
                 async function allowed(roles) {
-                  let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
-                      withCredentials: true
-                  });
-                  if (!curUser.data) {
-                    window.location.href = "/signIn";
-                  }
-                  else {
-                    curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
-                    const role = curUser.data.role;
-                    console.log('role:', role)
-                    if (!roles.includes(role)) {
-                      window.location.href = "/";
+                    let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+                        withCredentials: true
+                    });
+                    if (!curUser.data) {
+                        window.location.href = "/signIn";
                     }
-                  }
+                    else {
+                        curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
+                        const role = curUser.data.user_role;
+                        console.log('role:', role)
+                        if (!roles.includes(role)) {
+                            window.location.href = "/";
+                        }
+                    }
                 }
                 let roles = "<%= roles %>";
                 roles = roles.split(',');
                 allowed(roles);
-              </script>
+            </script>
 
             <script src="trackOrder.js"></script>
 

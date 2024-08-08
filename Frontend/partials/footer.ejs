@@ -15,35 +15,57 @@
 
     <div class="col">
         <h4>My Account</h4>
-        <a href="/signIn">Sign In </a>
+        <a id="sign_in" href="/signIn">Sign In </a>
         <a href="/cart">View Cart </a>
 
         <!-- Need to edit -->
         <a href="/trackOrder">Track My Order </a>
 
         <a id="admin" href="/admin_panel">Admin Panel</a>
+
+        <a id="sign_out" href="/">Sign Out</a>
     </div>
 </footer>
 
 <script>
+
     const checkAdmin = async (req, res) => {
+
         const adminPanel = document.querySelector("#admin");
         const navSignin = document.querySelector("#nav-signin");
         const editByUser = document.querySelector("#edit-by-user");
-        const curUserId = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+        const sign_in = document.querySelector("#sign_in");
+        const sign_out = document.querySelector("#sign_out");
+
+        const curUserId = await axios.get(`http://localhost:8080/api/Authentication/currentUser`, {
             withCredentials: true
         });
 
+        sign_out.addEventListener("click", async (event) => {
+            event.preventDefault();
+
+            try {
+                await axios.post(`http://localhost:8080/api/Authentication/logout`, {}, {
+                    withCredentials: true
+                });
+
+                window.location.href = "/";
+            } catch (error) {
+                console.error('Error logging out:', error);
+            }
+        });
 
         userId = curUserId.data
 
         if (!userId) {
-            adminPanel.remove()
+            sign_out.remove();
+            adminPanel.remove();
             if (editByUser) {
                 editByUser.remove();
             }
             return;
         } else {
+            sign_in.remove();
             if (navSignin) {
                 navSignin.innerHTML = 'History'
                 navSignin.setAttribute('href', '/trackOrder');
@@ -51,11 +73,12 @@
         }
         // console.log("user", userId);
         const user = await axios.get(`http://localhost:8080/api/User/getUser/${userId}`);
-        // console.log("user", user);
+        console.log("user", user.data);
         if (!user) {
+            sign_out.remove();
             adminPanel.remove()
         }
-        else if (user && (user.data.role !== "ADMIN" && user.data.role !== "PRODUCT MANAGER")) {
+        else if (user && (user.data.user_role !== "ADMIN" && user.data.user_role !== "PRODUCT MANAGER")) {
             adminPanel.remove()
         }
     }

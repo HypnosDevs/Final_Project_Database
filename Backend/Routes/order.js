@@ -10,6 +10,6 @@ router.get('/getOrderFromUser/:user_id', getOrderFromUser)
 
 router.post('/addOrder/:payment_id/:user_id', addOrder)
 
-router.delete('/deleteOrderItem/:order_id', deleteOrder)
+router.delete('/deleteOrder/:order_id', deleteOrder)
 
 module.exports = router

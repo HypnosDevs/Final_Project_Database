@@ -42,14 +42,14 @@
         <% let x=0 %>
           <% for(let product of products) { %>
 
-            <div class="pro" onclick="redirectToProduct('<%= product._id %>')">
-              <img src="data:image/png;base64, <%= product.image %>" alt="">
+            <div class="pro" onclick="redirectToProduct('<%= product.product_id %>')">
+              <img src="data:image/png;base64, <%= product.product_image %>" alt="">
               <div class="content">
                 <div class="des">
                   <span>
-                    <%= product.name %>
+                    <%= product.product_name %>
                   </span>
-                  <pre id="spanDesc"><%= product.description.replace(/^\s+/gm, '') %></pre>
+                  <pre id="spanDesc"><%= product.product_description.replace(/^\s+/gm, '') %></pre>
                   <div class="star">
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>

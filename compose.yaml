@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  my-shop-frontend:
+    #container_name: "my-shop-frontend"
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    image: "sealcandywar2/my-shop-frontend:v2"
+    restart: always
+    environment:
+      - BACKEND_SERVICE=my-shop-backend
+      - BACKEND_PORT=8080
+    ports:
+      - "9090:9090"
+    depends_on:
+      - my-shop-backend
+    networks:
+      - "frontend"
+    
+
+  my-shop-backend:
+    #container_name: "my-shop-backend"
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    image: "sealcandywar2/my-shop-backend:v3"
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - BACKEND_SERVICE=my-shop-db
+      - BACKEND_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_DATABASE=test_nodejs
+    depends_on:
+      - my-shop-db
+    networks:
+      - "backend"
+      - "frontend"
+
+  my-shop-db:
+    #container_name: "my-shop-db"
+    image: "sealcandywar2/my-shop-db:v0"
+    restart: always
+    ports:
+      - "3306"
+    networks:
+      - "backend"
+ 
+networks:
+  frontend:
+  backend:

@@ -44,6 +44,9 @@
 
                     </select>
 
+                    <button type="button" class="btn" id="cancelButton"
+                        onclick="window.location.href='/admin_panel';">Cancel</button>
+
 
 
 
@@ -54,7 +57,7 @@
                 <div class="payment tabshow">
                     <h1>Payment Info</h1>
                     <h2>Payment Type</h2>
-                    <select name="payment[type]" id="selectPaymentType" required>
+                    <select name="payment[payment_type]" id="selectPaymentType" required>
                         <option value="" disabled selected>Select Payment</option>
                     </select>
 
@@ -67,7 +70,10 @@
                     <input type="text" class="input" name="payment[account_number]">
 
                     <h2>Expiration date</h2>
-                    <input type="text" class="input" name="payment[expiry_date]">
+                    <input type="text" class="input" name="payment[payment_expiry_date]">
+
+                    <button type="button" class="btn" id="cancelButton"
+                        onclick="window.location.href='/admin_panel';">Cancel</button>
 
                     <!-- <button class="btn">Add</button> -->
 
@@ -77,8 +83,8 @@
                     <h1>Address Info</h1>
 
                     <h2>Address name</h2>
-                    <input type="text" class="input" value="" name="address[name]" placeholder="Enter a new address"
-                        required>
+                    <input type="text" class="input" value="" name="address[address_name]"
+                        placeholder="Enter a new address" required>
 
 
 
@@ -89,12 +95,15 @@
                     <input type="text" class="input" value="" name="address[address_line2]">
 
                     <h2>Country</h2>
-                    <select id="country" name="address[country]" required onchange="showProvinces()">
+                    <select id="country" name="address[country_name]" required onchange="showProvinces()">
                         <option value="" disabled selected>Select Country</option>
                         <option value="Thailand">Thailand</option>
                     </select>
 
                     <button class="btn" onclick="nextPage()">Next</button>
+
+                    <button type="button" class="btn" id="cancelButton"
+                        onclick="window.location.href='/admin_panel';">Cancel</button>
                 </div>
 
                 <div class="Address tabshow" id="addressPage2" style="display: none;">
@@ -142,41 +151,40 @@
                     <input type="password" name="user[password]" class="input" value="">
 
                     <h2>Role</h2>
-                    <select name="user[role]" class="input">
+                    <select name="user[user_role]" class="input">
                         <option value="ADMIN">ADMIN</option>
-
-                        <option value="USER">USER</option>
-
                         <option value="PRODUCT MANAGER">PRODUCT MANAGER</option>
-
+                        <option value="USER">USER</option>
                     </select>
 
                     <button id="addDataButton" class="btn">Add</button>
+                    <button type="button" class="btn" id="cancelButton"
+                        onclick="window.location.href='/admin_panel';">Cancel</button>
                 </div>
 
             </div>
 
             <script>
                 async function allowed(roles) {
-                  let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
-                      withCredentials: true
-                  });
-                  if (!curUser.data) {
-                    window.location.href = "/signIn";
-                  }
-                  else {
-                    curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
-                    const role = curUser.data.role;
-                    console.log('role:', role)
-                    if (!roles.includes(role)) {
-                      window.location.href = "/";
+                    let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+                        withCredentials: true
+                    });
+                    if (!curUser.data) {
+                        window.location.href = "/signIn";
                     }
-                  }
+                    else {
+                        curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
+                        const role = curUser.data.user_role;
+                        console.log('role:', role)
+                        if (!roles.includes(role)) {
+                            window.location.href = "/";
+                        }
+                    }
                 }
                 let roles = "<%= roles %>";
                 roles = roles.split(',');
                 allowed(roles);
-              </script>
+            </script>
 
             <script>
                 const addDataButton = document.querySelector("#addDataButton");
@@ -191,6 +199,7 @@
 
                             formElements.forEach(formElement => {
                                 let name = formElement.getAttribute('name');
+                                console.log('here', name);
 
                                 if (formElement.tagName === 'SELECT') {
                                     let selectedOption = formElement.options[formElement.selectedIndex];
@@ -201,7 +210,7 @@
                                     let value = formElement.value;
                                     formData[name] = value;
                                 }
-                                if (!formData[name]) {
+                                if (!formData[name] && name != 'address[address_line2]') {
                                     const [prefix] = name.split('[');
                                     throw `${prefix} field required !!!`.toUpperCase();
                                 }
@@ -263,15 +272,15 @@
 
             </script>
             <script>
-
+                const { BACKEND_SERVICE } = require('../app.js');
                 const loadPaymentType = async () => {
                     const selectPaymentType = document.getElementById('selectPaymentType');
-                    let allPaymentTypes = await axios.get(`http://localhost:8080/api/PaymentType/getPaymentType`);
+                    let allPaymentTypes = await axios.get(`${BACKEND_SERVICE}/api/PaymentType/getPaymentType`);
                     allPaymentTypes = allPaymentTypes.data;
                     allPaymentTypes.forEach(payment => {
                         const option = document.createElement('option');
-                        option.setAttribute('value', payment.name);
-                        option.innerHTML = payment.name
+                        option.setAttribute('value', payment.payment_name);
+                        option.innerHTML = payment.payment_name
                         selectPaymentType.appendChild(option);
 
                     })

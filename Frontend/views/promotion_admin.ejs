@@ -1,106 +1,173 @@
 <%- include('../partials/head') %>
 
-<body>
+    <body>
 
 
-    <section id="header">
-        <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
-        <div>
-            <ul id="navbar">
+        <section id="header">
+            <a href="#"> <img src="/img/logo.png" class="logo" alt=""></a>
+            <div>
+                <ul id="navbar">
 
-                <form>
-                    <div class="search">
-                        <span class="search-icon material-symbols-outlined">search</span>
-                        <input class="search-input" type="search" placeholder="Search">
+                    <form>
+                        <div class="search">
+                            <span class="search-icon material-symbols-outlined">search</span>
+                            <input class="search-input" type="search" placeholder="Search">
+                        </div>
+                    </form>
+
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/admin_panel">Dashboard</a></li>
+                    <li><a href="/product_admin">Products</a></li>
+                    <li><a class="active" href="/promotion_admin">Promotion</a></li>
+                    <li><a href="/payment_type_admin">Payment</a></li>
+
+                    <ul>
+            </div>
+        </section>
+
+        <section id="page-header">
+
+            <h2># Promotions</h2>
+
+        </section>
+
+
+        <section id="button_create">
+            <a href="/create_promotion">
+                <button>Add Promotion</button>
+            </a>
+        </section>
+
+        <section>
+            <div class="values">
+
+                <div class="val-box" id="promotions_page">
+                    <i class="fa-solid fa-box"></i>
+                    <div>
+                        <h3 id="promotions-length">
+
+                        </h3>
+                        <span>Promotion</span>
                     </div>
-                </form>
+                </div>
+                <div class="val-box" id="discounts_page">
+                    <i class="fa-solid fa-users"></i>
+                    <div>
+                        <h3 id="discounts-length">
 
-                <li><a href="/">Home</a></li>
-                <li><a href="/admin_panel">Dashboard</a></li>
-                <li><a href="/product_admin">Products</a></li>
-                <li><a class="active" href="/promotion_admin">Promotion</a></li>
-                <li><a href="/payment_type_admin">Payment</a></li>
-              
-                <ul>
-        </div>
-    </section>
+                        </h3>
+                        <span>Discounts</span>
+                    </div>
+                </div>
+                <div class="val-box" id="categories_page">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <div>
+                        <h3 id="categories-length">
 
-    <section id="page-header">
-
-        <h2># Promotions</h2>
-
-    </section>
+                        </h3>
+                        <span>Categories</span>
+                    </div>
+                </div>
 
 
-    <section id="button_create">
-        <a href="/create_promotion">
-            <button>Add Promotion</button>
-        </a>
-    </section> 
-    
-    <section id="cart" class="">
-        <table width="100%">
-            <thead>
-                <tr>
-                    <td>Remove</td>
-                    <td>Discount</td>
-                    <td>Category</td>
-                    <td></td>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- <tr>
-                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
-                    <td><img src="/img/products/p1.jpg"></td>
-                    <td>crazy deals 30% off Mystery and figure</td>
-                    <td>ABC123</td>
-                    <td>$ 29.99</td>
-                    <td class="edit"><a href="/edit_promotion">Edit</a></td>
-                    
-                </tr>
-                <tr>
-                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
-                    <td><img src="/img/products/p3.png"></td>
-                    <td>Crybaby Crying Parade Series</td>
-                    <td>Crybaby</td>
-                    <td>฿590</td>
-                    <td class="edit"><a href="/edit_promotion">Edit</a></td>
-                </tr>
-                <tr>
-                    <td><a href="#"><i class="fa-solid fa-circle-xmark"></i></a></td>
-                    <td><img src="/img/products/p8.jpg"></td>
-                    <td>CRYBABY × Powerpuff Girls Series-Vinyl Face Plush Blind Box</td>
-                    <td>Crybaby</td>
-                    <td>฿430</td>
-                    <td class="edit"><a href="/edit_promotion">Edit</a></td>
-                </tr> -->
+            </div>
+        </section>
 
-            </tbody>
-        </table>
-    </section>
+        <section id="board" class="">
+            <table id="header-table" width="100%">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr id="loader">
+                        <td colspan="6">
+                            <div class="loader"></div>
+                        </td>
+                    </tr>
 
-    <script>
-        async function allowed(roles) {
-          let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
-              withCredentials: true
-          });
-          if (!curUser.data) {
-            window.location.href = "/signIn";
-          }
-          else {
-            curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
-            const role = curUser.data.role;
-            console.log('role:', role)
-            if (!roles.includes(role)) {
-              window.location.href = "/";
+                </tbody>
+            </table>
+        </section>
+
+        <!-- <script src="/loader.js" defer></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        <script>
+            async function allowed(roles) {
+                let curUser = await axios.get("http://localhost:8080/api/Authentication/currentUser", {
+                    withCredentials: true
+                });
+                if (!curUser.data) {
+                    window.location.href = "/signIn";
+                }
+                else {
+                    curUser = await axios.get(`http://localhost:8080/api/User/getUser/${curUser.data}`);
+                    const role = curUser.data.user_role;
+                    console.log('role:', role)
+                    if (!roles.includes(role)) {
+                        window.location.href = "/";
+                    }
+                }
             }
-          }
-        }
-        let roles = "<%= roles %>";
-        roles = roles.split(',');
-        allowed(roles);
-      </script>
+            let roles = "<%= roles %>";
+            roles = roles.split(',');
+            allowed(roles);
+        </script>
 
-    <script src="PromotionAdmin.js"></script>
+        <script src="PromotionAdmin.js"></script>
+        <script>
+            const loadData = async () => {
+                const allPromotions = document.querySelector("#promotions_page");
+                const allDiscounts = document.querySelector("#discounts_page");
+                const allCategories = document.querySelector("#categories_page");
+                let discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
+                let categories = await axios.get("http://localhost:8080/api/Category/getCategory");
+                let promotions = await axios.get("http://localhost:8080/api/DiscountCategory/getDiscountCategory")
+                const loader = document.querySelector("#loader");
 
-<%- include('../partials/footer') %>
+
+                loader.classList.add("loader-hidden");
+
+                loader.addEventListener("transitionend", () => {
+                    document.body.removeChild("loader");
+                })
+
+                const rowLoader = document.querySelector("#loader")
+                rowLoader.remove();
+                document.querySelector("#promotions-length").innerHTML = promotions.data.length;
+                document.querySelector("#discounts-length").innerHTML = discounts.data.length;
+                document.querySelector("#categories-length").innerHTML = categories.data.length;
+                getPromotions(discounts);
+                allPromotions.addEventListener("click", async () => {
+                    promotions = await axios.get("http://localhost:8080/api/DiscountCategory/getDiscountCategory")
+                    await renderPromotions(discounts.data);
+                    if (discounts.data.length === 0) {
+                        emptyPage("No Promotion found");
+                    }
+                })
+
+                allDiscounts.addEventListener("click", async () => {
+                    discounts = await axios.get("http://localhost:8080/api/Discount/getDiscount");
+                    await renderDiscounts(discounts.data);
+                    if (discounts.data.length === 0) {
+                        emptyPage("No Discount found");
+                    }
+                })
+
+                allCategories.addEventListener("click", async () => {
+                    categories = await axios.get("http://localhost:8080/api/Category/getCategory");
+                    await renderCategories(categories.data);
+                    if (categories.data.length === 0) {
+                        emptyPage("No Category found");
+                    }
+                })
+            }
+
+            loadData();
+
+
+        </script>
+
+
+
+
+        <%- include('../partials/footer') %>

@@ -10,7 +10,7 @@ body{
     width: 540px;
     background: #fff;
     margin:0 auto;
-    height:550px;;
+    height:600px;;
     position: relative;
     margin-top:10%;
     box-shadow: 2px 5px 20px 
@@ -129,6 +129,10 @@ span{
 
 #cancelButton {
     background:#f44336;
+}
+
+#cancelButton:hover {
+    background:#c01515;
 }
 
 .tabshow{

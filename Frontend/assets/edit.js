@@ -139,7 +139,7 @@ document.getElementById('paymentSelect').addEventListener('change', function() {
         document.getElementById("addAccountNumber").required = true;
         document.getElementById("addExpiryData").required = true;
 
-        selectPaymentElement.style.display = 'block    ';
+        selectPaymentElement.style.display = 'block';
         newPaymentInput.style.display = 'block';
         newPaymentInput.setAttribute('required', 'required');
     } else {
